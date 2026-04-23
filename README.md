@@ -14,5 +14,4 @@ Es mi centro de verdad para:
 
 - decisiones de arquitectura;
 - políticas de proveedores (Copilot, etc.);
-- rutinas diarias de trabajo.# openclaw-operativo-2026
-Memoria nuclear 2026: decisiones, versiones y protocolos para mi ecosistema OpenClaw + Discord + Globy (sin depender de Antigravity).
+- rutinas diarias de trabajo.

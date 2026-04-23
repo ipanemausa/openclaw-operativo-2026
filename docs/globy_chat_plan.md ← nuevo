@@ -1,3 +1,138 @@
-git add docs/globy_chat_plan.md
-git commit -m "Add plan for OC + Ollama + Globy"
-git push
+# Plan OC + Ollama + Globy (primer chat)
+
+## 1. Meta de este plan
+
+Lograr que Globy pueda chatear conmigo usando:
+
+- OpenClaw (Gateway / Dashboard)
+- Ollama como LLM local
+- Un canal de chat simple (WebChat del Gateway, y opcionalmente Discord después)
+
+Este plan NO se ejecuta hoy, solo deja los pasos listos para mañana.
+
+---
+
+## 2. Prerrequisitos técnicos
+
+Mañana, antes de empezar, verificar:
+
+1. Tener instalado:
+   - Docker Desktop o instalación nativa de Ollama según mi OS.
+   - Node / entorno mínimo requerido por OpenClaw.
+
+2. Contar con:
+   - Acceso a la máquina donde correrán:
+     - OpenClaw Gateway
+     - Ollama (mismo host o LAN)
+
+---
+
+## 3. Paso 1: Ollama listo con un modelo
+
+Objetivo: tener un modelo local en Ollama que OpenClaw pueda usar como LLM.
+
+Pasos:
+
+1. Instalar y arrancar Ollama si no está instalado.
+2. Descargar un modelo base razonable (por ejemplo, llama3 o similar).
+3. Confirmar que responde a un prompt básico desde la CLI de Ollama.
+
+Condición de éxito:
+- Puedo correr un prompt de prueba en Ollama y recibir respuesta sin error.
+
+---
+
+## 4. Paso 2: OpenClaw instalado y Gateway corriendo
+
+Objetivo: tener el Gateway de OpenClaw operativo, con dashboard accesible desde navegador.
+
+Pasos:
+
+1. Verificar instalación de OpenClaw o seguir guía oficial de “Getting Started”.
+2. Ejecutar el comando para instalar / arrancar el daemon de OpenClaw.
+3. Abrir el dashboard del Gateway (URL local típica) en el navegador.
+
+Condición de éxito:
+- Puedo ver la UI del Gateway / Dashboard de OpenClaw en el navegador.
+
+---
+
+## 5. Paso 3: Configurar Ollama como proveedor LLM en OpenClaw
+
+Objetivo: conectar OpenClaw con Ollama para que las respuestas del chat salgan del modelo local.
+
+Pasos:
+
+1. Ubicar la sección de configuración de LLM providers en OpenClaw (archivo o UI).
+2. Añadir un proveedor “Ollama” apuntando al endpoint local (host:puerto correctos).
+3. Seleccionar ese proveedor como LLM por defecto para mi agente de pruebas.
+
+Condición de éxito:
+- Desde el panel de OpenClaw puedo hacer un “test chat” o “test completion” usando Ollama, y ver respuesta.
+
+---
+
+## 6. Paso 4: Definir el agente Globy
+
+Objetivo: tener un agente llamado “Globy” configurado en OpenClaw que use Ollama.
+
+Pasos:
+
+1. Crear un agente “Globy” con:
+   - Nombre: Globy
+   - Descripción: asistente personal conectado a mi ecosistema OC + memoria nuclear
+   - LLM provider: Ollama (configurado en el paso anterior)
+
+2. (Opcional) Definir prompt de sistema básico para Globy:
+   - Que entienda que este repo `openclaw-operativo-2026` es la memoria nuclear.
+   - Que trate de seguir mi loop diario y políticas cuando se le pida.
+
+Condición de éxito:
+- Globy aparece en la lista de agentes de OpenClaw y tiene seleccionado Ollama como LLM.
+
+---
+
+## 7. Paso 5: Primer chat por WebChat del Gateway
+
+Objetivo: hablar con Globy desde el navegador, sin aún integrar Discord/otros canales.
+
+Pasos:
+
+1. Abrir el módulo de WebChat / Chat del Gateway.
+2. Seleccionar el agente Globy (si aplica).
+3. Enviar un mensaje sencillo (“Hola Globy, probemos el chat con Ollama.”).
+4. Confirmar que la respuesta viene del modelo local (latencia y estilo).
+
+Condición de éxito:
+- Recibo respuestas coherentes de Globy a través del WebChat, usando Ollama.
+
+---
+
+## 8. Paso 6 (opcional): Conectar Globy a Discord (Globy-Discord)
+
+Objetivo: habilitar un canal real de uso diario (ej. Discord) para hablar con Globy.
+
+Pasos (a detallar en otro documento si se complica):
+
+1. Crear un bot / app de Discord y obtener token.
+2. Configurar en OpenClaw el canal Discord:
+   - Token del bot
+   - Servidor / canal donde estará activo
+3. Mapear ese canal al agente Globy.
+4. Probar enviando un mensaje desde Discord y verificando respuesta de Globy.
+
+Condición de éxito:
+- Puedo hablarle a Globy desde Discord y recibir respuesta consistente.
+
+---
+
+## 9. Relación con la memoria nuclear
+
+Este documento se guarda en `docs/globy_chat_plan.md` dentro de `openclaw-operativo-2026`.
+
+Cuando Globy esté funcionando:
+
+- Podré usar este repo como referencia para:
+  - políticas (Copilot, etc.),
+  - rutinas diarias (ocosto_loop_basico),
+  - decisiones de arquitectura (este plan OC + Ollama + Globy).

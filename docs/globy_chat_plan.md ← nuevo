@@ -1,1 +1,3 @@
-
+git add docs/globy_chat_plan.md
+git commit -m "Add plan for OC + Ollama + Globy"
+git push

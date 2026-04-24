@@ -136,3 +136,33 @@ Cuando Globy esté funcionando:
   - políticas (Copilot, etc.),
   - rutinas diarias (ocosto_loop_basico),
   - decisiones de arquitectura (este plan OC + Ollama + Globy).
+### Bloqueo actual (DNS/Red) – 2026-04-24
+
+Problema:
+- Ollama está instalado en Windows.
+- Al ejecutar `ollama run llama3` aparece:
+  - `pulling manifest`
+  - `Error: pull model manifest: Get "https://registry.ollama.ai/v2/library/llama3/manifests/latest": dial tcp: lookup registry.ollama.ai: no such host`
+
+Conclusión:
+- Es un problema de red/DNS: la máquina no puede resolver `registry.ollama.ai`.
+- No es un error de OpenClaw, Globy ni del código del repositorio.
+
+Intentos requeridos:
+1. Probar resolución DNS:
+   - Comando en PowerShell:
+     ```pwsh
+     nslookup registry.ollama.ai
+     ```
+2. Cambiar DNS de Windows a servidores públicos:
+   - Usar estos valores:
+     - DNS preferido: 1.1.1.1
+     - DNS alternativo: 8.8.8.8
+
+Acción pendiente:
+- Ejecutar el procedimiento de cambio de DNS en Windows.
+- Volver a probar:
+  ```pwsh
+  ollama run llama3
+  ```
+- Si después del cambio de DNS sigue apareciendo `no such host`, asumir bloqueo de red/ISP y probar de nuevo en otra conexión (por ejemplo, hotspot del celular).

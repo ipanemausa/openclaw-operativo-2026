@@ -3,7 +3,6 @@
 ## 1. Meta de este plan
 
 Lograr que Globy pueda chatear conmigo usando:
-
 - OpenClaw (Gateway / Dashboard)
 - Ollama como LLM local
 - Un canal de chat simple (WebChat del Gateway, y opcionalmente Discord después)
@@ -19,7 +18,6 @@ Mañana, antes de empezar, verificar:
 1. Tener instalado:
    - Docker Desktop o instalación nativa de Ollama según mi OS.
    - Node / entorno mínimo requerido por OpenClaw.
-
 2. Contar con:
    - Acceso a la máquina donde correrán:
      - OpenClaw Gateway
@@ -32,7 +30,6 @@ Mañana, antes de empezar, verificar:
 Objetivo: tener un modelo local en Ollama que OpenClaw pueda usar como LLM.
 
 Pasos:
-
 1. Instalar y arrancar Ollama si no está instalado.
 2. Descargar un modelo base razonable (por ejemplo, llama3 o similar).
 3. Confirmar que responde a un prompt básico desde la CLI de Ollama.
@@ -47,7 +44,6 @@ Condición de éxito:
 Objetivo: tener el Gateway de OpenClaw operativo, con dashboard accesible desde navegador.
 
 Pasos:
-
 1. Verificar instalación de OpenClaw o seguir guía oficial de “Getting Started”.
 2. Ejecutar el comando para instalar / arrancar el daemon de OpenClaw.
 3. Abrir el dashboard del Gateway (URL local típica) en el navegador.
@@ -62,33 +58,32 @@ Condición de éxito:
 Objetivo: conectar OpenClaw con Ollama para que las respuestas del chat salgan del modelo local.
 
 Pasos:
-
 1. Ubicar la sección de configuración de LLM providers en OpenClaw (archivo o UI).
 2. Añadir un proveedor “Ollama” apuntando al endpoint local (host:puerto correctos).
 3. Seleccionar ese proveedor como LLM por defecto para mi agente de pruebas.
 
 Condición de éxito:
-- Desde el panel de OpenClaw puedo hacer un “test chat” o “test completion” usando Ollama, y ver respuesta.
+- Cuando chatee desde OpenClaw, las respuestas vendrán del modelo configurado en Ollama.
 
 ---
 
-## 6. Paso 4: Definir el agente Globy
+## 6. Paso 4: Crear / configurar el agente Globy
 
-Objetivo: tener un agente llamado “Globy” configurado en OpenClaw que use Ollama.
+Objetivo: tener un agente llamado Globy dentro de OpenClaw, usando Ollama como LLM y con memoria ligada a este repo.
 
 Pasos:
-
-1. Crear un agente “Globy” con:
-   - Nombre: Globy
-   - Descripción: asistente personal conectado a mi ecosistema OC + memoria nuclear
-   - LLM provider: Ollama (configurado en el paso anterior)
-
-2. (Opcional) Definir prompt de sistema básico para Globy:
-   - Que entienda que este repo `openclaw-operativo-2026` es la memoria nuclear.
-   - Que trate de seguir mi loop diario y políticas cuando se le pida.
+1. Crear el agente Globy en OpenClaw (desde CLI o UI, según la guía).
+2. Configurar:
+   - Nombre: Globy.
+   - LLM provider: Ollama (el configurado en el paso 3).
+   - Contexto inicial: referencia a este repositorio `openclaw-operativo-2026`.
+3. Garantizar que Globy tenga acceso lógico (vía memoria / contexto) a:
+   - `docs/globy_chat_plan.md`
+   - `docs/ocosto_loop_basico.md`
+   - `docs/copilot_politica.md`
 
 Condición de éxito:
-- Globy aparece en la lista de agentes de OpenClaw y tiene seleccionado Ollama como LLM.
+- Globy existe en OpenClaw como agente, con Ollama como LLM, y sabe que este repo es su “memoria nuclear” de trabajo.
 
 ---
 
@@ -97,7 +92,6 @@ Condición de éxito:
 Objetivo: hablar con Globy desde el navegador, sin aún integrar Discord/otros canales.
 
 Pasos:
-
 1. Abrir el módulo de WebChat / Chat del Gateway.
 2. Seleccionar el agente Globy (si aplica).
 3. Enviar un mensaje sencillo (“Hola Globy, probemos el chat con Ollama.”).
@@ -113,7 +107,6 @@ Condición de éxito:
 Objetivo: habilitar un canal real de uso diario (ej. Discord) para hablar con Globy.
 
 Pasos (a detallar en otro documento si se complica):
-
 1. Crear un bot / app de Discord y obtener token.
 2. Configurar en OpenClaw el canal Discord:
    - Token del bot
@@ -131,12 +124,14 @@ Condición de éxito:
 Este documento se guarda en `docs/globy_chat_plan.md` dentro de `openclaw-operativo-2026`.
 
 Cuando Globy esté funcionando:
-
 - Podré usar este repo como referencia para:
   - políticas (Copilot, etc.),
   - rutinas diarias (ocosto_loop_basico),
   - decisiones de arquitectura (este plan OC + Ollama + Globy).
-### Bloqueo actual (DNS/Red) – 2026-04-24
+
+---
+
+## 10. Bloqueo actual (DNS/Red) – 2026-04-24
 
 Problema:
 - Ollama está instalado en Windows.
@@ -145,7 +140,7 @@ Problema:
   - `Error: pull model manifest: Get "https://registry.ollama.ai/v2/library/llama3/manifests/latest": dial tcp: lookup registry.ollama.ai: no such host`
 
 Conclusión:
-- Es un problema de red/DNS: la máquina no puede resolver `registry.ollama.ai`.
+- Es un problema de red/DNS: la máquina no puede resolver correctamente `registry.ollama.ai` desde Ollama.
 - No es un error de OpenClaw, Globy ni del código del repositorio.
 
 Intentos requeridos:
@@ -158,6 +153,11 @@ Intentos requeridos:
    - Usar estos valores:
      - DNS preferido: 1.1.1.1
      - DNS alternativo: 8.8.8.8
+3. Vaciar caché DNS:
+   - Comando en PowerShell:
+     ```pwsh
+     ipconfig /flushdns
+     ```
 
 Acción pendiente:
 - Ejecutar el procedimiento de cambio de DNS en Windows.
@@ -166,3 +166,13 @@ Acción pendiente:
   ollama run llama3
   ```
 - Si después del cambio de DNS sigue apareciendo `no such host`, asumir bloqueo de red/ISP y probar de nuevo en otra conexión (por ejemplo, hotspot del celular).
+
+Estado actual de pruebas:
+- `nslookup registry.ollama.ai` devuelve IPs correctas desde Windows.
+- Aun así, `ollama run llama3` sigue fallando con `no such host`, lo que indica un bloqueo o problema externo (router/ISP/proxy) fuera de mi control directo.
+- Próximo intento cuando sea posible:
+  - Probar la misma instalación de Ollama desde otra red (por ejemplo, hotspot del celular) y volver a ejecutar:
+    ```pwsh
+    ollama run llama3
+    ```
+  

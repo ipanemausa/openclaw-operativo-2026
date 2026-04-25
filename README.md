@@ -6,11 +6,12 @@ Memoria nuclear 2026: decisiones, versiones y protocolos para mi ecosistema Open
 
 - [`docs/ocosto_loop_basico.md`](docs/ocosto_loop_basico.md): loop operativo 0 costo (apertura, trabajo del día, cierre).
 - [`docs/copilot_politica.md`](docs/copilot_politica.md): política de privacidad y uso de GitHub Copilot.
+- [`docs/globy_oc_integration.md`](docs/globy_oc_integration.md): plan de integración Globy ↔ OpenClaw.
+- [`webhook_globy.py`](webhook_globy.py): endpoint Flask para recibir llamadas de Globy.
 
 ## Uso
 
-Este repo NO es código de producción.
-Es mi centro de verdad para:
+Este repo NO es código de producción. Es mi centro de verdad para:
 
 - decisiones de arquitectura;
 - políticas de proveedores (Copilot, etc.);

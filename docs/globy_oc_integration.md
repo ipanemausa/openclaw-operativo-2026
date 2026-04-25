@@ -1,0 +1,27 @@
+# Integración Globy ↔ OpenClaw
+
+**Fecha**: 2026-04-25  
+**Objetivo**: Conectar Globy (agente conversacional de Perplexity) con OpenClaw para orquestar tareas automáticas desde chat.
+
+## Flujo propuesto
+
+1. Usuario escribe tarea en Globy
+2. Globy identifica que requiere ejecución en OpenClaw
+3. Globy genera payload JSON con instrucciones
+4. Globy llama webhook de OpenClaw o API
+5. OpenClaw ejecuta tarea y responde
+6. Globy confirma al usuario
+
+## Requisitos técnicos
+
+- Webhook público en OpenClaw (puerto 8080 expuesto)
+- Autenticación con token
+- Logs de todas las llamadas
+- Timeout configurado (30s max)
+
+## Estado
+
+- [ ] Definir endpoint en OpenClaw
+- [ ] Configurar autenticación
+- [ ] Probar desde Globy
+- [ ] Documentar ejemplos de uso

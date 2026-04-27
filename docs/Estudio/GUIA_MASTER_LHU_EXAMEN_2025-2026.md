@@ -71,7 +71,22 @@ R: El tiempo que pasa desde que sale una tecnología SOTA hasta que una empresa 
 
 **P20: ¿Qué significa "Agents as a Service"?**  
 R: El modelo de negocio donde se alquila la capacidad de ejecución de un agente autónomo especializado.
+... (P1–P20)
 
+**P20: …**  
+R: …
+
+**P21: …**  
+R: …
+
+... 
+
+**P155: …**  
+R: …
+
+---
+
+*Preparado para Guillermo - Abril 2026. ¡Examen validado!*
 
 ---
 

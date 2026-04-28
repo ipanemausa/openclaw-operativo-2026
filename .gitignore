@@ -4,3 +4,5 @@
 *.ptx
 *.cubin
 *.fatbin
+logs/
+webhook_globy.py.backup

@@ -479,4 +479,4 @@ R: Liderar el cambio tecnológico mediante la construcción de agentes que resue
 
 ---
 
-*Preparado para Guillermo - Abril 2026. ¡Examen validado!*
+*Preparado por Guillermo - Abril 2026. ¡Examen validado!*

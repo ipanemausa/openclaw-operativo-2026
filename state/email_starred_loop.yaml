@@ -1,0 +1,24 @@
+task_id: email_starred_loop
+title: "Revisar correos importantes y generar resumen diario"
+status: pending          # pending | in_progress | done | error
+current_step: 1
+steps:
+  1: "Leer configuración y conectarse a Gmail"
+  2: "Obtener correos marcados con estrella de las últimas 24h"
+  3: "Resumir cada hilo en 3 bullets"
+  4: "Generar digest en Markdown y guardar ruta en outputs.output_file"
+outputs:
+  output_file: null       # Ruta al último digest generado, ej: outputs/digests/2026-05-01.md
+  total_threads: 0        # Número de hilos procesados en la última ejecución
+  last_run_ok: null       # true | false | null (si aún no se ha ejecutado)
+meta:
+  last_actor: "manual"    # manual | ps_script | oc | manus | otro
+  last_update: "2026-05-01T06:50:00"
+  last_error: null
+  notes: "Estado inicial del loop de correos importantes"
+config:
+  provider: "gmail"
+  label: "STARRED"
+  lookback_hours: 24
+  max_threads: 50         # límite de hilos a procesar por ejecución
+history: []

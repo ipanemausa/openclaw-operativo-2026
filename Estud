@@ -1874,3 +1874,184 @@ D) Opción D
 **Fundamento:** Caso de Uso 155.
 
 ---
+### 🧩 BLOQUE 7: ECOSISTEMA OPERATIVO OPENCLAW 2026 (P156-P170)
+
+**P156: ¿Qué significa “memoria nuclear 2026” en el contexto del ecosistema de Guillermo?**
+
+A) Un modelo de IA específico  
+B) Un servicio de nube propietario  
+C) El repositorio central donde se documentan decisiones, protocolos y versiones del ecosistema OpenClaw + Discord + Globy ✓  
+D) Un workflow de Lobster predefinido  
+
+**Respuesta correcta: C**  
+**Fundamento:** La memoria nuclear 2026 es el repo donde se consolida la verdad operativa: decisiones, loops, configuraciones y acuerdos de arquitectura para el sistema.  
+
+---
+
+**P157: ¿Cuál es el rol principal de OpenClaw dentro de este ecosistema?**
+
+A) Servir solo como modelo de texto  
+B) Ser un simple editor de código  
+C) Actuar como agente local que orquesta tareas y entiende la memoria nuclear 2026 ✓  
+D) Reemplazar por completo a Globy y Antigravity  
+
+**Respuesta correcta: C**  
+**Fundamento:** OpenClaw funciona como cerebro local con acceso a archivos, workflows (Lobster) y contexto de trabajo, no solo como LLM.  
+
+---
+
+**P158: ¿Para qué se propone usar la capa Lobster sobre OpenClaw y Globy?**
+
+A) Para reemplazar Git y GitHub  
+B) Para renderizar interfaces gráficas  
+C) Para orquestar flujos deterministas que coordinan agentes y tareas según la memoria nuclear 2026 ✓  
+D) Para ejecutar scripts sin control  
+
+**Respuesta correcta: C**  
+**Fundamento:** Lobster se diseña como capa de orquestación que define pasos claros (workflows) encima de agentes y herramientas, reduciendo improvisación.  
+
+---
+
+**P159: ¿Qué papel cumple Globy en el diseño actual de Guillermo?**
+
+A) Es la única fuente de verdad del sistema  
+B) Es una base de datos relacional  
+C) Es una capa de automatización y tareas modernas que se comunica con el ecosistema vía webhooks ✓  
+D) Es un reemplazo directo de OpenClaw  
+
+**Respuesta correcta: C**  
+**Fundamento:** Globy se usa como orquestador de tareas externas y flujos, interactuando con el sistema de Guillermo mediante un webhook local.  
+
+---
+
+**P160: ¿Cuál es el propósito principal del archivo `webhook_globy.py` dentro del ecosistema?**
+
+A) Actuar como servidor de bases de datos  
+B) Servir de interfaz gráfica para el usuario  
+C) Recibir tareas vía HTTP (por ejemplo desde Globy) y traducirlas en acciones o registros dentro de la memoria nuclear 2026 ✓  
+D) Compilar modelos de IA desde cero  
+
+**Respuesta correcta: C**  
+**Fundamento:** El webhook es la puerta de entrada para que herramientas externas envíen tareas que luego se reflejan en archivos y decisiones del repo.  
+
+---
+
+**P161: ¿Cuál es la definición de “trabajo real” que Guillermo adopta para evitar el “molino”?**
+
+A) Probar herramientas nuevas sin guardar nada  
+B) Leer documentación sin tomar notas  
+C) Cualquier acción que deje un archivo nuevo o modificado útil en el repositorio ✓  
+D) Ejecutar scripts aleatorios en pwsh  
+
+**Respuesta correcta: C**  
+**Fundamento:** Se considera trabajo real aquello que produce artefactos verificables (docs, código, decisiones) dentro del repo, no solo experimentos efímeros.  
+
+---
+
+**P162: ¿Qué riesgo principal se asocia con el uso de OpenClaw sin configuración de seguridad?**
+
+A) Solo lentitud en las respuestas  
+B) Exclusivamente errores de formato en archivos  
+C) Posible daño al sistema de archivos, filtración de datos o abuso de credenciales si se ejecutan herramientas sin límites ✓  
+D) Imposibilidad total de ejecutar comandos  
+
+**Respuesta correcta: C**  
+**Fundamento:** Reportes de 2026 señalan vulnerabilidades serias si OpenClaw se configura sin restricciones de filesystem, red o tokens. [web:432][web:436]  
+
+---
+
+**P163: ¿Qué enfoque se recomienda para mitigar riesgos de OpenClaw en el entorno de Guillermo?**
+
+A) Darle acceso root a todo el sistema  
+B) Compartir tokens en texto plano en los prompts  
+C) Restringir carpetas, limitar herramientas críticas y documentar reglas de uso en el repositorio ✓  
+D) Ejecutar OpenClaw solo en producción  
+
+**Respuesta correcta: C**  
+**Fundamento:** Las guías de hardening recomiendan limitar el ámbito de acción (paths, herramientas, credenciales) y plasmar políticas claras de uso. [web:434][web:437]  
+
+---
+
+**P164: ¿Cómo se entiende la relación entre OpenClaw y Antigravity en el diseño de Guillermo?**
+
+A) Son competidores que no pueden coexistir  
+B) Antigravity sustituye completamente a OpenClaw  
+C) Son complementarios: OpenClaw orquesta y Antigravity aporta modelos y capacidades cloud cuando se requiere ✓  
+D) Ambos se usan solo como editores de texto  
+
+**Respuesta correcta: C**  
+**Fundamento:** OpenClaw se enfoca en orquestación local y memoria; Antigravity aporta potencia de modelos y herramientas externas, sin ser dependencia obligatoria. [web:414]  
+
+---
+
+**P165: ¿Por qué Guillermo decidió no depender de Make y ngrok como piezas centrales del sistema?**
+
+A) Porque no funcionan en Windows  
+B) Porque no se integran con Git  
+C) Porque introducen complejidad y dependencia innecesaria para su objetivo de tener un ecosistema local y soberano ✓  
+D) Porque no permiten ejecutar comandos  
+
+**Respuesta correcta: C**  
+**Fundamento:** Se prioriza un diseño donde la lógica y las decisiones viven en el repo y en agentes locales, evitando depender de plataformas externas para lo básico.  
+
+---
+
+**P166: ¿Cuál es el objetivo principal de tener un archivo `decisiones_2026.md`?**
+
+A) Guardar solo logs de errores de sistema  
+B) Registrar passwords y tokens  
+C) Registrar decisiones importantes sobre arquitectura, herramientas y procesos del ecosistema en orden cronológico ✓  
+D) Servir de índice de commits en Git  
+
+**Respuesta correcta: C**  
+**Fundamento:** Este archivo actúa como bitácora de decisiones clave, haciendo trazable la evolución del sistema y evitando reabrir debates ya resueltos.  
+
+---
+
+**P167: ¿Qué problema concreto intenta evitar Guillermo al definir un plan diario dentro del repositorio?**
+
+A) La falta de acceso a internet  
+B) La ausencia de temas de estudio  
+C) La sensación de “burro amarrado al molino” sin resultados visibles ✓  
+D) Los conflictos de merge en Git  
+
+**Respuesta correcta: C**  
+**Fundamento:** El plan diario busca convertir cada sesión en una serie de acciones con salida tangible en el repo, en lugar de experimentos circulares.  
+
+---
+
+**P168: ¿Qué característica distingue a la “memoria nuclear 2026” frente a notas sueltas fuera del repositorio?**
+
+A) Que solo contiene código ejecutable  
+B) Que se guarda en servicios de terceros  
+C) Que está versionada con Git y sirve como fuente de verdad compartida entre agentes y herramientas ✓  
+D) Que no puede ser leída por agentes de IA  
+
+**Respuesta correcta: C**  
+**Fundamento:** Al estar en Git, la memoria nuclear permite trazabilidad, colaboración y acceso controlado por parte de agentes como OpenClaw.  
+
+---
+
+**P169: ¿Qué se busca al introducir Lobster como capa de orquestación sobre el ecosistema actual?**
+
+A) Aumentar la complejidad sin beneficios  
+B) Reemplazar todos los scripts de pwsh por completo  
+C) Definir workflows reproducibles que reduzcan decisiones improvisadas y centralicen la lógica de orquestación ✓  
+D) Eliminar el uso de Git en el proyecto  
+
+**Respuesta correcta: C**  
+**Fundamento:** Lobster permite que los flujos sean declarativos y repetibles, evitando que la orquestación dependa solo de acciones manuales o prompts ad hoc.  
+
+---
+
+**P170: ¿Cómo se alinea el diseño del ecosistema OpenClaw 2026 de Guillermo con las tendencias open source actuales?**
+
+A) Es totalmente contrario a la automatización  
+B) Depende solo de plataformas cerradas  
+C) Combina agentes, orquestación local, repositorios como fuente de verdad y atención a la seguridad, tal como las comunidades más avanzadas en 2026 ✓  
+D) Evita usar inteligencia artificial en cualquier parte  
+
+**Respuesta correcta: C**  
+**Fundamento:** El enfoque mezcla multi-agente, CI asistido por IA, gobernanza mediante archivos versionados y medidas de seguridad, en línea con el movimiento de “ecosistemas autónomos” en open source. [web:415][web:436]  
+
+---

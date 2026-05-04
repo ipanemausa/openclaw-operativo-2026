@@ -38,3 +38,6 @@
   ```
 - **Acción actual**: El webhook valida el token `Bearer`, registra la petición en `logs/webhook.log` y retorna una respuesta mock (`status: executed`).
 - **Restricciones**: Actualmente NO ejecuta comandos directos en OpenClaw; solo funciona como receptor y log de misiones.
+
+---
+**Prueba validada el 2026-05-04**: `webhook_globy.py` recibió correctamente tarea de prueba y quedó registrada en `logs/webhook.log`.

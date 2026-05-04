@@ -21,7 +21,20 @@
 
 ## Estado
 
-- [ ] Definir endpoint en OpenClaw
-- [ ] Configurar autenticación
+- [x] Definir endpoint en OpenClaw
+- [x] Configurar autenticación
 - [ ] Probar desde Globy
 - [ ] Documentar ejemplos de uso
+
+## Flujo actual Globy → OpenClaw (Mayo 2026)
+
+- **Arquitectura**: Globy llama al script `webhook_globy.py` (Flask) que actúa como receptor de tareas.
+- **Payload**: El JSON mínimo esperado contiene:
+  ```json
+  {
+    "task": "descripción de la tarea",
+    "params": {}
+  }
+  ```
+- **Acción actual**: El webhook valida el token `Bearer`, registra la petición en `logs/webhook.log` y retorna una respuesta mock (`status: executed`).
+- **Restricciones**: Actualmente NO ejecuta comandos directos en OpenClaw; solo funciona como receptor y log de misiones.

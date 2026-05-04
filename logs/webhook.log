@@ -1,0 +1,90 @@
+2026-04-25 16:18:37,356 | INFO | Starting Globy Webhook Server on port 8080
+2026-04-25 16:18:37,465 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.4:8080
+2026-04-25 16:18:37,465 | INFO | [33mPress CTRL+C to quit[0m
+2026-04-25 16:18:37,467 | INFO |  * Restarting with stat
+2026-04-25 16:18:37,739 | INFO | Starting Globy Webhook Server on port 8080
+2026-04-25 16:18:37,760 | WARNING |  * Debugger is active!
+2026-04-25 16:18:37,763 | INFO |  * Debugger PIN: 169-254-776
+2026-04-25 16:21:40,235 | INFO | Health check requested
+2026-04-25 16:21:40,238 | INFO | 127.0.0.1 - - [25/Apr/2026 16:21:40] "GET /health HTTP/1.1" 200 -
+2026-04-25 16:22:13,673 | INFO | Task received: test_logging | Params: {'ejemplo': 'valor'} | From: 127.0.0.1
+2026-04-25 16:22:13,673 | INFO | Task executed: test_logging | Result: executed
+2026-04-25 16:22:13,674 | INFO | 127.0.0.1 - - [25/Apr/2026 16:22:13] "POST /task HTTP/1.1" 200 -
+2026-04-27 17:43:58,015 | INFO | Starting Globy Webhook Server on port 8080
+2026-04-27 17:43:58,152 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.4:8080
+2026-04-27 17:43:58,153 | INFO | [33mPress CTRL+C to quit[0m
+2026-04-27 17:43:58,155 | INFO |  * Restarting with stat
+2026-04-27 17:43:58,498 | INFO | Starting Globy Webhook Server on port 8080
+2026-04-27 17:43:58,521 | WARNING |  * Debugger is active!
+2026-04-27 17:43:58,528 | INFO |  * Debugger PIN: 169-254-776
+2026-04-28 03:38:15,570 | INFO | Health check requested
+2026-04-28 03:38:15,576 | INFO | 127.0.0.1 - - [28/Apr/2026 03:38:15] "GET /health HTTP/1.1" 200 -
+2026-04-28 03:38:15,874 | INFO | 127.0.0.1 - - [28/Apr/2026 03:38:15] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-04-28 10:50:58,179 | INFO | Starting Globy Webhook Server on port 8080
+2026-04-28 10:50:58,278 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.4:8080
+2026-04-28 10:50:58,278 | INFO | [33mPress CTRL+C to quit[0m
+2026-04-28 10:50:58,282 | INFO |  * Restarting with stat
+2026-04-28 10:50:58,539 | INFO | Starting Globy Webhook Server on port 8080
+2026-04-28 10:50:58,559 | WARNING |  * Debugger is active!
+2026-04-28 10:50:58,564 | INFO |  * Debugger PIN: 169-254-776
+2026-04-28 10:57:03,956 | INFO | Starting Globy Webhook Server on port 8080
+2026-04-28 10:57:03,993 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.4:8080
+2026-04-28 10:57:03,993 | INFO | [33mPress CTRL+C to quit[0m
+2026-04-28 10:57:03,995 | INFO |  * Restarting with stat
+2026-04-28 10:57:04,250 | INFO | Starting Globy Webhook Server on port 8080
+2026-04-28 10:57:04,268 | WARNING |  * Debugger is active!
+2026-04-28 10:57:04,272 | INFO |  * Debugger PIN: 169-254-776
+2026-04-28 10:57:37,821 | INFO | Health check requested
+2026-04-28 10:57:37,823 | INFO | 127.0.0.1 - - [28/Apr/2026 10:57:37] "GET /health HTTP/1.1" 200 -
+2026-04-28 11:09:29,010 | INFO | Starting Globy Webhook Server on port 8080
+2026-04-28 11:09:29,050 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.4:8080
+2026-04-28 11:09:29,050 | INFO | [33mPress CTRL+C to quit[0m
+2026-04-28 11:09:29,052 | INFO |  * Restarting with stat
+2026-04-28 11:09:29,315 | INFO | Starting Globy Webhook Server on port 8080
+2026-04-28 11:09:29,336 | WARNING |  * Debugger is active!
+2026-04-28 11:09:29,338 | INFO |  * Debugger PIN: 169-254-776
+2026-04-28 11:13:06,702 | INFO | 127.0.0.1 - - [28/Apr/2026 11:13:06] "[33mGET /api?timeout=32s HTTP/1.1[0m" 404 -
+2026-04-28 11:13:06,736 | INFO | 127.0.0.1 - - [28/Apr/2026 11:13:06] "[33mGET /apis?timeout=32s HTTP/1.1[0m" 404 -
+2026-04-28 11:14:58,365 | INFO | 127.0.0.1 - - [28/Apr/2026 11:14:58] "[33mGET /robots.txt HTTP/1.1[0m" 404 -
+2026-04-28 11:14:58,746 | INFO | 127.0.0.1 - - [28/Apr/2026 11:14:58] "[31m[1mGET /task HTTP/1.1[0m" 405 -
+2026-04-28 11:14:59,107 | INFO | 127.0.0.1 - - [28/Apr/2026 11:14:59] "[33mGET / HTTP/1.1[0m" 404 -
+2026-04-28 16:55:03,413 | INFO | Starting Globy Webhook Server on port 8080
+2026-04-28 16:55:03,525 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.4:8080
+2026-04-28 16:55:03,525 | INFO | [33mPress CTRL+C to quit[0m
+2026-04-28 16:55:03,528 | INFO |  * Restarting with stat
+2026-04-28 16:55:03,807 | INFO | Starting Globy Webhook Server on port 8080
+2026-04-28 16:55:03,825 | WARNING |  * Debugger is active!
+2026-04-28 16:55:03,829 | INFO |  * Debugger PIN: 169-254-776
+2026-04-28 17:01:00,786 | INFO | 127.0.0.1 - - [28/Apr/2026 17:01:00] "[33mPOST /webhook/task HTTP/1.1[0m" 404 -
+2026-04-28 17:05:39,723 | INFO | Health check requested
+2026-04-28 17:05:39,726 | INFO | 127.0.0.1 - - [28/Apr/2026 17:05:39] "GET /health HTTP/1.1" 200 -
+2026-04-28 17:14:11,871 | INFO | Health check requested
+2026-04-28 17:14:11,872 | INFO | 127.0.0.1 - - [28/Apr/2026 17:14:11] "GET /health HTTP/1.1" 200 -
+2026-05-02 12:19:09,456 | INFO | Starting Globy Webhook Server on port 8080
+2026-05-02 12:19:09,561 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.9:8080
+2026-05-02 12:19:09,561 | INFO | [33mPress CTRL+C to quit[0m
+2026-05-02 12:19:09,565 | INFO |  * Restarting with stat
+2026-05-02 12:19:09,828 | INFO | Starting Globy Webhook Server on port 8080
+2026-05-02 12:19:09,848 | WARNING |  * Debugger is active!
+2026-05-02 12:19:09,853 | INFO |  * Debugger PIN: 169-254-776

@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  gateway:
+    build: ./scripts
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env.example
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: openclaw
+      POSTGRES_PASSWORD: openclaw123
+      POSTGRES_DB: openclawdb
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:

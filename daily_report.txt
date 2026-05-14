@@ -1,0 +1,4 @@
+9814c9f Daily update: workflow + pipeline changes
+1fe2bff Definir workflow de apertura
+99da87e Agrego requirements.txt inicial
+5bc2f07 Add secure compose file with isolated network and env secrets

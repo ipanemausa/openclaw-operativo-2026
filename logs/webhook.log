@@ -88,3 +88,13 @@
 2026-05-02 12:19:09,828 | INFO | Starting Globy Webhook Server on port 8080
 2026-05-02 12:19:09,848 | WARNING |  * Debugger is active!
 2026-05-02 12:19:09,853 | INFO |  * Debugger PIN: 169-254-776
+2026-05-13 16:55:12,919 | INFO | Starting Globy Webhook Server on port 8080
+2026-05-13 16:55:12,954 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://172.18.0.2:8080
+2026-05-13 16:55:12,954 | INFO | [33mPress CTRL+C to quit[0m
+2026-05-13 16:55:12,955 | INFO |  * Restarting with stat
+2026-05-13 16:55:13,199 | INFO | Starting Globy Webhook Server on port 8080
+2026-05-13 16:55:13,216 | WARNING |  * Debugger is active!
+2026-05-13 16:55:13,217 | INFO |  * Debugger PIN: 138-361-382

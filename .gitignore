@@ -1,9 +1,13 @@
-*.i
-*.ii
-*.gpu
-*.ptx
-*.cubin
-*.fatbin
-logs/
+
+# Ignorar archivos sensibles
+.env
+.env.local
+.env.*.local
+
+# Ignorar datos de base de datos
+db_data/
+
+# Ignorar archivos temporales
 *.log
-webhook_globy.py.backup
+*.tmp
+

@@ -1,23 +1,28 @@
 version: "3.9"
 
 services:
-  gateway:
-    build: ./scripts
+  app:
+    build:
+      context: .
+      dockerfile: scripts/Dockerfile.app
+    container_name: openclaw_app
     ports:
-      - "8080:8080"
-    env_file:
-      - .env.example
+      - "5000:5000"
+    restart: unless-stopped
+
+  gateway:
+    build:
+      context: .
+      dockerfile: scripts/Dockerfile
+    container_name: openclaw_gateway
+    ports:
+      - "18789:18789"
     depends_on:
-      - db
+      - app
+    restart: unless-stopped
 
-  db:
+  postgres:
     image: postgres:15
+    container_name: openclaw_db
     environment:
-      POSTGRES_USER: openclaw
-      POSTGRES_PASSWORD: openclaw123
-      POSTGRES_DB: openclawdb
-    volumes:
-      - db_data:/var/lib/postgresql/data
-
-volumes:
-  db_data:
+      POSTGRES

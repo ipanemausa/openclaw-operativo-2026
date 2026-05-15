@@ -25,4 +25,12 @@ services:
     image: postgres:15
     container_name: openclaw_db
     environment:
-      POSTGRES
+      POSTGRES_USER: ocuser
+      POSTGRES_PASSWORD: ocpass
+      POSTGRES_DB: ocdb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  pgdata:

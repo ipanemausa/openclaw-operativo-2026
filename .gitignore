@@ -11,3 +11,4 @@ db_data/
 *.log
 *.tmp
 
+logs/*.log

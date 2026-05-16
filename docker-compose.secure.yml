@@ -13,6 +13,32 @@ services:
     networks:
       - internal
 
+  gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile.gateway
+    volumes:
+      - .:/gateway
+    depends_on:
+      - db
+    networks:
+      - internal
+    ports:
+      - "8080:8080"
+
+  gateway_alt:
+    build:
+      context: .
+      dockerfile: Dockerfile.gateway
+    volumes:
+      - .:/gateway
+    depends_on:
+      - db
+    networks:
+      - internal
+    ports:
+      - "8081:8080"
+
   db:
     image: postgres:15
     environment:

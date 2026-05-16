@@ -6,11 +6,15 @@ app = Flask(__name__)
 
 def check_db():
     try:
+        db_user = os.environ.get("DB_USER", "oc_user")
+        db_pass = os.environ.get("DB_PASS", "securepass")
+        db_host = os.environ.get("DB_HOST", "db")
+        db_name = os.environ.get("DB_NAME", "oc_db")
         conn = psycopg2.connect(
-            dbname="oc_db",
-            user="oc_user",
-            password=os.getenv("DB_PASS"),
-            host="db"
+            dbname=db_name,
+            user=db_user,
+            password=db_pass,
+            host=db_host
         )
         cur = conn.cursor()
         cur.execute("SELECT 1;")

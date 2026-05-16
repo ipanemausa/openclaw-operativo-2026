@@ -1,20 +1,33 @@
-# Usa una imagen ligera de Python
-FROM python:3.11-slim
+version: "3.9"
 
-# Define el directorio de trabajo dentro del contenedor
-WORKDIR /app
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    container_name: openclaw_app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
 
-# Copia primero las dependencias
-COPY requirements.txt .
+  gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile.gateway
+    container_name: openclaw_gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - app
+      - db
 
-# Instala las dependencias
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copia el resto del código de la aplicación
-COPY . .
-
-# Expone el puerto 5000
-EXPOSE 5000
-
-# Comando de arranque con Gunicorn (producción)
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
+  db:
+    image: postgres:15
+    container_name: openclaw_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: openclaw
+    ports:
+      - "5432:5432"

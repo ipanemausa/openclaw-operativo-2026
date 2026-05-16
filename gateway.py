@@ -1,16 +1,16 @@
 from flask import Flask, jsonify
-
-app = Flask(__name__)
-
-from flask import Flask, jsonify
 import psycopg2
+import os
 
 app = Flask(__name__)
 
 def check_db():
     try:
         conn = psycopg2.connect(
-            "dbname=ocdb user=postgres password=ocpass host=openclaw_db"
+            dbname="oc_db",
+            user="oc_user",
+            password=os.getenv("DB_PASS"),
+            host="db"
         )
         cur = conn.cursor()
         cur.execute("SELECT 1;")

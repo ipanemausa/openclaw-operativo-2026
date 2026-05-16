@@ -1,7 +1,7 @@
 gateway:
   build:
     context: .
-    dockerfile: Dockerfile.gateway
+    dockerfile: Dockerfile   # aquí debe ir el nombre real del archivo
   container_name: openclaw_gateway
   depends_on:
     - db

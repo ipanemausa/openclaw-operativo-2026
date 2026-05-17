@@ -28,13 +28,9 @@ def check_db():
 def root():
     return "Gateway is running and connected!"
 
-@app.route("/status", methods=["GET"])
-def status():
-    return jsonify({
-        "status": "ok",
-        "gateway": "running",
-        "db_connected": check_db()
-    })
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080)
+@app.route("/health", methods=["GET"])
+def health():
+    if check_db():
+        return jsonify({"status": "ok", "db": "connected"})
+    else:
+        return jsonify({"status": "error", "db": "unreachable"}), 500

@@ -4,7 +4,10 @@ services:
   app:
     build:
       context: .
-      dockerfile: scripts/Dockerfile
+      dockerfile: Dockerfile.app   # usa el Dockerfile correcto
     volumes:
-      - .:/app
-    command: python webhook_globy.py
+      - .:/app                     # monta tu código para desarrollo
+    ports:
+      - "5000:5000"                # mantiene el mapeo consistente
+    # ⚠️ Se elimina el "command: python webhook_globy.py"
+    # para que se respete el CMD del Dockerfile (Gunicorn en 5000)

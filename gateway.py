@@ -1,6 +1,7 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, Response
 import psycopg2
 import os
+import requests
 
 app = Flask(__name__)
 
@@ -34,3 +35,19 @@ def health():
         return jsonify({"status": "ok", "db": "connected"})
     else:
         return jsonify({"status": "error", "db": "unreachable"}), 500
+
+# 🔥 Bloque nuevo: proxy genérico hacia openclaw_app
+@app.route('/<path:path>', methods=["GET", "POST"])
+def proxy(path):
+    resp = requests.request(
+        method=request.method,
+        url=f"http://openclaw_app:5000/{path}",
+        headers={key: value for key, value in request.headers},
+        data=request.get_data(),
+        cookies=request.cookies,
+        allow_redirects=False
+    )
+    return Response(resp.content, resp.status_code, resp.headers.items())
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080)

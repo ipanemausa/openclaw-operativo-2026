@@ -58,6 +58,10 @@ def execute_task():
     
     return jsonify(result), 200
 
+@app.route("/dashboard", methods=["GET"])
+def dashboard():
+    return "<h1>OpenClaw Dashboard</h1><p>Bienvenido al panel</p>"
+
 if __name__ == "__main__":
     logger.info("Starting Globy Webhook Server on port 8080")
     app.run(host="0.0.0.0", port=8080, debug=True)

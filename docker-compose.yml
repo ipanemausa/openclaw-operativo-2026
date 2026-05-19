@@ -7,7 +7,8 @@ services:
       dockerfile: Dockerfile.app
     container_name: openclaw_app
     ports:
-      - "5000:5000"
+      - "8080:5000"     # Flask expuesto en 8080
+      - "18789:5000"    # acceso alternativo en 18789
     depends_on:
       - db
 
@@ -17,7 +18,7 @@ services:
       dockerfile: Dockerfile.gateway
     container_name: openclaw_gateway
     ports:
-      - "8080:8080"
+      - "8090:8080"     # gateway expuesto en 8090 para evitar choque
     depends_on:
       - app
       - db

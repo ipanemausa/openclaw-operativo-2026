@@ -44,7 +44,7 @@ Este documento describe la foto actual (no la ideal) de mi ecosistema de proyect
 ### Configuración ganadora actual (25 abril 2026)
 
 **Stack operativo hoy**:
-- **OpenClaw**: versión 2026.4.24 (actualizada ayer desde 4.15)
+- **OpenClaw**: versión 2026.5.19 (actualizada desde 2026.4.24)
   - DeepSeek V4 Flash como modelo default en onboarding ($0.14 input / $0.28 output por 1M tokens)
   - Google Meet bundled, WebRTC para voz en tiempo real
   - Generación de imágenes ampliada (OpenAI, OpenRouter, Codex)
@@ -94,16 +94,25 @@ Este documento describe la foto actual (no la ideal) de mi ecosistema de proyect
 - Si OpenClaw se vuelve pesado/comercial → NanoClaw (código mínimo) o fork de versión actual
 - Si Anti mete límites duros → usar solo VS Code + GitHub Copilot (training opt-out activo)
 
-### Cambios sustanciales recientes (OC 4.15 → 4.24)
+### Cambios sustanciales recientes (OC 2026.4.24 -> 2026.5.19)
 
-**Por qué actualizar de 4.15 a 4.24 mejora el plan 0 costo**:
+Por qué actualizar a 2026.5.19:
 
-1. **DeepSeek V4 Flash bundled**: antes había que configurar manualmente, ahora es default y extremadamente barato
-2. **Seguridad mejorada**: el agente no puede modificar su propia config → menos riesgo de romper setup estable
-3. **Memoria más eficiente**: pruning automático → menos consumo de recursos locales
-4. **WebRTC y Meet**: nuevas capacidades sin costo adicional (útil para Globy + Discord en el futuro)
+1. **Control de Plugins**: Nuevos comandos CLI nativos (`/codex plugins list`, `enable`, `disable`) para gestionar plugins desde el chat.
+2. **Estabilidad de Navegador**: Corrección en manejo de diálogos y mejor manejo de bloqueos en tiempo de ejecución.
+3. **Rediseño de Ajustes**: Nueva pantalla de Ajustes con navegación simplificada para permisos, voz y skills.
+4. **Robustez Operativa**: Refuerzo de la pasarela (gateway/proxy), trazas de reinicio y enrutamiento seguro de subagentes.
 
-**Migración recomendada**: de 4.15 a 4.24 vale la pena por mejoras de estabilidad y modelo default más barato.
+### Cambios previos (OC 4.15 -> 4.24)
+
+Por qué actualizar de 4.15 a 4.24 mejora el plan 0 costo:
+
+1. DeepSeek V4 Flash bundled: antes había que configurar manualmente, ahora es default y extremadamente barato
+2. Seguridad mejorada: el agente no puede modificar su propia config -> menos riesgo de romper setup estable
+3. Memoria más eficiente: pruning automático -> menos consumo de recursos locales
+4. WebRTC y Meet: nuevas capacidades sin costo adicional (útil para Globy + Discord en el futuro)
+
+Migración recomendada: de 4.15 a 4.24 vale la pena por mejoras de estabilidad y modelo default más barato.
 
 ## 4. Otros proyectos (estado de clarificación)
 

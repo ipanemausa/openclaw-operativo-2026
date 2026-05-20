@@ -19,6 +19,11 @@ services:
     container_name: openclaw_gateway
     ports:
       - "8090:8080"     # gateway expuesto en 8090 para evitar choque
+    environment:
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - DB_NAME=openclaw
+      - DB_HOST=db
     depends_on:
       - app
       - db

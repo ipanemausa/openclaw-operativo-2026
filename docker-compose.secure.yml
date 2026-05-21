@@ -1,62 +1,50 @@
+@"
+version: "3.9"
+
 services:
   app:
     build:
       context: .
-      dockerfile: scripts/Dockerfile
-    volumes:
-      - .:/app
+      dockerfile: Dockerfile.app
+    container_name: openclaw_app
+    ports:
+      - "8080:5000"
+      - "18789:5000"
     env_file:
       - .env
-    command: python webhook_globy.py
-    networks:
-      - internal
-    ports:
-      - "8080:8080"
+    depends_on:
+      - db
 
   gateway:
     build:
       context: .
       dockerfile: Dockerfile.gateway
-    volumes:
-      - .:/gateway
+    container_name: openclaw_gateway
+    ports:
+      - "8090:8080"
+    environment:
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - DB_NAME=openclaw
+      - DB_HOST=db
     env_file:
       - .env
     depends_on:
+      - app
       - db
-    networks:
-      - internal
-    ports:
-      - "8081:8080"
-
-  gateway_alt:
-    build:
-      context: .
-      dockerfile: Dockerfile.gateway
-    volumes:
-      - .:/gateway
-    env_file:
-      - .env
-    depends_on:
-      - db
-    networks:
-      - internal
-    ports:
-      - "8082:8080"
 
   db:
     image: postgres:15
+    container_name: openclaw_db
     environment:
-      POSTGRES_USER: oc_user
-      POSTGRES_PASSWORD: ${DB_PASS}
-      POSTGRES_DB: oc_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: openclaw
     volumes:
       - db_data:/var/lib/postgresql/data
-    networks:
-      - internal
-
-networks:
-  internal:
-    driver: bridge
+    ports:
+      - "5432:5432"
 
 volumes:
   db_data:
+"@ | Set-Content docker-compose.yml

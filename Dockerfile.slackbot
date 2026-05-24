@@ -1,0 +1,14 @@
+# Dockerfile.slackbot
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# Copiamos solo los requirements específicos del bot primero para aprovechar la caché de Docker
+COPY requirements-slack.txt .
+RUN pip install --no-cache-dir -r requirements-slack.txt
+
+# Copiamos el archivo del bot
+COPY slack_bot.py .
+
+# Ejecutamos el bot
+CMD ["python", "slack_bot.py"]

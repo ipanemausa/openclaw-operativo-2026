@@ -105,9 +105,10 @@ services:
       context: .
       dockerfile: Dockerfile.slackbot
     container_name: openclaw_slack_bot
-    environment:
-      - SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}
-      - SLACK_APP_TOKEN=${SLACK_APP_TOKEN}
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
     depends_on:
       - app
     restart: unless-stopped

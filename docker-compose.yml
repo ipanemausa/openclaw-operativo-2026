@@ -97,5 +97,43 @@ services:
     depends_on:
       - app
 
+  # ========== INTEGRACIONES CRÍTICAS ==========
+
+  # ChatOps: Bot de Slack aislado
+  slack_bot:
+    build:
+      context: .
+      dockerfile: Dockerfile.slackbot
+    container_name: openclaw_slack_bot
+    environment:
+      - SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}
+      - SLACK_APP_TOKEN=${SLACK_APP_TOKEN}
+    depends_on:
+      - app
+    restart: unless-stopped
+
+  # Cola de Tareas: Para video_agent y marketing_generator
+  redis:
+    image: redis:7-alpine
+    container_name: openclaw_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  # Memoria Vectorial: Para RAG en marketing_generator
+  qdrant_db:
+    image: qdrant/qdrant:latest
+    container_name: openclaw_vector_db
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: unless-stopped
+
 volumes:
   postgres_data:
+  redis_data:
+  qdrant_data:

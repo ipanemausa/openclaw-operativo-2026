@@ -14,8 +14,7 @@ graph TD
     F2 --> F3[Fase 3: Creación de Packing List y Ordenamiento]
     F3 --> F4[Fase 4: Formateo y Agrupamiento GRP]
     F4 --> F5[Fase 5: Guardado en OneDrive por Mes/Fecha]
-    F5 --> F6[Fase 6: Impresión de Reportes de Trabajo]
-    F6 --> F7[Fase 7: Impresión de Etiquetas Térmicas de Envío]
+    F5 --> F6[Fase 6: Impresión de Reportes de Trabajo en Epson]
 ```
 
 ### Fase 1: Detección y Limpieza de Cabeceras
@@ -65,17 +64,16 @@ graph TD
 ### Fase 6: Impresión de Reportes de Trabajo (Tamaño Carta 8.5x11")
 - **Formato:** Configura el tamaño de papel a Carta estándar (`xlPaperLetter` - 8.5" x 11") en orientación horizontal o vertical según corresponda.
 - **Encabezados:** Configura `&A` (nombre de hoja), `&D` (fecha), y pie de página con número de página.
-- **Enrutamiento:** Envía los reportes a la impresora estándar de la oficina.
+- **Enrutamiento:** Envía los reportes a la impresora estándar de la oficina (Epson).
 
-### Fase 7: Impresión de Etiquetas (Labels) (Impresora Térmica 4x6")
-- **Formato Térmico:** Configura el formato de página a dimensiones térmicas (4" x 6" o `xlPaperUser` / `xlPaperA6` según driver) con márgenes mínimos de 0.1 pulgadas para maximizar área de impresión.
-- **Enrutamiento:** Cambia automáticamente la impresora activa del sistema (`Application.ActivePrinter`) a la impresora térmica configurada, realiza la impresión y restaura la impresora estándar para no alterar el flujo posterior.
+> [!NOTE]
+> **Impresión de Etiquetas (Labels):** Las etiquetas de envío térmicas (4x6") se imprimen **directamente desde el sistema WMS** a la impresora térmica (ej. PL70e). La macro de Excel no gestiona la impresión de labels térmicos para evitar conflictos con el WMS.
 
 ---
 
 ## 🛠️ Código VBA Integrado y Ordenado
 
-El siguiente bloque representa el código VBA estructurado en el orden óptimo de fases e incorporando la **Fase 7** de impresión automática de etiquetas térmicas:
+El siguiente bloque representa el código VBA estructurado en el orden óptimo de fases (1 al 6), delegando la impresión térmica exclusivamente al WMS:
 
 ```vba
 ' ==========================================
@@ -270,15 +268,7 @@ Sub Run_Full_Store_Pipeline()
     Call PrintSheets(wbWalmart, 1, resolvedEpson)
     Call PrintSheets(wbTemu, 2, resolvedEpson)
     
-    ' FASE 7: Impresión de Etiquetas (Impresora Térmica 4x6")
-    ' Enviar etiquetas de envío a la impresora térmica (Nelko / PL70e)
-    Dim resolvedNelko As String
-    resolvedNelko = GetFullPrinterName("PL70e")
-    Call PrintThermalLabels(wbTikTok, resolvedNelko)
-    Call PrintThermalLabels(wbWalmart, resolvedNelko)
-    Call PrintThermalLabels(wbTemu, resolvedNelko)
-    
-    MsgBox "Proceso completado exitosamente. Reportes en Epson (Carta) y Etiquetas en PL70e (Térmica) enviados.", vbInformation
+    MsgBox "Proceso completado exitosamente. Reportes impresos en Epson.", vbInformation
 End Sub
 
 ' ==========================================
@@ -316,49 +306,6 @@ Function GetFullPrinterName(ByVal nameToFind As String) As String
     Next i
     GetFullPrinterName = "" ' No encontrada
 End Function
-
-' ==========================================
-' FASE 7: IMPRESIÓN EN IMPRESORA TÉRMICA DEDICADA (NELKO 4x6")
-' ==========================================
-Sub PrintThermalLabels(wb As Workbook, ByVal thermalPrinterName As String)
-    Dim ws As Worksheet
-    Dim originalPrinter As String
-    
-    On Error Resume Next
-    Set ws = wb.Sheets(1) ' Hoja principal que contiene datos de envío
-    
-    If Not ws Is Nothing Then
-        ' Guardar impresora original
-        originalPrinter = Application.ActivePrinter
-        
-        ' 1. Configurar página para formato térmico (A6/4x6 pulgadas)
-        With ws.PageSetup
-            .PaperSize = xlPaperA6 
-            .Orientation = xlPortrait
-            
-            ' Márgenes mínimos para maximizar papel térmico
-            .LeftMargin = Application.InchesToPoints(0.1)
-            .RightMargin = Application.InchesToPoints(0.1)
-            .TopMargin = Application.InchesToPoints(0.1)
-            .BottomMargin = Application.InchesToPoints(0.1)
-            
-            .Zoom = False
-            .FitToPagesWide = 1
-            .FitToPagesTall = 1
-        End With
-        
-        ' 2. Cambiar temporalmente a la impresora térmica Nelko y enviar trabajo
-        If thermalPrinterName <> "" Then
-            Application.ActivePrinter = thermalPrinterName
-        End If
-        
-        ws.PrintOut Copies:=1, Collate:=True, IgnorePrintAreas:=False
-        
-        ' Restaurar impresora original
-        Application.ActivePrinter = originalPrinter
-    End If
-    On Error GoTo 0
-End Sub
 
 ' ==========================================
 ' FASE 6: IMPRESIÓN DE REPORTES TAMAÑO CARTA EN EPSON (8.5 x 11")

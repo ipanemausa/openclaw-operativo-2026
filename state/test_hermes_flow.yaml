@@ -1,0 +1,11 @@
+task_id: "test_hermes_flow"
+title: "Simulacion de orquestacion de Hermes via PowerShell"
+status: "pending"
+current_step: 1
+steps:
+  1: "Crear un archivo de texto de prueba para verificar el flujo"
+  2: "Actualizar el estado a completado"
+outputs: {}
+meta:
+  last_actor: "hermes"
+  last_update: "2026-05-25T15:50:00"

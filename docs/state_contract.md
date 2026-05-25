@@ -35,7 +35,7 @@ steps:                      # mapa ordenado de pasos
 outputs:                    # mapa de salidas relevantes
   <clave>: <valor>
 meta:
-  last_actor: string        # manus | oc | ps_script | manual | otro
+  last_actor: string        # hermes | manus | oc | ps_script | manual | operator_washington | otro
   last_update: string       # ISO 8601, ej. 2026-05-01T06:45:00
 ```
 
@@ -115,7 +115,7 @@ Reglas:
 Campos mínimos recomendados:
 
 - `last_actor`: quién fue el último en modificar el estado.
-  - Valores típicos: `manus`, `oc`, `ps_script`, `manual`.
+  - Valores típicos: `hermes`, `manus`, `oc`, `ps_script`, `manual`, `operator_washington`.
 - `last_update`: fecha/hora en formato ISO 8601.
   - Ejemplo: `"2026-05-01T06:45:00"`
 
@@ -174,7 +174,7 @@ Para minimizar conflictos cuando varios agentes puedan tocar el mismo archivo:
   - Comprobar que `last_update` no ha cambiado desde que se leyó inicialmente.
   - En caso de duda, abortar la escritura y requerir intervención humana.
 
-Una estrategia simple es que cada loop tenga un “ejecutor principal” (por ejemplo, un script PWSH) y que los demás agentes solo propongan cambios de diseño o modificaciones de pasos, nunca actualizaciones frecuentes de estado.
+Una estrategia simple es que cada loop tenga un “ejecutor principal” (por ejemplo, un script PWSH). **Hermes** actuará como orquestador, definiendo y agregando pasos de alto nivel en `steps`, pero no ejecutará rutinas de bajo nivel; los demás agentes (como Gordon o Antigravity) ejecutarán esos pasos y actualizarán el `status`.
 
 ---
 

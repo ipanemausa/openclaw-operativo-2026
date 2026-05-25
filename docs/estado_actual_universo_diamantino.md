@@ -44,7 +44,7 @@ Este documento describe la foto actual (no la ideal) de mi ecosistema de proyect
 ### Configuración ganadora actual (25 abril 2026)
 
 **Stack operativo hoy**:
-- **OpenClaw**: versión 2026.5.19 (actualizada desde 2026.4.24)
+- **OpenClaw**: versión 2026.5.24-beta.2 (actualizada desde 2026.5.19)
   - DeepSeek V4 Flash como modelo default en onboarding ($0.14 input / $0.28 output por 1M tokens)
   - Google Meet bundled, WebRTC para voz en tiempo real
   - Generación de imágenes ampliada (OpenAI, OpenRouter, Codex)

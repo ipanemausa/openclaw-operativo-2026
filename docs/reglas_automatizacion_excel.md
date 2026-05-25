@@ -271,14 +271,14 @@ Sub Run_Full_Store_Pipeline()
     Call PrintSheets(wbTemu, 2, resolvedEpson)
     
     ' FASE 7: Impresión de Etiquetas (Impresora Térmica 4x6")
-    ' Enviar etiquetas de envío a la impresora térmica Nelko
+    ' Enviar etiquetas de envío a la impresora térmica (Nelko / PL70e)
     Dim resolvedNelko As String
-    resolvedNelko = GetFullPrinterName("Nelko")
+    resolvedNelko = GetFullPrinterName("PL70e")
     Call PrintThermalLabels(wbTikTok, resolvedNelko)
     Call PrintThermalLabels(wbWalmart, resolvedNelko)
     Call PrintThermalLabels(wbTemu, resolvedNelko)
     
-    MsgBox "Proceso completado exitosamente. Reportes en Epson (Carta) y Etiquetas en Nelko (Térmica) enviados.", vbInformation
+    MsgBox "Proceso completado exitosamente. Reportes en Epson (Carta) y Etiquetas en PL70e (Térmica) enviados.", vbInformation
 End Sub
 
 ' ==========================================

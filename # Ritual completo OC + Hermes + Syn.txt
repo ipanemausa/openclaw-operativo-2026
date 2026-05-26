@@ -1,0 +1,78 @@
+# Ritual completo OC + Hermes + Sync – 26/05/2026
+
+## 0. Nombre del proyecto
+
+openclaw-operativo-2026 – OC + Hermes + WMS (TikTok, Walmart, Temu, Shein)
+
+## 1. Abrir entorno (pwsh + Docker + CLI OC)
+
+1) Abrir PowerShell 7.6.1.
+
+2) Lanzar Ventana 2 para el ritual:
+
+   Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd 'C:\Users\ipane\openclaw-operativo-2026'; Write-Host '🐳 Ventana 2: Ritual OC CLI' -ForegroundColor Green"
+
+3) En la Ventana 2 (sale el mensaje “🐳 Ventana 2: Ritual OC CLI”), ejecutar:
+
+   cd C:\Users\ipane\openclaw-operativo-2026
+   docker compose up -d
+   openclaw status --gateway-url http://127.0.0.1:18789
+
+   (Comprobar que todo está Running y que OC ve las sesiones – Hermes, Gemini, GPT‑5.5.)
+
+## 2. Entrar a OC con Hermes (trabajo directo en OC)
+
+En la misma Ventana 2:
+
+   openclaw chat --agent hermes --gateway-url http://127.0.0.1:18789
+
+Mensaje base para empezar la sesión con Hermes (copiar/pegar en el chat de OC):
+
+   "Tengo un WMS donde veo pedidos de TikTok, Walmart, Temu, Shein, etc.
+   Quiero automatizar el WMS (no los Excels):
+   - Que el WMS sea el motor de envíos.
+   - Que OC me ayude a diseñar y automatizar el proceso de picking & packing, usando como referencia lo que antes hacía Excel.
+   Empecemos desde 0, usando como ejemplo los pedidos de esta mañana (aunque ya estén enviados)."
+
+A partir de aquí, TODO el diseño y la lógica del flujo WMS se trabaja directo desde el chat de OC con Hermes.
+
+## 3. Sync Git – que no quede nada suelto
+
+(Se ejecuta solo cuando quieras consolidar cambios en el repo.)
+
+1) Ver estado del repo:
+
+   cd C:\Users\ipane\openclaw-operativo-2026
+   git status
+
+   - Si dice: "nothing to commit, working tree clean" → no hay cambios locales, ya está limpio.
+
+2) Si hay cambios que SÍ quieres guardar:
+
+   git add .
+   git commit -m "Sync OC+Hermes+WMS – sesión del 26/05/2026"
+   git push origin main
+
+   (Ajustar `main` si usas otra rama.)
+
+Con esto, el código/scripts/notas quedan sincronizados con el remoto y no queda nada suelto.
+
+## 4. Sync entorno de ejecución (Docker / OC)
+
+Cada vez que hagas cambios importantes en el código de OC o servicios del stack:
+
+   cd C:\Users\ipane\openclaw-operativo-2026
+   docker compose up -d --build
+   openclaw status --gateway-url http://127.0.0.1:18789
+
+   - `--build` recompila imágenes si hace falta, sin tocar volúmenes ni datos.
+   - Confirmar que 9/9 contenedores están Running.
+
+## 5. Cerrar sesión limpia (cuando termines el día)
+
+Si ya no vas a usar OC:
+
+   cd C:\Users\ipane\openclaw-operativo-2026
+   docker compose down
+
+   (Baja contenedores, mantiene datos persistentes; el siguiente día repites el Ritual de la sección 1.)

@@ -1,0 +1,107 @@
+# Nota: wms-plan-oc-hermes-2026-05-26
+
+## 0. Nombre del archivo (guardar como)
+
+wms-plan-oc-hermes-2026-05-26.md
+
+Guardar esta nota en:
+C:\Users\ipane\openclaw-operativo-2026
+
+## 1. Ritual para abrir OC + Hermes (desde CLI)
+
+En PowerShell 7.6.1:
+
+cd C:\Users\ipane\openclaw-operativo-2026
+docker compose up -d
+openclaw status --gateway-url http://127.0.0.1:18789
+openclaw chat --agent hermes --gateway-url http://127.0.0.1:18789
+
+Este bloque es sagrado: no se toca. Siempre que quiera trabajar con OC + Hermes, lo ejecuto así. (Docker levanta el stack, la CLI verifica el gateway, y luego abre el chat con Hermes.) 
+
+## 2. Proyecto WMS + OC + Hermes (objetivo)
+
+Objetivo general:
+- El WMS es el motor de envíos (imprime etiquetas térmicas y maneja estados de pedido).
+- OC (Hermes) es el cerebro de orquestación y automatización.
+
+Tareas principales:
+- Leer pedidos del WMS (TikTok, Walmart, Temu, Shein, etc.).
+- Reemplazar el Excel como “cerebro de picking & packing”:
+  - Ordenar pedidos por tienda y por SKU.
+  - Preparar listas de picking & packing.
+- Hacer que el WMS dispare las etiquetas de envío (PL70e) para los pedidos empacados.
+
+La meta es dejar una automatización industrial y autónoma donde:
+- El WMS recibe pedidos.
+- OC/Hermes organiza, decide y guía el picking & packing.
+- El WMS imprime etiquetas térmicas sin intervención manual extra.
+
+## 3. Mensaje base para iniciar la sesión con Hermes en OC
+
+Cuando esté dentro de:
+
+openclaw chat --agent hermes --gateway-url http://127.0.0.1:18789
+
+pegar este mensaje:
+
+"Tengo un WMS donde veo pedidos de TikTok, Walmart, Temu, Shein, etc.
+Antes, Excel era el 'cerebro' de picking & packing: organizaba por tienda, SKU y mandaba a imprimir a la Epson. 
+El WMS era el 'motor' de envíos: imprimía las etiquetas térmicas (PL70e).
+Ahora quiero:
+- Que el WMS siga siendo el motor de envíos.
+- Que OC (Hermes) se convierta en el cerebro industrial y autónomo.
+Objetivo:
+1) Leer pedidos desde el WMS.
+2) Procesarlos (por tienda, SKU, prioridad).
+3) Generar listas de picking & packing sin depender de Excel.
+4) Hacer que el WMS dispare las etiquetas térmicas para esos pedidos.
+Guíame paso a paso: primero la arquitectura, luego los scripts (Python/PowerShell o lo que recomiendes) y la integración con el WMS."
+
+## 4. Ritual de commit + sync (que no quede nada suelto)
+
+Cada vez que haya cambios en código/notas/scripts que quiera conservar:
+
+1) Ver estado del repo:
+
+cd C:\Users\ipane\openclaw-operativo-2026
+git status
+
+- Si veo: "nothing to commit, working tree clean" → ya está todo sync y no hay nada pendiente.
+- Si hay archivos "modified" o "untracked", seguir con los pasos 2 y 3.
+
+2) Preparar commit:
+
+git add .
+
+3) Crear commit con mensaje claro:
+
+git commit -m "OC+Hermes+WMS – sync sesión 2026-05-26"
+
+4) Subir al remoto:
+
+git push origin main
+
+(Ajustar el nombre de la rama si no es main.)
+
+Con esto, el repositorio local y remoto quedan sincronizados, sin cambios sueltos.
+
+## 5. Sync del entorno de ejecución (Docker)
+
+Cuando cambie código que afecte servicios en Docker:
+
+cd C:\Users\ipane\openclaw-operativo-2026
+docker compose up -d --build
+openclaw status --gateway-url http://127.0.0.1:18789
+
+- `--build` recompila imágenes si hace falta, sin borrar datos ni volúmenes.
+- Confirmar que todos los contenedores están Running.
+
+## 6. Cierre limpio del día
+
+Cuando termine de trabajar con OC y no quiera dejar Docker corriendo:
+
+cd C:\Users\ipane\openclaw-operativo-2026
+docker compose down
+
+Esto baja los contenedores pero mantiene todos los datos persistentes. 
+Al día siguiente, basta con repetir el Ritual de la sección 1 para volver a levantar todo.

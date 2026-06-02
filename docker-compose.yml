@@ -8,7 +8,6 @@ services:
     container_name: openclaw_app
     ports:
       - "8080:5000"     # Flask expuesto en 8080
-      - "18789:5000"    # acceso alternativo en 18789
     depends_on:
       - db
 
@@ -18,7 +17,7 @@ services:
       dockerfile: Dockerfile.gateway
     container_name: openclaw_gateway
     ports:
-      - "8090:8080"     # gateway expuesto en 8090 para evitar choque
+      - "8080:8080"     # Gateway fijo en 8080
     environment:
       - DB_USER=postgres
       - DB_PASS=postgres
@@ -99,7 +98,6 @@ services:
 
   # ========== INTEGRACIONES CRÍTICAS ==========
 
-  # ChatOps: Bot de Slack aislado
   slack_bot:
     build:
       context: .
@@ -113,7 +111,6 @@ services:
       - app
     restart: unless-stopped
 
-  # Cola de Tareas: Para video_agent y marketing_generator
   redis:
     image: redis:7-alpine
     container_name: openclaw_redis
@@ -123,7 +120,6 @@ services:
       - redis_data:/data
     restart: unless-stopped
 
-  # Memoria Vectorial: Para RAG en marketing_generator
   qdrant_db:
     image: qdrant/qdrant:latest
     container_name: openclaw_vector_db

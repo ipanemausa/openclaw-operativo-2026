@@ -1,0 +1,83 @@
+═══════════════════════════════════════════════════════════════
+OPENCLAW CLOUD 2026
+¿DÓNDE COLOCAR LA API KEY DE PICKAXE?
+═══════════════════════════════════════════════════════════════
+
+📍 UBICACIÓN EXACTA:
+───────────────────────────────────────────────────────────────
+
+Archivo: C:\Users\ipane\openclaw-cloud-2026\.env
+
+En el archivo .env, busca esta línea (está cerca del principio):
+
+    PICKAXE_API_KEY=pk-your-api-key-from-pickaxe-dot-ai
+                     ↑                                    ↑
+                     │                                    │
+                     └────────────┬───────────────────────┘
+                                  │
+                    REEMPLAZA ESTO POR TU CLAVE
+
+
+🔑 TU API KEY DE PICKAXE:
+───────────────────────────────────────────────────────────────
+
+La API key de Pickaxe tiene este formato:
+    pk-abc123def456ghi789jklmnopqrst
+
+
+🚀 INSTRUCCIONES (3 PASOS SIMPLES):
+───────────────────────────────────────────────────────────────
+
+PASO 1: Abre el archivo .env
+   • Ve a: C:\Users\ipane\openclaw-cloud-2026\
+   • Haz clic derecho en ".env"
+   • Selecciona "Abrir con" → "Bloc de notas"
+
+PASO 2: Busca y reemplaza
+   • Presiona Ctrl+F
+   • Busca: pk-your-api-key-from-pickaxe-dot-ai
+   • Reemplaza con tu clave real (la que obtuviste de pickaxe.ai)
+
+PASO 3: Guarda
+   • Presiona Ctrl+S
+   • Cierra el editor
+
+
+📋 EJEMPLO:
+───────────────────────────────────────────────────────────────
+
+ANTES (lo que verás en el archivo):
+    PICKAXE_API_KEY=pk-your-api-key-from-pickaxe-dot-ai
+
+DESPUÉS (lo que debes poner):
+    PICKAXE_API_KEY=pk-abc123def456ghi789jklmnopqrst
+
+(Reemplaza "pk-abc123..." por TU clave real)
+
+
+✅ VERIFICACIÓN:
+───────────────────────────────────────────────────────────────
+
+Después de guardar, verifica que:
+   ✓ La línea dice: PICKAXE_API_KEY=pk-... (tu clave)
+   ✓ NO está en blanco
+   ✓ NO dice "pk-your-api-key-from-pickaxe-dot-ai"
+
+
+🚀 DESPLEGAR:
+───────────────────────────────────────────────────────────────
+
+Una vez guardado el .env:
+
+1. Abre PowerShell
+2. Ejecuta:
+   cd C:\Users\ipane\openclaw-cloud-2026
+   docker-compose up -d --build
+
+3. Espera 30 segundos
+4. Abre en el navegador: http://localhost
+
+
+═══════════════════════════════════════════════════════════════
+¡ESO ES TODO!
+═══════════════════════════════════════════════════════════════

@@ -1,0 +1,14 @@
+FROM python:3.11-slim
+
+WORKDIR /gateway
+
+RUN pip install flask requests
+
+COPY gateway_app.py app.py
+
+EXPOSE 8080
+
+HEALTHCHECK --interval=10s --timeout=5s --retries=3 \
+    CMD curl -f http://localhost:8080/health || exit 1
+
+CMD ["python", "-u", "app.py"]

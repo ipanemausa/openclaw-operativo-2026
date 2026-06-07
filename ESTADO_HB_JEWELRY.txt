@@ -1,0 +1,22 @@
+=== OPENCLAW + HB JEWELRY - ESTADO 06/06/2026 ===
+
+SISTEMA OPERATIVO:
+- Gateway: http://localhost:8080
+- Agentes: main, marketing, video, shopify
+- Pickaxe: conectado y respondiendo
+- PostgreSQL: openclaw_admin / openclaw_prod / SecureDB2026!@#Xyz123
+- Tabla messages: creada
+
+ENDPOINTS FUNCIONANDO:
+- GET  /health OK
+- GET  /api/mcp/status OK
+- POST /api/mcp/session OK
+- POST /api/mcp/message OK (Pickaxe responde)
+
+PENDIENTE:
+- GET /api/mcp/history da 404 (fix pendiente)
+- Conectar Git al repo GitHub
+- Proyecto HB Jewelry por definir
+
+ARRANCAR SISTEMA:
+docker compose -f C:\Users\ipane\openclaw-cloud-2026\docker-compose.yml up -d

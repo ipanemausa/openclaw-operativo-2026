@@ -1,0 +1,185 @@
+═══════════════════════════════════════════════════════════════════════════════
+                    OPENCLAW CLOUD 2026 - GUÍA VISUAL
+                  ¿DÓNDE EXACTAMENTE COLOCAR LA API KEY?
+═══════════════════════════════════════════════════════════════════════════════
+
+
+📁 ARCHIVO A EDITAR:
+─────────────────────────────────────────────────────────────────────────────
+
+    C:\Users\ipane\openclaw-cloud-2026\.env
+
+
+🔍 UBICACIÓN EN EL ARCHIVO (LÍNEA 19-23):
+─────────────────────────────────────────────────────────────────────────────
+
+    # ⭐⭐⭐ AQUÍ VA TU PICKAXE API KEY ⭐⭐⭐
+    # 1. Ve a: https://pickaxe.ai
+    # 2. Crea una cuenta (es gratis)
+    # 3. Ve a Settings / API Keys
+    # 4. Copia tu clave (empieza con "pk-")
+    # 5. Pegla exactamente abajo en la línea:
+    
+    PICKAXE_API_KEY=pk-your-api-key-from-pickaxe-dot-ai
+                    ↑                                    ↑
+                    INICIO                             FIN
+                    (no toques esto)
+
+
+🎯 LÍNEA EXACTA QUE EDITAR:
+─────────────────────────────────────────────────────────────────────────────
+
+    ╔════════════════════════════════════════════════════════════════╗
+    ║ PICKAXE_API_KEY=pk-your-api-key-from-pickaxe-dot-ai           ║
+    ║ └─────────────────┬──────────────────────────────────────────┘ ║
+    ║                   │                                             ║
+    ║         REEMPLAZA ESTO COMPLETAMENTE                           ║
+    ║              POR TU CLAVE REAL                                  ║
+    ║                   │                                             ║
+    ║                   ▼                                             ║
+    ║ PICKAXE_API_KEY=pk-abc123def456ghi789jklmnopqrst               ║
+    ╚════════════════════════════════════════════════════════════════╝
+
+
+📌 DÓNDE OBTENER TU API KEY (3 PASOS):
+─────────────────────────────────────────────────────────────────────────────
+
+    PASO 1: Abre https://pickaxe.ai en tu navegador
+            ▼
+    PASO 2: Haz clic en "Sign Up" y crea una cuenta GRATIS
+            ▼
+    PASO 3: Ve a Settings / API Keys
+            ▼
+            Haz clic en "Generate Key" o "Create API Key"
+            ▼
+            Copia toda la clave (empieza con "pk-")
+            ▼
+            Ejemplo: pk-abc123def456ghi789jklmnopqrst
+
+
+✏️  CÓMO EDITAR EL .ENV:
+─────────────────────────────────────────────────────────────────────────────
+
+    OPCIÓN 1 - Con el mouse (más fácil):
+    ──────────────────────────────────
+    1. Abre C:\Users\ipane\openclaw-cloud-2026\
+    2. Haz clic derecho en ".env"
+    3. Selecciona "Abrir con..." → "Bloc de notas"
+    4. Presiona Ctrl+F
+    5. Busca: pk-your-api-key-from-pickaxe-dot-ai
+    6. Haz clic derecho sobre el texto encontrado
+    7. Selecciona "Reemplazar todo"
+    8. Escribe tu clave real: pk-abc123...
+    9. Presiona Ctrl+S para guardar
+    10. Cierra el editor
+
+
+    OPCIÓN 2 - Línea por línea (paso a paso):
+    ───────────────────────────────────────
+    1. Abre C:\Users\ipane\openclaw-cloud-2026\ en el Explorador
+    2. Haz clic derecho en ".env" → "Abrir con" → "Bloc de notas"
+    3. Busca esta línea:
+       PICKAXE_API_KEY=pk-your-api-key-from-pickaxe-dot-ai
+    4. Selecciona TODA la parte después del "=" (desde "pk-" hasta el final)
+    5. Bórralo
+    6. Escribe tu clave real: pk-tu-clave-real-aqui
+    7. Presiona Ctrl+S
+    8. Cierra
+
+
+    OPCIÓN 3 - Usando PowerShell:
+    ──────────────────────────────
+    1. Abre PowerShell
+    2. Ejecuta:
+       cd C:\Users\ipane\openclaw-cloud-2026
+       notepad .env
+    3. Sigue los pasos de OPCIÓN 1 o 2
+    4. Cierra
+
+
+⚠️  IMPORTANTE - NO OLVIDES ESTOS TAMBIÉN:
+─────────────────────────────────────────────────────────────────────────────
+
+    Además de la API Key de Pickaxe, también cambia estas líneas:
+
+    ┌──────────────────────────────────────────────────────────────┐
+    │ 1. DB_PASSWORD=change_this_to_a_secure_password_12_chars_min │
+    │    Cambiar a: DB_PASSWORD=MySecurePass2026!@#XyZ             │
+    ├──────────────────────────────────────────────────────────────┤
+    │ 2. REDIS_PASSWORD=change_this_to_another_secure_redis_pass   │
+    │    Cambiar a: REDIS_PASSWORD=MyRedisPass2026!@#Abc123        │
+    ├──────────────────────────────────────────────────────────────┤
+    │ 3. QDRANT_API_KEY=change_qdrant_api_key_to_something_secure  │
+    │    Cambiar a: QDRANT_API_KEY=MyQdrantKey2026!@#Def456        │
+    ├──────────────────────────────────────────────────────────────┤
+    │ 4. SECRET_KEY=change_this_to_a_very_long_random_sec_key...   │
+    │    Cambiar a: SECRET_KEY=SuperLongRandomKey2026!@#Xyz789MNO │
+    └──────────────────────────────────────────────────────────────┘
+
+
+✅ CHECKLIST ANTES DE DESPLEGAR:
+─────────────────────────────────────────────────────────────────────────────
+
+    ☐ Copié mi API key de Pickaxe.ai (empieza con pk-)
+    ☐ Reemplacé la línea PICKAXE_API_KEY completamente
+    ☐ Cambié DB_PASSWORD con una contraseña segura
+    ☐ Cambié REDIS_PASSWORD con otra contraseña diferente
+    ☐ Cambié QDRANT_API_KEY con una cadena segura
+    ☐ Cambié SECRET_KEY con una cadena larga aleatoria
+    ☐ Guardé el archivo (.env)
+    ☐ Cerré el editor
+
+
+🚀 DESPUÉS DE GUARDAR:
+─────────────────────────────────────────────────────────────────────────────
+
+    1. Abre PowerShell
+    2. Ejecuta:
+       
+       cd C:\Users\ipane\openclaw-cloud-2026
+       
+    3. Despliega:
+       
+       docker-compose up -d --build
+       
+    4. Espera 30 segundos mientras inician los servicios
+    5. Verifica:
+       
+       curl http://localhost:8080/health
+       
+    6. Abre en tu navegador:
+       
+       http://localhost
+
+
+📝 EJEMPLO COMPLETO DEL .ENV EDITADO:
+─────────────────────────────────────────────────────────────────────────────
+
+    ANTES (❌ INCORRECTO):
+    ─────────────────────
+    PICKAXE_API_KEY=pk-your-api-key-from-pickaxe-dot-ai
+    DB_PASSWORD=change_this_to_a_secure_password_12_chars_min
+    REDIS_PASSWORD=change_this_to_another_secure_redis_password
+    QDRANT_API_KEY=change_qdrant_api_key_to_something_secure
+    SECRET_KEY=change_this_to_a_very_long_random_secret_key_min_32_chars
+
+
+    DESPUÉS (✅ CORRECTO):
+    ──────────────────────
+    PICKAXE_API_KEY=pk-abc123def456ghi789jklmnopqrst
+    DB_PASSWORD=MySecureDB2026!@#Xyz123
+    REDIS_PASSWORD=MyRedisPass2026!@#Abc456
+    QDRANT_API_KEY=MyQdrantKey2026!@#Def789
+    SECRET_KEY=SuperLongRandomKey2026!@#GhiJklMnoPqrStuVwxYzAbc123
+
+
+🎯 RESUMEN EN 1 FRASE:
+─────────────────────────────────────────────────────────────────────────────
+
+    Abre .env → Busca "PICKAXE_API_KEY=" → Reemplaza el valor después del "="
+    por tu clave de Pickaxe → Guarda → docker-compose up
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                           ¡YA ESTÁ! TAN SIMPLE ES.
+═══════════════════════════════════════════════════════════════════════════════

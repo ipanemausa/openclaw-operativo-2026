@@ -1,0 +1,24 @@
+# ANTIGRAVITY WORK LOG - 06/06/2026
+
+## Tareas Realizadas:
+1. **Creado el endpoint POST `/api/mcp/message`**:
+   - Modificado `C:\Users\ipane\openclaw-cloud-2026\gateway_app.py` y `C:\Users\ipane\openclaw-cloud-2026\gateway\app.py` para implementar el endpoint.
+   - Conectado exitosamente con Pickaxe LLM utilizando el endpoint correcto `https://api.pickaxe.co/v1/completions`.
+   - Mapeado el payload de entrada `{"agent": "main", "message": "..."}` y el payload de salida `{"response": "...", "status": "ok"}`.
+
+2. **Ajustes en Docker y Entorno**:
+   - Agregada la librería `requests` a las dependencias de instalación en `Dockerfile.gateway`.
+   - Modificado `docker-compose.yml` para pasar las variables de entorno de Pickaxe al contenedor del `gateway` (incluyendo `PICKAXE_API_URL` apuntando a `https://api.pickaxe.co/v1` para evitar redirecciones y fallas de resolución DNS de `.ai`).
+   - Modificado `pickaxe_provider.py` para usar por defecto la URL de producción correcta de Pickaxe (`api.pickaxe.co` en lugar de `.ai`).
+
+3. **Pruebas y Verificación**:
+   - Reconstruido y reiniciado el stack Docker.
+   - Probado exitosamente desde PowerShell con el comando:
+     ```powershell
+     Invoke-RestMethod -Method Post -Uri "http://localhost:8080/api/mcp/message" -ContentType "application/json" -Body '{"agent":"main","message":"Hola, responde con la palabra TEST_OK si me escuchas"}'
+     ```
+   - Respuesta obtenida: `TEST_OK` con estado `ok`.
+
+## Estado Final:
+- Sistema 100% funcional y conectado con Pickaxe LLM.
+- Todos los servicios corriendo de manera estable.

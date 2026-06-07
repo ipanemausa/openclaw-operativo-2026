@@ -1,0 +1,384 @@
+NAME                           IMAGE                                          COMMAND                  SERVICE               CREATED        STATUS                        PORTS
+openclaw_app                   openclaw:app-2026.5.27-cloud                   "gunicorn -w 4 -b 0.…"   app                   16 hours ago   Up 18 minutes (healthy)       0.0.0.0:8084->5000/tcp, 0.0.0.0:18789->5000/tcp, [::]:8084->5000/tcp, [::]:18789->5000/tcp
+openclaw_db                    postgres:15-alpine                             "docker-entrypoint.s…"   db                    16 hours ago   Up 18 minutes (healthy)       0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
+openclaw_gateway               openclaw:gateway-2026.5.27-cloud               "python -u app.py"       gateway               16 hours ago   Up 13 minutes (unhealthy)     0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp
+openclaw_marketing_generator   openclaw:marketing-generator-2026.5.27-cloud   "gunicorn -w 2 -b 0.…"   marketing_generator   16 hours ago   Up 18 minutes (unhealthy)     0.0.0.0:8086->5000/tcp, [::]:8086->5000/tcp
+openclaw_nginx                 nginx:alpine                                   "/docker-entrypoint.…"   nginx                 16 hours ago   Up About a minute (healthy)   0.0.0.0:80->80/tcp, [::]:80->80/tcp, 0.0.0.0:443->443/tcp, [::]:443->443/tcp
+openclaw_qdrant                qdrant/qdrant:latest                           "./entrypoint.sh"        qdrant_db             16 hours ago   Up 18 minutes (unhealthy)     0.0.0.0:6333->6333/tcp, [::]:6333->6333/tcp
+openclaw_redis                 redis:7-alpine                                 "docker-entrypoint.s…"   redis                 16 hours ago   Up 18 minutes (healthy)       0.0.0.0:6379->6379/tcp, [::]:6379->6379/tcp
+openclaw_shopify_integration   openclaw:shopify-integration-2026.5.27-cloud   "gunicorn -w 2 -b 0.…"   shopify_integration   16 hours ago   Up 18 minutes (unhealthy)     0.0.0.0:8087->5000/tcp, [::]:8087->5000/tcp
+openclaw_slack_bot             openclaw:slack-bot-2026.5.27-cloud             "python slack_bot.py"    slack_bot             16 hours ago   Up 18 minutes (healthy)       0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp
+openclaw_video_agent           openclaw:video-agent-2026.5.27-cloud           "gunicorn -w 2 -b 0.…"   video_agent           16 hours ago   Up 18 minutes (unhealthy)     0.0.0.0:8085->5000/tcp, [::]:8085->5000/tcp
+openclaw_video_agent          | [2026-06-05 20:15:48 +0000] [1] [INFO] Starting gunicorn 26.0.0
+openclaw_video_agent          | [2026-06-05 20:15:48 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_video_agent          | [2026-06-05 20:15:48 +0000] [1] [INFO] Using worker: sync
+openclaw_video_agent          | [2026-06-05 20:15:48 +0000] [7] [INFO] Booting worker with pid: 7
+openclaw_video_agent          | [2026-06-05 20:15:49 +0000] [8] [INFO] Booting worker with pid: 8
+openclaw_shopify_integration  | [2026-06-05 20:15:48 +0000] [1] [INFO] Starting gunicorn 26.0.0
+openclaw_shopify_integration  | [2026-06-05 20:15:48 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+openclaw_video_agent          | [2026-06-05 20:15:49 +0000] [1] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+openclaw_shopify_integration  | [2026-06-05 20:15:48 +0000] [1] [INFO] Using worker: sync
+openclaw_shopify_integration  | [2026-06-05 20:15:48 +0000] [7] [INFO] Booting worker with pid: 7
+openclaw_video_agent          | [2026-06-06 12:13:21 +0000] [1] [INFO] Starting gunicorn 26.0.0
+openclaw_shopify_integration  | [2026-06-05 20:15:48 +0000] [8] [INFO] Booting worker with pid: 8
+openclaw_video_agent          | [2026-06-06 12:13:21 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+openclaw_shopify_integration  | [2026-06-05 20:15:49 +0000] [1] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+openclaw_shopify_integration  | [2026-06-06 12:13:21 +0000] [1] [INFO] Starting gunicorn 26.0.0
+openclaw_video_agent          | [2026-06-06 12:13:21 +0000] [1] [INFO] Using worker: sync
+openclaw_shopify_integration  | [2026-06-06 12:13:21 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+openclaw_video_agent          | [2026-06-06 12:13:21 +0000] [7] [INFO] Booting worker with pid: 7
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_video_agent          | [2026-06-06 12:13:21 +0000] [8] [INFO] Booting worker with pid: 8
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_video_agent          | [2026-06-06 12:13:21 +0000] [1] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              | python: can't open file '/gateway/app.py': [Errno 2] No such file or directory
+openclaw_gateway              |  * Serving Flask app 'app'
+openclaw_gateway              |  * Debug mode: off
+openclaw_gateway              | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+openclaw_gateway              |  * Running on all addresses (0.0.0.0)
+openclaw_gateway              |  * Running on http://127.0.0.1:8080
+openclaw_gateway              |  * Running on http://172.22.0.3:8080
+openclaw_shopify_integration  | [2026-06-06 12:13:21 +0000] [1] [INFO] Using worker: sync
+openclaw_shopify_integration  | [2026-06-06 12:13:21 +0000] [7] [INFO] Booting worker with pid: 7
+openclaw_gateway              | [33mPress CTRL+C to quit[0m
+openclaw_shopify_integration  | [2026-06-06 12:13:21 +0000] [8] [INFO] Booting worker with pid: 8
+openclaw_shopify_integration  | [2026-06-06 12:13:21 +0000] [1] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+openclaw_gateway              | 172.22.0.1 - - [06/Jun/2026 12:19:01] "GET /health HTTP/1.1" 200 -
+openclaw_gateway              | 172.22.0.1 - - [06/Jun/2026 12:19:46] "GET /health HTTP/1.1" 200 -
+openclaw_gateway              | 172.22.0.1 - - [06/Jun/2026 12:19:49] "[31m[1mPOST /api/test HTTP/1.1[0m" 415 -
+openclaw_gateway              | 172.22.0.1 - - [06/Jun/2026 12:22:29] "GET /health HTTP/1.1" 200 -
+openclaw_qdrant               | 2026-06-05T20:15:47.853242Z  INFO qdrant::actix: Qdrant HTTP listening on 6333
+openclaw_qdrant               | 2026-06-05T20:15:47.858326Z  INFO actix_server::builder: starting 3 workers
+openclaw_qdrant               | 2026-06-05T20:15:47.858608Z  INFO actix_server::server: Actix runtime found; starting in Actix runtime
+openclaw_qdrant               | 2026-06-05T20:15:47.858646Z  INFO actix_server::server: starting service: "actix-web-service-0.0.0.0:6333", workers: 3, listening on: 0.0.0.0:6333
+openclaw_qdrant               | 2026-06-05T20:15:47.873268Z  INFO qdrant::tonic: Qdrant gRPC listening on 6334
+openclaw_qdrant               | 2026-06-05T20:15:47.873486Z  INFO qdrant::tonic: TLS disabled for gRPC API
+openclaw_qdrant               |            _                 _    
+openclaw_qdrant               |   __ _  __| |_ __ __ _ _ __ | |_  
+openclaw_qdrant               |  / _` |/ _` | '__/ _` | '_ \| __| 
+openclaw_qdrant               | | (_| | (_| | | | (_| | | | | |_  
+openclaw_qdrant               |  \__, |\__,_|_|  \__,_|_| |_|\__| 
+openclaw_qdrant               |     |_|                           
+openclaw_qdrant               | 
+openclaw_qdrant               | Version: 1.18.2, build: 44ad62f8
+openclaw_qdrant               | Access web UI at http://localhost:6333/dashboard
+openclaw_qdrant               | Agentic Skills: https://skills.qdrant.tech/
+openclaw_qdrant               | 
+openclaw_qdrant               | 2026-06-05T20:16:43.290323Z  INFO storage::content_manager::consensus::persistent: Loading raft state from ./storage/raft_state.json
+openclaw_qdrant               | 2026-06-05T20:16:43.292381Z  INFO qdrant: Distributed mode disabled
+openclaw_qdrant               | 2026-06-05T20:16:43.292440Z  INFO qdrant: Telemetry reporting enabled, id: 4d2d83df-542e-435a-b8e6-0af382ac18e6
+openclaw_qdrant               | 2026-06-05T20:16:43.311256Z  INFO qdrant::actix: REST transport settings: keep_alive=5s, client_request_timeout=5s, client_disconnect_timeout=5s
+openclaw_qdrant               | 2026-06-05T20:16:43.311278Z  INFO qdrant::actix: TLS disabled for REST API
+openclaw_qdrant               | 2026-06-05T20:16:43.311376Z  INFO qdrant::actix: Qdrant HTTP listening on 6333
+openclaw_qdrant               | 2026-06-05T20:16:43.311411Z  INFO actix_server::builder: starting 3 workers
+openclaw_qdrant               | 2026-06-05T20:16:43.311420Z  INFO actix_server::server: Actix runtime found; starting in Actix runtime
+openclaw_qdrant               | 2026-06-05T20:16:43.311424Z  INFO actix_server::server: starting service: "actix-web-service-0.0.0.0:6333", workers: 3, listening on: 0.0.0.0:6333
+openclaw_qdrant               | 2026-06-05T20:16:43.319004Z  INFO qdrant::tonic: Qdrant gRPC listening on 6334
+openclaw_qdrant               | 2026-06-05T20:16:43.319082Z  INFO qdrant::tonic: TLS disabled for gRPC API
+openclaw_qdrant               |            _                 _    
+openclaw_qdrant               |   __ _  __| |_ __ __ _ _ __ | |_  
+openclaw_qdrant               |  / _` |/ _` | '__/ _` | '_ \| __| 
+openclaw_qdrant               | | (_| | (_| | | | (_| | | | | |_  
+openclaw_qdrant               |  \__, |\__,_|_|  \__,_|_| |_|\__| 
+openclaw_qdrant               |     |_|                           
+openclaw_qdrant               | 
+openclaw_qdrant               | Version: 1.18.2, build: 44ad62f8
+openclaw_qdrant               | Access web UI at http://localhost:6333/dashboard
+openclaw_qdrant               | Agentic Skills: https://skills.qdrant.tech/
+openclaw_qdrant               | 
+openclaw_qdrant               | 2026-06-06T12:13:21.053199Z  INFO storage::content_manager::consensus::persistent: Loading raft state from ./storage/raft_state.json
+openclaw_qdrant               | 2026-06-06T12:13:21.118228Z  INFO qdrant: Distributed mode disabled
+openclaw_qdrant               | 2026-06-06T12:13:21.124489Z  INFO qdrant: Telemetry reporting enabled, id: 52f91361-f655-47ea-ba73-0975a895a772
+openclaw_qdrant               | 2026-06-06T12:13:21.459764Z  INFO qdrant::tonic: Qdrant gRPC listening on 6334
+openclaw_qdrant               | 2026-06-06T12:13:21.460067Z  INFO qdrant::tonic: TLS disabled for gRPC API
+openclaw_qdrant               | 2026-06-06T12:13:21.516546Z  INFO qdrant::actix: REST transport settings: keep_alive=5s, client_request_timeout=5s, client_disconnect_timeout=5s
+openclaw_qdrant               | 2026-06-06T12:13:21.516577Z  INFO qdrant::actix: TLS disabled for REST API
+openclaw_qdrant               | 2026-06-06T12:13:21.525381Z  INFO qdrant::actix: Qdrant HTTP listening on 6333
+openclaw_qdrant               | 2026-06-06T12:13:21.525407Z  INFO actix_server::builder: starting 3 workers
+openclaw_qdrant               | 2026-06-06T12:13:21.525419Z  INFO actix_server::server: Actix runtime found; starting in Actix runtime
+openclaw_qdrant               | 2026-06-06T12:13:21.525423Z  INFO actix_server::server: starting service: "actix-web-service-0.0.0.0:6333", workers: 3, listening on: 0.0.0.0:6333
+openclaw_nginx                | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+openclaw_nginx                | /docker-entrypoint.sh: Configuration complete; ready for start up
+openclaw_nginx                | 2026/06/06 12:27:28 [warn] 1#1: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /etc/nginx/nginx.conf:70
+openclaw_nginx                | nginx: [warn] the "listen ... http2" directive is deprecated, use the "http2" directive instead in /etc/nginx/nginx.conf:70
+openclaw_nginx                | 2026/06/06 12:27:28 [emerg] 1#1: cannot load certificate "/etc/nginx/ssl/openclaw.crt": PEM_read_bio_X509_AUX() failed (SSL: error:0680009B:asn1 encoding routines::too long error:06800066:asn1 encoding routines::bad object header error:0688010A:asn1 encoding routines::nested asn1 error:Type=X509 error:0488000D:PEM routines::ASN1 lib)
+openclaw_nginx                | nginx: [emerg] cannot load certificate "/etc/nginx/ssl/openclaw.crt": PEM_read_bio_X509_AUX() failed (SSL: error:0680009B:asn1 encoding routines::too long error:06800066:asn1 encoding routines::bad object header error:0688010A:asn1 encoding routines::nested asn1 error:Type=X509 error:0488000D:PEM routines::ASN1 lib)
+openclaw_nginx                | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+openclaw_nginx                | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+openclaw_nginx                | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+openclaw_marketing_generator  | [2026-06-05 20:15:48 +0000] [1] [INFO] Starting gunicorn 26.0.0
+openclaw_marketing_generator  | [2026-06-05 20:15:48 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+openclaw_marketing_generator  | [2026-06-05 20:15:48 +0000] [1] [INFO] Using worker: sync
+openclaw_marketing_generator  | [2026-06-05 20:15:48 +0000] [7] [INFO] Booting worker with pid: 7
+openclaw_marketing_generator  | [2026-06-05 20:15:48 +0000] [8] [INFO] Booting worker with pid: 8
+openclaw_marketing_generator  | [2026-06-05 20:15:49 +0000] [1] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+openclaw_marketing_generator  | [2026-06-06 12:13:21 +0000] [1] [INFO] Starting gunicorn 26.0.0
+openclaw_marketing_generator  | [2026-06-06 12:13:21 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+openclaw_marketing_generator  | [2026-06-06 12:13:21 +0000] [1] [INFO] Using worker: sync
+openclaw_marketing_generator  | [2026-06-06 12:13:21 +0000] [7] [INFO] Booting worker with pid: 7
+openclaw_marketing_generator  | [2026-06-06 12:13:21 +0000] [8] [INFO] Booting worker with pid: 8
+openclaw_marketing_generator  | [2026-06-06 12:13:21 +0000] [1] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+openclaw_nginx                | 10-listen-on-ipv6-by-default.sh: info: IPv6 listen already enabled
+openclaw_nginx                | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+openclaw_nginx                | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+openclaw_nginx                | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+openclaw_nginx                | /docker-entrypoint.sh: Configuration complete; ready for start up
+openclaw_nginx                | 2026/06/06 12:27:54 [warn] 1#1: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /etc/nginx/nginx.conf:70
+openclaw_nginx                | nginx: [warn] the "listen ... http2" directive is deprecated, use the "http2" directive instead in /etc/nginx/nginx.conf:70
+openclaw_nginx                | 2026/06/06 12:27:54 [emerg] 1#1: cannot load certificate "/etc/nginx/ssl/openclaw.crt": PEM_read_bio_X509_AUX() failed (SSL: error:0680009B:asn1 encoding routines::too long error:06800066:asn1 encoding routines::bad object header error:0688010A:asn1 encoding routines::nested asn1 error:Type=X509 error:0488000D:PEM routines::ASN1 lib)
+openclaw_nginx                | nginx: [emerg] cannot load certificate "/etc/nginx/ssl/openclaw.crt": PEM_read_bio_X509_AUX() failed (SSL: error:0680009B:asn1 encoding routines::too long error:06800066:asn1 encoding routines::bad object header error:0688010A:asn1 encoding routines::nested asn1 error:Type=X509 error:0488000D:PEM routines::ASN1 lib)
+openclaw_nginx                | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+openclaw_nginx                | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+openclaw_nginx                | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+openclaw_nginx                | 10-listen-on-ipv6-by-default.sh: info: IPv6 listen already enabled
+openclaw_nginx                | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+openclaw_nginx                | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+openclaw_nginx                | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+openclaw_nginx                | /docker-entrypoint.sh: Configuration complete; ready for start up
+openclaw_nginx                | 2026/06/06 12:28:46 [warn] 1#1: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /etc/nginx/nginx.conf:70
+openclaw_nginx                | nginx: [warn] the "listen ... http2" directive is deprecated, use the "http2" directive instead in /etc/nginx/nginx.conf:70
+openclaw_nginx                | 2026/06/06 12:28:46 [emerg] 1#1: cannot load certificate "/etc/nginx/ssl/openclaw.crt": PEM_read_bio_X509_AUX() failed (SSL: error:0680009B:asn1 encoding routines::too long error:06800066:asn1 encoding routines::bad object header error:0688010A:asn1 encoding routines::nested asn1 error:Type=X509 error:0488000D:PEM routines::ASN1 lib)
+openclaw_nginx                | nginx: [emerg] cannot load certificate "/etc/nginx/ssl/openclaw.crt": PEM_read_bio_X509_AUX() failed (SSL: error:0680009B:asn1 encoding routines::too long error:06800066:asn1 encoding routines::bad object header error:0688010A:asn1 encoding routines::nested asn1 error:Type=X509 error:0488000D:PEM routines::ASN1 lib)
+openclaw_nginx                | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+openclaw_nginx                | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+openclaw_nginx                | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+openclaw_nginx                | 10-listen-on-ipv6-by-default.sh: info: IPv6 listen already enabled
+openclaw_nginx                | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+openclaw_nginx                | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+openclaw_nginx                | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+openclaw_nginx                | /docker-entrypoint.sh: Configuration complete; ready for start up
+openclaw_nginx                | 2026/06/06 12:29:46 [warn] 1#1: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /etc/nginx/nginx.conf:70
+openclaw_nginx                | nginx: [warn] the "listen ... http2" directive is deprecated, use the "http2" directive instead in /etc/nginx/nginx.conf:70
+openclaw_nginx                | 2026/06/06 12:29:46 [emerg] 1#1: cannot load certificate "/etc/nginx/ssl/openclaw.crt": PEM_read_bio_X509_AUX() failed (SSL: error:0680009B:asn1 encoding routines::too long error:06800066:asn1 encoding routines::bad object header error:0688010A:asn1 encoding routines::nested asn1 error:Type=X509 error:0488000D:PEM routines::ASN1 lib)
+openclaw_nginx                | nginx: [emerg] cannot load certificate "/etc/nginx/ssl/openclaw.crt": PEM_read_bio_X509_AUX() failed (SSL: error:0680009B:asn1 encoding routines::too long error:06800066:asn1 encoding routines::bad object header error:0688010A:asn1 encoding routines::nested asn1 error:Type=X509 error:0488000D:PEM routines::ASN1 lib)
+openclaw_nginx                | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+openclaw_nginx                | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+openclaw_nginx                | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+openclaw_nginx                | 10-listen-on-ipv6-by-default.sh: info: IPv6 listen already enabled
+openclaw_nginx                | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+openclaw_nginx                | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+openclaw_nginx                | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+openclaw_nginx                | /docker-entrypoint.sh: Configuration complete; ready for start up
+openclaw_app                  | [2026-06-06 12:13:21 +0000] [9] [INFO] Booting worker with pid: 9
+openclaw_app                  | [2026-06-06 12:13:21 +0000] [10] [INFO] Booting worker with pid: 10
+openclaw_app                  | [2026-06-06 12:13:21 +0000] [11] [INFO] Booting worker with pid: 11
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:13:26 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:13:56 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:14:26 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:14:56 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:15:26 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 172.22.0.1 - - [06/Jun/2026:12:15:32 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.19.0"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:15:56 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:16:26 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 172.22.0.1 - - [06/Jun/2026:12:16:31 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36 Edg/148.0.0.0"
+openclaw_app                  | 172.22.0.1 - - [06/Jun/2026:12:16:31 +0000] "GET /favicon.ico HTTP/1.1" 404 207 "http://localhost:8084/healthz" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36 Edg/148.0.0.0"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:16:57 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:17:27 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | [2026-06-06 12:17:31 +0000] [1] [CRITICAL] WORKER TIMEOUT (pid:8)
+openclaw_app                  | [2026-06-06 12:17:31 +0000] [8] [INFO] Worker exiting (pid: 8)
+openclaw_app                  | [2026-06-06 12:17:31 +0000] [1] [ERROR] Worker (pid:8) exited with code 1
+openclaw_app                  | [2026-06-06 12:17:31 +0000] [1] [ERROR] Worker (pid:8) exited with code 1.
+openclaw_app                  | [2026-06-06 12:17:31 +0000] [66] [INFO] Booting worker with pid: 66
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:17:57 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:18:27 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:18:57 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:19:27 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 172.22.0.1 - - [06/Jun/2026:12:19:46 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.19.0"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:19:57 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:20:28 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:21:01 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:21:31 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:22:01 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 172.22.0.1 - - [06/Jun/2026:12:22:29 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.19.0"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:22:32 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:23:02 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:23:32 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:24:03 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:24:33 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:25:03 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:25:33 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:26:03 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:26:33 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:27:03 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:27:33 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:28:03 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:28:33 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:29:03 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:29:33 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:30:03 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:30:33 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:31:03 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_app                  | 127.0.0.1 - - [06/Jun/2026:12:31:33 +0000] "GET /healthz HTTP/1.1" 200 68 "-" "curl/8.14.1"
+openclaw_slack_bot            | 127.0.0.1 - - [05/Jun/2026 21:12:51] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [05/Jun/2026 21:13:21] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [05/Jun/2026 21:13:52] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [05/Jun/2026 21:14:22] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            |  * Serving Flask app 'slack_bot'
+openclaw_slack_bot            |  * Debug mode: off
+openclaw_slack_bot            | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+openclaw_slack_bot            |  * Running on all addresses (0.0.0.0)
+openclaw_slack_bot            |  * Running on http://127.0.0.1:3000
+openclaw_slack_bot            |  * Running on http://172.22.0.9:3000
+openclaw_slack_bot            | [33mPress CTRL+C to quit[0m
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:13:26] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:13:56] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:14:26] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:14:56] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:15:26] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:15:56] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:16:26] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:16:57] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:17:27] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:17:57] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:18:27] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:18:57] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:19:27] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 172.22.0.1 - - [06/Jun/2026 12:19:46] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:19:57] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:20:27] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:20:58] "GET /health HTTP/1.1" 200 -
+openclaw_db                   | 2026-06-06 12:23:28.467 UTC [454] FATAL:  database "openclaw_admin" does not exist
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:21:28] "GET /health HTTP/1.1" 200 -
+openclaw_db                   | 2026-06-06 12:23:38.553 UTC [461] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:23:48.635 UTC [468] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:23:58.699 UTC [475] FATAL:  database "openclaw_admin" does not exist
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:21:58] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:22:28] "GET /health HTTP/1.1" 200 -
+openclaw_db                   | 2026-06-06 12:24:08.826 UTC [482] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:24:18.889 UTC [489] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:24:28.940 UTC [496] FATAL:  database "openclaw_admin" does not exist
+openclaw_slack_bot            | 172.22.0.1 - - [06/Jun/2026 12:22:29] "GET /health HTTP/1.1" 200 -
+openclaw_db                   | 2026-06-06 12:24:38.995 UTC [503] FATAL:  database "openclaw_admin" does not exist
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:22:58] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:23:28] "GET /health HTTP/1.1" 200 -
+openclaw_db                   | 2026-06-06 12:24:49.058 UTC [510] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:24:59.113 UTC [517] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:25:09.172 UTC [523] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:25:19.228 UTC [531] FATAL:  database "openclaw_admin" does not exist
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:23:58] "GET /health HTTP/1.1" 200 -
+openclaw_db                   | 2026-06-06 12:25:29.286 UTC [538] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:25:39.356 UTC [545] FATAL:  database "openclaw_admin" does not exist
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:24:28] "GET /health HTTP/1.1" 200 -
+openclaw_db                   | 2026-06-06 12:25:49.409 UTC [552] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:25:59.473 UTC [560] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:26:09.537 UTC [567] FATAL:  database "openclaw_admin" does not exist
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:24:59] "GET /health HTTP/1.1" 200 -
+openclaw_db                   | 2026-06-06 12:26:19.594 UTC [575] FATAL:  database "openclaw_admin" does not exist
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:25:29] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:25:59] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:26:29] "GET /health HTTP/1.1" 200 -
+openclaw_db                   | 2026-06-06 12:26:29.657 UTC [582] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:26:39.716 UTC [589] FATAL:  database "openclaw_admin" does not exist
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:26:59] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:27:29] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:27:59] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:28:29] "GET /health HTTP/1.1" 200 -
+openclaw_db                   | 2026-06-06 12:26:49.768 UTC [596] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:26:59.826 UTC [603] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:27:09.885 UTC [610] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:27:19.961 UTC [617] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:27:30.008 UTC [624] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:27:40.063 UTC [630] FATAL:  database "openclaw_admin" does not exist
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:28:59] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:29:29] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:29:59] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:30:29] "GET /health HTTP/1.1" 200 -
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:30:59] "GET /health HTTP/1.1" 200 -
+openclaw_db                   | 2026-06-06 12:27:50.128 UTC [637] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:28:00.182 UTC [644] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:28:10.250 UTC [651] FATAL:  database "openclaw_admin" does not exist
+openclaw_slack_bot            | 127.0.0.1 - - [06/Jun/2026 12:31:29] "GET /health HTTP/1.1" 200 -
+openclaw_db                   | 2026-06-06 12:28:20.307 UTC [659] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:28:30.362 UTC [666] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:28:40.422 UTC [673] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:28:50.472 UTC [680] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:29:00.538 UTC [687] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:29:10.601 UTC [694] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:29:20.652 UTC [701] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:29:30.725 UTC [708] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:29:40.786 UTC [715] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:29:50.833 UTC [722] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:30:00.883 UTC [729] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:30:10.937 UTC [736] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:30:20.984 UTC [742] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:30:31.045 UTC [748] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:30:41.097 UTC [754] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:30:51.150 UTC [761] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:31:01.197 UTC [768] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:31:11.272 UTC [774] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:31:21.313 UTC [781] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:31:31.361 UTC [788] FATAL:  database "openclaw_admin" does not exist
+openclaw_db                   | 2026-06-06 12:31:41.413 UTC [795] FATAL:  database "openclaw_admin" does not exist
+openclaw_redis                | 1:C 05 Jun 2026 20:15:47.939 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+openclaw_redis                | 1:C 05 Jun 2026 20:15:47.939 * Redis version=7.4.9, bits=64, commit=00000000, modified=0, pid=1, just started
+openclaw_redis                | 1:C 05 Jun 2026 20:15:47.939 * Configuration loaded
+openclaw_redis                | 1:M 05 Jun 2026 20:15:47.943 * monotonic clock: POSIX clock_gettime
+openclaw_redis                | 1:M 05 Jun 2026 20:15:47.945 * Running mode=standalone, port=6379.
+openclaw_redis                | 1:M 05 Jun 2026 20:15:47.945 * Server initialized
+openclaw_redis                | 1:M 05 Jun 2026 20:15:47.946 * Reading RDB base file on AOF loading...
+openclaw_redis                | 1:M 05 Jun 2026 20:15:47.947 * Loading RDB produced by version 7.4.9
+openclaw_redis                | 1:M 05 Jun 2026 20:15:47.947 * RDB age 372 seconds
+openclaw_redis                | 1:M 05 Jun 2026 20:15:47.947 * RDB memory usage when created 0.91 Mb
+openclaw_redis                | 1:M 05 Jun 2026 20:15:47.947 * RDB is base AOF
+openclaw_redis                | 1:M 05 Jun 2026 20:15:47.947 * Done loading RDB, keys loaded: 0, keys expired: 0.
+openclaw_redis                | 1:M 05 Jun 2026 20:15:47.949 * DB loaded from base file appendonly.aof.1.base.rdb: 0.002 seconds
+openclaw_redis                | 1:M 05 Jun 2026 20:15:47.949 * DB loaded from append only file: 0.003 seconds
+openclaw_redis                | 1:M 05 Jun 2026 20:15:47.949 * Opening AOF incr file appendonly.aof.1.incr.aof on server start
+openclaw_redis                | 1:M 05 Jun 2026 20:15:47.949 * Ready to accept connections tcp
+openclaw_redis                | 1:C 06 Jun 2026 12:13:20.695 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+openclaw_redis                | 1:C 06 Jun 2026 12:13:20.696 * Redis version=7.4.9, bits=64, commit=00000000, modified=0, pid=1, just started
+openclaw_redis                | 1:C 06 Jun 2026 12:13:20.696 * Configuration loaded
+openclaw_redis                | 1:M 06 Jun 2026 12:13:20.697 * monotonic clock: POSIX clock_gettime
+openclaw_redis                | 1:M 06 Jun 2026 12:13:20.706 * Running mode=standalone, port=6379.
+openclaw_redis                | 1:M 06 Jun 2026 12:13:20.707 * Server initialized
+openclaw_redis                | 1:M 06 Jun 2026 12:13:20.714 * Reading RDB base file on AOF loading...
+openclaw_redis                | 1:M 06 Jun 2026 12:13:20.714 * Loading RDB produced by version 7.4.9
+openclaw_redis                | 1:M 06 Jun 2026 12:13:20.714 * RDB age 57825 seconds
+openclaw_redis                | 1:M 06 Jun 2026 12:13:20.715 * RDB memory usage when created 0.91 Mb
+openclaw_redis                | 1:M 06 Jun 2026 12:13:20.715 * RDB is base AOF
+openclaw_redis                | 1:M 06 Jun 2026 12:13:20.715 * Done loading RDB, keys loaded: 0, keys expired: 0.
+openclaw_redis                | 1:M 06 Jun 2026 12:13:20.718 * DB loaded from base file appendonly.aof.1.base.rdb: 0.006 seconds
+openclaw_redis                | 1:M 06 Jun 2026 12:13:20.718 * DB loaded from append only file: 0.009 seconds
+openclaw_redis                | 1:M 06 Jun 2026 12:13:20.718 * Opening AOF incr file appendonly.aof.1.incr.aof on server start
+openclaw_redis                | 1:M 06 Jun 2026 12:13:20.718 * Ready to accept connections tcp
+=== HEALTH CHECKS ===
+{"service":"openclaw-app","status":"healthy","version":"2026.5.27"}
+{"service":"gateway","status":"healthy"}
+healthy
+{"service":"slack-bot","status":"healthy"}

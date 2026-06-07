@@ -1,0 +1,88 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Secrets
+*.key
+*.crt
+*.pem
+secrets/
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# Node
+node_modules/
+dist/
+build/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# Volumes (local development)
+volumes/db/*
+volumes/redis/*
+volumes/qdrant/*
+volumes/uploads/*
+!volumes/db/.gitkeep
+!volumes/redis/.gitkeep
+!volumes/qdrant/.gitkeep
+!volumes/uploads/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+
+# CI/CD
+.github/workflows/*.log
+
+# Backups
+*.backup
+*.bak
+*.tmp
+
+# SSL (store only examples)
+nginx/ssl/openclaw.*
+!nginx/ssl/README.md
+
+# Test coverage
+htmlcov/
+.coverage
+.coverage.*

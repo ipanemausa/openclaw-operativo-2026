@@ -1,0 +1,135 @@
+DOCUMENTO OPERATIVO — OPENCLAW + HB JEWELRY
+DC-06/09/2026 · ipanemausa · V2.1
+
+1. HERMES (DI — Dirección de Intención)
+Hermes es el operador humano del ecosistema. Define intención, valida código, ejecuta comandos, aprueba despliegues y cierra cada DC. Hermes no genera código: lo autoriza. Sin Hermes no hay dirección.
+Estado actual: operativo con Docker Desktop, PowerShell 7.6.2, GitHub, gateway Flask en :8080.
+Pendiente: integrar blueprint hb_cotizacion en openclaw_gateway.
+
+2. DOCKER — INFRAESTRUCTURA ACTIVA
+Estado:
+openclaw_gateway             Up (healthy)
+openclaw_app                 Up (healthy)
+openclaw_slack_bot           Up (healthy)
+openclaw_nginx               Up (healthy)
+openclaw_shopify_integration Up (unhealthy)
+openclaw_video_agent         Up (unhealthy)
+openclaw_marketing_generator Up (unhealthy)
+openclaw_db                  Up (healthy)
+openclaw_redis               Up (healthy)
+openclaw_qdrant              Up (unhealthy)
+
+Arquitectura:
+NGINX → Gateway :8080 → App :8084 → Agentes :8085-8087 → PostgreSQL + Redis + Qdrant
+
+3. DC (Dirección de Código — Claude)
+DC genera código, diseña flujos, analiza repos, produce artefactos y documenta el estado.
+Reglas activas: no borrar archivos, no resetear BD, no inventar formatos, no mezclar flujos, no loops, un comando por línea, rutas completas.
+Estado: BLOQUE A al 80%. Pendiente: integrar blueprint.
+
+4. INDEX — ESTADO DEL ECOSISTEMA
+Repo 1 — openclaw-hb-jewelry:
+Sitio live en GitHub Pages. Pipeline verde. Archivos: index.html, cotizacion.html, cotizacion_endpoint.py, cotizacion.json, openclaw_guia_completa.html, setup_git.bat, README.md.
+
+Repo 2 — openclaw-operativo-2026:
+Infraestructura completa: agents/, app/, config/, db/, gateway/, nginx/, scripts/. Contiene hb_cotizacion.py, gateway.py, docker-compose.yml y documentación extensa. Es la fuente de verdad.
+
+5. ARTEFACTO DEL DÍA
+Blueprint hb_cotizacion.py con endpoints:
+POST /api/flows/cotizacion
+GET /api/flows/cotizacion/<id>
+PATCH /api/flows/cotizacion/<id>/estado
+GET /hb/dashboard
+
+Tabla cotizaciones creada y validada. Inserción de prueba OK.
+gateway.py limpio y listo para registrar blueprint.
+Estado del artefacto: 80%.
+
+6. SISTEMA OPERATIVO CONCEPTUAL
+Arquitectura DI/DC:
+Hermes (intención)
+↓
+DC (código + diseño)
+↓
+DI (ejecución)
+↓
+Gateway Flask
+↓
+Agentes especializados
+↓
+PostgreSQL + Redis + Qdrant
+↓
+GitHub Pages (frontend)
+
+7. WORKFLOWS ACTIVOS
+Workflow 1 — Deploy continuo HB Jewelry: push → Actions → Pages → deploy.
+Workflow 2 — Cotización HB Jewelry: formulario → gateway → agente → BD → respuesta.
+Workflow 3 — Dashboard admin: GET /hb/dashboard → PostgreSQL → JSON.
+
+8. PIPELINE CI/CD
+Frontend:
+git push → GitHub Actions → GitHub Pages → sitio live.
+
+Backend:
+docker cp → docker restart.
+
+9. ARQUITECTURA EXTENDIDA
+Internet
+↓
+NGINX
+↓
+Gateway :8080
+    /health
+    /api/mcp/status
+    /api/mcp/message
+    /api/flows/cotizacion
+    /hb/dashboard
+↓
+openclaw_app :8084
+↓
+Agentes:
+    marketing_generator
+    video_agent
+    shopify_integration
+↓
+Datos:
+    PostgreSQL
+    Redis
+    Qdrant
+
+10. AGENTES Y ROLES
+marketing_generator — copy y propuestas.
+video_agent — clips.
+shopify_integration — inventario.
+slack_bot — ChatOps.
+openclaw_app — lógica principal.
+
+11. INTEGRACIÓN OPENCLAW + HB JEWELRY
+Frontend: 100% operativo.
+Backend: 80% operativo.
+Pendiente: registrar blueprint en openclaw_gateway.
+
+12. PENDIENTE INMEDIATO — DESBLOQUEO BLUEPRINT
+Descargar archivo limpio:
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/ipanemausa/openclaw-operativo-2026/main/hb_cotizacion.py" -OutFile "C:\Users\ipane\openclaw-cloud-2026\hb_cotizacion_new.py"
+
+Copiar al contenedor:
+docker cp C:\Users\ipane\openclaw-cloud-2026\hb_cotizacion_new.py openclaw_gateway:/gateway/hb_cotizacion.py
+
+Validar sintaxis:
+docker exec openclaw_gateway python3 -c "import ast; ast.parse(open('/gateway/hb_cotizacion.py').read()); print('Sintaxis OK')"
+
+SNAPSHOT DC-06/09/2026 — 10:30 AM
+Sistema:          OpenClaw Cloud 2026
+Gateway:          healthy
+BD:               healthy
+Redis:            healthy
+GitHub Pages:     live
+Pipeline CI/CD:   verde
+Blueprint:        generado
+BLOQUE A:         80%
+BLOQUE B:         pendiente
+BLOQUE C:         pendiente
+BLOQUE D:         pendiente
+Próximo paso:     integrar blueprint
+

@@ -1,7 +1,11 @@
 from flask import Flask, jsonify, request
 import os
+from hb_cotizacion import hb_bp, crear_tabla_cotizaciones
 
 app = Flask(__name__)
+
+app.register_blueprint(hb_bp)
+crear_tabla_cotizaciones()
 
 @app.route('/health', methods=['GET'])
 def health():

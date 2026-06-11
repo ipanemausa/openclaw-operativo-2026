@@ -13,10 +13,11 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(level
 logger = logging.getLogger("gateway")
 
 AGENT_PROMPTS = {
-    "main": "Eres el asistente principal de OpenClaw Cloud. Ayudas con cualquier tarea general del sistema.",
-    "marketing": "Eres el agente de marketing de OpenClaw. Generas contenido, campanas, posts para redes sociales y estrategias de marketing digital.",
-    "video": "Eres el agente de video de OpenClaw. Ayudas con guiones, produccion, edicion y estrategia de contenido en video.",
-    "shopify": "Eres el agente de ventas de OpenClaw. Gestionas productos, ventas, mercado libre y estrategias de e-commerce en Shopify."
+    "main": "Eres el asistente principal de OpenClaw Cloud para HB Jewelry. Ayudas con cualquier tarea general del sistema.",
+    "marketing": "Eres el agente de marketing de HB Jewelry, una marca de joyeria fina en Washington DC que vende plata, bisuteria gold plated y rhodium plated. Generas contenido viral para Instagram y TikTok: descripciones de productos, captions con hashtags, ideas de reels, guiones de videos cortos y campanas de temporada. Tu tono es elegante, aspiracional y accesible. Siempre incluyes llamadas a la accion y hashtags relevantes en ingles y espanol.",
+    "video": "Eres el agente de video de HB Jewelry. Creas guiones para Reels de Instagram y TikTok mostrando piezas de joyeria fina en Washington DC. Tus videos son cortos, elegantes y virales. Incluyes texto en pantalla, musica sugerida y llamadas a la accion.",
+    "shopify": "Eres el agente de ventas de HB Jewelry. Gestionas el catalogo de productos, registras pedidos, consultas de inventario y estrategias de venta en Shopify, Instagram, WhatsApp y TikTok Shop. Ayudas a cerrar ventas con respuestas rapidas y profesionales.",
+    "ventas": "Eres el agente de registro de ventas de HB Jewelry. Cuando el usuario te da informacion de una venta (producto, cantidad, precio, cliente, canal), la registras de forma estructurada y confirmas el registro. Extraes: producto, cantidad, precio_unitario, total, cliente, canal_venta, fecha."
 }
 
 def get_redis():
@@ -28,7 +29,13 @@ def get_redis():
 
 def get_db():
     try:
-        return psycopg2.connect(host=os.getenv('DB_HOST','db'), port=os.getenv('DB_PORT','5432'), dbname=os.getenv('DB_NAME','openclaw_prod'), user=os.getenv('DB_USER','openclaw_prod'), password=os.getenv('DB_PASSWORD','openclaw_prod'))
+        return psycopg2.connect(
+            host=os.getenv('DB_HOST','db'),
+            port=os.getenv('DB_PORT','5432'),
+            dbname=os.getenv('DB_NAME','openclaw_prod'),
+            user=os.getenv('DB_USER','openclaw_admin'),
+            password=os.getenv('DB_PASSWORD','SecureDB2026!@#Xyz123')
+        )
     except Exception as e:
         logger.error(f"DB connection error: {str(e)}")
         return None
@@ -39,7 +46,8 @@ def save_message(session_id, agent, role, content):
         if not conn:
             return
         cur = conn.cursor()
-        cur.execute("INSERT INTO messages (session_id, agent, role, content, created_at) VALUES (%s, %s, %s, %s, %s)", (session_id, agent, role, content, datetime.utcnow()))
+        cur.execute("INSERT INTO messages (session_id, agent, role, content, created_at) VALUES (%s, %s, %s, %s, %s)",
+                    (session_id, agent, role, content, datetime.utcnow()))
         conn.commit()
         cur.close()
         conn.close()
@@ -52,7 +60,8 @@ def get_history(session_id, limit=10):
         if not conn:
             return []
         cur = conn.cursor()
-        cur.execute("SELECT role, content FROM messages WHERE session_id = %s ORDER BY created_at DESC LIMIT %s", (session_id, limit))
+        cur.execute("SELECT role, content FROM messages WHERE session_id = %s ORDER BY created_at DESC LIMIT %s",
+                    (session_id, limit))
         rows = cur.fetchall()
         cur.close()
         conn.close()
@@ -61,9 +70,49 @@ def get_history(session_id, limit=10):
         logger.error(f"DB history error: {str(e)}")
         return []
 
+def save_sale(data):
+    try:
+        conn = get_db()
+        if not conn:
+            return False
+        cur = conn.cursor()
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS sales (
+                id SERIAL PRIMARY KEY,
+                producto VARCHAR(200),
+                cantidad INTEGER,
+                precio_unitario DECIMAL(10,2),
+                total DECIMAL(10,2),
+                cliente VARCHAR(200),
+                canal_venta VARCHAR(100),
+                notas TEXT,
+                created_at TIMESTAMP
+            )
+        """)
+        cur.execute("""
+            INSERT INTO sales (producto, cantidad, precio_unitario, total, cliente, canal_venta, notas, created_at)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """, (
+            data.get('producto',''),
+            data.get('cantidad', 1),
+            data.get('precio_unitario', 0),
+            data.get('total', 0),
+            data.get('cliente',''),
+            data.get('canal_venta',''),
+            data.get('notas',''),
+            datetime.utcnow()
+        ))
+        conn.commit()
+        cur.close()
+        conn.close()
+        return True
+    except Exception as e:
+        logger.error(f"Sale save error: {str(e)}")
+        return False
+
 @app.route('/health', methods=['GET'])
 def health():
-    return jsonify({"status": "healthy", "service": "gateway"}), 200
+    return jsonify({"status": "healthy", "service": "gateway", "project": "HB Jewelry"}), 200
 
 @app.route('/api/test', methods=['POST'])
 def test():
@@ -72,7 +121,12 @@ def test():
 
 @app.route('/api/mcp/status', methods=['GET'])
 def mcp_status():
-    return jsonify({"agents": list(AGENT_PROMPTS.keys()), "status": "ok", "persistence": "postgresql+redis"}), 200
+    return jsonify({
+        "agents": list(AGENT_PROMPTS.keys()),
+        "status": "ok",
+        "project": "HB Jewelry",
+        "persistence": "postgresql+redis"
+    }), 200
 
 @app.route('/api/mcp/session', methods=['POST'])
 def mcp_session():
@@ -82,7 +136,10 @@ def mcp_session():
     try:
         r = get_redis()
         if r:
-            r.setex(f"session:{session_id}", 86400, json.dumps({"agent": agent, "created_at": datetime.utcnow().isoformat()}))
+            r.setex(f"session:{session_id}", 86400, json.dumps({
+                "agent": agent,
+                "created_at": datetime.utcnow().isoformat()
+            }))
         logger.info(f"Session {session_id} created for agent {agent}")
     except Exception as e:
         logger.error(f"Redis session error: {str(e)}")
@@ -119,7 +176,12 @@ def mcp_message():
         save_message(session_id, agent, "assistant", pickaxe_response)
 
         logger.info(f"Agent:{agent} Session:{session_id} OK")
-        return jsonify({"response": pickaxe_response, "session_id": session_id, "agent": agent, "status": "ok"}), 200
+        return jsonify({
+            "response": pickaxe_response,
+            "session_id": session_id,
+            "agent": agent,
+            "status": "ok"
+        }), 200
 
     except requests.exceptions.Timeout:
         return jsonify({"response": "Error: Pickaxe timeout.", "status": "error"}), 504
@@ -134,6 +196,35 @@ def mcp_history():
         return jsonify({"error": "session_id required"}), 400
     history = get_history(session_id, limit=50)
     return jsonify({"session_id": session_id, "history": history, "count": len(history)}), 200
+
+@app.route('/api/hb/sale', methods=['POST'])
+def register_sale():
+    data = request.get_json() or {}
+    required = ['producto', 'cantidad', 'precio_unitario', 'cliente', 'canal_venta']
+    missing = [f for f in required if not data.get(f)]
+    if missing:
+        return jsonify({"error": f"Faltan campos: {missing}", "status": "error"}), 400
+    data['total'] = float(data.get('cantidad', 1)) * float(data.get('precio_unitario', 0))
+    success = save_sale(data)
+    if success:
+        return jsonify({"status": "ok", "message": "Venta registrada", "total": data['total']}), 200
+    return jsonify({"status": "error", "message": "Error guardando venta"}), 500
+
+@app.route('/api/hb/sales', methods=['GET'])
+def get_sales():
+    try:
+        conn = get_db()
+        if not conn:
+            return jsonify({"error": "DB no disponible"}), 500
+        cur = conn.cursor()
+        cur.execute("SELECT id, producto, cantidad, precio_unitario, total, cliente, canal_venta, created_at FROM sales ORDER BY created_at DESC LIMIT 50")
+        rows = cur.fetchall()
+        cur.close()
+        conn.close()
+        sales = [{"id": r[0], "producto": r[1], "cantidad": r[2], "precio_unitario": float(r[3]), "total": float(r[4]), "cliente": r[5], "canal_venta": r[6], "fecha": str(r[7])} for r in rows]
+        return jsonify({"sales": sales, "count": len(sales), "status": "ok"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=False, threaded=True)

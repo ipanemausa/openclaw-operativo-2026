@@ -3,6 +3,3 @@ flask-cors
 requests
 psycopg2-binary
 redis
-gunicorn
-Flask-SQLAlchemy
-Flask-Migrate

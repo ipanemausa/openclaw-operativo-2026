@@ -1,51 +1,16 @@
 import os
-import json
 import requests
-import psycopg2
-import psycopg2.extras
 from flask import Blueprint, request, jsonify
+from datetime import datetime
+from models import db, Cotizacion
 
 hb_bp = Blueprint('hb_jewelry', __name__)
 
 MARKETING_URL = os.getenv('MARKETING_URL', 'http://openclaw_marketing_generator:5000')
 SHOPIFY_URL = os.getenv('SHOPIFY_URL', 'http://openclaw_shopify_integration:5000')
 
-def get_db():
-    return psycopg2.connect(
-        dbname=os.getenv('PG_DB', 'openclaw_prod'),
-        user=os.getenv('PG_USER', 'openclaw_admin'),
-        password='SecureDB2026!@#Xyz123',
-        host='openclaw_db',
-        port='5432'
-    )
-
 def crear_tabla_cotizaciones():
-    try:
-        conn = get_db()
-        cur = conn.cursor()
-        cur.execute(
-            'CREATE TABLE IF NOT EXISTS cotizaciones ('
-            'id SERIAL PRIMARY KEY,'
-            'cliente_nombre VARCHAR(255),'
-            'cliente_email VARCHAR(255),'
-            'tipo_pieza VARCHAR(100),'
-            'material VARCHAR(100),'
-            'ocasion VARCHAR(100),'
-            'presupuesto VARCHAR(50),'
-            'descripcion TEXT,'
-            'referencias TEXT,'
-            'clasificacion JSONB,'
-            'propuesta TEXT,'
-            'estado VARCHAR(50) DEFAULT chr(39)||chr(114)||chr(101)||chr(99)||chr(105)||chr(98)||chr(105)||chr(100)||chr(97)||chr(39),'
-            'created_at TIMESTAMP DEFAULT NOW(),'
-            'updated_at TIMESTAMP DEFAULT NOW())'
-        )
-        conn.commit()
-        cur.close()
-        conn.close()
-        print('[HB] tabla ok')
-    except Exception as e:
-        print('[HB] error: ' + str(e))
+    pass
 
 @hb_bp.route('/api/flows/cotizacion', methods=['POST'])
 def hb_cotizacion():
@@ -62,19 +27,22 @@ def hb_cotizacion():
 
     # ESTADO 1: Guardar en BD
     try:
-        conn = get_db()
-        cur = conn.cursor()
-        cur.execute(
-            'INSERT INTO cotizaciones(cliente_nombre,cliente_email,tipo_pieza,material,ocasion,presupuesto,descripcion,referencias,estado)'
-            'VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s) RETURNING id',
-            (nombre, email, tipo_pieza, data.get('material',''), data.get('ocasion',''),
-             presupuesto, descripcion, data.get('referencias',''), 'recibida')
+        coti = Cotizacion(
+            cliente_nombre=nombre,
+            cliente_email=email,
+            tipo_pieza=tipo_pieza,
+            material=data.get('material', ''),
+            ocasion=data.get('ocasion', ''),
+            presupuesto=presupuesto,
+            descripcion=descripcion,
+            referencias=data.get('referencias', ''),
+            estado='recibida'
         )
-        cid = cur.fetchone()[0]
-        conn.commit()
-        cur.close()
-        conn.close()
+        db.session.add(coti)
+        db.session.commit()
+        cid = coti.id
     except Exception as e:
+        db.session.rollback()
         return jsonify({'status': 'error', 'mensaje': 'BD: ' + str(e)}), 500
 
     # ESTADO 2: Llamar agente marketing
@@ -88,13 +56,13 @@ def hb_cotizacion():
         mdata = res.json()
         propuesta = mdata.get('propuesta', '')
         if propuesta:
-            conn = get_db()
-            cur = conn.cursor()
-            cur.execute('UPDATE cotizaciones SET propuesta=%s, estado=%s WHERE id=%s', (propuesta, 'propuesta_generada', cid))
-            conn.commit()
-            cur.close()
-            conn.close()
+            c = Cotizacion.query.get(cid)
+            if c:
+                c.propuesta = propuesta
+                c.estado = 'propuesta_generada'
+                db.session.commit()
     except Exception as e:
+        db.session.rollback()
         print('[HB] marketing error: ' + str(e))
 
     # ESTADO 3: Llamar agente shopify
@@ -120,19 +88,25 @@ def hb_cotizacion():
 @hb_bp.route('/api/flows/cotizacion/<int:cid>', methods=['GET'])
 def hb_get_cotizacion(cid):
     try:
-        conn = get_db()
-        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-        cur.execute('SELECT * FROM cotizaciones WHERE id = %s', (cid,))
-        row = cur.fetchone()
-        cur.close()
-        conn.close()
+        row = Cotizacion.query.get(cid)
         if not row:
             return jsonify({'status': 'error', 'mensaje': 'No encontrada'}), 404
-        d = dict(row)
-        if d.get('created_at'):
-            d['created_at'] = d['created_at'].isoformat()
-        if d.get('updated_at'):
-            d['updated_at'] = d['updated_at'].isoformat()
+        d = {
+            "id": row.id,
+            "cliente_nombre": row.cliente_nombre,
+            "cliente_email": row.cliente_email,
+            "tipo_pieza": row.tipo_pieza,
+            "material": row.material,
+            "ocasion": row.ocasion,
+            "presupuesto": row.presupuesto,
+            "descripcion": row.descripcion,
+            "referencias": row.referencias,
+            "clasificacion": row.clasificacion,
+            "propuesta": row.propuesta,
+            "estado": row.estado,
+            "created_at": row.created_at.isoformat() if row.created_at else None,
+            "updated_at": row.updated_at.isoformat() if row.updated_at else None
+        }
         return jsonify({'status': 'ok', 'cotizacion': d}), 200
     except Exception as e:
         return jsonify({'status': 'error', 'mensaje': str(e)}), 500
@@ -140,18 +114,17 @@ def hb_get_cotizacion(cid):
 @hb_bp.route('/hb/dashboard', methods=['GET'])
 def hb_dashboard():
     try:
-        conn = get_db()
-        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-        cur.execute('SELECT COUNT(*) AS total FROM cotizaciones')
-        stats = dict(cur.fetchone())
-        cur.execute('SELECT id,cliente_nombre,tipo_pieza,estado,created_at FROM cotizaciones ORDER BY created_at DESC LIMIT 20')
-        rows = [dict(r) for r in cur.fetchall()]
-        for r in rows:
-            if r.get('created_at'):
-                r['created_at'] = r['created_at'].isoformat()
-        cur.close()
-        conn.close()
-        return jsonify({'status': 'ok', 'stats': stats, 'cotizaciones': rows}), 200
+        total = Cotizacion.query.count()
+        rows = Cotizacion.query.order_by(Cotizacion.created_at.desc()).limit(20).all()
+        data_rows = [{
+            "id": r.id,
+            "cliente_nombre": r.cliente_nombre,
+            "tipo_pieza": r.tipo_pieza,
+            "estado": r.estado,
+            "created_at": r.created_at.isoformat() if r.created_at else None
+        } for r in rows]
+        
+        return jsonify({'status': 'ok', 'stats': {"total": total}, 'cotizaciones': data_rows}), 200
     except Exception as e:
         return jsonify({'status': 'error', 'mensaje': str(e)}), 500
 
@@ -163,15 +136,12 @@ def hb_update_estado(cid):
     if estado not in validos:
         return jsonify({'status': 'error', 'mensaje': 'Estado invalido', 'validos': validos}), 400
     try:
-        conn = get_db()
-        cur = conn.cursor()
-        cur.execute('UPDATE cotizaciones SET estado=%s, updated_at=NOW() WHERE id=%s RETURNING id', (estado, cid))
-        if cur.rowcount == 0:
-            cur.close(); conn.close()
+        row = Cotizacion.query.get(cid)
+        if not row:
             return jsonify({'status': 'error', 'mensaje': 'No encontrada'}), 404
-        conn.commit()
-        cur.close()
-        conn.close()
+        row.estado = estado
+        db.session.commit()
         return jsonify({'status': 'ok', 'id': cid, 'nuevo_estado': estado}), 200
     except Exception as e:
+        db.session.rollback()
         return jsonify({'status': 'error', 'mensaje': str(e)}), 500

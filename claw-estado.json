@@ -1,11 +1,19 @@
 {
   "siguiente_agente": "claude",
-  "ultima_actualizacion": "2026-06-21T09:08:53Z",
-  "notas": "veo_client.py corregido a GEMINI_API_KEY. docker-compose incluye redis y video_veo_worker. Orquestador expone :8090 con Docker socket.",
+  "ultima_actualizacion": "2026-06-21T14:16:08Z",
+  "notas": "Stack 4/4 contenedores operativos. Protocolo Lamautonomia v1.0 documentado. VS Code es el editor para archivos Python largos. Set-Content para archivos cortos.",
   "tareas_activas": [
-    "Modulo Video: agregar endpoints /api/radio/input /api/radio/publish al orchestrator",
-    "Modulo Video: verificar Veo API con GEMINI_API_KEY real",
-    "Ajustar Docker socket en claw-orchestrator - HECHO",
-    "redis + video_veo_worker en docker-compose - HECHO"
+    "Verificar Veo API con GEMINI_API_KEY real en produccion",
+    "Agente residente local para automatizar VS Code",
+    "Agregar gitignore para lamautonomia-video-veo.ps1"
+  ],
+  "tareas_completadas": [
+    "video_veo_worker container - HECHO",
+    "redis container - HECHO",
+    "docker-compose.yml actualizado - HECHO",
+    "endpoints /api/radio/input /api/radio/publish - HECHO",
+    "orchestrator.py con redis - HECHO",
+    "PROTOCOLO-LAMAUTONOMIA.ps1 - HECHO",
+    "commit y push a GitHub - HECHO"
   ]
 }

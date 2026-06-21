@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends libpq-dev gcc &
 COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY gateway_app.py app.py
+COPY gateway /gateway
 
 EXPOSE 8080
 HEALTHCHECK --interval=10s --timeout=5s --retries=3 CMD curl -f http://localhost:8080/health || exit 1

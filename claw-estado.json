@@ -1,0 +1,11 @@
+{
+  "siguiente_agente": "claude",
+  "ultima_actualizacion": "2026-06-21T09:08:53Z",
+  "notas": "veo_client.py corregido a GEMINI_API_KEY. docker-compose incluye redis y video_veo_worker. Orquestador expone :8090 con Docker socket.",
+  "tareas_activas": [
+    "Modulo Video: agregar endpoints /api/radio/input /api/radio/publish al orchestrator",
+    "Modulo Video: verificar Veo API con GEMINI_API_KEY real",
+    "Ajustar Docker socket en claw-orchestrator - HECHO",
+    "redis + video_veo_worker en docker-compose - HECHO"
+  ]
+}

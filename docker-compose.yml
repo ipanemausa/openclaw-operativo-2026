@@ -1,348 +1,40 @@
-version: '3.9'
+version: "3.9"
 
 services:
-  # ═══════════════════════════════════════════════════════════════
-  # POSTGRESQL - Base de datos principal
-  # ═══════════════════════════════════════════════════════════════
-  db:
-    image: postgres:15-alpine
-    container_name: openclaw_db
-    environment:
-      POSTGRES_USER: ${DB_USER:-openclaw_admin}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-secure_password_change_me}
-      POSTGRES_DB: ${DB_NAME:-openclaw_prod}
-      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --lc-collate=en_US.UTF-8 --lc-ctype=en_US.UTF-8"
+  claw-orchestrator:
+    build: ./claw-orchestrator
+    container_name: claw-orchestrator
+    restart: always
     ports:
-      - "${DB_PORT:-5432}:5432"
+      - "8090:8090"
     volumes:
-      - db_data:/var/lib/postgresql/data
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
-    networks:
-      - openclaw_network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-openclaw_admin}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      - /var/run/docker.sock:/var/run/docker.sock
 
-  # ═══════════════════════════════════════════════════════════════
-  # REDIS - Cache y message broker
-  # ═══════════════════════════════════════════════════════════════
+  openclaw_app:
+    build: ./app
+    container_name: openclaw_app
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - claw-orchestrator
+
   redis:
     image: redis:7-alpine
     container_name: openclaw_redis
-    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-redis_secure_pass}
+    restart: always
     ports:
-      - "${REDIS_PORT:-6379}:6379"
-    volumes:
-      - redis_data:/data
-    networks:
-      - openclaw_network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      - "6379:6379"
 
-  # ═══════════════════════════════════════════════════════════════
-  # QDRANT - Vector database para embeddings y RAG
-  # ═══════════════════════════════════════════════════════════════
-  qdrant_db:
-    image: qdrant/qdrant:latest
-    container_name: openclaw_qdrant
-    ports:
-      - "${QDRANT_PORT:-6333}:6333"
-    volumes:
-      - qdrant_data:/qdrant/storage
-    environment:
-      QDRANT_API_KEY: ${QDRANT_API_KEY:-qdrant_api_key_change_me}
-    networks:
-      - openclaw_network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:6333/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  # ═══════════════════════════════════════════════════════════════
-  # APP - Motor principal de OpenClaw (Python Flask + Gunicorn)
-  # ═══════════════════════════════════════════════════════════════
-  app:
+  video_veo_worker:
     build:
-      context: .
-      dockerfile: Dockerfile.app
-      args:
-        BUILDKIT_INLINE_CACHE: 1
-    container_name: openclaw_app
-    image: openclaw:app-${VERSION:-latest}
+      context: ./agents/video_veo
+      dockerfile: Dockerfile.txt
+    container_name: video_veo_worker
+    restart: always
     environment:
-      FLASK_ENV: ${FLASK_ENV:-production}
-      DEBUG: ${DEBUG:-False}
-      PYTHONUNBUFFERED: 1
-      DB_USER: ${DB_USER:-openclaw_admin}
-      DB_PASSWORD: ${DB_PASSWORD:-secure_password_change_me}
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_NAME: ${DB_NAME:-openclaw_prod}
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-      REDIS_PASSWORD: ${REDIS_PASSWORD:-redis_secure_pass}
-      QDRANT_HOST: qdrant_db
-      QDRANT_PORT: 6333
-      QDRANT_API_KEY: ${QDRANT_API_KEY:-qdrant_api_key_change_me}
-      PICKAXE_API_KEY: ${PICKAXE_API_KEY:-your-pickaxe-api-key}
-      PICKAXE_MODEL: ${PICKAXE_MODEL:-pickaxe-7b}
-      PICKAXE_API_URL: ${PICKAXE_API_URL:-https://api.pickaxe.co/v1}
-      GEMINI_API_KEY: ${GEMINI_API_KEY:-optional-gemini-key}
-      SECRET_KEY: ${SECRET_KEY:-change-me-in-production}
-    ports:
-      - "${APP_PORT:-8084}:5000"
-      - "18789:5000"
-    depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    volumes:
-      - ./app:/app
-      - app_logs:/app/logs
-    networks:
-      - openclaw_network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/healthz"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
-  # ═══════════════════════════════════════════════════════════════
-  # GATEWAY - Router principal (nginx-like, Python Gunicorn)
-  # ═══════════════════════════════════════════════════════════════
-  gateway:
-    build:
-      context: .
-      dockerfile: Dockerfile.gateway
-      args:
-        BUILDKIT_INLINE_CACHE: 1
-    container_name: openclaw_gateway
-    image: openclaw:gateway-${VERSION:-latest}
-    environment:
-      GATEWAY_HOST: 0.0.0.0
-      GATEWAY_PORT: 8080
-      GATEWAY_WORKERS: ${GATEWAY_WORKERS:-4}
-      APP_HOST: app
-      APP_PORT: 5000
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_USER: ${DB_USER:-openclaw_admin}
-      DB_PASSWORD: ${DB_PASSWORD:-secure_password_change_me}
-      DB_NAME: ${DB_NAME:-openclaw_prod}
-      SECRET_KEY: ${SECRET_KEY:-change-me-in-production}
-      PYTHONUNBUFFERED: 1
-      PICKAXE_API_KEY: ${PICKAXE_API_KEY:-your-pickaxe-api-key}
-      PICKAXE_MODEL: ${PICKAXE_MODEL:-pickaxe-7b-instruct}
-      PICKAXE_API_URL: ${PICKAXE_API_URL:-https://api.pickaxe.co/v1}
-      PICKAXE_TIMEOUT: ${PICKAXE_TIMEOUT:-60}
-    ports:
-      - "${GATEWAY_PORT:-8080}:8080"
-    depends_on:
-      - app
-      - db
-    volumes:
-      - ./gateway:/gateway
-      - gateway_logs:/gateway/logs
-    networks:
-      - openclaw_network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
-  # ═══════════════════════════════════════════════════════════════
-  # AGENTES ESPECIALIZADOS
-  # ═══════════════════════════════════════════════════════════════
-
-  video_agent:
-    build:
-      context: ./agents/video_agent
-      dockerfile: Dockerfile
-    container_name: openclaw_video_agent
-    image: openclaw:video-agent-${VERSION:-latest}
-    environment:
-      AGENT_NAME: video_agent
-      AGENT_PORT: 5000
-      REDIS_HOST: redis
-      REDIS_PASSWORD: ${REDIS_PASSWORD:-redis_secure_pass}
-    ports:
-      - "${VIDEO_AGENT_PORT:-8085}:5000"
-    volumes:
-      - ./agents/video_agent:/app
-      - video_uploads:/app/uploads
-      - video_processing:/app/processing
+      - GEMINI_API_KEY=
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     depends_on:
       - redis
-    networks:
-      - openclaw_network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
-  marketing_generator:
-    build:
-      context: ./agents/marketing_generator
-      dockerfile: Dockerfile
-    container_name: openclaw_marketing_generator
-    image: openclaw:marketing-generator-${VERSION:-latest}
-    environment:
-      AGENT_NAME: marketing_generator
-      AGENT_PORT: 5000
-      REDIS_HOST: redis
-      REDIS_PASSWORD: ${REDIS_PASSWORD:-redis_secure_pass}
-      QDRANT_HOST: qdrant_db
-      QDRANT_PORT: 6333
-      QDRANT_API_KEY: ${QDRANT_API_KEY:-qdrant_api_key_change_me}
-      HB_JEWELRY_PRICE_MIN: ${HB_JEWELRY_PRICE_MIN:-15}
-      HB_JEWELRY_PRICE_MAX: ${HB_JEWELRY_PRICE_MAX:-500}
-      HB_JEWELRY_STYLE: ${HB_JEWELRY_STYLE:-contemporary}
-      HB_JEWELRY_AGE_MIN: ${HB_JEWELRY_AGE_MIN:-18}
-      HB_JEWELRY_AGE_MAX: ${HB_JEWELRY_AGE_MAX:-65}
-      HB_JEWELRY_PRODUCT_TYPES: ${HB_JEWELRY_PRODUCT_TYPES:-rings,necklaces,bracelets,earrings,sets}
-    ports:
-      - "${MARKETING_AGENT_PORT:-8086}:5000"
-    volumes:
-      - ./agents/marketing_generator:/app
-      - marketing_products:/app/products
-      - marketing_output:/app/output
-    depends_on:
-      - redis
-    networks:
-      - openclaw_network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
-  shopify_integration:
-    build:
-      context: ./agents/shopify_integration
-      dockerfile: Dockerfile
-    container_name: openclaw_shopify_integration
-    image: openclaw:shopify-integration-${VERSION:-latest}
-    environment:
-      AGENT_NAME: shopify_integration
-      AGENT_PORT: 5000
-      SHOPIFY_STORE_URL: ${SHOPIFY_STORE_URL:-}
-      SHOPIFY_ACCESS_TOKEN: ${SHOPIFY_ACCESS_TOKEN:-}
-      SHOPIFY_API_VERSION: ${SHOPIFY_API_VERSION:-2024-01}
-      REDIS_HOST: redis
-      REDIS_PASSWORD: ${REDIS_PASSWORD:-redis_secure_pass}
-    ports:
-      - "${SHOPIFY_AGENT_PORT:-8087}:5000"
-    volumes:
-      - ./agents/shopify_integration:/app
-      - shopify_config:/app/config
-      - shopify_logs:/app/logs
-    depends_on:
-      - redis
-    networks:
-      - openclaw_network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
-  # ═══════════════════════════════════════════════════════════════
-  # SLACK BOT - Integración con Slack
-  # ═══════════════════════════════════════════════════════════════
-  slack_bot:
-    build:
-      context: .
-      dockerfile: Dockerfile.slackbot
-    container_name: openclaw_slack_bot
-    image: openclaw:slack-bot-${VERSION:-latest}
-    environment:
-      SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN:-}
-      SLACK_APP_TOKEN: ${SLACK_APP_TOKEN:-}
-      GATEWAY_URL: http://gateway:8080
-      PYTHONUNBUFFERED: 1
-    ports:
-      - "${SLACK_BOT_PORT:-3000}:3000"
-    depends_on:
-      - gateway
-    env_file:
-      - .env
-    networks:
-      - openclaw_network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
-  # ═══════════════════════════════════════════════════════════════
-  # NGINX - Reverse proxy y static files (OPCIONAL, para cloud)
-  # ═══════════════════════════════════════════════════════════════
-  nginx:
-    image: nginx:alpine
-    container_name: openclaw_nginx
-    ports:
-      - "${NGINX_PORT:-80}:80"
-      - "${NGINX_SSL_PORT:-443}:443"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx/ssl:/etc/nginx/ssl:ro
-      - ./ui/dist:/usr/share/nginx/html:ro
-      - nginx_logs:/var/log/nginx
-    depends_on:
-      - gateway
-    networks:
-      - openclaw_network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
-networks:
-  openclaw_network:
-    driver: bridge
-
-volumes:
-  db_data:
-    driver: local
-  redis_data:
-    driver: local
-  qdrant_data:
-    driver: local
-  app_logs:
-    driver: local
-  gateway_logs:
-    driver: local
-  video_uploads:
-    driver: local
-  video_processing:
-    driver: local
-  marketing_products:
-    driver: local
-  marketing_output:
-    driver: local
-  shopify_config:
-    driver: local
-  shopify_logs:
-    driver: local
-  nginx_logs:
-    driver: local

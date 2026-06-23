@@ -1,4 +1,3 @@
-
 services:
   claw-orchestrator:
     build: ./claw-orchestrator
@@ -8,7 +7,7 @@ services:
       - "8090:8090"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-
+      - ./claw-estado.json:/app/claw-estado.json
   openclaw_app:
     build: ./app
     container_name: openclaw_app
@@ -17,14 +16,12 @@ services:
       - "3000:3000"
     depends_on:
       - claw-orchestrator
-
   redis:
     image: redis:7-alpine
     container_name: openclaw_redis
     restart: always
     ports:
       - "6379:6379"
-
   video_veo_worker:
     build:
       context: ./agents/video_veo

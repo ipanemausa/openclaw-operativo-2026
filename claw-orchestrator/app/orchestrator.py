@@ -57,24 +57,24 @@ def task_executor():
 
 def get_stack_status():
     try:
-        client = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-        client.connect("/var/run/docker.sock")
-        request = "GET /containers/json HTTP/1.0\r\nHost: localhost\r\n\r\n"
-        client.send(request.encode())
-        response = b""
-        while True:
-            chunk = client.recv(4096)
-            if not chunk:
-                break
-            response += chunk
-        client.close()
-        body = response.split(b"\r\n\r\n", 1)[1]
-        containers_raw = json.loads(body)
+        import http.client
+        class UnixHTTPConnection(http.client.HTTPConnection):
+            def __init__(self, path):
+                super().__init__("localhost")
+                self.path = path
+            def connect(self):
+                s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+                s.connect(self.path)
+                self.sock = s
+        conn = UnixHTTPConnection("/var/run/docker.sock")
+        conn.request("GET", "/containers/json")
+        resp = conn.getresponse()
+        data = json.loads(resp.read())
         containers = []
-        for c in containers_raw:
+        for c in data:
             name   = c.get("Names", [""])[0].lstrip("/")
             status = c.get("Status", "")
-            ports  = ",".join([str(p.get("PublicPort", "")) for p in c.get("Ports", []) if p.get("PublicPort")])
+            ports  = ",".join([str(p.get("PublicPort","")) for p in c.get("Ports",[]) if p.get("PublicPort")])
             containers.append({"name": name, "status": status, "ports": ports})
         return containers
     except Exception as e:

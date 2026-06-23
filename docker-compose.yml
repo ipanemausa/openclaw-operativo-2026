@@ -8,6 +8,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./claw-estado.json:/app/claw-estado.json
+    networks:
+      - claw-net
   openclaw_app:
     build: ./app
     container_name: openclaw_app
@@ -16,12 +18,16 @@ services:
       - "3000:3000"
     depends_on:
       - claw-orchestrator
+    networks:
+      - claw-net
   redis:
     image: redis:7-alpine
     container_name: openclaw_redis
     restart: always
     ports:
       - "6379:6379"
+    networks:
+      - claw-net
   video_veo_worker:
     build:
       context: ./agents/video_veo
@@ -34,3 +40,8 @@ services:
       - REDIS_PORT=6379
     depends_on:
       - redis
+    networks:
+      - claw-net
+networks:
+  claw-net:
+    driver: bridge

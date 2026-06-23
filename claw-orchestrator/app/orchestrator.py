@@ -15,8 +15,6 @@ redis_client = redis.Redis(
     decode_responses=True
 )
 
-# ── DAG ENGINE ─────────────────────────────────────────────────────────────
-
 def load_estado():
     try:
         return json.loads(ESTADO_PATH.read_text(encoding="utf-8"))
@@ -45,7 +43,7 @@ def dag_worker():
             for nombre in ready:
                 redis_client.lpush("queue:tareas", nombre)
                 tareas[nombre]["estado"] = "en_cola"
-                print(f"[DAG] {nombre} → en_cola", flush=True)
+                print(f"[DAG] {nombre} en_cola", flush=True)
             if ready:
                 estado["ultima_actualizacion"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
                 save_estado(estado)
@@ -53,7 +51,9 @@ def dag_worker():
             print(f"[DAG] error: {e}", flush=True)
         time.sleep(10)
 
-# ── STACK ──────────────────────────────────────────────────────────────────
+def task_executor():
+    import task_executor as ex
+    ex.run()
 
 def get_stack_status():
     try:
@@ -73,8 +73,6 @@ def get_stack_status():
         return containers
     except Exception as e:
         return [{"error": str(e)}]
-
-# ── ROUTES ─────────────────────────────────────────────────────────────────
 
 @app.route("/health")
 def health():
@@ -159,9 +157,7 @@ def completar_tarea(nombre):
     save_estado(estado)
     return jsonify({"tarea": nombre, "estado": "completada"})
 
-# ── MAIN ───────────────────────────────────────────────────────────────────
-
 if __name__ == "__main__":
-    t = threading.Thread(target=dag_worker, daemon=True)
-    t.start()
+    threading.Thread(target=dag_worker, daemon=True).start()
+    threading.Thread(target=task_executor, daemon=True).start()
     app.run(host="0.0.0.0", port=8090, debug=False)

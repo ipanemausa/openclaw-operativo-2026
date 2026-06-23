@@ -2,9 +2,17 @@ param(
     [string]$Servicio = "all",
     [string]$Mensaje  = "auto: pipeline lamautonomia"
 )
-
 $ROOT = "C:\Users\ipane\openclaw-cloud-2026"
 Set-Location $ROOT
+
+# ── VALIDACION GEMINI KEY ──────────────────────────────────────
+if (-not $env:GEMINI_API_KEY -or $env:GEMINI_API_KEY -match "TU_API|tu-key|placeholder") {
+    Write-Host "  FAIL GEMINI_API_KEY no esta exportada en Windows" -ForegroundColor Red
+    Write-Host "  Ejecuta: `$env:GEMINI_API_KEY='tu-key-real'" -ForegroundColor Yellow
+    exit 1
+}
+Write-Host "  OK GEMINI_API_KEY validada" -ForegroundColor Green
+# ──────────────────────────────────────────────────────────────
 
 $errores = 0
 function Log-OK   { param($msg) Write-Host "  OK $msg" -ForegroundColor Green }

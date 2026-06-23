@@ -1,19 +1,27 @@
 {
   "siguiente_agente": "claude",
-  "ultima_actualizacion": "2026-06-21T14:16:08Z",
-  "notas": "Stack 4/4 contenedores operativos. Protocolo Lamautonomia v1.0 documentado. VS Code es el editor para archivos Python largos. Set-Content para archivos cortos.",
-  "tareas_activas": [
-    "Verificar Veo API con GEMINI_API_KEY real en produccion",
-    "Agente residente local para automatizar VS Code",
-    "Agregar gitignore para lamautonomia-video-veo.ps1"
-  ],
-  "tareas_completadas": [
-    "video_veo_worker container - HECHO",
-    "redis container - HECHO",
-    "docker-compose.yml actualizado - HECHO",
-    "endpoints /api/radio/input /api/radio/publish - HECHO",
-    "orchestrator.py con redis - HECHO",
-    "PROTOCOLO-LAMAUTONOMIA.ps1 - HECHO",
-    "commit y push a GitHub - HECHO"
-  ]
+  "ultima_actualizacion": "2026-06-23T09:30:00Z",
+  "notas": "DAG activado. Motor de tareas automatico.",
+  "tareas": {
+    "fix_gemini_key": {
+      "estado": "pendiente",
+      "depends_on": [],
+      "descripcion": "Verificar GEMINI_API_KEY en contenedor"
+    },
+    "eliminar_version_compose": {
+      "estado": "pendiente",
+      "depends_on": [],
+      "descripcion": "Eliminar atributo version obsoleto de docker-compose.yml"
+    },
+    "probar_veo": {
+      "estado": "pendiente",
+      "depends_on": ["fix_gemini_key"],
+      "descripcion": "1 solo request de prueba a Veo 3.1"
+    },
+    "push_github": {
+      "estado": "pendiente",
+      "depends_on": ["probar_veo", "eliminar_version_compose"],
+      "descripcion": "Commit y push COMPENDIO.md y cambios del dia"
+    }
+  }
 }

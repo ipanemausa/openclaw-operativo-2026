@@ -1,15 +1,15 @@
 {
   "siguiente_agente": "claude",
-  "ultima_actualizacion": "2026-06-23T09:30:00Z",
-  "notas": "DAG activado. Motor de tareas automatico.",
+  "ultima_actualizacion": "2026-06-23T10:00:00Z",
+  "notas": "DAG motor activo. Pipeline con validacion GEMINI. Stack limpio.",
   "tareas": {
     "fix_gemini_key": {
-      "estado": "pendiente",
+      "estado": "completada",
       "depends_on": [],
       "descripcion": "Verificar GEMINI_API_KEY en contenedor"
     },
     "eliminar_version_compose": {
-      "estado": "pendiente",
+      "estado": "completada",
       "depends_on": [],
       "descripcion": "Eliminar atributo version obsoleto de docker-compose.yml"
     },
@@ -19,9 +19,24 @@
       "descripcion": "1 solo request de prueba a Veo 3.1"
     },
     "push_github": {
+      "estado": "completada",
+      "depends_on": ["eliminar_version_compose"],
+      "descripcion": "Commit y push cambios del dia"
+    },
+    "deploy_frontend_cloud_run": {
       "estado": "pendiente",
-      "depends_on": ["probar_veo", "eliminar_version_compose"],
-      "descripcion": "Commit y push COMPENDIO.md y cambios del dia"
+      "depends_on": ["push_github"],
+      "descripcion": "Deploy frontend a Google Cloud Run"
+    },
+    "agente_externo_antigravity": {
+      "estado": "pendiente",
+      "depends_on": ["deploy_frontend_cloud_run"],
+      "descripcion": "Adaptador de delegacion para Antigravity"
+    },
+    "agente_externo_copilot": {
+      "estado": "pendiente",
+      "depends_on": ["deploy_frontend_cloud_run"],
+      "descripcion": "Adaptador de delegacion para Copilot"
     }
   }
 }

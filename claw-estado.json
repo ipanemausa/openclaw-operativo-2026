@@ -1,6 +1,6 @@
 {
   "siguiente_agente": "claude",
-  "ultima_actualizacion": "2026-06-23T18:23:21Z",
+  "ultima_actualizacion": "2026-06-23T18:55:30Z",
   "notas": "DAG motor activo. Pipeline con validacion GEMINI. Stack limpio.",
   "tareas": {
     "fix_gemini_key": {
@@ -14,11 +14,12 @@
       "descripcion": "Eliminar atributo version obsoleto de docker-compose.yml"
     },
     "probar_veo": {
-      "estado": "en_cola",
+      "estado": "completada",
       "depends_on": [
         "fix_gemini_key"
       ],
-      "descripcion": "1 solo request de prueba a Veo 3.1"
+      "descripcion": "1 solo request de prueba a Veo 3.1",
+      "completada_at": "2026-06-23T18:55:28Z"
     },
     "push_github": {
       "estado": "completada",
@@ -28,11 +29,12 @@
       "descripcion": "Commit y push cambios del dia"
     },
     "deploy_frontend_cloud_run": {
-      "estado": "en_cola",
+      "estado": "completada",
       "depends_on": [
         "push_github"
       ],
-      "descripcion": "Deploy frontend a Google Cloud Run"
+      "descripcion": "Deploy frontend a Google Cloud Run",
+      "completada_at": "2026-06-23T18:55:30Z"
     },
     "agente_externo_antigravity": {
       "estado": "pendiente",

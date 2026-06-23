@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from datetime import datetime, timezone
-import json, os, pathlib, redis, threading, time, socket
+import json, os, pathlib, redis, threading, time
+import docker
 
 app = Flask(__name__)
 HANDOFFS_DIR = pathlib.Path("/handoffs")
@@ -57,25 +58,15 @@ def task_executor():
 
 def get_stack_status():
     try:
-        import http.client
-        class UnixHTTPConnection(http.client.HTTPConnection):
-            def __init__(self, path):
-                super().__init__("localhost")
-                self.path = path
-            def connect(self):
-                s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-                s.connect(self.path)
-                self.sock = s
-        conn = UnixHTTPConnection("/var/run/docker.sock")
-        conn.request("GET", "/containers/json")
-        resp = conn.getresponse()
-        data = json.loads(resp.read())
+        client = docker.from_env()
         containers = []
-        for c in data:
-            name   = c.get("Names", [""])[0].lstrip("/")
-            status = c.get("Status", "")
-            ports  = ",".join([str(p.get("PublicPort","")) for p in c.get("Ports",[]) if p.get("PublicPort")])
-            containers.append({"name": name, "status": status, "ports": ports})
+        for c in client.containers.list(all=True):
+            ports = ",".join([str(v[0]["HostPort"]) for v in (c.ports or {}).values() if v])
+            containers.append({
+                "name":   c.name,
+                "status": c.status,
+                "ports":  ports
+            })
         return containers
     except Exception as e:
         return [{"error": str(e)}]

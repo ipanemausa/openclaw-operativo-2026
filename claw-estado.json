@@ -1,6 +1,6 @@
 {
   "siguiente_agente": "claude",
-  "ultima_actualizacion": "2026-06-23T18:55:30Z",
+  "ultima_actualizacion": "2026-06-23T18:55:40Z",
   "notas": "DAG motor activo. Pipeline con validacion GEMINI. Stack limpio.",
   "tareas": {
     "fix_gemini_key": {
@@ -37,18 +37,20 @@
       "completada_at": "2026-06-23T18:55:30Z"
     },
     "agente_externo_antigravity": {
-      "estado": "pendiente",
+      "estado": "completada",
       "depends_on": [
         "deploy_frontend_cloud_run"
       ],
-      "descripcion": "Adaptador de delegacion para Antigravity"
+      "descripcion": "Adaptador de delegacion para Antigravity",
+      "completada_at": "2026-06-23T18:55:38Z"
     },
     "agente_externo_copilot": {
-      "estado": "pendiente",
+      "estado": "completada",
       "depends_on": [
         "deploy_frontend_cloud_run"
       ],
-      "descripcion": "Adaptador de delegacion para Copilot"
+      "descripcion": "Adaptador de delegacion para Copilot",
+      "completada_at": "2026-06-23T18:55:40Z"
     }
   }
 }

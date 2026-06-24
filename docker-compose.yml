@@ -42,6 +42,19 @@ services:
       - redis
     networks:
       - claw-net
+  gateway:
+    build: ./gateway
+    container_name: openclaw_gateway
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - PICKAXE_API_KEY=${PICKAXE_API_KEY}
+      - PICKAXE_API_URL=https://api.pickaxe.co/v1
+    depends_on:
+      - claw-orchestrator
+    networks:
+      - claw-net
 networks:
   claw-net:
     driver: bridge

@@ -3,6 +3,7 @@ import os, urllib.request, json
 
 app = Flask(__name__)
 ORCHESTRATOR = "http://claw-orchestrator:8090"
+GATEWAY      = "http://gateway:8080"
 
 def fetch_json(url):
     try:
@@ -35,6 +36,7 @@ h1 { color:#00ff88; font-size:1.4rem; margin-bottom:4px; }
 .tag-pendiente { background:#ffaa0020; color:#ffaa00; border:1px solid #ffaa0040; }
 .tag-en_cola { background:#00aaff20; color:#00aaff; border:1px solid #00aaff40; }
 .tag-ejecutando { background:#ff880020; color:#ff8800; border:1px solid #ff880040; }
+.hb { color:#ff88ff; }
 .version { color:#333; font-size:0.7rem; margin-top:24px; }
 </style>
 </head>
@@ -46,24 +48,30 @@ h1 { color:#00ff88; font-size:1.4rem; margin-bottom:4px; }
 <script>
 async function load() {
   try {
-    const [s, t] = await Promise.all([
+    const [s, t, g] = await Promise.all([
       fetch('/api/stack').then(r=>r.json()),
-      fetch('/api/tareas').then(r=>r.json())
+      fetch('/api/tareas').then(r=>r.json()),
+      fetch('/api/gateway').then(r=>r.json())
     ]);
-    const dot = s => s.includes('Up') ? 'dot-ok' : 'dot-fail';
-    const ok  = s => s.includes('Up') ? 'ok' : 'fail';
+    const dot = s => s.includes('running') ? 'dot-ok' : 'dot-fail';
+    const ok  = s => s.includes('running') ? 'ok' : 'fail';
     const tag = s => 'tag-'+(s||'pendiente');
     document.getElementById('grid').innerHTML =
       '<div class="card"><h2>CONTENEDORES</h2>' +
       (s.containers||[]).map(c=>
-        `<div class="item"><span><span class="dot ${dot(c.status)}"></span>${c.name}</span><span class="${ok(c.status)}">${c.status.split(' ').slice(0,2).join(' ')}</span></div>`
+        `<div class="item"><span><span class="dot ${dot(c.status)}"></span>${c.name}</span><span class="${ok(c.status)}">${c.status}</span></div>`
       ).join('') + '</div>' +
       '<div class="card"><h2>DAG — TAREAS</h2>' +
       Object.entries(t.tareas||{}).map(([k,v])=>
         `<div class="item"><span>${k.replace(/_/g,' ')}</span><span class="tag ${tag(v.estado)}">${v.estado}</span></div>`
+      ).join('') + '</div>' +
+      '<div class="card"><h2>HB JEWELRY — GATEWAY</h2>' +
+      `<div class="item"><span>estado</span><span class="${g.status==='healthy'?'ok':'fail'}">${g.status||'sin respuesta'}</span></div>` +
+      (g.agents||[]).map(a=>
+        `<div class="item"><span class="hb">⬡ ${a}</span><span class="ok">activo</span></div>`
       ).join('') + '</div>';
   } catch(e) {
-    document.getElementById('grid').innerHTML = '<div style="color:#ff4444">Error conectando con el orquestador</div>';
+    document.getElementById('grid').innerHTML = '<div style="color:#ff4444">Error conectando</div>';
   }
 }
 load();
@@ -90,6 +98,13 @@ def stack():
 @app.route("/api/tareas")
 def tareas():
     return jsonify(fetch_json(f"{ORCHESTRATOR}/api/tareas"))
+
+@app.route("/api/gateway")
+def gateway():
+    data = fetch_json(f"{GATEWAY}/health")
+    agents = fetch_json(f"{GATEWAY}/api/mcp/status")
+    data["agents"] = agents.get("agents", [])
+    return jsonify(data)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000, debug=False)

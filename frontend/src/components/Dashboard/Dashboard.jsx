@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-const BASE = 'http://localhost:3000'
+const BASE = ''
 
 export default function Dashboard() {
   const [stack, setStack] = useState([])
@@ -40,22 +40,16 @@ export default function Dashboard() {
     <div style={{padding:'1.5rem',background:'#0a0a0a',minHeight:'100vh',color:'#e0e0e0',fontFamily:'monospace'}}>
       <h1 style={{color:'#00ff88',marginBottom:'4px',fontSize:'1.4rem'}}>⬡ LAMAUTONOMIA</h1>
       <p style={{color:'#555',fontSize:'0.8rem',marginBottom:'1.5rem'}}>auto-refresh 10s</p>
-
       <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:'1rem'}}>
-
         <div style={{background:'#111',border:'1px solid #222',borderRadius:'8px',padding:'1rem'}}>
           <h2 style={{color:'#00aaff',fontSize:'0.85rem',letterSpacing:'2px',marginBottom:'12px'}}>CONTENEDORES</h2>
           {stack.map(c => (
             <div key={c.name} style={{display:'flex',justifyContent:'space-between',padding:'6px 0',borderBottom:'1px solid #1a1a1a',fontSize:'0.82rem'}}>
-              <span>
-                <span style={{display:'inline-block',width:'8px',height:'8px',borderRadius:'50%',background:c.status==='running'?'#00ff88':'#ff4444',marginRight:'6px'}}/>
-                {c.name}
-              </span>
+              <span><span style={{display:'inline-block',width:'8px',height:'8px',borderRadius:'50%',background:c.status==='running'?'#00ff88':'#ff4444',marginRight:'6px'}}/>{c.name}</span>
               <span style={{color:c.status==='running'?'#00ff88':'#ff4444'}}>{c.status}</span>
             </div>
           ))}
         </div>
-
         <div style={{background:'#111',border:'1px solid #222',borderRadius:'8px',padding:'1rem'}}>
           <h2 style={{color:'#00aaff',fontSize:'0.85rem',letterSpacing:'2px',marginBottom:'12px'}}>HB JEWELRY — GATEWAY</h2>
           <div style={{display:'flex',justifyContent:'space-between',padding:'6px 0',borderBottom:'1px solid #1a1a1a',fontSize:'0.82rem'}}>
@@ -69,7 +63,6 @@ export default function Dashboard() {
             </div>
           ))}
         </div>
-
         <div style={{background:'#111',border:'1px solid #222',borderRadius:'8px',padding:'1rem'}}>
           <h2 style={{color:'#00aaff',fontSize:'0.85rem',letterSpacing:'2px',marginBottom:'12px'}}>DAG — TAREAS</h2>
           {Object.entries(tareas).map(([k, v]) => (
@@ -79,7 +72,6 @@ export default function Dashboard() {
             </div>
           ))}
         </div>
-
       </div>
     </div>
   )

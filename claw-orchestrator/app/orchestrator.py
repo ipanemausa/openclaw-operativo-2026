@@ -118,6 +118,24 @@ def radio_publish():
         "created_at": data.get("created_at")
     })
 
+@app.route("/api/chat/input", methods=["POST"])
+def chat_input():
+    body = request.get_json(force=True)
+    mensaje = body.get("mensaje", "")
+    agente  = body.get("agente", "main")
+    if not mensaje:
+        return jsonify({"error": "mensaje requerido"}), 400
+    job_id = f"chat-{datetime.now(timezone.utc).strftime('%Y%m%d-%H%M%S-%f')}"
+    redis_client.hset(f"chat:{job_id}", mapping={
+        "mensaje":    mensaje,
+        "agente":     agente,
+        "status":     "queued",
+        "created_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    })
+    redis_client.lpush("queue:chat", job_id)
+    print(f"[CHAT] job {job_id} encolado — agente: {agente}", flush=True)
+    return jsonify({"job_id": job_id, "status": "queued"}), 202
+
 @app.route("/handoff", methods=["POST"])
 def create_handoff():
     body = request.get_json(force=True)

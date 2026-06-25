@@ -10,20 +10,16 @@ export default function Dashboard() {
 
   useEffect(() => {
     async function load() {
-      try {
-        const [s, t, g] = await Promise.all([
-          fetch('http://localhost:8090/stack').then(r => r.json()),
-          fetch('http://localhost:8090/tareas').then(r => r.json()),
-          fetch('http://localhost:8080/api/mcp/status').then(r => r.json()),
-        ])
-        setStack(s.containers || [])
-        setTareas(t.tareas || {})
-        setGateway(g)
-      } catch (e) {
-        console.error(e)
-      } finally {
-        setLoading(false)
-      }
+      // Usar allSettled para que un fallo no bloquee los otros paneles
+      const [s, t, g] = await Promise.allSettled([
+        fetch('http://localhost:8090/stack').then(r => r.json()),
+        fetch('http://localhost:8090/api/tareas').then(r => r.json()),
+        fetch('http://localhost:8080/api/mcp/status').then(r => r.json()),
+      ])
+      if (s.status === 'fulfilled') setStack(s.value.containers || [])
+      if (t.status === 'fulfilled') setTareas(t.value.tareas || {})
+      if (g.status === 'fulfilled') setGateway(g.value)
+      setLoading(false)
     }
     load()
     const interval = setInterval(load, 10000)

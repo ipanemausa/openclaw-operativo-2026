@@ -1,9 +1,11 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 from datetime import datetime, timezone
 import json, os, pathlib, redis, threading, time
 import docker
 
 app = Flask(__name__)
+CORS(app)
 HANDOFFS_DIR = pathlib.Path("/handoffs")
 LOGS_DIR     = pathlib.Path("/logs")
 ESTADO_PATH  = pathlib.Path("/app/claw-estado.json")

@@ -12,9 +12,9 @@ export default function Dashboard() {
     async function load() {
       try {
         const [s, t, g] = await Promise.all([
-          fetch(`${BASE}/api/stack`).then(r => r.json()),
-          fetch(`${BASE}/api/tareas`).then(r => r.json()),
-          fetch(`${BASE}/api/gateway`).then(r => r.json()),
+          fetch('http://localhost:8090/stack').then(r => r.json()),
+          fetch('http://localhost:8090/tareas').then(r => r.json()),
+          fetch('http://localhost:8080/api/mcp/status').then(r => r.json()),
         ])
         setStack(s.containers || [])
         setTareas(t.tareas || {})
@@ -54,7 +54,7 @@ export default function Dashboard() {
           <h2 style={{color:'#00aaff',fontSize:'0.85rem',letterSpacing:'2px',marginBottom:'12px'}}>HB JEWELRY — GATEWAY</h2>
           <div style={{display:'flex',justifyContent:'space-between',padding:'6px 0',borderBottom:'1px solid #1a1a1a',fontSize:'0.82rem'}}>
             <span>estado</span>
-            <span style={{color:gateway.status==='healthy'?'#00ff88':'#ff4444'}}>{gateway.status||'sin respuesta'}</span>
+            <span style={{color:gateway.status==='ok'?'#00ff88':'#ff4444'}}>{gateway.status||'sin respuesta'}</span>
           </div>
           {(gateway.agents||[]).map(a => (
             <div key={a} style={{display:'flex',justifyContent:'space-between',padding:'6px 0',borderBottom:'1px solid #1a1a1a',fontSize:'0.82rem'}}>

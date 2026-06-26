@@ -55,6 +55,19 @@ services:
       - claw-orchestrator
     networks:
       - claw-net
+  chat_worker:
+    build:
+      context: ./agents/chat_worker
+      dockerfile: Dockerfile
+    container_name: chat_worker
+    restart: always
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+    networks:
+      - claw-net
 networks:
   claw-net:
     driver: bridge

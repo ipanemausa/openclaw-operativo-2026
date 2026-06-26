@@ -1,0 +1,12 @@
+
+System      : @{Timestamp=6/26/2026 10:18:18 AM; Hostname=DESKTOP-BUSONST; User=ipane; TimeZone=Eastern Standard Time; Uptime=2.02:32:53.6177567; OS=Microsoft Windows 11 Home 10.0.26200 Build 26200; BIOS=F5CN64WW; CPU=11th Gen Intel(R) Core(TM) i7-1165G7 @ 2.80GHz; RAM_GB=11.8; Model=82BJ; Manufacturer=LENOVO; IsVirtual=False}
+Disks       : @{Drive=C; Label=Windows-SSD; SizeGB=475.41; FreeGB=160.17; FileSystem=NTFS; LargestFiles=System.Object[]}
+Performance : @{Timestamp=6/26/2026 10:18:22 AM; CPU_Top=System.Object[]; Memory_Top=System.Object[]; CPU_Load=68.1742028815417; RAM_Load=513}
+Network     : @{Timestamp=6/26/2026 10:18:25 AM; IPs=System.Object[]; Routes=System.Object[]; DNS=System.Object[]; Adapters=System.Object[]; ListeningPorts=System.Object[]; ActiveConnections=System.Object[]; Proxy=}
+Services    : @{Timestamp=6/26/2026 10:18:35 AM; NotRunning=System.Object[]}
+Security    : @{Timestamp=6/26/2026 10:18:52 AM; Defender=MSFT_MpComputerStatus (ComputerID = "9A076504-103E-4B67-9A3D-8AA84AB8FC2B"); Firewall=System.Object[]; BitLocker=; UAC=}
+Updates     : {\\DESKTOP-BUSONST\root\cimv2:Win32_QuickFixEngineering.HotFixID="KB5092427",ServicePackInEffect="", \\DESKTOP-BUSONST\root\cimv2:Win32_QuickFixEngineering.HotFixID="KB5054156",ServicePackInEffect="", \\DESKTOP-BUSONST\root\cimv2:Win32_QuickFixEngineering.HotFixID="KB5095093",ServicePackInEffect="", \\DESKTOP-BUSONST\root\cimv2:Win32_QuickFixEngineering.HotFixID="KB5094135",ServicePackInEffect=""…}
+Logs        : {[System, System.Object[]], [Application, ]}
+Software    : {@{DisplayName=thinkorswim; DisplayVersion=desktop; Publisher=thinkorswim, Inc; InstallDate=}, @{DisplayName=Docker Desktop; DisplayVersion=4.75.0; Publisher=Docker Inc.; InstallDate=}, @{DisplayName=Git; DisplayVersion=2.51.0.2; Publisher=The Git Development Community; InstallDate=20251014}, @{DisplayName=Mozilla Firefox (x64 en-US); DisplayVersion=140.0.4; Publisher=Mozilla; InstallDate=}…}
+
+

@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, Response
 from flask_cors import CORS
 from datetime import datetime, timezone
 import json, os, pathlib, redis, threading, time
@@ -174,7 +174,23 @@ def completar_tarea(nombre):
     save_estado(estado)
     return jsonify({"tarea": nombre, "estado": "completada"})
 
+
+@app.route("/api/chat/status/<job_id>")
+def chat_status(job_id):
+    def generate():
+        for _ in range(30):
+            data = redis_client.hgetall(f"chat:{job_id}")
+            status = data.get("status", "queued")
+            respuesta = data.get("respuesta", "")
+            import json as _json
+            yield f"data: {_json.dumps({'status': status, 'respuesta': respuesta})}\n\n"
+            if status == "completed":
+                break
+            time.sleep(1)
+    return Response(generate(), mimetype="text/event-stream", headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
+
 if __name__ == "__main__":
     threading.Thread(target=dag_worker, daemon=True).start()
     threading.Thread(target=task_executor, daemon=True).start()
     app.run(host="0.0.0.0", port=8090, debug=False)
+

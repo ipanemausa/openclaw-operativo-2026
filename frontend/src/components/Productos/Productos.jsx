@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react'
+import '../../styles/hb.css'
 
 const API = ''
+const CATEGORIAS = ['Collares', 'Aretes', 'Pulseras', 'Anillos', 'Sets']
+const CANALES = ['Instagram', 'WhatsApp', 'Shopify', 'TikTok', 'Tienda']
 
 export default function Productos() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
-  const [form, setForm] = useState({ nombre: '', categoria: '', material: '', precio: '', inventario: '', canal: '' })
-  const [adding, setAdding] = useState(false)
   const [showForm, setShowForm] = useState(false)
+  const [adding, setAdding] = useState(false)
+  const [form, setForm] = useState({ nombre: '', categoria: '', material: '', precio: '', stock: '', descripcion: '' })
 
   useEffect(() => { loadProducts() }, [])
 
   async function loadProducts() {
     try {
-      const r = await fetch(API + '/api/hb/products')
+      const r = await fetch(API + '/api/hb/productos')
       const d = await r.json()
-      setProducts(d.products || [])
+      setProducts(d.productos || [])
     } catch(e) { console.error(e) }
     setLoading(false)
   }
@@ -24,14 +27,14 @@ export default function Productos() {
     if (!form.nombre || !form.precio) return
     setAdding(true)
     try {
-      const r = await fetch(API + '/api/hb/products', {
+      const r = await fetch(API + '/api/hb/productos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, precio: parseFloat(form.precio), inventario: parseInt(form.inventario) || 0 })
+        body: JSON.stringify({ ...form, precio: parseFloat(form.precio), stock: parseInt(form.stock) || 0 })
       })
       const d = await r.json()
       if (d.status === 'ok') {
-        setForm({ nombre: '', categoria: '', material: '', precio: '', inventario: '', canal: '' })
+        setForm({ nombre: '', categoria: '', material: '', precio: '', stock: '', descripcion: '' })
         setShowForm(false)
         loadProducts()
       }
@@ -39,59 +42,55 @@ export default function Productos() {
     setAdding(false)
   }
 
-  const categorias = ['Collares', 'Aretes', 'Pulseras', 'Anillos', 'Sets']
-  const canales = ['Instagram', 'WhatsApp', 'Shopify', 'TikTok', 'Tienda']
-
   return (
-    <div style={{padding:'0'}}>
-      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'24px'}}>
+    <div className="hb-page">
+      <div className="hb-page-header">
         <div>
-          <h2 style={{fontSize:'18px',fontWeight:'600',color:'#f0ede8'}}>Catalogo de productos</h2>
-          <p style={{fontSize:'13px',color:'#a09d99',marginTop:'4px'}}>{products.length} productos activos</p>
+          <div className="hb-page-title">Catálogo de productos</div>
+          <div className="hb-page-subtitle">{products.length} productos activos</div>
         </div>
-        <button onClick={() => setShowForm(!showForm)} style={{background:'#d4af6a',color:'#000',border:'none',borderRadius:'8px',padding:'9px 18px',fontSize:'13px',fontWeight:'600',cursor:'pointer'}}>
+        <button className="hb-btn" onClick={() => setShowForm(!showForm)}>
           {showForm ? 'Cancelar' : '+ Agregar producto'}
         </button>
       </div>
 
       {showForm && (
-        <div style={{background:'#1a1a1a',border:'1px solid rgba(255,255,255,0.08)',borderRadius:'12px',padding:'20px',marginBottom:'24px'}}>
-          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(160px,1fr))',gap:'10px',marginBottom:'12px'}}>
-            <input placeholder="Nombre *" value={form.nombre} onChange={e => setForm({...form, nombre: e.target.value})} style={{background:'#111',border:'1px solid rgba(255,255,255,0.1)',borderRadius:'7px',padding:'8px 12px',color:'#f0ede8',fontSize:'13px',fontFamily:'inherit'}} />
-            <select value={form.categoria} onChange={e => setForm({...form, categoria: e.target.value})} style={{background:'#111',border:'1px solid rgba(255,255,255,0.1)',borderRadius:'7px',padding:'8px 12px',color:'#f0ede8',fontSize:'13px',fontFamily:'inherit'}}>
-              <option value="">Categoria</option>
-              {categorias.map(c => <option key={c} value={c}>{c}</option>)}
+        <div className="hb-form">
+          <div className="hb-form-grid">
+            <input className="hb-input" placeholder="Nombre *" value={form.nombre} onChange={e => setForm({...form, nombre: e.target.value})} />
+            <select className="hb-select" value={form.categoria} onChange={e => setForm({...form, categoria: e.target.value})}>
+              <option value="">Categoría</option>
+              {CATEGORIAS.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
-            <input placeholder="Material" value={form.material} onChange={e => setForm({...form, material: e.target.value})} style={{background:'#111',border:'1px solid rgba(255,255,255,0.1)',borderRadius:'7px',padding:'8px 12px',color:'#f0ede8',fontSize:'13px',fontFamily:'inherit'}} />
-            <input placeholder="Precio *" type="number" value={form.precio} onChange={e => setForm({...form, precio: e.target.value})} style={{background:'#111',border:'1px solid rgba(255,255,255,0.1)',borderRadius:'7px',padding:'8px 12px',color:'#f0ede8',fontSize:'13px',fontFamily:'inherit'}} />
-            <input placeholder="Inventario" type="number" value={form.inventario} onChange={e => setForm({...form, inventario: e.target.value})} style={{background:'#111',border:'1px solid rgba(255,255,255,0.1)',borderRadius:'7px',padding:'8px 12px',color:'#f0ede8',fontSize:'13px',fontFamily:'inherit'}} />
-            <select value={form.canal} onChange={e => setForm({...form, canal: e.target.value})} style={{background:'#111',border:'1px solid rgba(255,255,255,0.1)',borderRadius:'7px',padding:'8px 12px',color:'#f0ede8',fontSize:'13px',fontFamily:'inherit'}}>
-              <option value="">Canal</option>
-              {canales.map(c => <option key={c} value={c}>{c}</option>)}
-            </select>
+            <input className="hb-input" placeholder="Material" value={form.material} onChange={e => setForm({...form, material: e.target.value})} />
+            <input className="hb-input" placeholder="Precio *" type="number" value={form.precio} onChange={e => setForm({...form, precio: e.target.value})} />
+            <input className="hb-input" placeholder="Stock" type="number" value={form.stock} onChange={e => setForm({...form, stock: e.target.value})} />
+            <input className="hb-input" placeholder="Descripción" value={form.descripcion} onChange={e => setForm({...form, descripcion: e.target.value})} />
           </div>
-          <button onClick={addProduct} disabled={adding} style={{background:'#d4af6a',color:'#000',border:'none',borderRadius:'7px',padding:'8px 20px',fontSize:'13px',fontWeight:'600',cursor:'pointer',opacity:adding?0.5:1}}>
+          <button className="hb-btn hb-btn-sm" onClick={addProduct} disabled={adding}>
             {adding ? 'Guardando...' : 'Guardar producto'}
           </button>
         </div>
       )}
 
       {loading ? (
-        <p style={{color:'#6b6866',fontSize:'13px'}}>Cargando productos...</p>
+        <p className="hb-empty">Cargando productos...</p>
+      ) : products.length === 0 ? (
+        <p className="hb-empty">No hay productos registrados.</p>
       ) : (
-        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))',gap:'12px'}}>
+        <div className="hb-grid">
           {products.map(p => (
-            <div key={p.id} style={{background:'#1a1a1a',border:'1px solid rgba(255,255,255,0.07)',borderRadius:'12px',padding:'16px'}}>
-              <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:'8px'}}>
-                <div style={{fontSize:'14px',fontWeight:'500',color:'#f0ede8'}}>{p.nombre}</div>
-                <div style={{fontSize:'15px',fontWeight:'600',color:'#d4af6a'}}>${p.precio.toFixed(2)}</div>
+            <div key={p.id} className="hb-card">
+              <div className="hb-card-header">
+                <div className="hb-card-name">{p.nombre}</div>
+                <div className="hb-card-price">${parseFloat(p.precio).toFixed(2)}</div>
               </div>
-              <div style={{fontSize:'12px',color:'#a09d99',marginBottom:'4px'}}>{p.categoria} · {p.material}</div>
-              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginTop:'10px'}}>
-                <span style={{fontSize:'11px',background:p.inventario < 6 ? 'rgba(251,113,133,0.15)':'rgba(52,211,153,0.1)',color:p.inventario < 6 ? '#fb7185':'#34d399',padding:'2px 8px',borderRadius:'10px'}}>
-                  Stock: {p.inventario}
+              <div className="hb-card-meta">{p.categoria}{p.material ? ` · ${p.material}` : ''}</div>
+              {p.descripcion && <div className="hb-card-meta">{p.descripcion}</div>}
+              <div className="hb-card-footer">
+                <span className={`hb-badge ${parseInt(p.stock) < 6 ? 'hb-badge-red' : 'hb-badge-green'}`}>
+                  Stock: {p.stock}
                 </span>
-                <span style={{fontSize:'11px',color:'#6b6866'}}>{p.canal}</span>
               </div>
             </div>
           ))}

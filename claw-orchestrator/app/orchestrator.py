@@ -64,11 +64,7 @@ def get_stack_status():
         containers = []
         for c in client.containers.list(all=True):
             ports = ",".join([str(v[0]["HostPort"]) for v in (c.ports or {}).values() if v])
-            containers.append({
-                "name":   c.name,
-                "status": c.status,
-                "ports":  ports
-            })
+            containers.append({"name": c.name, "status": c.status, "ports": ports})
         return containers
     except Exception as e:
         return [{"error": str(e)}]
@@ -92,11 +88,9 @@ def radio_input():
         return jsonify({"error": "prompt requerido"}), 400
     job_id = f"veo-{datetime.now(timezone.utc).strftime('%Y%m%d-%H%M%S-%f')}"
     redis_client.hset(f"veo:{job_id}", mapping={
-        "prompt":     prompt,
-        "duration":   str(duration),
-        "resolution": resolution,
-        "style":      style,
-        "status":     "queued",
+        "prompt": prompt, "duration": str(duration),
+        "resolution": resolution, "style": style,
+        "status": "queued",
         "created_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     })
     redis_client.lpush("queue:video_veo", job_id)
@@ -110,13 +104,9 @@ def radio_publish():
     data = redis_client.hgetall(f"veo:{job_id}")
     if not data:
         return jsonify({"error": "job no encontrado"}), 404
-    return jsonify({
-        "job_id":     job_id,
-        "status":     data.get("status"),
-        "video_url":  data.get("video_url", ""),
-        "prompt":     data.get("prompt"),
-        "created_at": data.get("created_at")
-    })
+    return jsonify({"job_id": job_id, "status": data.get("status"),
+                    "video_url": data.get("video_url", ""), "prompt": data.get("prompt"),
+                    "created_at": data.get("created_at")})
 
 @app.route("/api/chat/input", methods=["POST"])
 def chat_input():
@@ -127,14 +117,89 @@ def chat_input():
         return jsonify({"error": "mensaje requerido"}), 400
     job_id = f"chat-{datetime.now(timezone.utc).strftime('%Y%m%d-%H%M%S-%f')}"
     redis_client.hset(f"chat:{job_id}", mapping={
-        "mensaje":    mensaje,
-        "agente":     agente,
-        "status":     "queued",
+        "mensaje": mensaje, "agente": agente,
+        "status": "queued",
         "created_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     })
     redis_client.lpush("queue:chat", job_id)
     print(f"[CHAT] job {job_id} encolado — agente: {agente}", flush=True)
     return jsonify({"job_id": job_id, "status": "queued"}), 202
+
+@app.route("/api/chat/status/<job_id>")
+def chat_status(job_id):
+    def generate():
+        for _ in range(30):
+            data = redis_client.hgetall(f"chat:{job_id}")
+            status = data.get("status", "queued")
+            respuesta = data.get("respuesta", "")
+            yield f"data: {json.dumps({'status': status, 'respuesta': respuesta})}\n\n"
+            if status == "completed":
+                break
+            time.sleep(1)
+    return Response(generate(), mimetype="text/event-stream",
+                    headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
+
+@app.route("/api/hb/productos", methods=["GET"])
+def get_productos():
+    keys = redis_client.keys("hb:producto:*")
+    productos = [redis_client.hgetall(k) for k in sorted(keys)]
+    return jsonify({"productos": productos})
+
+@app.route("/api/hb/productos", methods=["POST"])
+def add_producto():
+    b = request.get_json(force=True)
+    pid = f"hb:producto:{datetime.now(timezone.utc).strftime('%Y%m%d-%H%M%S-%f')}"
+    redis_client.hset(pid, mapping={
+        "id": pid, "nombre": b.get("nombre",""), "precio": str(b.get("precio",0)),
+        "stock": str(b.get("stock",0)), "categoria": b.get("categoria",""),
+        "descripcion": b.get("descripcion",""),
+        "created_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    })
+    return jsonify({"status": "ok", "id": pid}), 201
+
+@app.route("/api/hb/ventas", methods=["GET"])
+def get_ventas():
+    keys = redis_client.keys("hb:venta:*")
+    ventas = [redis_client.hgetall(k) for k in sorted(keys)]
+    return jsonify({"ventas": ventas})
+
+@app.route("/api/hb/ventas", methods=["POST"])
+def add_venta():
+    b = request.get_json(force=True)
+    vid = f"hb:venta:{datetime.now(timezone.utc).strftime('%Y%m%d-%H%M%S-%f')}"
+    redis_client.hset(vid, mapping={
+        "id": vid, "producto": b.get("producto",""), "cantidad": str(b.get("cantidad",1)),
+        "precio": str(b.get("precio",0)), "canal": b.get("canal",""),
+        "cliente": b.get("cliente",""),
+        "fecha": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    })
+    return jsonify({"status": "ok", "id": vid}), 201
+
+@app.route("/api/hb/ordenes", methods=["GET"])
+def get_ordenes():
+    keys = redis_client.keys("hb:orden:*")
+    ordenes = [redis_client.hgetall(k) for k in sorted(keys)]
+    return jsonify({"ordenes": ordenes})
+
+@app.route("/api/hb/ordenes", methods=["POST"])
+def add_orden():
+    b = request.get_json(force=True)
+    oid = f"hb:orden:{datetime.now(timezone.utc).strftime('%Y%m%d-%H%M%S-%f')}"
+    redis_client.hset(oid, mapping={
+        "id": oid, "cliente": b.get("cliente",""), "producto": b.get("producto",""),
+        "cantidad": str(b.get("cantidad",1)), "precio": str(b.get("precio",0)),
+        "canal": b.get("canal","Instagram"), "estado": b.get("estado","Pendiente"),
+        "notas": b.get("notas",""),
+        "fecha": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    })
+    return jsonify({"status": "ok", "id": oid}), 201
+
+@app.route("/api/hb/ordenes/<oid>", methods=["PATCH"])
+def update_orden(oid):
+    b = request.get_json(force=True)
+    key = oid if oid.startswith("hb:orden:") else f"hb:orden:{oid}"
+    redis_client.hset(key, "estado", b.get("estado","Pendiente"))
+    return jsonify({"status": "ok"})
 
 @app.route("/handoff", methods=["POST"])
 def create_handoff():
@@ -174,23 +239,7 @@ def completar_tarea(nombre):
     save_estado(estado)
     return jsonify({"tarea": nombre, "estado": "completada"})
 
-
-@app.route("/api/chat/status/<job_id>")
-def chat_status(job_id):
-    def generate():
-        for _ in range(30):
-            data = redis_client.hgetall(f"chat:{job_id}")
-            status = data.get("status", "queued")
-            respuesta = data.get("respuesta", "")
-            import json as _json
-            yield f"data: {_json.dumps({'status': status, 'respuesta': respuesta})}\n\n"
-            if status == "completed":
-                break
-            time.sleep(1)
-    return Response(generate(), mimetype="text/event-stream", headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
-
 if __name__ == "__main__":
     threading.Thread(target=dag_worker, daemon=True).start()
     threading.Thread(target=task_executor, daemon=True).start()
     app.run(host="0.0.0.0", port=8090, debug=False)
-

@@ -1,0 +1,54 @@
+/* ── HB App Global ── */
+.hb-page { padding: 0; }
+
+.hb-page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+.hb-page-title { font-size: 18px; font-weight: 600; color: #f0ede8; }
+.hb-page-subtitle { font-size: 13px; color: #a09d99; margin-top: 4px; }
+
+.hb-btn { background: transparent; color: #d4af6a; border: 1.5px solid #d4af6a; border-radius: 8px; padding: 9px 18px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+.hb-btn:hover { background: rgba(212,175,106,0.1); }
+.hb-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.hb-btn-sm { padding: 6px 14px; font-size: 12px; }
+
+.hb-form { background: #1a1a1a; border: 1px solid rgba(212,175,106,0.15); border-radius: 12px; padding: 20px; margin-bottom: 24px; }
+.hb-form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 12px; }
+.hb-input { background: #111; border: 1px solid rgba(212,175,106,0.2); border-radius: 7px; padding: 8px 12px; color: #f0ede8; font-size: 13px; font-family: inherit; width: 100%; box-sizing: border-box; transition: border-color 0.15s; }
+.hb-input:focus { outline: none; border-color: #d4af6a; }
+.hb-input::placeholder { color: #6b6866; }
+.hb-select { background: #111; border: 1px solid rgba(212,175,106,0.2); border-radius: 7px; padding: 8px 12px; color: #f0ede8; font-size: 13px; font-family: inherit; width: 100%; cursor: pointer; }
+.hb-select:focus { outline: none; border-color: #d4af6a; }
+
+.hb-total { font-size: 13px; color: #d4af6a; margin-bottom: 12px; font-weight: 600; }
+
+.hb-empty { color: #6b6866; font-size: 13px; margin-top: 20px; }
+
+/* Cards */
+.hb-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.hb-card { background: #1a1a1a; border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 16px; transition: border-color 0.15s; }
+.hb-card:hover { border-color: rgba(212,175,106,0.3); }
+.hb-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.hb-card-name { font-size: 14px; font-weight: 500; color: #f0ede8; }
+.hb-card-price { font-size: 15px; font-weight: 600; color: #d4af6a; }
+.hb-card-meta { font-size: 12px; color: #a09d99; margin-bottom: 4px; }
+.hb-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+
+/* Badges */
+.hb-badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; }
+.hb-badge-green { background: rgba(52,211,153,0.1); color: #34d399; }
+.hb-badge-red { background: rgba(251,113,133,0.15); color: #fb7185; }
+.hb-badge-gray { font-size: 11px; color: #6b6866; }
+
+/* Tabla ventas */
+.hb-table-wrap { background: #1a1a1a; border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; overflow: hidden; }
+.hb-table { width: 100%; border-collapse: collapse; }
+.hb-table thead tr { border-bottom: 1px solid rgba(255,255,255,0.07); }
+.hb-table th { padding: 10px 14px; font-size: 11px; color: #6b6866; text-align: left; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; }
+.hb-table td { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.hb-table tr:last-child td { border-bottom: none; }
+.hb-table .td-main { color: #f0ede8; }
+.hb-table .td-muted { color: #a09d99; }
+.hb-table .td-gold { color: #d4af6a; font-weight: 600; }
+.hb-table .td-dim { color: #6b6866; font-size: 11px; }
+
+/* Canal badges */
+.hb-canal { font-size: 11px; padding: 2px 8px; border-radius: 10px; }

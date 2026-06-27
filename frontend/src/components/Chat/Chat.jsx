@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
 import "../../styles/chat.css";
 
 const AGENTS = [
@@ -135,7 +136,13 @@ export default function Chat() {
       <div className="chat-messages responsive-scroll">
         {messages.map((m, i) => (
           <div key={i} className={`chat-msg ${m.role}`}>
-            <div className="chat-bubble">{m.content}</div>
+            <div className="chat-bubble">
+              {m.role === "assistant" ? (
+                <ReactMarkdown>{m.content}</ReactMarkdown>
+              ) : (
+                m.content
+              )}
+            </div>
           </div>
         ))}
 

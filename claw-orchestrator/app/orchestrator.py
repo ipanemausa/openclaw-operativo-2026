@@ -139,6 +139,24 @@ def chat_status(job_id):
     return Response(generate(), mimetype="text/event-stream",
                     headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
 
+@app.route("/api/hb/write-file", methods=["POST"])
+def write_file():
+    b = request.get_json(force=True)
+    rel_path = b.get("path", "").lstrip("/")
+    content  = b.get("content", "")
+    if not rel_path or not content:
+        return jsonify({"error": "path y content requeridos"}), 400
+    if not rel_path.startswith("frontend/src/"):
+        return jsonify({"error": "ruta no permitida — solo frontend/src/"}), 403
+    try:
+        full_path = pathlib.Path("/") / rel_path
+        full_path.parent.mkdir(parents=True, exist_ok=True)
+        full_path.write_text(content, encoding="utf-8")
+        print(f"[WRITE] {full_path}", flush=True)
+        return jsonify({"status": "ok", "path": str(full_path)}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @app.route("/api/hb/productos", methods=["GET"])
 def get_productos():
     keys = redis_client.keys("hb:producto:*")

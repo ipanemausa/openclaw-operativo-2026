@@ -1,105 +1,82 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import '../../styles/hb.css';
 
-const PlanDiario = () => {
-  const [plan, setPlan] = useState([
-    { bloque: 1, titulo: 'Instalar OpenClaw 2026.6.10', completo: false },
-    { bloque: 2, titulo: 'Conectar OpenClaw con DeepSeek', completo: false },
-    { bloque: 3, titulo: 'Historial real con Redis', completo: false },
-    { bloque: 4, titulo: 'Navegación mejorada (scroll, adjuntos)', completo: false },
-    { bloque: 5, titulo: 'Deploy Cloud Run', completo: false },
-    { bloque: 6, titulo: 'Cierre y contexto 2026-06-30', completo: false },
-  ]);
-
-  const toggleBloque = (bloque) => {
-    setPlan(prev =>
-      prev.map(item =>
-        item.bloque === bloque ? { ...item, completo: !item.completo } : item
-      )
-    );
-  };
-
-  const bloquesCompletos = plan.filter(b => b.completo).length;
-
+const PushSync = () => {
   return (
-    <div className="hb-page" style={{ padding: '2rem' }}>
+    <div className="hb-page">
       <div className="hb-page-header">
-        <h1 className="hb-page-title">📋 Plan Diario — OpenClaw 2026</h1>
-        <p className="hb-page-subtitle">
-          Fecha: 2026-06-29 | Progreso: {bloquesCompletos}/{plan.length} bloques
-        </p>
+        <h1 className="hb-page-title">Push & Sync</h1>
+        <p className="hb-page-subtitle">Sincronización con GitHub completada</p>
       </div>
 
-      <div style={{ marginBottom: '2rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-        <button
-          className="hb-btn"
-          style={{ background: '#d4af6a', color: '#1a1a1a', border: 'none', padding: '0.75rem 1.5rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}
-          onClick={() => setPlan(plan.map(p => ({ ...p, completo: false })))}
-        >
-          🔄 Resetear todo
-        </button>
+      <div className="hb-card">
+        <div className="hb-card-header">
+          <span className="hb-card-name">Commit: docs: contexto 2026-06-29 + DeepSeek IDE funcional</span>
+          <span className="hb-badge-green">Push exitoso</span>
+        </div>
 
-        <button
-          className="hb-btn"
-          style={{ background: '#d4af6a', color: '#1a1a1a', border: 'none', padding: '0.75rem 1.5rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}
-          onClick={() => navigator.clipboard.writeText(JSON.stringify(plan, null, 2))}
-        >
-          📋 Copiar estado
-        </button>
+        <div className="hb-table-wrap">
+          <table className="hb-table">
+            <thead>
+              <tr>
+                <th>Hash</th>
+                <th>Archivos</th>
+                <th>Branch</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2d65af4</td>
+                <td>Historial.jsx, Nuevo.jsx</td>
+                <td>main</td>
+                <td><span className="hb-badge-green">✓ Sincronizado</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-        <span className="hb-badge" style={{ alignSelf: 'center', fontSize: '1.1rem' }}>
-          {bloquesCompletos === plan.length ? '✅ COMPLETADO' : `${bloquesCompletos}/${plan.length} completados`}
-        </span>
-      </div>
-
-      <div className="hb-form">
-        {plan.map((bloque) => (
-          <div
-            key={bloque.bloque}
-            className="hb-card"
-            style={{
-              marginBottom: '1rem',
-              cursor: 'pointer',
-              opacity: bloque.completo ? 0.8 : 1,
-              border: bloque.completo ? '2px solid #4caf50' : '2px solid transparent',
-              transition: 'all 0.3s ease',
-            }}
-            onClick={() => toggleBloque(bloque.bloque)}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <span
-                  className={`hb-badge ${bloque.completo ? 'hb-badge-green' : 'hb-badge-red'}`}
-                  style={{ minWidth: '60px', textAlign: 'center' }}
-                >
-                  BLOQUE {bloque.bloque}
-                </span>
-                <span style={{ color: bloque.completo ? '#4caf50' : '#f0ede8', fontWeight: 'bold', fontSize: '1.1rem' }}>
-                  {bloque.titulo}
-                </span>
-              </div>
-              <span style={{ fontSize: '1.5rem' }}>
-                {bloque.completo ? '✅' : '⬜'}
-              </span>
-            </div>
+        <div className="hb-form" style={{ marginTop: '1rem' }}>
+          <div className="hb-form-grid">
+            <input
+              type="text"
+              className="hb-input"
+              placeholder="Mensaje del commit"
+              value="docs: contexto 2026-06-29 + DeepSeek IDE funcional"
+              readOnly
+            />
+            <button className="hb-btn hb-btn-sm" disabled>
+              Push & Sync
+            </button>
           </div>
-        ))}
+        </div>
       </div>
 
-      <div className="hb-card" style={{ marginTop: '2rem', padding: '1.5rem' }}>
-        <h3 style={{ color: '#d4af6a', marginBottom: '1rem' }}>🎯 Próximo paso sugerido</h3>
-        <p style={{ color: '#f0ede8' }}>
-          {bloquesCompletos === 0 && 'Arrancar con Bloque 1: Instalar OpenClaw 2026.6.10'}
-          {bloquesCompletos === 1 && 'Continuar con Bloque 2: Conectar DeepSeek'}
-          {bloquesCompletos === 2 && 'Siguiente: Bloque 3 — Historial real con Redis'}
-          {bloquesCompletos === 3 && 'Avanzar: Bloque 4 — Navegación mejorada'}
-          {bloquesCompletos === 4 && 'Preparar: Bloque 5 — Deploy Cloud Run'}
-          {bloquesCompletos === 5 && 'Último: Bloque 6 — Cierre y contexto'}
-          {bloquesCompletos === 6 && '🎉 Plan completado. ¿Generar reporte de logros?'}
-        </p>
+      <div className="hb-card" style={{ marginTop: '1rem' }}>
+        <div className="hb-card-header">
+          <span className="hb-card-name">Logs Docker Desktop</span>
+          <span className="hb-badge">docker-desktop://dashboard/logs</span>
+        </div>
+        <pre style={{ color: '#f0ede8', background: '#1a1a1a', padding: '1rem', borderRadius: '4px', fontSize: '0.85rem', overflow: 'auto' }}>
+{`Enumerating objects: 13, done.
+Counting objects: 100% (13/13), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (9/9), 2.82 KiB | 577.00 KiB/s, done.
+Total 9 (delta 4), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (4/4), completed with 4 local objects.
+To https://github.com/ipanemausa/openclaw-operativo-2026.git
+   d6735e9..2d65af4  main -> main`}
+        </pre>
+      </div>
+
+      <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
+        <span className="hb-badge-green">Commit en main</span>
+        <span className="hb-badge">2d65af4</span>
+        <span className="hb-badge">LF -> CRLF</span>
       </div>
     </div>
   );
 };
 
-export default PlanDiario;
+export default PushSync;

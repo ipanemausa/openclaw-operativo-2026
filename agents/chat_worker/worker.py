@@ -5,23 +5,33 @@ import requests
 import re
 
 REDIS_URL = os.getenv("REDIS_URL", "redis://redis:6379")
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
-GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "")
+DEEPSEEK_URL = "https://api.deepseek.com/v1/chat/completions"
 WRITE_FILE_URL = "http://claw-orchestrator:8090/api/hb/write-file"
 FRONTEND_BASE = "frontend/src/components"
 
 r = redis.from_url(REDIS_URL, decode_responses=True)
-print("chat_worker iniciado — escuchando queue:chat", flush=True)
+print("chat_worker iniciado — DeepSeek", flush=True)
 
-def call_gemini(prompt):
-    payload = {"contents": [{"parts": [{"text": prompt}]}]}
-    url = f"{GEMINI_URL}?key={GEMINI_API_KEY}"
+def call_deepseek(prompt, system="Eres un agente de HB Jewelry. Responde en espanol."):
+    headers = {
+        "Authorization": f"Bearer {DEEPSEEK_API_KEY}",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "model": "deepseek-chat",
+        "messages": [
+            {"role": "system", "content": system},
+            {"role": "user", "content": prompt}
+        ],
+        "max_tokens": 4096
+    }
     try:
-        resp = requests.post(url, json=payload, headers={"Content-Type": "application/json"}, timeout=30)
+        resp = requests.post(DEEPSEEK_URL, json=payload, headers=headers, timeout=30)
         resp.raise_for_status()
-        return resp.json()["candidates"][0]["content"]["parts"][0]["text"]
+        return resp.json()["choices"][0]["message"]["content"]
     except Exception as e:
-        return f"Error Gemini: {str(e)}"
+        return f"Error DeepSeek: {str(e)}"
 
 def extract_code(text):
     match = re.search(r"```(?:jsx|javascript|js)?\n(.*?)```", text, re.DOTALL)
@@ -36,32 +46,26 @@ def es_comando_crear(mensaje):
 def extraer_nombre_componente(mensaje):
     match = re.search(r"componente\s+(?:llamado\s+)?(\w+)", mensaje.lower())
     if match:
-        nombre = match.group(1).capitalize()
-        return nombre
-    match = re.search(r"llamado\s+(\w+)|llamada\s+(\w+)|nombre\s+(\w+)", mensaje.lower())
+        return match.group(1).capitalize()
+    match = re.search(r"llamado\s+(\w+)|llamada\s+(\w+)", mensaje.lower())
     if match:
-        nombre = (match.group(1) or match.group(2) or match.group(3)).capitalize()
-        return nombre
+        return (match.group(1) or match.group(2)).capitalize()
     return "Nuevo"
 
-def crear_componente(mensaje, agente):
+def crear_componente(mensaje):
     nombre = extraer_nombre_componente(mensaje)
-    prompt = f"""Eres un experto en React y el sistema de diseno HB Jewelry.
-El sistema usa clases CSS globales definidas en hb.css:
-- hb-page, hb-page-header, hb-page-title, hb-page-subtitle
-- hb-btn, hb-btn-sm, hb-form, hb-form-grid, hb-input, hb-select
-- hb-card, hb-card-header, hb-card-name, hb-card-price, hb-card-meta
-- hb-table-wrap, hb-table, hb-badge, hb-badge-green, hb-badge-red
-- Colores: dorado #d4af6a, fondo #1a1a1a, texto #f0ede8
+    system = """Eres un experto en React y el sistema de diseno HB Jewelry.
+Clases CSS disponibles en hb.css:
+hb-page, hb-page-header, hb-page-title, hb-page-subtitle,
+hb-btn, hb-btn-sm, hb-form, hb-form-grid, hb-input, hb-select,
+hb-card, hb-card-header, hb-card-name, hb-card-price, hb-card-meta,
+hb-table-wrap, hb-table, hb-badge, hb-badge-green, hb-badge-red.
+Colores: dorado #d4af6a, fondo #1a1a1a, texto #f0ede8.
+Genera SOLO codigo JSX. Importa con: import '../../styles/hb.css'
+NO incluyas explicaciones. Solo el codigo entre ```jsx y ```."""
 
-Genera SOLO el codigo JSX del componente React llamado {nombre}.
-Importa hb.css con: import '../../styles/hb.css'
-NO incluyas explicaciones, SOLO el codigo entre ```jsx y ```.
-
-Tarea: {mensaje}"""
-
-    respuesta_gemini = call_gemini(prompt)
-    codigo = extract_code(respuesta_gemini)
+    respuesta = call_deepseek(mensaje, system=system)
+    codigo = extract_code(respuesta)
     path = f"{FRONTEND_BASE}/{nombre}/{nombre}.jsx"
 
     try:
@@ -72,11 +76,6 @@ Tarea: {mensaje}"""
             return f"Error escribiendo archivo: {r2.text}"
     except Exception as e:
         return f"Error llamando write-file: {str(e)}"
-
-def chat_normal(mensaje, agente):
-    system_prompt = f"Eres un agente de HB Jewelry especializado en {agente}. Responde en espanol, de forma concisa y util."
-    prompt = f"{system_prompt}\n\nUsuario: {mensaje}"
-    return call_gemini(prompt)
 
 while True:
     try:
@@ -91,14 +90,13 @@ while True:
 
             if es_comando_crear(mensaje):
                 print(f"[{job_id}] Modo IDE — creando componente", flush=True)
-                respuesta = crear_componente(mensaje, agente)
+                respuesta = crear_componente(mensaje)
             else:
-                respuesta = chat_normal(mensaje, agente)
+                system = f"Eres un agente de HB Jewelry especializado en {agente}. Responde en espanol, de forma concisa y util."
+                respuesta = call_deepseek(mensaje, system=system)
 
             r.hset(f"chat:{job_id}", mapping={"status": "completed", "respuesta": respuesta})
             print(f"[{job_id}] Completado", flush=True)
     except Exception as e:
         print(f"Error worker: {e}", flush=True)
         time.sleep(2)
-
-

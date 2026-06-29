@@ -11,9 +11,9 @@ export default function Dashboard() {
   useEffect(() => {
     async function load() {
       const [s, t, g] = await Promise.allSettled([
-        fetch('http://localhost:8090/stack').then(r => r.json()),
-        fetch('http://localhost:8090/api/tareas').then(r => r.json()),
-        fetch('http://localhost:8080/api/mcp/status').then(r => r.json()),
+        fetch('/stack').then(r => r.json()),
+        fetch('/api/tareas').then(r => r.json()),
+        fetch('/api/mcp/status').then(r => r.json()),
       ])
       if (s.status === 'fulfilled') setStack(s.value.containers || [])
       if (t.status === 'fulfilled') setTareas(t.value.tareas || {})

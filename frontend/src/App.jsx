@@ -6,6 +6,10 @@ import Ventas from './components/Ventas/Ventas'
 import Dashboard from './components/Dashboard/Dashboard'
 import Marketing from './components/Marketing/Marketing'
 import Ordenes from './components/Ordenes/Ordenes'
+import Historial from './components/Historial/Historial'
+import Chathistorial from './components/Chathistorial/Chathistorial'
+import Workspace from './components/Workspace/Workspace'
+import Auditoria from './components/Auditoria/Auditoria'
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('dashboard')
@@ -18,6 +22,11 @@ export default function App() {
       {activeSection === 'ventas' && <Ventas />}
       {activeSection === 'marketing' && <Marketing />}
       {activeSection === 'ordenes' && <Ordenes />}
+      {activeSection === 'historial' && <Historial />}
+      {activeSection === 'chathistorial' && <Chathistorial />}
+      {activeSection === 'workspace' && <Workspace />}
+      {activeSection === 'auditoria' && <Auditoria />}
     </Layout>
   )
 }
+

@@ -8,6 +8,10 @@ const sections = [
   { id: 'ventas', label: 'Ventas', icon: '◆' },
   { id: 'marketing', label: 'Marketing', icon: '◉' },
   { id: 'ordenes', label: 'Ordenes', icon: '▣' },
+  { id: 'historial', label: 'Historial', icon: '◷' },
+  { id: 'chathistorial', label: 'Chat Historial', icon: '💬' },
+  { id: 'workspace', label: 'Workspace', icon: '⬡' },
+  { id: 'auditoria', label: 'Auditoria', icon: '🔍' },
 ]
 
 export default function Sidebar({ activeSection, onSelect }) {
@@ -29,3 +33,4 @@ export default function Sidebar({ activeSection, onSelect }) {
     </aside>
   )
 }
+

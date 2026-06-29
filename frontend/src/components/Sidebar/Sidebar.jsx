@@ -1,6 +1,5 @@
 import React from 'react'
 import '../../styles/sidebar.css'
-
 const sections = [
   { id: 'dashboard', label: 'Dashboard', icon: '◈' },
   { id: 'chat', label: 'Chat Agentes', icon: '◎' },
@@ -13,24 +12,18 @@ const sections = [
   { id: 'workspace', label: 'Workspace', icon: '⬡' },
   { id: 'auditoria', label: 'Auditoria', icon: '🔍' },
 ]
-
 export default function Sidebar({ activeSection, onSelect }) {
   return (
-    <aside className="sidebar">
-      <nav className="sidebar-nav">
+    <aside className='sidebar'>
+      <nav className='sidebar-nav'>
         {sections.map(s => (
-          <button
-            key={s.id}
-            className={"sidebar-item" + (activeSection === s.id ? " active" : "")}
-            onClick={() => onSelect(s.id)}
-          >
-            <span className="sidebar-icon">{s.icon}</span>
-            <span className="sidebar-label">{s.label}</span>
+          <button key={s.id} className={'sidebar-item' + (activeSection === s.id ? ' active' : '')} onClick={() => onSelect(s.id)}>
+            <span className='sidebar-icon'>{s.icon}</span>
+            <span className='sidebar-label'>{s.label}</span>
           </button>
         ))}
       </nav>
-      <div className="sidebar-footer">OpenClaw 2026</div>
+      <div className='sidebar-footer'>OpenClaw 2026</div>
     </aside>
   )
 }
-

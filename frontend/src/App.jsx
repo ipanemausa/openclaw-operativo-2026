@@ -10,6 +10,15 @@ import Historial from './components/Historial/Historial'
 import Chathistorial from './components/Chathistorial/Chathistorial'
 import Workspace from './components/Workspace/Workspace'
 import Auditoria from './components/Auditoria/Auditoria'
+import Clientes from './components/Clientes/Clientes'
+import Inventario from './components/Inventario/Inventario'
+import Reportes from './components/Reportes/Reportes'
+import Configuracion from './components/Configuracion/Configuracion'
+import Notificaciones from './components/Notificaciones/Notificaciones'
+import Monitor from './components/Monitor/Monitor'
+import Analytics from './components/Analytics/Analytics'
+import Pipeline from './components/Pipeline/Pipeline'
+import Chatui from './components/Chatui/Chatui'
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('dashboard')
@@ -26,7 +35,17 @@ export default function App() {
       {activeSection === 'chathistorial' && <Chathistorial />}
       {activeSection === 'workspace' && <Workspace />}
       {activeSection === 'auditoria' && <Auditoria />}
+      {activeSection === 'clientes' && <Clientes />}
+      {activeSection === 'inventario' && <Inventario />}
+      {activeSection === 'reportes' && <Reportes />}
+      {activeSection === 'configuracion' && <Configuracion />}
+      {activeSection === 'notificaciones' && <Notificaciones />}
+      {activeSection === 'monitor' && <Monitor />}
+      {activeSection === 'analytics' && <Analytics />}
+      {activeSection === 'pipeline' && <Pipeline />}
+      {activeSection === 'chatui' && <Chatui />}
     </Layout>
   )
 }
+
 

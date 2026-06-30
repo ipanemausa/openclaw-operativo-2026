@@ -13,3 +13,6 @@ const ProductCard = ({ name, price }) => {
 };
 
 export default ProductCard;
+
+
+

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import '../../styles/hb.css'
+import '../../../styles/hb.css'
 
 const API = ''
 const CANALES = ['Instagram', 'WhatsApp', 'Shopify', 'TikTok', 'Tienda']
@@ -118,6 +118,7 @@ export default function Ventas() {
     </div>
   )
 }
+
 
 
 

@@ -1,4 +1,4 @@
-import '../../styles/hb.css';
+import '../../../styles/hb.css';
 import React, { useState } from 'react';
 
 function Notificaciones() {
@@ -59,5 +59,6 @@ function Notificaciones() {
 }
 
 export default Notificaciones;
+
 
 

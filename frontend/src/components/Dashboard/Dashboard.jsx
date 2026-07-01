@@ -58,3 +58,5 @@ const Dashboard = ({ actividades = [] }) => {
 };
 
 export default Dashboard;
+
+

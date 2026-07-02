@@ -1,4 +1,4 @@
-import '../../styles/hb.css';
+import "../../styles/hb.css";
 
 const Clientes = () => {
   return (
@@ -62,6 +62,7 @@ const Clientes = () => {
 };
 
 export default Clientes;
+
 
 
 

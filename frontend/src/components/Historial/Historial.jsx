@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/hb.css';
+import "../../styles/hb.css";
 
 const Historial = () => {
   const conversaciones = [
@@ -66,6 +66,7 @@ const Historial = () => {
 };
 
 export default Historial;
+
 
 
 

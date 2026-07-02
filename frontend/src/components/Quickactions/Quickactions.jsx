@@ -1,4 +1,4 @@
-import '../../styles/hb.css';
+import "../../styles/hb.css";
 
 const QuickActions = () => {
   return (
@@ -20,5 +20,6 @@ const QuickActions = () => {
 };
 
 export default QuickActions;
+
 
 

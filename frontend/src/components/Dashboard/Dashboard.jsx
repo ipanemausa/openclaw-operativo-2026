@@ -1,4 +1,4 @@
-import '../../styles/hb.css';
+import "../../styles/hb.css";
 
 const Dashboard = ({ actividades = [] }) => {
   const recientes = actividades.slice(-5).reverse();
@@ -58,5 +58,6 @@ const Dashboard = ({ actividades = [] }) => {
 };
 
 export default Dashboard;
+
 
 

@@ -1,4 +1,4 @@
-import '../../styles/hb.css';
+import "../../styles/hb.css";
 
 const FileManager = () => {
   const archivos = [
@@ -47,6 +47,7 @@ const FileManager = () => {
 };
 
 export default FileManager;
+
 
 
 

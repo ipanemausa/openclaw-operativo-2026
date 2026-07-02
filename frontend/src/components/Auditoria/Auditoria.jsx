@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../../styles/hb.css';
+import "../../styles/hb.css";
 
 const Auditoria = () => {
   const [logs, setLogs] = useState([
@@ -45,6 +45,7 @@ const Auditoria = () => {
 };
 
 export default Auditoria;
+
 
 
 

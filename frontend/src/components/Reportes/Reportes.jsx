@@ -1,4 +1,4 @@
-import '../../styles/hb.css';
+import "../../styles/hb.css";
 import React from 'react';
 
 const Reportes = () => {
@@ -57,6 +57,7 @@ const Reportes = () => {
 };
 
 export default Reportes;
+
 
 
 

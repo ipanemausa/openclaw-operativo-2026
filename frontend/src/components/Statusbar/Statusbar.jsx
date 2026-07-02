@@ -1,4 +1,4 @@
-import '../../styles/hb.css';
+import "../../styles/hb.css";
 
 const StatusBar = () => {
   return (
@@ -25,4 +25,5 @@ const StatusBar = () => {
 };
 
 export default StatusBar;
+
 

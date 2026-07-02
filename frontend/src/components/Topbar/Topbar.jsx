@@ -1,4 +1,4 @@
-import '../../styles/hb.css';
+import "../../styles/hb.css";
 
 const TopBar = () => {
   return (
@@ -73,5 +73,6 @@ const TopBar = () => {
 };
 
 export default TopBar;
+
 
 

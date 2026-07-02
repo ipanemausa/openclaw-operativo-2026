@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../../styles/hb.css';
+import "../../styles/hb.css";
 
 const Analytics = () => {
   const [ventasData, setVentasData] = useState(null);
@@ -149,6 +149,7 @@ const Analytics = () => {
 };
 
 export default Analytics;
+
 
 
 

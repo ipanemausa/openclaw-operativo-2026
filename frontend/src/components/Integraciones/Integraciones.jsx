@@ -1,4 +1,4 @@
-import '../../styles/hb.css';
+import "../../styles/hb.css";
 
 const Integraciones = () => {
   const integraciones = [
@@ -34,6 +34,7 @@ const Integraciones = () => {
 };
 
 export default Integraciones;
+
 
 
 

@@ -1,4 +1,4 @@
-import '../../styles/hb.css';
+import "../../styles/hb.css";
 
 const Pipeline = () => {
   const steps = [
@@ -96,6 +96,7 @@ const Pipeline = () => {
 };
 
 export default Pipeline;
+
 
 
 

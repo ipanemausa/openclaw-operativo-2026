@@ -1,4 +1,4 @@
-import '../../styles/hb.css';
+import "../../styles/hb.css";
 
 const AgentStatus = ({ agents = [] }) => {
   const defaultAgents = [
@@ -59,6 +59,7 @@ const AgentStatus = ({ agents = [] }) => {
 };
 
 export default AgentStatus;
+
 
 
 

@@ -1,4 +1,4 @@
-import '../../styles/hb.css';
+import "../../styles/hb.css";
 
 const SearchBar = () => {
   return (
@@ -24,5 +24,6 @@ const SearchBar = () => {
 };
 
 export default SearchBar;
+
 
 

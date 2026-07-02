@@ -1,4 +1,4 @@
-import '../../styles/hb.css';
+import "../../styles/hb.css";
 
 function Configuracion() {
   return (
@@ -56,6 +56,7 @@ function Configuracion() {
 }
 
 export default Configuracion;
+
 
 
 

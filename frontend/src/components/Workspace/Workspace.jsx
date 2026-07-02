@@ -1,4 +1,4 @@
-import '../../styles/hb.css';
+import "../../styles/hb.css";
 
 const Workspace = () => {
   const recentFiles = [
@@ -133,6 +133,7 @@ const Workspace = () => {
 };
 
 export default Workspace;
+
 
 
 

@@ -1,4 +1,4 @@
-import '../../styles/hb.css';
+import "../../styles/hb.css";
 
 const Inventario = () => {
   const productos = [
@@ -54,6 +54,7 @@ const Inventario = () => {
 };
 
 export default Inventario;
+
 
 
 

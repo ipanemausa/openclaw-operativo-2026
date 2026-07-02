@@ -1,38 +1,23 @@
-import '../../styles/hb.css';
+import React, { useState } from 'react'
+import Header from '../Header/Header'
+import Sidebar from '../Sidebar/Sidebar'
+import './layout.css'
 
-const Layout = ({ children }) => {
+export default function Layout({ children }) {
+  const [activeSection, setActiveSection] = useState('dashboard')
+
   return (
-    <div className="hb-page">
-      <StatusBar />
-      <TopBar />
-      <div className="hb-page-header">
-        <SearchBar />
-        <div className="hb-page-header-right">
-          <div className="user-info">
-            <span className="user-avatar">👤</span>
-            <span className="user-name">Admin</span>
-          </div>
-        </div>
-      </div>
-      <div className="hb-page-body">
-        <aside className="sidebar">
-          <nav>
-            <ul>
-              <li><a href="/dashboard">Dashboard</a></li>
-              <li><a href="/productos">Productos</a></li>
-              <li><a href="/ventas">Ventas</a></li>
-              <li><a href="/clientes">Clientes</a></li>
-              <li><a href="/reportes">Reportes</a></li>
-            </ul>
-          </nav>
-        </aside>
-        <main className="hb-page-content">
-          {children}
-        </main>
-      </div>
+    <div className="layout">
+      <Header />
+
+      <Sidebar
+        activeSection={activeSection}
+        onSelect={setActiveSection}
+      />
+
+      <main className="layout-content">
+        {children}
+      </main>
     </div>
-  );
-};
-
-export default Layout;
-
+  )
+}

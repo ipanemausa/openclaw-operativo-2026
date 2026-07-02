@@ -86,3 +86,7 @@ nginx/ssl/openclaw.*
 htmlcov/
 .coverage
 .coverage.*
+
+# Custom backups and temp files
+docker-backups/
+import React*.txt

@@ -1,44 +1,72 @@
 import React from 'react'
 import '../../styles/sidebar.css'
 
-const sections = [
-  { id: 'dashboard', label: 'Dashboard', icon: '◈' },
-  { id: 'chat', label: 'Chat Agentes', icon: '◎' },
-  { id: 'productos', label: 'Productos', icon: '◇' },
-  { id: 'ventas', label: 'Ventas', icon: '◆' },
-  { id: 'marketing', label: 'Marketing', icon: '◉' },
-  { id: 'ordenes', label: 'Ordenes', icon: '▣' },
-  { id: 'historial', label: 'Historial', icon: '◷' },
-  { id: 'chathistorial', label: 'Chat Historial', icon: '💬' },
-  { id: 'workspace', label: 'Workspace', icon: '⬡' },
-  { id: 'auditoria', label: 'Auditoria', icon: '🔍' },
-  { id: 'clientes', label: 'Clientes', icon: '👥' },
-  { id: 'inventario', label: 'Inventario', icon: '📦' },
-  { id: 'reportes', label: 'Reportes', icon: '📊' },
-  { id: 'analytics', label: 'Analytics', icon: '📈' },
-  { id: 'monitor', label: 'Monitor', icon: '🖥' },
-  { id: 'pipeline', label: 'Pipeline', icon: '🚀' },
-  { id: 'notificaciones', label: 'Notificaciones', icon: '🔔' },
-  { id: 'configuracion', label: 'Configuracion', icon: '⚙️' },
+const sectionGroups = [
+  {
+    title: 'Principal',
+    items: [
+      { id: 'dashboard', label: 'Dashboard', icon: '◈' },
+      { id: 'chat', label: 'Chat Agentes', icon: '◎' },
+      { id: 'workspace', label: 'Workspace', icon: '⬡' },
+      { id: 'monitor', label: 'Monitor', icon: '🖥' },
+    ]
+  },
+  {
+    title: 'Operaciones',
+    items: [
+      { id: 'ventas', label: 'Ventas', icon: '◆' },
+      { id: 'productos', label: 'Productos', icon: '◇' },
+      { id: 'inventario', label: 'Inventario', icon: '📦' },
+      { id: 'clientes', label: 'Clientes', icon: '👥' },
+      { id: 'ordenes', label: 'Ordenes', icon: '▣' },
+    ]
+  },
+  {
+    title: 'Marketing & Analytics',
+    items: [
+      { id: 'marketing', label: 'Marketing', icon: '◉' },
+      { id: 'analytics', label: 'Analytics', icon: '📈' },
+      { id: 'reportes', label: 'Reportes', icon: '📊' },
+      { id: 'pipeline', label: 'Pipeline', icon: '🚀' },
+    ]
+  },
+  {
+    title: 'Sistema',
+    items: [
+      { id: 'historial', label: 'Historial', icon: '◷' },
+      { id: 'chathistorial', label: 'Chat Historial', icon: '💬' },
+      { id: 'auditoria', label: 'Auditoria', icon: '🔍' },
+      { id: 'notificaciones', label: 'Notificaciones', icon: '🔔' },
+      { id: 'configuracion', label: 'Configuracion', icon: '⚙️' },
+    ]
+  }
 ]
 
-export default function Sidebar({ activeSection, onSelect, sidebarOpen }) {
+export default function Sidebar({ activeSection, onSelect }) {
   return (
-    <aside className={'sidebar' + (sidebarOpen ? ' open' : '')}>
-      <nav className='sidebar-nav'>
-        {sections.map(s => (
-          <button 
-            key={s.id} 
-            className={'sidebar-item' + (activeSection === s.id ? ' active' : '')}
-            onClick={() => onSelect(s.id)}
-          >
-            <span className='sidebar-icon'>{s.icon}</span>
-            <span className='sidebar-label'>{s.label}</span>
-          </button>
+    <aside className="sidebar">
+      <nav className="sidebar-nav">
+        {sectionGroups.map((group, idx) => (
+          <div key={idx} className="sidebar-section">
+            {idx > 0 && <hr className="sidebar-divider" />}
+            <h3 className="sidebar-section-title">{group.title}</h3>
+            <ul className="sidebar-menu">
+              {group.items.map(item => (
+                <li key={item.id}>
+                  <button
+                    className={'sidebar-item' + (activeSection === item.id ? ' active' : '')}
+                    onClick={() => onSelect(item.id)}
+                  >
+                    <span className="sidebar-icon">{item.icon}</span>
+                    <span className="sidebar-label">{item.label}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
         ))}
       </nav>
-
-      <div className='sidebar-footer'>OpenClaw 2026</div>
+      <div className="sidebar-footer">OpenClaw 2026</div>
     </aside>
   )
 }

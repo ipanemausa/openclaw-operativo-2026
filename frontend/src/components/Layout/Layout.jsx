@@ -1,23 +1,18 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Header from '../Header/Header'
 import Sidebar from '../Sidebar/Sidebar'
-import './layout.css'
+import '../../styles/layout.css'
 
-export default function Layout({ children }) {
-  const [activeSection, setActiveSection] = useState('dashboard')
-
+export default function Layout({ children, activeSection, onSelect }) {
   return (
-    <div className="layout">
+    <div className="app-layout">
       <Header />
-
-      <Sidebar
-        activeSection={activeSection}
-        onSelect={setActiveSection}
-      />
-
-      <main className="layout-content">
-        {children}
-      </main>
+      <div className="app-body">
+        <Sidebar activeSection={activeSection} onSelect={onSelect} />
+        <main className="app-content">
+          {children}
+        </main>
+      </div>
     </div>
   )
 }

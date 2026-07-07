@@ -87,6 +87,7 @@
 
 .app-content {
   flex: 1;
+  min-height: 0;
   height: 100%;
   width: 100%;
   overflow-y: auto;
@@ -114,3 +115,4 @@ html, body {
 .sidebar::-webkit-scrollbar-track, .app-content::-webkit-scrollbar-track { background: #0d0d0d; }
 .sidebar::-webkit-scrollbar-thumb, .app-content::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 10px; }
 .sidebar::-webkit-scrollbar-thumb:hover, .app-content::-webkit-scrollbar-thumb:hover { background: rgba(212,175,106,0.4); }
+

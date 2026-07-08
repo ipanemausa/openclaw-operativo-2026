@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   claw-orchestrator:
     build: ./claw-orchestrator
@@ -31,31 +33,8 @@ services:
     container_name: video_veo_worker
     restart: always
     environment:
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GEMINI_API_KEY=
       - REDIS_HOST=redis
       - REDIS_PORT=6379
     depends_on:
       - redis
-
-  chat_worker:
-    build:
-      context: ./agents/chat_worker
-      dockerfile: Dockerfile
-    container_name: chat_worker
-    restart: always
-    environment:
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
-      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
-      - REDIS_URL=redis://redis:6379
-    depends_on:
-      - redis
-
-  gateway:
-    build: ./gateway
-    container_name: openclaw_gateway
-    restart: always
-    ports:
-      - "8080:8080"
-    environment:
-      - PICKAXE_API_URL=${PICKAXE_API_URL}
-      - PICKAXE_API_KEY=${PICKAXE_API_KEY}

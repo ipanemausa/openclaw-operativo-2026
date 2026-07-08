@@ -3,3 +3,5 @@
 2026-06-25 09:30:41 | continuity | estado=completado | Continuity Protocol instalado y probado
 2026-06-25 09:30:41 | completado | current_task.md + HANDOFF.md + lamautonomia-continuity.ps1
 2026-06-25 09:42:14 | frontend | fix: Dashboard LAMAUTONOMIA /tareas corregido a /api/tareas + Promise.allSettled - paneles CONTENEDORES y DAG-TAREAS ahora muestran datos
+2026-07-08 02:15:28 | continuity | estado=en-progreso | Investigacion multimodel Gemini+DeepSeek, docker-compose.yml incompleto (falta chat_worker y gateway), historial de commits Gemini identificado
+2026-07-08 02:15:28 | pendiente | Reconstruir docker-compose.yml completo con 6 servicios reales, revisar worker.py commit 2d79580 para logica multimodel original

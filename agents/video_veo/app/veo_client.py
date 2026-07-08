@@ -1,45 +1,32 @@
 import requests
 import os
-import time
 
 API_KEY = os.getenv("GEMINI_API_KEY")
-VEO_BASE = "https://generativelanguage.googleapis.com/v1beta"
-VEO_MODEL = "models/veo-3.1-generate-preview"
+VEO_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/veo-3.0-generate-preview:generateVideo"
 
 def generate_video(prompt, duration, resolution, style):
     if not API_KEY:
-        raise ValueError("GEMINI_API_KEY no configurada")
+        raise ValueError("GEMINI_API_KEY no configurada en .env")
 
-    # Paso 1 — iniciar operacion larga
+    payload = {
+        "instances": [{"prompt": f"{style}: {prompt}"}],
+        "parameters": {
+            "duration_seconds": duration,
+            "resolution": resolution,
+            "aspect_ratio": "16:9"
+        }
+    }
+
     response = requests.post(
-        f"{VEO_BASE}/{VEO_MODEL}:predictLongRunning?key={API_KEY}",
-        json={
-            "instances": [{"prompt": f"{style}: {prompt}"}],
-            "parameters": {
-                "durationSeconds": duration,
-                "aspectRatio": "16:9"
-            }
-        },
-        timeout=30
+        f"{VEO_ENDPOINT}?key={API_KEY}",
+        json=payload,
+        timeout=120
     )
     response.raise_for_status()
-    operation = response.json()
-    operation_name = operation.get("name")
-    if not operation_name:
-        raise ValueError(f"No se obtuvo nombre de operacion: {operation}")
+    data = response.json()
 
-    # Paso 2 — polling hasta completar
-    for i in range(24):
-        time.sleep(5)
-        poll = requests.get(
-            f"{VEO_BASE}/{operation_name}?key={API_KEY}",
-            timeout=30
-        )
-        poll.raise_for_status()
-        result = poll.json()
-        if result.get("done"):
-            predictions = result.get("response", {}).get("predictions", [])
-            if not predictions:
-                raise ValueError(f"Sin predicciones: {result}")
-            return predictions[0].get("videoUri", predictions[0].get("gcsUri", "sin-url"))
-    raise ValueError("Timeout esperando video de Veo")
+    predictions = data.get("predictions", [])
+    if not predictions:
+        raise ValueError("Veo no devolvio predicciones")
+
+    return predictions[0].get("videoUri", predictions[0].get("url", ""))

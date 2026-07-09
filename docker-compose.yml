@@ -7,6 +7,7 @@ services:
       - "8090:8090"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./claw-estado.json:/app/claw-estado.json
 
   openclaw_app:
     build: ./app
@@ -59,3 +60,4 @@ services:
     environment:
       - PICKAXE_API_URL=${PICKAXE_API_URL}
       - PICKAXE_API_KEY=${PICKAXE_API_KEY}
+

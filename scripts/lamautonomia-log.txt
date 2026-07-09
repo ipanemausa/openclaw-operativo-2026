@@ -5,3 +5,5 @@
 2026-06-25 09:42:14 | frontend | fix: Dashboard LAMAUTONOMIA /tareas corregido a /api/tareas + Promise.allSettled - paneles CONTENEDORES y DAG-TAREAS ahora muestran datos
 2026-07-08 02:15:28 | continuity | estado=en-progreso | Investigacion multimodel Gemini+DeepSeek, docker-compose.yml incompleto (falta chat_worker y gateway), historial de commits Gemini identificado
 2026-07-08 02:15:28 | pendiente | Reconstruir docker-compose.yml completo con 6 servicios reales, revisar worker.py commit 2d79580 para logica multimodel original
+2026-07-08 02:21:50 | continuity | estado=completado | docker-compose.yml reconstruido con 6 servicios: claw-orchestrator, openclaw_app, redis, video_veo_worker, chat_worker, gateway
+2026-07-08 02:21:50 | completado | chat_worker y gateway ya no se perderan en docker compose down. Ambos con sus variables de entorno reales preservadas.

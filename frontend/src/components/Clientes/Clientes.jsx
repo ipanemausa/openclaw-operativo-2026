@@ -15,7 +15,7 @@ const Clientes = () => {
         return res.json();
       })
       .then((data) => {
-        setClientes(data);
+        setClientes(data.clientes || []);
         setLoading(false);
       })
       .catch((err) => {

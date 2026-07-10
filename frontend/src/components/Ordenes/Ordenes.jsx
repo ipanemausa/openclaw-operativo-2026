@@ -12,7 +12,7 @@ const Ordenes = () => {
         const response = await fetch("/api/hb/ordenes");
         if (!response.ok) throw new Error("Error al cargar órdenes");
         const data = await response.json();
-        setOrdenes(data);
+        setOrdenes(data.ordenes || []);
       } catch (err) {
         setError(err.message);
       } finally {

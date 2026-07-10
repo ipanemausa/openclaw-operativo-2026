@@ -10,7 +10,7 @@ const Ventas = () => {
       try {
         const response = await fetch("/api/hb/ventas");
         const data = await response.json();
-        setVentas(data);
+        setVentas(data.ventas || []);
       } catch (error) {
         console.error("Error al cargar ventas:", error);
       } finally {
@@ -68,3 +68,4 @@ const Ventas = () => {
 };
 
 export default Ventas;
+

@@ -8,6 +8,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./claw-estado.json:/app/claw-estado.json
+      - ./frontend:/frontend
 
   openclaw_app:
     build: ./app
@@ -60,4 +61,5 @@ services:
     environment:
       - PICKAXE_API_URL=${PICKAXE_API_URL}
       - PICKAXE_API_KEY=${PICKAXE_API_KEY}
+
 

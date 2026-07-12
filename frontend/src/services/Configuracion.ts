@@ -1,1 +1,0 @@
-export async function getConfiguracion() {\n  return []; // mock\n}\n

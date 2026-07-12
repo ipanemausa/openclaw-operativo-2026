@@ -1,1 +1,0 @@
-export async function getAyuda() {\n  return []; // mock\n}\n

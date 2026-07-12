@@ -1,1 +1,0 @@
-export async function getPagos() {\n  return []; // mock\n}\n

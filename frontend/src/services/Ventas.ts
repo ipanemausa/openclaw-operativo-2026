@@ -1,1 +1,0 @@
-export async function getVentas() {\n  return []; // mock\n}\n

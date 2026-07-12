@@ -1,1 +1,0 @@
-export async function getReportes() {\n  return []; // mock\n}\n

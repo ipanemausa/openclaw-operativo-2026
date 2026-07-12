@@ -1,1 +1,0 @@
-export async function getClientes() {\n  return []; // mock\n}\n

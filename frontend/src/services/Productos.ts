@@ -1,0 +1,1 @@
+export async function getProductos() {\n  return []; // mock\n}\n

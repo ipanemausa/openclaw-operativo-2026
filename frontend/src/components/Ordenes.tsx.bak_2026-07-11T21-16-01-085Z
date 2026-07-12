@@ -1,0 +1,12 @@
+import React from "react";
+
+export const Ordenes = () => {
+  return (
+    <div style={{ padding: "1rem" }}>
+      <h2>Ordenes</h2>
+      <p>Componente base generado automáticamente.</p>
+    </div>
+  );
+};
+
+export default Ordenes;

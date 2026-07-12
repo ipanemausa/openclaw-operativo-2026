@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import '../../styles/hb.css'
 
-export default function Dashboard({ onSelect }) {
+export default function Dashboard() {
   const [stack, setStack] = useState([])
   const [tareas, setTareas] = useState({})
   const [gateway, setGateway] = useState({})
@@ -87,11 +87,11 @@ export default function Dashboard({ onSelect }) {
       </div>
 
       <div className='hb-card'>
-        <div style={{color:'#d4af6a',fontWeight:'600',marginBottom:'12px'}}>Acciones rápidas</div>
+        <div style={{color:'#d4af6a',fontWeight:'600',marginBottom:'12px'}}>Acciones rapidas</div>
         <div style={{display:'flex',gap:'10px'}}>
-          <button className='hb-btn' onClick={() => onSelect("productos")}>Agregar producto</button>
-          <button className='hb-btn' onClick={() => onSelect("ordenes")}>Ver pedidos</button>
-          <button className='hb-btn' onClick={() => onSelect("reportes")}>Reportes</button>
+          <button className='hb-btn'>Agregar producto</button>
+          <button className='hb-btn'>Ver pedidos</button>
+          <button className='hb-btn'>Reportes</button>
         </div>
       </div>
     </div>

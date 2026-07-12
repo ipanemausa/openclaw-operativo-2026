@@ -1,0 +1,1 @@
+export async function getInventario() {\n  return []; // mock\n}\n

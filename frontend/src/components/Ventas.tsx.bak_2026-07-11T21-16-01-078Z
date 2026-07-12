@@ -1,0 +1,12 @@
+import React from "react";
+
+export const Ventas = () => {
+  return (
+    <div style={{ padding: "1rem" }}>
+      <h2>Ventas</h2>
+      <p>Componente base generado automáticamente.</p>
+    </div>
+  );
+};
+
+export default Ventas;

@@ -1,0 +1,1 @@
+export async function getProveedores() {\n  return []; // mock\n}\n

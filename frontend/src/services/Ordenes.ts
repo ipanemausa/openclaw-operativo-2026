@@ -1,0 +1,1 @@
+export async function getOrdenes() {\n  return []; // mock\n}\n

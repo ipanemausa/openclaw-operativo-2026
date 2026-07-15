@@ -8,3 +8,4 @@
 2026-07-08 02:21:50 | continuity | estado=completado | docker-compose.yml reconstruido con 6 servicios: claw-orchestrator, openclaw_app, redis, video_veo_worker, chat_worker, gateway
 2026-07-08 02:21:50 | completado | chat_worker y gateway ya no se perderan en docker compose down. Ambos con sus variables de entorno reales preservadas.
 2026-07-10 06:38:20 | continuity | estado=completado | Volumen frontend restaurado en docker-compose - chat-IDE escribiendo correctamente de nuevo. 6 componentes actualizados: Ventas Productos Ordenes Clientes con datos reales, ClienteForm y ProductoForm creados
+2026-07-13 04:51:35 | backend | app-levantada-estable

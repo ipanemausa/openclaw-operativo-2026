@@ -8,7 +8,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./claw-estado.json:/app/claw-estado.json
-      - ./frontend:/frontend
+      - C:\openclaw\hb-jewelry:/frontend
 
   openclaw_app:
     build: ./app

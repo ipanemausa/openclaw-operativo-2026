@@ -9,7 +9,7 @@ const AGENTS = [
   { value: "main", label: "General ✨" },
 ];
 
-const API = "http://localhost:8080";
+const API = "";
 
 export default function Chat() {
   const [messages, setMessages] = useState([
@@ -178,7 +178,3 @@ export default function Chat() {
     </div>
   );
 }
-
-
-
-

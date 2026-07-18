@@ -219,7 +219,3 @@ export default function Marketing() {
     </div>
   )
 }
-
-
-
-

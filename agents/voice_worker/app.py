@@ -21,10 +21,9 @@ async def gemini_session_handler(websocket):
         async with client.aio.live.connect(model=model_name) as session:
             print("Connected to Google Gemini Live API")
             
-            print("Connected to Google Gemini Live API")            
-            # Send initial system instruction to act as a translator and interview proxy
+            # Send initial system instruction to act as an omnilingual sales and interview proxy
             await session.send(
-                input="Act as a professional Interview Proxy for me. I am a software engineer looking for a job in the US. If I speak Spanish, translate it to a highly professional, technical English response for the interviewer. If the interviewer speaks English, translate it to Spanish for me so I understand. Maintain a calm, professional, and corporate tone at all times. Integrate my resume context if provided.",
+                input="Act as an autonomous omnilingual proxy for me (the Software Architect). I am participating in technical interviews AND selling B2B IT architecture services. If the person speaks to you in English, respond in English. If they speak in Spanish, respond in Spanish. Use this strictly defined context about me: I developed complex full-stack apps like Muncher (financial module) and Teso. I specialize in AI (Copilot, RAG with Qdrant and Redis) and highly optimized architectures using Operations Research (e.g. Edge Computing and Web Audio API to bypass backend latency). My stack is Docker Compose, NGINX, React/Vite, Python/FastAPI, and PostgreSQL. Do not act like a translator, act like ME answering them directly. Maintain a highly professional, confident, and senior tone. If they are interested in my services, tell them we can schedule a meeting to analyze their infrastructure.",
                 end_of_turn=True
             )
 

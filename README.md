@@ -58,41 +58,64 @@ docker-compose down
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Architecture (Updated: Edge Computing + RAG)
 
+```mermaid
+graph TD
+    %% NGINX Router
+    NGINX["NGINX (Reverse Proxy)<br/>Ports 80/443"]
+    
+    %% Frontend Edge
+    subgraph Frontend Edge
+        UI["UI PRO (React/Vite)<br/>Port 80"]
+        AvatarEdge["Edge Computing<br/>(Mathematical Lip-sync / AudioContext)"]
+        UI --- AvatarEdge
+    end
+    
+    %% Backend Services
+    subgraph Docker Internal Network
+        Gateway["Gateway (Python)<br/>Port 8080"]
+        VoiceWorker["Voice Worker<br/>(Gemini Live Translator)"]
+        RagWorker["Financial RAG Worker<br/>(Port 8093)"]
+        ChatWorker["Chat Worker<br/>(DeepSeek)"]
+        App["App Core<br/>Port 5000"]
+    end
+    
+    %% Data Layer
+    subgraph Data & State
+        Qdrant[("Qdrant<br/>(Vector DB - 6333)")]
+        Redis[("Redis<br/>(Cache - 6379)")]
+        Postgres[("PostgreSQL<br/>(Relational - 5432)")]
+    end
+    
+    %% Routing
+    NGINX -->|/| UI
+    NGINX -->|/ws/voice| VoiceWorker
+    NGINX -->|/api/rag| RagWorker
+    NGINX -->|/api/chat| ChatWorker
+    NGINX -->|/api/*| Gateway
+    
+    %% Internal Logic
+    Gateway --> App
+    RagWorker -->|Embeddings| Qdrant
+    ChatWorker --> Redis
+    App --> Postgres
+    App --> Redis
+    
+    %% Edge Stream
+    VoiceWorker -.->|Binary Audio Stream (0-Latency)| AvatarEdge
+    
+    classDef proxy fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef frontend fill:#bbf,stroke:#333,stroke-width:2px;
+    classDef edge fill:#dfd,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5;
+    classDef db fill:#fdb,stroke:#333,stroke-width:2px;
+    
+    class NGINX proxy;
+    class UI frontend;
+    class AvatarEdge edge;
+    class Qdrant,Redis,Postgres db;
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    NGINX (Reverse Proxy)                    │
-│                   Port 80 / 443 (SSL/TLS)                   │
-└────────────────────────┬────────────────────────────────────┘
-                         │
-        ┌────────────────┼────────────────┐
-        │                │                │
-        ▼                ▼                ▼
-   ┌─────────┐   ┌──────────────┐   ┌─────────────┐
-   │ UI PRO  │   │   Gateway    │   │ WebSocket   │
-   │ (React) │   │  (Python)    │   │ Support     │
-   └─────────┘   │ Port 8080    │   └─────────────┘
-                 └──────────────┘
-                         │
-        ┌────────────────┼────────────────┐
-        │                │                │
-        ▼                ▼                ▼
-   ┌─────────┐   ┌──────────────┐   ┌─────────────┐
-   │   App   │   │   MCP Gate   │   │  Agents     │
-   │ 8084    │   │   8080       │   │  (8085-87)  │
-   └─────────┘   └──────────────┘   └─────────────┘
-        │                │                │
-        └────────────────┼────────────────┘
-                         │
-        ┌────────────────┼────────────────────────┐
-        │                │                        │
-        ▼                ▼                        ▼
-   ┌─────────┐   ┌──────────────┐   ┌─────────────────┐
-   │PostgreSQL│  │    Redis     │   │  Qdrant         │
-   │  5432    │  │    6379      │   │  6333 (RAG)     │
-   └─────────┘   └──────────────┘   └─────────────────┘
-```
+
 
 ---
 
@@ -460,6 +483,6 @@ For issues, check:
 
 OpenClaw 2026 - Production deployment package
 
-**Version:** 2026.5.27-cloud  
-**Updated:** 2026-06-02  
+**Version:** 2026.7.1
+**Updated:** 2026-07-19
 **Status:** Ready for cloud deployment

@@ -1,4 +1,4 @@
-﻿# PROTOCOLO DE BLINDAJE PERMANENTE — OpenClaw Cloud 2026
+# PROTOCOLO DE BLINDAJE PERMANENTE — OpenClaw Cloud 2026
 
 ## Estado estable verificado
 - **Tag de referencia:** `v2.0-stable`
@@ -68,3 +68,17 @@ CSS responsable:
 ---
 
 REGLA DE ORO: v2.0-stable es el estado maestro. En caso de duda -> PROTEGER.
+
+---
+
+## Protocolo Automático de Cierre y Respaldo (PIPELINE DAG)
+
+Siempre que el usuario solicite un cierre, respaldo, o diga frases como "hacer backup", "commit y push", "sync drive", "cierre de jornada" o similar:
+
+1. Ejecutar inmediatamente el script maestro de cierre:
+   `powershell -ExecutionPolicy Bypass -File .\scripts\pipeline-cierre.ps1`
+2. Este script ejecuta automáticamente:
+   - Git `add .`, `commit`, `push` a GitHub (`origin/main`).
+   - Sincronización en la nube vía `rclone` hacia Google Drive (`drive:HBJewelry` y `drive:openclaw-cloud-2026-backup`).
+   - Registro de estado en `ANTIGRAVITY_WORK_LOG.txt`.
+3. Confirmar la ejecución al usuario con un resumen conciso de lo respaldado.

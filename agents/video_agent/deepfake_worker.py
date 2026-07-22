@@ -41,8 +41,8 @@ def run_local_lipsync(image_path, audio_path, output_path):
     
     print("[AI STUDIO] Procesando tensores de malla facial. Esto puede tardar varios minutos dependiendo de tu CPU/GPU...")
     try:
-        # Aquí se ejecutaría la inferencia pesada
-        # subprocess.run(cmd, check=True)
+        # Inferencia real de la Red Neuronal
+        subprocess.run(cmd, check=True)
         print("\n[==================================================]")
         print("[AI STUDIO] ¡Inferencia de Malla Facial Completa!")
         print(f"[AI STUDIO] Video exportado exitosamente a: {output_path}")

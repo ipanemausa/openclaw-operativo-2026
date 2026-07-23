@@ -70,7 +70,7 @@ def run_vectorization():
         # })
         print("  -> ¡Guardado exitoso!")
         
-    print("\n[✔] BASE DE DATOS VECTORIZADA Y LISTA EN FIREBASE.")
+    print("\n[OK] BASE DE DATOS VECTORIZADA Y LISTA EN FIREBASE.")
 
 if __name__ == "__main__":
     run_vectorization()

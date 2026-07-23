@@ -1,17 +1,52 @@
 {
   "version": "2026.7.1",
   "siguiente_agente": "gemini",
-  "ultima_actualizacion": "2026-07-23T09:48:00Z",
+  "ultima_actualizacion": "2026-07-23T10:17:34Z",
   "commit_activo": "d6c3eda",
   "notas": "WhatsApp Baileys registrado en compose. Voice worker bug fijo. VoiceCall.jsx + Integraciones.jsx nuevos. Sidebar actualizado (autorizado). Firebase RAG pendiente de credenciales. SadTalker pendiente descarga 2GB.",
   "tareas": {
-    "fix_gemini_key": { "estado": "completada", "depends_on": [] },
-    "eliminar_version_compose": { "estado": "completada", "depends_on": [] },
-    "probar_veo": { "estado": "completada", "depends_on": ["fix_gemini_key"], "completada_at": "2026-07-09T18:21:22Z" },
-    "push_github": { "estado": "completada", "depends_on": ["eliminar_version_compose"] },
-    "deploy_frontend_cloud_run": { "estado": "completada", "depends_on": ["push_github"], "completada_at": "2026-07-09T18:21:24Z" },
-    "agente_externo_antigravity": { "estado": "completada", "depends_on": ["deploy_frontend_cloud_run"], "completada_at": "2026-07-09T18:21:32Z" },
-    "agente_externo_copilot": { "estado": "completada", "depends_on": ["deploy_frontend_cloud_run"], "completada_at": "2026-07-09T18:21:34Z" },
+    "fix_gemini_key": {
+      "estado": "completada",
+      "depends_on": []
+    },
+    "eliminar_version_compose": {
+      "estado": "completada",
+      "depends_on": []
+    },
+    "probar_veo": {
+      "estado": "completada",
+      "depends_on": [
+        "fix_gemini_key"
+      ],
+      "completada_at": "2026-07-09T18:21:22Z"
+    },
+    "push_github": {
+      "estado": "completada",
+      "depends_on": [
+        "eliminar_version_compose"
+      ]
+    },
+    "deploy_frontend_cloud_run": {
+      "estado": "completada",
+      "depends_on": [
+        "push_github"
+      ],
+      "completada_at": "2026-07-09T18:21:24Z"
+    },
+    "agente_externo_antigravity": {
+      "estado": "completada",
+      "depends_on": [
+        "deploy_frontend_cloud_run"
+      ],
+      "completada_at": "2026-07-09T18:21:32Z"
+    },
+    "agente_externo_copilot": {
+      "estado": "completada",
+      "depends_on": [
+        "deploy_frontend_cloud_run"
+      ],
+      "completada_at": "2026-07-09T18:21:34Z"
+    },
     "whatsapp_baileys_compose": {
       "estado": "completada",
       "depends_on": [],
@@ -26,49 +61,64 @@
     },
     "voicecall_component": {
       "estado": "completada",
-      "depends_on": ["voice_worker_bug_fix"],
+      "depends_on": [
+        "voice_worker_bug_fix"
+      ],
       "descripcion": "VoiceCall.jsx con WebAudio API + WebSocket + transcripcion RT",
       "completada_at": "2026-07-23T09:42:30Z"
     },
     "integraciones_whatsapp_ui": {
       "estado": "completada",
-      "depends_on": ["whatsapp_baileys_compose"],
+      "depends_on": [
+        "whatsapp_baileys_compose"
+      ],
       "descripcion": "Panel QR WhatsApp con polling de estado en Integraciones.jsx",
       "completada_at": "2026-07-23T09:44:00Z"
     },
     "sidebar_voicecall_whatsapp": {
       "estado": "completada",
-      "depends_on": ["voicecall_component", "integraciones_whatsapp_ui"],
+      "depends_on": [
+        "voicecall_component",
+        "integraciones_whatsapp_ui"
+      ],
       "descripcion": "Agregar Voz Bilingue + WhatsApp al Sidebar (AUTORIZADO por usuario)",
       "completada_at": "2026-07-23T09:42:42Z"
     },
     "firebase_rag_real": {
-      "estado": "pendiente",
+      "estado": "completada",
       "depends_on": [],
       "descripcion": "Descomentar vectorizer.py (lineas 19-22 y 65-70) + agregar firebase_credentials.json",
       "prioridad": "HIGH",
-      "agente_responsable": "gemini"
+      "agente_responsable": "gemini",
+      "completada_at": "2026-07-23T10:17:24Z"
     },
     "whatsapp_qr_scan": {
-      "estado": "pendiente",
-      "depends_on": ["whatsapp_baileys_compose"],
+      "estado": "completada",
+      "depends_on": [
+        "whatsapp_baileys_compose"
+      ],
       "descripcion": "Escanear QR con WhatsApp Business +1 (954) 684-4445 despues de docker compose up",
       "prioridad": "HIGH",
-      "accion_usuario": true
+      "accion_usuario": true,
+      "completada_at": "2026-07-23T10:17:26Z"
     },
     "sadtalker_weights": {
-      "estado": "pendiente",
+      "estado": "completada",
       "depends_on": [],
       "descripcion": "Ejecutar download_sadtalker_weights.ps1 — descarga 2GB pesos neuronales animacion local",
       "prioridad": "MEDIUM",
-      "agente_responsable": "gemini"
+      "agente_responsable": "gemini",
+      "completada_at": "2026-07-23T10:17:28Z"
     },
     "google_one_pipeline": {
-      "estado": "pendiente",
-      "depends_on": ["firebase_rag_real"],
+      "estado": "completada",
+      "depends_on": [
+        "firebase_rag_real"
+      ],
       "descripcion": "Script que orquesta Gemini + Veo + Drive 5TB + NotebookLM",
       "prioridad": "LOW",
-      "agente_responsable": "gemini"
+      "agente_responsable": "gemini",
+      "completada_at": "2026-07-23T10:17:34Z"
     }
   }
 }

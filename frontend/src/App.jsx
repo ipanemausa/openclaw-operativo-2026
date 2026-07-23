@@ -10,6 +10,8 @@ import Historial from './components/Historial/Historial'
 import Chathistorial from './components/Chathistorial/Chathistorial'
 import Workspace from './components/Workspace/Workspace'
 import Auditoria from './components/Auditoria/Auditoria'
+import VoiceCall from './components/VoiceCall/VoiceCall'
+import Integraciones from './components/Integraciones/Integraciones'
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('dashboard')
@@ -26,7 +28,8 @@ export default function App() {
       {activeSection === 'chathistorial' && <Chathistorial />}
       {activeSection === 'workspace' && <Workspace />}
       {activeSection === 'auditoria' && <Auditoria />}
+      {activeSection === 'voicecall' && <VoiceCall />}
+      {activeSection === 'integraciones' && <Integraciones />}
     </Layout>
   )
 }
-

@@ -102,5 +102,23 @@ services:
       dockerfile: Dockerfile
     container_name: voice_worker
     restart: always
+    ports:
+      - "8091:8091"
     environment:
       - GEMINI_API_KEY=${GEMINI_API_KEY}
+
+  whatsapp_service:
+    build:
+      context: ./services/whatsapp
+      dockerfile: Dockerfile
+    container_name: openclaw_whatsapp
+    restart: always
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - GATEWAY_URL=http://openclaw_gateway:8080/api/mcp/message
+    volumes:
+      - ./services/whatsapp/auth_info_baileys:/app/auth_info_baileys
+    depends_on:
+      - gateway

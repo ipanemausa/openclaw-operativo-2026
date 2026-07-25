@@ -13,28 +13,12 @@ const SEVEN_QA_ITEMS = [
 
 const AvatarMeet = () => {
   const [hasMicPermission, setHasMicPermission] = useState(false);
-  const [isAudioMuted, setIsAudioMuted] = useState(true);
+  const [isAudioMuted, setIsAudioMuted] = useState(false);
   const [avatarSource, setAvatarSource] = useState('/output_avatar_english_7qa.mp4');
   const [activeQAIndex, setActiveQAIndex] = useState(0);
   const [isPlayingAuto, setIsPlayingAuto] = useState(false);
-
-  // Solicitud explícita de permisos de micrófono y parlante del PC
-  async function requestMicAndAudioPermissions() {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      setHasMicPermission(true);
-      setIsAudioMuted(false);
-      if (videoRef.current) {
-        videoRef.current.muted = false;
-        videoRef.current.play().catch(e => console.log('Play after mic permission:', e));
-      }
-      // Detener stream temporal de prueba
-      stream.getTracks().forEach(track => track.stop());
-    } catch (err) {
-      console.warn("Permiso de micrófono o altavoz denegado por el usuario o navegador:", err);
-      alert("Por favor autoriza el micrófono y altavoz en la barra de tu navegador para interactuar con Guillermo AI.");
-    }
-  }
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [audioBlockedByBrowser, setAudioBlockedByBrowser] = useState(false);
 
   // Voice Input (WhisperFlow $0)
   const [inputText, setInputText] = useState('');
@@ -43,14 +27,77 @@ const AvatarMeet = () => {
   const videoRef = useRef(null);
   const recognitionRef = useRef(null);
 
-  // Auto-play video on source load
+  // Solicitud explícita de permisos de micrófono y parlante del PC
+  async function requestMicAndAudioPermissions() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      setHasMicPermission(true);
+      setIsAudioMuted(false);
+      setAudioBlockedByBrowser(false);
+      if (videoRef.current) {
+        videoRef.current.muted = false;
+        videoRef.current.play().catch(e => console.log('Play after mic permission:', e));
+      }
+      stream.getTracks().forEach(track => track.stop());
+    } catch (err) {
+      console.warn("Permiso de micrófono o altavoz denegado:", err);
+      alert("Por favor autoriza el micrófono y altavoz en la barra de tu navegador para interactuar con Guillermo AI.");
+    }
+  }
+
+  // Reproducir voz sintética (TTS Browser / Gemini Voice)
+  const speakText = (text) => {
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    utterance.rate = 1.0;
+    utterance.pitch = 1.0;
+
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+
+    window.speechSynthesis.speak(utterance);
+  };
+
+  // Reproducir video y audio sincronizados
+  const playAvatarResponse = (sourceUrl, textToSpeak) => {
+    setIsAudioMuted(false);
+    setAudioBlockedByBrowser(false);
+    setAvatarSource(sourceUrl);
+
+    if (textToSpeak) {
+      speakText(textToSpeak);
+    }
+
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.muted = false;
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(err => {
+          console.warn("Autoplay con audio bloqueado por navegador. Muteando temporalmente:", err);
+          setAudioBlockedByBrowser(true);
+          videoRef.current.muted = true;
+          videoRef.current.play();
+        });
+      }
+    }
+  };
+
+  // Auto-play video al cambiar fuente o estado de audio
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.currentTime = 0;
       videoRef.current.muted = isAudioMuted;
-      videoRef.current.play().catch(e => console.log('Autoplay handled:', e));
+      videoRef.current.play().catch(e => {
+        console.log('Autoplay handled:', e);
+        setAudioBlockedByBrowser(true);
+      });
     }
-  }, [avatarSource, isAudioMuted]);
+  }, [avatarSource]);
 
   // Setup WebSpeech / WhisperFlow $0
   useEffect(() => {
@@ -90,6 +137,7 @@ const AvatarMeet = () => {
   const toggleSound = () => {
     const nextState = !isAudioMuted;
     setIsAudioMuted(nextState);
+    setAudioBlockedByBrowser(false);
     if (videoRef.current) {
       videoRef.current.muted = nextState;
       if (!nextState) videoRef.current.play();
@@ -98,11 +146,8 @@ const AvatarMeet = () => {
 
   const selectQA = (idx) => {
     setActiveQAIndex(idx);
-    setAvatarSource('/output_avatar_english_7qa.mp4');
-    if (videoRef.current) {
-      videoRef.current.currentTime = 0;
-      videoRef.current.play();
-    }
+    const item = SEVEN_QA_ITEMS[idx];
+    playAvatarResponse('/output_avatar_english_7qa.mp4', item.a);
   };
 
   const nextQA = () => {
@@ -122,18 +167,13 @@ const AvatarMeet = () => {
         clearInterval(interval);
         setIsPlayingAuto(false);
       }
-    }, 5000);
+    }, 7000);
   };
 
   const triggerAvatarVoiceResponse = (text) => {
     if (!text.trim()) return;
-    setAvatarSource('/temp_lipsync.mp4');
-    if (videoRef.current) {
-      videoRef.current.currentTime = 0;
-      videoRef.current.muted = false;
-      setIsAudioMuted(false);
-      videoRef.current.play();
-    }
+    const responseText = `Regarding "${text}": Our Guillermo AI Avatar engine processes this request live in sub-100ms.`;
+    playAvatarResponse('/temp_lipsync.mp4', responseText);
   };
 
   const currentQA = SEVEN_QA_ITEMS[activeQAIndex];
@@ -142,7 +182,7 @@ const AvatarMeet = () => {
     <div className="avatar-meet-container" style={{ maxWidth: '960px', margin: '0 auto', padding: '16px' }}>
       {/* Header Badge & Permission Control */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
-        <h2 style={{ margin: 0, color: '#d4af6a', fontSize: '20px' }}>Guillermo AI Avatar (English 7 Q&A Output)</h2>
+        <h2 style={{ margin: 0, color: '#d4af6a', fontSize: '20px' }}>Guillermo AI Avatar (Dynamic Video & Speech Output)</h2>
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
           <button
             onClick={requestMicAndAudioPermissions}
@@ -150,25 +190,42 @@ const AvatarMeet = () => {
           >
             {hasMicPermission ? '🎙️ Micrófono & Audio Autorizados' : '🎙️ Autorizar Micrófono & Audio PC'}
           </button>
-          <span className="status-badge connected" style={{ background: 'rgba(52,211,153,0.15)', color: '#34d399', padding: '6px 14px', borderRadius: '20px', fontSize: '12px', fontWeight: '600' }}>
-            🟢 VIDEO OUTPUT ACTIVO (1080P)
+          <span className="status-badge connected" style={{ background: isSpeaking ? 'rgba(217,119,6,0.2)' : 'rgba(52,211,153,0.15)', color: isSpeaking ? '#f59e0b' : '#34d399', padding: '6px 14px', borderRadius: '20px', fontSize: '12px', fontWeight: '600' }}>
+            {isSpeaking ? '🗣️ VOZ ACTIVA (HABLANDO)' : '🟢 VIDEO OUTPUT ACTIVO (1080P)'}
           </span>
         </div>
       </div>
 
       {/* Main Video Screen */}
-      <div style={{ background: '#000', borderRadius: '16px', border: '1px solid rgba(212,175,106,0.3)', overflow: 'hidden', textAlign: 'center', marginBottom: '16px' }}>
+      <div style={{ position: 'relative', background: '#000', borderRadius: '16px', border: '1px solid rgba(212,175,106,0.3)', overflow: 'hidden', textAlign: 'center', marginBottom: '16px' }}>
+        
+        {/* Banner de aviso si el navegador bloqueó audio */}
+        {audioBlockedByBrowser && (
+          <div 
+            onClick={toggleSound}
+            style={{ position: 'absolute', top: '12px', left: '50%', transform: 'translateX(-50%)', zIndex: 10, background: 'rgba(217,119,6,0.95)', color: '#fff', padding: '8px 18px', borderRadius: '20px', fontSize: '13px', fontWeight: '700', cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.5)' }}
+          >
+            🔊 Haz clic aquí para activar el sonido del Avatar
+          </div>
+        )}
+
         <video 
           key={avatarSource}
           ref={videoRef}
           src={avatarSource}
           autoPlay
           muted={isAudioMuted}
-          loop
           playsInline
           controls
+          onEnded={() => {
+            if (videoRef.current) {
+              videoRef.current.currentTime = 0;
+              videoRef.current.play();
+            }
+          }}
           style={{ width: '100%', maxHeight: '420px', objectFit: 'contain' }}
         />
+        
         <div style={{ background: '#111', padding: '12px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
           <button 
             onClick={toggleSound}
@@ -179,7 +236,7 @@ const AvatarMeet = () => {
 
           <select 
             value={avatarSource}
-            onChange={(e) => setAvatarSource(e.target.value)}
+            onChange={(e) => playAvatarResponse(e.target.value, currentQA.a)}
             style={{ background: '#1a1a1a', color: '#d4af6a', border: '1px solid #d4af6a', borderRadius: '6px', padding: '6px 12px', fontSize: '12px', fontWeight: '600' }}
           >
             <option value="/output_avatar_english_7qa.mp4">🎬 REAL OUTPUT: Avatar English 7 Q&A</option>

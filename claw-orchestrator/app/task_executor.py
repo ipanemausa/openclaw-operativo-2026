@@ -72,13 +72,23 @@ def ecc_gate(action, task_name, actor="executor", success=True):
         print(f"[ECC] gate_{action} error (non-blocking): {e}", flush=True)
 
 def run():
-    print("[EXECUTOR] iniciado — escuchando queue:tareas", flush=True)
+    print("[EXECUTOR] iniciado — escuchando queue:tareas:critical y queue:tareas", flush=True)
     while True:
         try:
-            item = r.brpop("queue:tareas", timeout=5)
+            # Event Intelligence Layer: Prioridad a tareas críticas
+            item = r.brpop(["queue:tareas:critical", "queue:tareas"], timeout=5)
             if not item:
                 continue
-            _, nombre = item
+            queue_name, data_str = item
+            
+            # Parse JSON metadata
+            try:
+                event_data = json.loads(data_str)
+                nombre = event_data.get("task_id", data_str)
+                print(f"[EXECUTOR] Recibido evento {queue_name}: {event_data.get('priority', 'normal')} prioridad", flush=True)
+            except json.JSONDecodeError:
+                nombre = data_str # Fallback for old format
+                
             estado = load_estado()
             tareas = estado.get("tareas", {})
             if nombre not in tareas:

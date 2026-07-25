@@ -38,15 +38,31 @@ def get_ready_tasks(tareas):
     return ready
 
 def dag_worker():
+    from scheduler import EnterpriseScheduler
+    scheduler_instance = EnterpriseScheduler()
     while True:
         try:
             estado = load_estado()
             tareas = estado.get("tareas", {})
             ready  = get_ready_tasks(tareas)
             for nombre in ready:
-                redis_client.lpush("queue:tareas", nombre)
+                # Event Intelligence Layer - Fase 5
+                task_data = tareas[nombre]
+                eval_result = scheduler_instance.evaluate_task(nombre, task_data, tareas)
+                
+                event_payload = {
+                    "task_id": nombre,
+                    "priority": "critical" if eval_result.get("action") == "SCHEDULE_PRIORITY" else "normal",
+                    "action": eval_result.get("action", "SCHEDULE"),
+                    "metrics": eval_result.get("metrics", {}),
+                    "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+                }
+                
+                queue_name = "queue:tareas:critical" if event_payload["priority"] == "critical" else "queue:tareas"
+                redis_client.lpush(queue_name, json.dumps(event_payload))
                 tareas[nombre]["estado"] = "en_cola"
-                print(f"[DAG] {nombre} en_cola", flush=True)
+                print(f"[DAG] {nombre} en_cola ({queue_name}) - {eval_result.get('reason')}", flush=True)
+                
             if ready:
                 estado["ultima_actualizacion"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
                 save_estado(estado)
@@ -76,6 +92,20 @@ def health():
 @app.route("/stack")
 def stack():
     return jsonify({"containers": get_stack_status()})
+
+@app.route("/api/observability")
+def observability():
+    try:
+        from scheduler import EnterpriseScheduler
+        scheduler_instance = EnterpriseScheduler()
+        metrics = {
+            "chat": scheduler_instance.queues["chat"].get_queue_metrics(),
+            "video": scheduler_instance.queues["video"].get_queue_metrics(),
+            "rag": scheduler_instance.queues["rag"].get_queue_metrics()
+        }
+        return jsonify({"status": "ok", "metrics": metrics})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/api/radio/input", methods=["POST"])
 def radio_input():

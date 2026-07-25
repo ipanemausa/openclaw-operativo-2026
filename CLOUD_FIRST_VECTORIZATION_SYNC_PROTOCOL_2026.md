@@ -43,7 +43,7 @@ graph TD
 3. Preservación automática de archivos blindados `v2.0-stable`.
 
 ### Fase 4: Respaldo Multinube & Control de Versiones (Rclone & Git)
-1. **Rclone 5TB Google Drive:** Ejecución de `rclone sync` hacia `drive:HBJewelry` y `drive:openclaw-cloud-2026-backup`.
+1. **Motor Maestro Rclone (Google Drive 5TB):** **Rclone** es el motor principal de sincronización directa en la nube (no PowerShell). Sincroniza hacia `drive:HBJewelry` y `drive:openclaw-cloud-2026-backup` con filtro inteligente de exclusión (`node_modules`, `.git`).
 2. **GitHub:** Commit y Push a la rama principal (`origin/main`).
 3. **Work Log:** Registro automático del hash de estado en `ANTIGRAVITY_WORK_LOG.txt`.
 

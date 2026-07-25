@@ -31,7 +31,7 @@
 ## 🎯 2. TAREA PRINCIPAL Y PLAN MAESTRO PARA MAÑANA (26 DE JULIO)
 
 ### **TAREA PRINCIPAL:**
-> **Lograr la creación e integración del video con el Avatar ultra-realista de Guillermo con movimientos naturales de manos, boca y gesticulación facial mediante el HB Digital Presenter Engine ($0 Costo).**
+> **🎬 LOGRAR LA CREACIÓN DEL VIDEO TUTORIAL/DEMOSTRATIVO EXPLICANDO EL MANEJO DE LA APP HB JEWELRY CON TU AVATAR GUILLERMO (movimientos de manos, lip-sync, gesticulación facial y pantalla virtual holográfica mediante HB Digital Presenter Engine $0 Costo).**
 
 ### **PASOS DE EJECUCIÓN (26 DE JULIO):**
 

@@ -479,10 +479,19 @@ For issues, check:
 
 ---
 
+## ⚙️ Orquestación de Operaciones y Cierre
+
+- **Modelo de Ruta Crítica y Colas:** Monitoreo dinámico de prioridades y cálculo de tiempos $\lambda/\mu$ para orquestación de operaciones.
+- **Hand-off Claude / Antigravity:** Consulte [hand_off_to_claude.md](file:///c:/Users/ipane/openclaw-operativo-2026/hand_off_to_claude.md) para ver el informe detallado de estado y la arquitectura de colas.
+- **Protocolo de Cierre Automatizado:** Ejecución vía PowerShell del script `scripts/pipeline-cierre.ps1`.
+
+---
+
 ## 📄 License
 
 OpenClaw 2026 - Production deployment package
 
 **Version:** 2026.7.1
-**Updated:** 2026-07-19
+**Updated:** 2026-07-25
 **Status:** Ready for cloud deployment
+

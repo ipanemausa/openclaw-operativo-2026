@@ -11,6 +11,13 @@ const SEVEN_QA_ITEMS = [
   { id: 7, q: 'How is cloud backup handled?', a: 'Our automated pipeline pushes commits to GitHub and syncs to 5TB Google Drive via Rclone.' }
 ];
 
+const CUSTOMER_SAMPLE_QUESTIONS = [
+  { id: 'c1', label: '💎 Cadenas Cubanas Oro 14k', q: '¿Cuál es el precio y peso de las Cadenas Cubanas de Oro 14k?', a: 'Nuestras Cadenas Cubanas en Oro Solido de 14k inician desde $1,850 USD, cuentan con cierre de seguridad italiano y garantía de por vida.' },
+  { id: 'c2', label: '🟢 Esmeraldas Colombianas', q: '¿Tienen anillos con Esmeraldas Colombianas naturales?', a: 'Sí, ofrecemos anillos solitarios con Esmeraldas Colombianas certicadas de Muzo y Chivor en monturas de Oro de 18k.' },
+  { id: 'c3', label: '✈️ Envíos & Garantía', q: '¿Cómo funcionan los envíos internacionales y la garantía?', a: 'Realizamos envíos asegurados a nivel mundial por FedEx Express. Cada pieza incluye certificado de autenticidad y garantía de por vida.' },
+  { id: 'c4', label: '🎨 Diseños Personalizados', q: '¿Realizan pedidos y diseños de joyería personalizados?', a: '¡Por supuesto! Nuestro taller master diseña piezas únicas en 3D en 48 horas según tus especificaciones.' }
+];
+
 const AvatarMeet = () => {
   const [hasMicPermission, setHasMicPermission] = useState(false);
   const [isAudioMuted, setIsAudioMuted] = useState(false);
@@ -19,15 +26,18 @@ const AvatarMeet = () => {
   const [isPlayingAuto, setIsPlayingAuto] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [audioBlockedByBrowser, setAudioBlockedByBrowser] = useState(false);
+  const [viewMode, setViewMode] = useState('customer'); // 'customer' | 'technical'
 
-  // Voice Input (WhisperFlow $0)
+  // Voice & Customer Input
   const [inputText, setInputText] = useState('');
+  const [currentResponseTitle, setCurrentResponseTitle] = useState('Bienvenido a HB Jewelry Concierge AI');
+  const [currentResponseText, setCurrentResponseText] = useState('Hola, soy Guillermo AI. ¿En qué te puedo asesorar hoy sobre nuestra colección exclusiva de joyas en oro de 14k/18k y esmeraldas colombianas?');
   const [isListening, setIsListening] = useState(false);
 
   const videoRef = useRef(null);
   const recognitionRef = useRef(null);
 
-  // Solicitud explícita de permisos de micrófono y parlante del PC
+  // Permisos de micrófono y altavoz
   async function requestMicAndAudioPermissions() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -40,18 +50,18 @@ const AvatarMeet = () => {
       }
       stream.getTracks().forEach(track => track.stop());
     } catch (err) {
-      console.warn("Permiso de micrófono o altavoz denegado:", err);
+      console.warn("Permiso denegado:", err);
       alert("Por favor autoriza el micrófono y altavoz en la barra de tu navegador para interactuar con Guillermo AI.");
     }
   }
 
-  // Reproducir voz sintética (TTS Browser / Gemini Voice)
+  // Voz sintética (TTS Browser / Gemini Voice)
   const speakText = (text) => {
     if (!('speechSynthesis' in window)) return;
-    window.speechSynthesis.cancel(); // Detener lecturas previas
+    window.speechSynthesis.cancel();
 
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US';
+    utterance.lang = 'es-ES';
     utterance.rate = 1.0;
     utterance.pitch = 1.0;
 
@@ -63,12 +73,13 @@ const AvatarMeet = () => {
   };
 
   // Reproducir video y audio sincronizados
-  const playAvatarResponse = (sourceUrl, textToSpeak) => {
+  const playAvatarResponse = (sourceUrl, title, textToSpeak) => {
     setIsAudioMuted(false);
     setAudioBlockedByBrowser(false);
     setAvatarSource(sourceUrl);
-
+    if (title) setCurrentResponseTitle(title);
     if (textToSpeak) {
+      setCurrentResponseText(textToSpeak);
       speakText(textToSpeak);
     }
 
@@ -78,7 +89,7 @@ const AvatarMeet = () => {
       const playPromise = videoRef.current.play();
       if (playPromise !== undefined) {
         playPromise.catch(err => {
-          console.warn("Autoplay con audio bloqueado por navegador. Muteando temporalmente:", err);
+          console.warn("Autoplay bloqueado por navegador. Muteando temporalmente:", err);
           setAudioBlockedByBrowser(true);
           videoRef.current.muted = true;
           videoRef.current.play();
@@ -87,7 +98,7 @@ const AvatarMeet = () => {
     }
   };
 
-  // Auto-play video al cambiar fuente o estado de audio
+  // Auto-play video al cambiar fuente
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.currentTime = 0;
@@ -99,19 +110,19 @@ const AvatarMeet = () => {
     }
   }, [avatarSource]);
 
-  // Setup WebSpeech / WhisperFlow $0
+  // Setup WebSpeech
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (SpeechRecognition) {
       const rec = new SpeechRecognition();
       rec.continuous = false;
       rec.interimResults = false;
-      rec.lang = 'en-US';
+      rec.lang = 'es-ES';
 
       rec.onresult = (e) => {
         const text = e.results[0][0].transcript;
         setInputText(text);
-        triggerAvatarVoiceResponse(text);
+        handleCustomCustomerQuery(text);
       };
 
       rec.onend = () => setIsListening(false);
@@ -144,25 +155,32 @@ const AvatarMeet = () => {
     }
   };
 
-  const selectQA = (idx) => {
+  const selectTechnicalQA = (idx) => {
     setActiveQAIndex(idx);
     const item = SEVEN_QA_ITEMS[idx];
-    playAvatarResponse('/output_avatar_english_7qa.mp4', item.a);
+    playAvatarResponse('/output_avatar_english_7qa.mp4', `Pregunta Técnica Q${item.id}: ${item.q}`, item.a);
   };
 
-  const nextQA = () => {
-    selectQA((activeQAIndex + 1) % SEVEN_QA_ITEMS.length);
+  const selectCustomerQuestion = (item) => {
+    playAvatarResponse('/temp_lipsync.mp4', `Consulta de Cliente: ${item.q}`, item.a);
+  };
+
+  const handleCustomCustomerQuery = (text) => {
+    if (!text.trim()) return;
+    const responseText = `Excelente pregunta sobre "${text}". En HB Jewelry cada pieza es elaborada en oro sólido de 14k y 18k con certificación internacional. ¿Te gustaría que un asesor te contacte por WhatsApp?`;
+    playAvatarResponse('/temp_lipsync.mp4', `Consulta Libre: "${text}"`, responseText);
+    setInputText('');
   };
 
   const startAutoPlayback = () => {
     setIsPlayingAuto(true);
     let current = 0;
-    selectQA(0);
+    selectTechnicalQA(0);
 
     const interval = setInterval(() => {
       current++;
       if (current < SEVEN_QA_ITEMS.length) {
-        selectQA(current);
+        selectTechnicalQA(current);
       } else {
         clearInterval(interval);
         setIsPlayingAuto(false);
@@ -170,29 +188,37 @@ const AvatarMeet = () => {
     }, 7000);
   };
 
-  const triggerAvatarVoiceResponse = (text) => {
-    if (!text.trim()) return;
-    const responseText = `Regarding "${text}": Our Guillermo AI Avatar engine processes this request live in sub-100ms.`;
-    playAvatarResponse('/temp_lipsync.mp4', responseText);
-  };
-
-  const currentQA = SEVEN_QA_ITEMS[activeQAIndex];
-
   return (
     <div className="avatar-meet-container" style={{ maxWidth: '960px', margin: '0 auto', padding: '16px' }}>
-      {/* Header Badge & Permission Control */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
-        <h2 style={{ margin: 0, color: '#d4af6a', fontSize: '20px' }}>Guillermo AI Avatar (Dynamic Video & Speech Output)</h2>
-        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+      
+      {/* Top Selector Mode: Cliente vs Investigador Técnico */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px', background: '#111', padding: '12px 16px', borderRadius: '12px', border: '1px solid rgba(212,175,106,0.3)' }}>
+        <div>
+          <h2 style={{ margin: 0, color: '#d4af6a', fontSize: '20px' }}>💎 HB Jewelry Concierge AI & Guillermo Avatar</h2>
+          <span style={{ color: '#888', fontSize: '12px' }}>Atención personalizada al cliente & Demo de Arquitectura de IA</span>
+        </div>
+        
+        <div style={{ display: 'flex', gap: '8px' }}>
           <button
-            onClick={requestMicAndAudioPermissions}
-            style={{ background: hasMicPermission ? '#059669' : '#d97706', color: '#fff', border: 'none', borderRadius: '20px', padding: '6px 14px', fontSize: '12px', fontWeight: '600', cursor: 'pointer' }}
+            onClick={() => setViewMode('customer')}
+            style={{
+              background: viewMode === 'customer' ? 'linear-gradient(135deg, #d4af6a, #aa8237)' : '#222',
+              color: viewMode === 'customer' ? '#000' : '#aaa',
+              border: 'none', borderRadius: '20px', padding: '8px 16px', fontWeight: '700', fontSize: '13px', cursor: 'pointer'
+            }}
           >
-            {hasMicPermission ? '🎙️ Micrófono & Audio Autorizados' : '🎙️ Autorizar Micrófono & Audio PC'}
+            ✨ Consulta Cliente Joyería
           </button>
-          <span className="status-badge connected" style={{ background: isSpeaking ? 'rgba(217,119,6,0.2)' : 'rgba(52,211,153,0.15)', color: isSpeaking ? '#f59e0b' : '#34d399', padding: '6px 14px', borderRadius: '20px', fontSize: '12px', fontWeight: '600' }}>
-            {isSpeaking ? '🗣️ VOZ ACTIVA (HABLANDO)' : '🟢 VIDEO OUTPUT ACTIVO (1080P)'}
-          </span>
+          <button
+            onClick={() => setViewMode('technical')}
+            style={{
+              background: viewMode === 'technical' ? '#059669' : '#222',
+              color: viewMode === 'technical' ? '#fff' : '#aaa',
+              border: 'none', borderRadius: '20px', padding: '8px 16px', fontWeight: '700', fontSize: '13px', cursor: 'pointer'
+            }}
+          >
+            🛠️ Demo Arquitectura Técnica
+          </button>
         </div>
       </div>
 
@@ -234,102 +260,114 @@ const AvatarMeet = () => {
             {isAudioMuted ? '🔇 Activar Sonido (Unmute)' : '🔊 Sonido Activado (Mute)'}
           </button>
 
-          <select 
-            value={avatarSource}
-            onChange={(e) => playAvatarResponse(e.target.value, currentQA.a)}
-            style={{ background: '#1a1a1a', color: '#d4af6a', border: '1px solid #d4af6a', borderRadius: '6px', padding: '6px 12px', fontSize: '12px', fontWeight: '600' }}
+          <button
+            onClick={requestMicAndAudioPermissions}
+            style={{ background: hasMicPermission ? '#059669' : '#d97706', color: '#fff', border: 'none', borderRadius: '20px', padding: '6px 14px', fontSize: '12px', fontWeight: '600', cursor: 'pointer' }}
           >
-            <option value="/output_avatar_english_7qa.mp4">🎬 REAL OUTPUT: Avatar English 7 Q&A</option>
-            <option value="/temp_lipsync.mp4">👄 LipSync Real MP4</option>
-            <option value="/tiktok_showcase.mp4">📱 TikTok Original (Guillermo)</option>
-          </select>
+            {hasMicPermission ? '🎙️ Micrófono & Audio Autorizados' : '🎙️ Autorizar Micrófono & Audio PC'}
+          </button>
+
+          <span className="status-badge connected" style={{ background: isSpeaking ? 'rgba(217,119,6,0.2)' : 'rgba(52,211,153,0.15)', color: isSpeaking ? '#f59e0b' : '#34d399', padding: '6px 14px', borderRadius: '20px', fontSize: '12px', fontWeight: '600' }}>
+            {isSpeaking ? '🗣️ VOZ ACTIVA (HABLANDO)' : '🟢 VIDEO OUTPUT ACTIVO (1080P)'}
+          </span>
         </div>
       </div>
 
-      {/* Active Q&A Display Card */}
+      {/* Dynamic Response Display Box */}
       <div style={{ background: '#141414', border: '1px solid rgba(212,175,106,0.4)', borderRadius: '12px', padding: '20px', marginBottom: '16px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-          <span style={{ color: '#d4af6a', fontSize: '14px', fontWeight: '700' }}>
-            🎬 Question {currentQA.id} of 7:
-          </span>
-          <div style={{ display: 'flex', gap: '8px' }}>
+        <h4 style={{ margin: '0 0 8px 0', color: '#d4af6a', fontSize: '15px' }}>{currentResponseTitle}</h4>
+        <div style={{ background: '#1c1c1c', borderRadius: '8px', padding: '14px 18px', borderLeft: '4px solid #34d399' }}>
+          <strong style={{ color: '#34d399', fontSize: '12px', display: 'block', marginBottom: '4px' }}>🤖 RESPUESTA DE GUILLERMO AI:</strong>
+          <span style={{ color: '#f0ede8', fontSize: '14px', fontWeight: '400', lineHeight: '1.5' }}>{currentResponseText}</span>
+        </div>
+      </div>
+
+      {/* MODE 1: CONSULTA CLIENTE JOYERÍA (DEBAJO DEL ROBOT) */}
+      {viewMode === 'customer' && (
+        <div style={{ background: '#141414', border: '1px solid rgba(212,175,106,0.3)', borderRadius: '12px', padding: '20px', marginBottom: '16px' }}>
+          <h3 style={{ margin: '0 0 6px 0', color: '#d4af6a', fontSize: '17px' }}>✨ ¿Qué te gustaría consultar hoy sobre nuestra Colección HB Jewelry?</h3>
+          <p style={{ margin: '0 0 16px 0', color: '#aaa', fontSize: '13px' }}>Puedes seleccionar una consulta frecuente o preguntar libremente lo que desees a nuestro Avatar en voz o texto:</p>
+
+          {/* Sample Customer Buttons */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '10px', marginBottom: '18px' }}>
+            {CUSTOMER_SAMPLE_QUESTIONS.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => selectCustomerQuestion(item)}
+                style={{
+                  background: '#1f1f1f', border: '1px solid rgba(212,175,106,0.3)', borderRadius: '8px', padding: '10px 14px',
+                  color: '#fff', fontSize: '12px', fontWeight: '600', textAlign: 'left', cursor: 'pointer', transition: 'all 0.2s'
+                }}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Open Question Input & Mic */}
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+            <input 
+              type="text" 
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleCustomCustomerQuery(inputText)}
+              placeholder="Escribe o habla cualquier pregunta sobre collares, anillos, precios o envíos..."
+              style={{ flex: 1, background: '#1f1f1f', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '10px 14px', color: '#fff', fontSize: '13px' }}
+            />
+            <button 
+              onClick={toggleMic}
+              style={{ background: isListening ? '#ef4444' : '#25d366', color: '#fff', border: 'none', borderRadius: '8px', padding: '10px 16px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}
+            >
+              {isListening ? '🔴 Detener' : '🎙️ Hablar'}
+            </button>
+            <button 
+              onClick={() => handleCustomCustomerQuery(inputText)}
+              disabled={!inputText.trim()}
+              style={{ background: 'linear-gradient(135deg, #d4af6a, #aa8237)', color: '#000', border: 'none', borderRadius: '8px', padding: '10px 20px', fontWeight: '700', fontSize: '13px', cursor: 'pointer', opacity: !inputText.trim() ? 0.5 : 1 }}
+            >
+              🗣️ Consultar
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* MODE 2: DEMO ARQUITECTURA TÉCNICA APP (PARA INVESTIGADORES / INGENIEROS) */}
+      {viewMode === 'technical' && (
+        <div style={{ background: '#141414', border: '1px solid rgba(52,211,153,0.3)', borderRadius: '12px', padding: '20px', marginBottom: '16px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+            <div>
+              <h3 style={{ margin: '0 0 4px 0', color: '#34d399', fontSize: '16px' }}>🛠️ Demo de Investigación de Arquitectura Técnica App</h3>
+              <span style={{ color: '#aaa', fontSize: '12px' }}>Preguntas especializadas sobre RAG 768-dim, WhatsApp Baileys $0 y WhisperFlow:</span>
+            </div>
             <button 
               onClick={startAutoPlayback}
               disabled={isPlayingAuto}
               style={{ background: 'linear-gradient(135deg, #d4af6a, #aa8237)', color: '#000', border: 'none', borderRadius: '6px', padding: '6px 14px', fontWeight: '700', fontSize: '12px', cursor: 'pointer' }}
             >
-              {isPlayingAuto ? '⚡ Playing All 7...' : '▶ Play All 7 Q&A'}
-            </button>
-            <button 
-              onClick={nextQA}
-              style={{ background: '#222', color: '#fff', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '6px', padding: '6px 14px', fontWeight: '600', fontSize: '12px', cursor: 'pointer' }}
-            >
-              ⏭ Next ({currentQA.id}/7)
+              {isPlayingAuto ? '⚡ Reproduciendo las 7 Q&A...' : '▶ Reproducir las 7 Preguntas de Arquitectura'}
             </button>
           </div>
-        </div>
 
-        {/* Q&A Pills */}
-        <div style={{ display: 'flex', gap: '6px', marginBottom: '14px' }}>
-          {SEVEN_QA_ITEMS.map((item, idx) => (
-            <button
-              key={item.id}
-              onClick={() => selectQA(idx)}
-              style={{
-                flex: 1, padding: '6px 0', borderRadius: '4px', border: 'none',
-                background: activeQAIndex === idx ? '#d4af6a' : '#222',
-                color: activeQAIndex === idx ? '#000' : '#888',
-                fontWeight: '700', fontSize: '12px', cursor: 'pointer'
-              }}
-            >
-              Q{item.id}
-            </button>
-          ))}
+          {/* Q&A Pills */}
+          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+            {SEVEN_QA_ITEMS.map((item, idx) => (
+              <button
+                key={item.id}
+                onClick={() => selectTechnicalQA(idx)}
+                style={{
+                  flex: 1, minWidth: '80px', padding: '8px 0', borderRadius: '6px', border: 'none',
+                  background: activeQAIndex === idx ? '#34d399' : '#222',
+                  color: activeQAIndex === idx ? '#000' : '#888',
+                  fontWeight: '700', fontSize: '12px', cursor: 'pointer'
+                }}
+              >
+                Q{item.id} Técnico
+              </button>
+            ))}
+          </div>
         </div>
+      )}
 
-        {/* Question Text */}
-        <div style={{ background: '#1c1c1c', borderRadius: '8px', padding: '12px 16px', marginBottom: '8px', borderLeft: '4px solid #d4af6a' }}>
-          <strong style={{ color: '#d4af6a', fontSize: '12px', display: 'block', marginBottom: '2px' }}>👤 USER QUESTION:</strong>
-          <span style={{ color: '#fff', fontSize: '14px', fontWeight: '500' }}>{currentQA.q}</span>
-        </div>
-
-        {/* Answer Text */}
-        <div style={{ background: '#1c1c1c', borderRadius: '8px', padding: '12px 16px', borderLeft: '4px solid #34d399' }}>
-          <strong style={{ color: '#34d399', fontSize: '12px', display: 'block', marginBottom: '2px' }}>🤖 GUILLERMO AI OUTPUT:</strong>
-          <span style={{ color: '#f0ede8', fontSize: '14px', fontWeight: '400', lineHeight: '1.4' }}>{currentQA.a}</span>
-        </div>
-      </div>
-
-      {/* WhisperFlow $0 Hands-Free Mic */}
-      <div style={{ background: '#141414', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '16px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-          <span style={{ color: '#a09d99', fontSize: '12px', fontWeight: '600' }}>🎙️ WhisperFlow $0 Hands-Free Mic Input:</span>
-          <button 
-            onClick={toggleMic}
-            style={{ background: isListening ? '#ef4444' : '#25d366', color: '#fff', border: 'none', borderRadius: '16px', padding: '6px 14px', fontSize: '12px', fontWeight: '600', cursor: 'pointer' }}
-          >
-            {isListening ? '🔴 Stop Listening' : '🎙️ Speak by Microphone'}
-          </button>
-        </div>
-
-        <div style={{ display: 'flex', gap: '8px' }}>
-          <input 
-            type="text" 
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && triggerAvatarVoiceResponse(inputText)}
-            placeholder="Type or speak a question for Guillermo AI..."
-            style={{ flex: 1, background: '#1f1f1f', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '8px 12px', color: '#fff', fontSize: '13px' }}
-          />
-          <button 
-            onClick={() => triggerAvatarVoiceResponse(inputText)}
-            disabled={!inputText.trim()}
-            style={{ background: 'linear-gradient(135deg, #d4af6a, #aa8237)', color: '#000', border: 'none', borderRadius: '6px', padding: '8px 16px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', opacity: !inputText.trim() ? 0.5 : 1 }}
-          >
-            🗣️ Send
-          </button>
-        </div>
-      </div>
     </div>
   );
 };

@@ -48,7 +48,7 @@ const AvatarMeet = () => {
   // Reproducir voz sintética (TTS Browser / Gemini Voice)
   const speakText = (text) => {
     if (!('speechSynthesis' in window)) return;
-    window.speechSynthesis.cancel();
+    window.speechSynthesis.cancel(); // Detener lecturas previas
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'en-US';

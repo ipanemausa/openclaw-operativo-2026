@@ -13,6 +13,10 @@ const SEVEN_QA_ITEMS = [
 
 const AvatarMeet = () => {
   const [hasMicPermission, setHasMicPermission] = useState(false);
+  const [isAudioMuted, setIsAudioMuted] = useState(true);
+  const [avatarSource, setAvatarSource] = useState('/output_avatar_english_7qa.mp4');
+  const [activeQAIndex, setActiveQAIndex] = useState(0);
+  const [isPlayingAuto, setIsPlayingAuto] = useState(false);
 
   // Solicitud explícita de permisos de micrófono y parlante del PC
   async function requestMicAndAudioPermissions() {

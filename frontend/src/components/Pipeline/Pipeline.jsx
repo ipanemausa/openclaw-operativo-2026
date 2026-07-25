@@ -1,103 +1,64 @@
-import "../../styles/hb.css";
+import React, { useState } from 'react'
+import '../../styles/hb.css'
 
-const Pipeline = () => {
-  const steps = [
-    { id: 1, name: 'Build', status: 'completed' },
-    { id: 2, name: 'Test', status: 'pending' },
-    { id: 3, name: 'Deploy', status: 'failed' },
-    { id: 4, name: 'Verify', status: 'pending' },
-  ];
+const tareas = [
+  { id: 'T-001', nombre: 'Deploy frontend Cloud Run', agente: 'antigravity', estado: 'completada', prioridad: 'alta' },
+  { id: 'T-002', nombre: 'Sync inventario Shopify', agente: 'shopify', estado: 'completada', prioridad: 'media' },
+  { id: 'T-003', nombre: 'Generar reporte ventas julio', agente: 'main', estado: 'completada', prioridad: 'alta' },
+  { id: 'T-004', nombre: 'Procesar video campaña verano', agente: 'video', estado: 'en_cola', prioridad: 'media' },
+  { id: 'T-005', nombre: 'Analizar métricas Instagram', agente: 'marketing', estado: 'pendiente', prioridad: 'baja' },
+  { id: 'T-006', nombre: 'Actualizar catálogo productos', agente: 'shopify', estado: 'pendiente', prioridad: 'alta' },
+]
 
-  const getBadgeClass = (status) => {
-    switch (status) {
-      case 'completed':
-        return 'hb-badge hb-badge-green';
-      case 'pending':
-        return 'hb-badge';
-      case 'failed':
-        return 'hb-badge hb-badge-red';
-      default:
-        return 'hb-badge';
-    }
-  };
+const colorEstado = { completada: '#4ade80', en_cola: '#60a5fa', ejecutando: '#fb923c', pendiente: '#fbbf24' }
+const colorPrio = { alta: '#fb7185', media: '#fbbf24', baja: '#a09d99' }
 
-  const getBadgeText = (status) => {
-    switch (status) {
-      case 'completed':
-        return 'Completed';
-      case 'pending':
-        return 'Pending';
-      case 'failed':
-        return 'Failed';
-      default:
-        return status;
-    }
-  };
-
+export default function Pipeline() {
   return (
     <div className="hb-page">
       <div className="hb-page-header">
-        <h1 className="hb-page-title">Pipeline CI/CD</h1>
-        <p className="hb-page-subtitle">Continuous Integration / Continuous Deployment Pipeline</p>
+        <div>
+          <div className="hb-page-title">Pipeline</div>
+          <div className="hb-page-subtitle">Cola de tareas — agentes activos</div>
+        </div>
+        <button className="hb-btn">+ Nueva tarea</button>
       </div>
 
-      <div className="hb-card" style={{ margin: '2rem 0', padding: '2rem' }}>
-        <div className="hb-card-header">
-          <h3 className="hb-card-name">Deployment Pipeline</h3>
-        </div>
-
-        <div style={{ display: 'flex', justifyContent: 'space-around', margin: '2rem 0', alignItems: 'center' }}>
-          {steps.map((step, index) => (
-            <div key={step.id} style={{ textAlign: 'center', flex: 1, position: 'relative' }}>
-              <div
-                style={{
-                  width: '60px',
-                  height: '60px',
-                  borderRadius: '50%',
-                  backgroundColor: step.status === 'completed' ? '#4caf50' : step.status === 'failed' ? '#f44336' : '#d4af6a',
-                  color: '#1a1a1a',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  margin: '0 auto 0.5rem auto',
-                  fontWeight: 'bold',
-                  fontSize: '1.2rem',
-                }}
-              >
-                {step.id}
-              </div>
-              <div style={{ fontWeight: 'bold', color: '#f0ede8', marginBottom: '0.3rem' }}>{step.name}</div>
-              <span className={getBadgeClass(step.status)}>{getBadgeText(step.status)}</span>
-              {index < steps.length - 1 && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: '30px',
-                    right: '-50%',
-                    width: '100%',
-                    height: '2px',
-                    backgroundColor: '#d4af6a',
-                    zIndex: -1,
-                  }}
-                />
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-        <button className="hb-btn" style={{ padding: '12px 30px', fontSize: '1.1rem' }}>
-          Ejecutar Nuevo Deploy
-        </button>
+      <div className="hb-table-wrap">
+        <table className="hb-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Tarea</th>
+              <th>Agente</th>
+              <th>Prioridad</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tareas.map(t => (
+              <tr key={t.id}>
+                <td className="td-dim">{t.id}</td>
+                <td className="td-main">{t.nombre}</td>
+                <td style={{ color: '#d4af6a', fontSize: '12px' }}>{t.agente}</td>
+                <td>
+                  <span style={{ fontSize: '11px', color: colorPrio[t.prioridad] }}>● {t.prioridad}</span>
+                </td>
+                <td>
+                  <span style={{
+                    fontSize: '11px', padding: '2px 8px', borderRadius: '4px',
+                    color: colorEstado[t.estado] || '#a09d99',
+                    border: '1px solid ' + (colorEstado[t.estado] || '#a09d99') + '40',
+                    background: (colorEstado[t.estado] || '#a09d99') + '15'
+                  }}>
+                    {t.estado}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
-  );
-};
-
-export default Pipeline;
-
-
-
-
-
+  )
+}

@@ -33,8 +33,6 @@ const sectionGroups = [
   {
     title: 'Sistema',
     items: [
-      { id: 'voicecall', label: 'Voz Bilingüe', icon: '🎙' },
-      { id: 'integraciones', label: 'WhatsApp', icon: '📲' },
       { id: 'historial', label: 'Historial', icon: '◷' },
       { id: 'chathistorial', label: 'Chat Historial', icon: '💬' },
       { id: 'auditoria', label: 'Auditoria', icon: '🔍' },

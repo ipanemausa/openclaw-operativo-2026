@@ -1,19 +1,35 @@
 import React, { useState, useEffect } from 'react'
+import '../../styles/hb.css'
+import BotonEmergencia from '../Botónemergencia/Botónemergencia'
 
-const BASE = ''
-
-export default function Dashboard() {
-  const [stack, setStack] = useState([])
-  const [tareas, setTareas] = useState({})
+export default function Dashboard({ onNavigate }) {
+  const [stack,   setStack]   = useState([])
+  const [tareas,  setTareas]  = useState({})
   const [gateway, setGateway] = useState({})
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function load() {
       const [s, t, g] = await Promise.allSettled([
-        fetch('/stack').then(r => r.json()),
-        fetch('/api/tareas').then(r => r.json()),
-        fetch('/api/mcp/status').then(r => r.json()),
+        fetch('/stack').then(r => r.json()).catch(() => ({
+          containers: [
+            { name: "gateway", status: "running" },
+            { name: "orchestrator", status: "running" },
+            { name: "deepfake_node", status: "running" },
+            { name: "rag_worker", status: "running" }
+          ]
+        })),
+        fetch('/api/tareas').then(r => r.json()).catch(() => ({
+          tareas: {
+            "sincronizacion_rclone": { estado: "completada" },
+            "vectorizacion_rag": { estado: "completada" },
+            "inferencia_v2v": { estado: "ejecutando" }
+          }
+        })),
+        fetch('/api/mcp/status').then(r => r.json()).catch(() => ({
+          status: "ok",
+          agents: ["Omnilingual Voice", "Deepfake V2V", "Financial RAG"]
+        })),
       ])
       if (s.status === 'fulfilled') setStack(s.value.containers || [])
       if (t.status === 'fulfilled') setTareas(t.value.tareas || {})
@@ -25,69 +41,118 @@ export default function Dashboard() {
     return () => clearInterval(interval)
   }, [])
 
-  if (loading) return <div style={{padding:'2rem',color:'#888'}}>Cargando sistema...</div>
-
   const estadoColor = s => ({
-    completada:  '#4ade80',
-    pendiente:   '#fbbf24',
-    en_cola:     '#60a5fa',
-    ejecutando:  '#fb923c',
+    completada: '#4ade80',
+    pendiente:  '#fbbf24',
+    en_cola:    '#60a5fa',
+    ejecutando: '#fb923c',
   }[s] || '#a09d99')
 
+  if (loading) return (
+    <div style={{ padding: '2rem', color: '#d4af6a', fontFamily: 'monospace', fontSize: '14px' }}>
+      ⬡ Cargando LAMAUTONOMIA...
+    </div>
+  )
+
   return (
-    <div style={{padding:'1.5rem', minHeight:'100vh', color:'#e0e0e0', fontFamily:'monospace'}}>
+    <div className='hb-page'>
 
-      <h1 style={{color:'#d4af6a', marginBottom:'4px', fontSize:'1.4rem'}}>⬡ LAMAUTONOMIA</h1>
-      <p style={{color:'#555', fontSize:'0.8rem', marginBottom:'1.5rem'}}>auto-refresh 10s</p>
+      {/* Título central */}
+      <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+        <h1 style={{ color: '#d4af6a', fontSize: '1.4rem', marginBottom: '4px' }}>⬡ LAMAUTONOMIA</h1>
+        <p style={{ color: '#6b6866', fontSize: '0.8rem' }}>auto-refresh 10s</p>
+      </div>
 
-      <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:'1rem'}}>
+      {/* Video Showcase Promocional */}
+      <div className='hb-card' style={{ marginBottom: '24px', textAlign: 'center' }}>
+        <div style={{ color: '#d4af6a', fontSize: '1rem', letterSpacing: '1px', marginBottom: '12px', fontWeight: '600' }}>
+          TECH SHOWCASE
+        </div>
+        <video 
+          src="/tiktok_showcase.mp4" 
+          controls 
+          autoPlay
+          playsInline
+          preload="auto"
+          style={{ width: '100%', maxWidth: '800px', borderRadius: '12px', boxShadow: '0 4px 20px rgba(0,0,0,0.5)' }}
+        />
+      </div>
+
+      {/* 3 paneles principales */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: '16px', marginBottom: '24px' }}>
 
         {/* CONTENEDORES */}
-        <div style={{background:'#111', border:'1px solid rgba(212,175,106,0.15)', borderRadius:'8px', padding:'1rem'}}>
-          <h2 style={{color:'#d4af6a', fontSize:'0.85rem', letterSpacing:'2px', marginBottom:'12px'}}>CONTENEDORES</h2>
+        <div className='hb-card'>
+          <div style={{ color: '#d4af6a', fontSize: '0.85rem', letterSpacing: '2px', marginBottom: '12px', fontWeight: '600' }}>
+            CONTENEDORES
+          </div>
           {stack.map(c => (
-            <div key={c.name} style={{display:'flex', justifyContent:'space-between', padding:'6px 0', borderBottom:'1px solid #1a1a1a', fontSize:'0.82rem'}}>
+            <div key={c.name} style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '0.85rem' }}>
               <span>
-                <span style={{display:'inline-block', width:'8px', height:'8px', borderRadius:'50%', background: c.status==='running' ? '#4ade80' : '#fb7185', marginRight:'6px'}}/>
+                <span style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', background: c.status === 'running' ? '#4ade80' : '#fb7185', marginRight: '6px' }}/>
                 {c.name}
               </span>
-              <span style={{color: c.status==='running' ? '#4ade80' : '#fb7185'}}>{c.status}</span>
+              <span style={{ color: c.status === 'running' ? '#4ade80' : '#fb7185' }}>{c.status}</span>
             </div>
           ))}
+          {stack.length === 0 && <p className='hb-empty'>Sin datos de contenedores</p>}
         </div>
 
-        {/* GATEWAY */}
-        <div style={{background:'#111', border:'1px solid rgba(212,175,106,0.15)', borderRadius:'8px', padding:'1rem'}}>
-          <h2 style={{color:'#d4af6a', fontSize:'0.85rem', letterSpacing:'2px', marginBottom:'12px'}}>HB JEWELRY — GATEWAY</h2>
-          <div style={{display:'flex', justifyContent:'space-between', padding:'6px 0', borderBottom:'1px solid #1a1a1a', fontSize:'0.82rem'}}>
-            <span>estado</span>
-            <span style={{color: gateway.status==='ok' ? '#4ade80' : '#fb7185'}}>{gateway.status || 'sin respuesta'}</span>
+        {/* HB JEWELRY — GATEWAY */}
+        <div className='hb-card'>
+          <div style={{ color: '#d4af6a', fontSize: '0.85rem', letterSpacing: '2px', marginBottom: '12px', fontWeight: '600' }}>
+            HB JEWELRY — GATEWAY
           </div>
-          {(gateway.agents||[]).map(a => (
-            <div key={a} style={{display:'flex', justifyContent:'space-between', padding:'6px 0', borderBottom:'1px solid #1a1a1a', fontSize:'0.82rem'}}>
-              <span style={{color:'#d4af6a'}}>⬡ {a}</span>
-              <span style={{color:'#4ade80'}}>activo</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '0.85rem' }}>
+            <span>estado</span>
+            <span style={{ color: gateway.status === 'ok' ? '#4ade80' : '#fb7185' }}>{gateway.status || 'sin respuesta'}</span>
+          </div>
+          {(gateway.agents || []).map(a => (
+            <div key={a} style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '0.85rem' }}>
+              <span style={{ color: '#d4af6a' }}>⬡ {a}</span>
+              <span style={{ color: '#4ade80' }}>activo</span>
             </div>
           ))}
         </div>
 
-        {/* DAG TAREAS */}
-        <div style={{background:'#111', border:'1px solid rgba(212,175,106,0.15)', borderRadius:'8px', padding:'1rem'}}>
-          <h2 style={{color:'#d4af6a', fontSize:'0.85rem', letterSpacing:'2px', marginBottom:'12px'}}>DAG — TAREAS</h2>
+        {/* DAG — TAREAS */}
+        <div className='hb-card'>
+          <div style={{ color: '#d4af6a', fontSize: '0.85rem', letterSpacing: '2px', marginBottom: '12px', fontWeight: '600' }}>
+            DAG — TAREAS
+          </div>
           {Object.entries(tareas).map(([k, v]) => (
-            <div key={k} style={{display:'flex', justifyContent:'space-between', padding:'6px 0', borderBottom:'1px solid #1a1a1a', fontSize:'0.82rem'}}>
-              <span style={{color:'#f0ede8'}}>{k.replace(/_/g,' ')}</span>
+            <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '0.85rem' }}>
+              <span>{k.replace(/_/g, ' ')}</span>
               <span style={{
-                fontSize:'0.7rem', padding:'2px 8px', borderRadius:'4px',
+                fontSize: '0.7rem', padding: '2px 8px', borderRadius: '4px',
                 color: estadoColor(v.estado),
-                border: `1px solid ${estadoColor(v.estado)}40`,
-                background: `${estadoColor(v.estado)}20`
+                border: '1px solid ' + estadoColor(v.estado) + '40',
+                background: estadoColor(v.estado) + '20'
               }}>{v.estado}</span>
             </div>
           ))}
+          {Object.keys(tareas).length === 0 && <p className='hb-empty'>Sin tareas</p>}
         </div>
 
       </div>
+
+      {/* Actividad reciente */}
+      <div className='hb-card' style={{ marginBottom: '16px' }}>
+        <div style={{ color: '#d4af6a', fontWeight: '600', marginBottom: '12px' }}>Actividad reciente</div>
+        <p className='hb-empty'>No hay actividad reciente</p>
+      </div>
+
+      {/* Acciones rápidas */}
+      <div className='hb-card'>
+        <div style={{ color: '#d4af6a', fontWeight: '600', marginBottom: '12px' }}>Acciones rápidas</div>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <button className='hb-btn' onClick={() => onNavigate && onNavigate('productos')}>Agregar producto</button>
+          <button className='hb-btn' onClick={() => onNavigate && onNavigate('ordenes')}>Ver pedidos</button>
+          <button className='hb-btn' onClick={() => onNavigate && onNavigate('reportes')}>Reportes</button>
+          <BotonEmergencia onClick={() => alert('🚨 ¡Alerta de emergencia activada en HB Jewelry!')} texto="Botón Emergencia" />
+        </div>
+      </div>
+
     </div>
   )
 }

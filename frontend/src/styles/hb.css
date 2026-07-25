@@ -1,54 +1,53 @@
-/* ── HB App Global ── */
-.hb-page { padding: 0; }
+﻿/* ============================================================
+   HB.CSS — Estilos base HB Jewelry 2026
+   ============================================================ */
 
-.hb-page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
-.hb-page-title { font-size: 18px; font-weight: 600; color: #f0ede8; }
-.hb-page-subtitle { font-size: 13px; color: #a09d99; margin-top: 4px; }
+/* --- Páginas --- */
+.hb-page { padding: 20px 24px; max-width: 1400px; }
+.hb-page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+.hb-page-title { font-size: 18px; font-weight: 700; color: #d4af6a; margin-bottom: 4px; }
+.hb-page-subtitle { font-size: 12px; color: #6b6866; }
 
-.hb-btn { background: transparent; color: #d4af6a; border: 1.5px solid #d4af6a; border-radius: 8px; padding: 9px 18px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
-.hb-btn:hover { background: rgba(212,175,106,0.1); }
-.hb-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-.hb-btn-sm { padding: 6px 14px; font-size: 12px; }
+/* --- Cards --- */
+.hb-card { background: #161412; border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 16px; }
 
-.hb-form { background: #1a1a1a; border: 1px solid rgba(212,175,106,0.15); border-radius: 12px; padding: 20px; margin-bottom: 24px; }
-.hb-form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 12px; }
-.hb-input { background: #111; border: 1px solid rgba(212,175,106,0.2); border-radius: 7px; padding: 8px 12px; color: #f0ede8; font-size: 13px; font-family: inherit; width: 100%; box-sizing: border-box; transition: border-color 0.15s; }
-.hb-input:focus { outline: none; border-color: #d4af6a; }
-.hb-input::placeholder { color: #6b6866; }
-.hb-select { background: #111; border: 1px solid rgba(212,175,106,0.2); border-radius: 7px; padding: 8px 12px; color: #f0ede8; font-size: 13px; font-family: inherit; width: 100%; cursor: pointer; }
-.hb-select:focus { outline: none; border-color: #d4af6a; }
+/* --- Buttons --- */
+.hb-btn { background: rgba(212,175,106,0.1); border: 1px solid rgba(212,175,106,0.25); color: #d4af6a; padding: 8px 16px; border-radius: 7px; cursor: pointer; font-size: 13px; font-family: inherit; transition: background 0.15s; }
+.hb-btn:hover { background: rgba(212,175,106,0.2); border-color: rgba(212,175,106,0.45); }
+.hb-btn-sm { padding: 6px 12px; font-size: 12px; }
+.hb-btn-ghost { background: transparent; border-color: rgba(255,255,255,0.1); color: #a09d99; }
 
-.hb-total { font-size: 13px; color: #d4af6a; margin-bottom: 12px; font-weight: 600; }
-
-.hb-empty { color: #6b6866; font-size: 13px; margin-top: 20px; }
-
-/* Cards */
-.hb-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
-.hb-card { background: #1a1a1a; border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 16px; transition: border-color 0.15s; }
-.hb-card:hover { border-color: rgba(212,175,106,0.3); }
-.hb-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-.hb-card-name { font-size: 14px; font-weight: 500; color: #f0ede8; }
-.hb-card-price { font-size: 15px; font-weight: 600; color: #d4af6a; }
-.hb-card-meta { font-size: 12px; color: #a09d99; margin-bottom: 4px; }
-.hb-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
-
-/* Badges */
-.hb-badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; }
-.hb-badge-green { background: rgba(52,211,153,0.1); color: #34d399; }
-.hb-badge-red { background: rgba(251,113,133,0.15); color: #fb7185; }
-.hb-badge-gray { font-size: 11px; color: #6b6866; }
-
-/* Tabla ventas */
-.hb-table-wrap { background: #1a1a1a; border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; overflow: hidden; }
-.hb-table { width: 100%; border-collapse: collapse; }
-.hb-table thead tr { border-bottom: 1px solid rgba(255,255,255,0.07); }
-.hb-table th { padding: 10px 14px; font-size: 11px; color: #6b6866; text-align: left; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; }
-.hb-table td { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+/* --- Tablas --- */
+.hb-table-wrap { background: #161412; border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; overflow: hidden; }
+.hb-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.hb-table th { padding: 10px 14px; text-align: left; font-size: 11px; color: #6b6866; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.hb-table td { padding: 10px 14px; color: #c0bcb8; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
 .hb-table tr:last-child td { border-bottom: none; }
-.hb-table .td-main { color: #f0ede8; }
-.hb-table .td-muted { color: #a09d99; }
-.hb-table .td-gold { color: #d4af6a; font-weight: 600; }
-.hb-table .td-dim { color: #6b6866; font-size: 11px; }
+.hb-table tr:hover td { background: rgba(255,255,255,0.02); }
+.td-main { color: #f0ede8 !important; font-weight: 500; }
 
-/* Canal badges */
-.hb-canal { font-size: 11px; padding: 2px 8px; border-radius: 10px; }
+/* --- Badges --- */
+.hb-badge { display: inline-block; padding: 3px 9px; border-radius: 5px; font-size: 11px; font-weight: 500; }
+.hb-badge-green { background: rgba(74,222,128,0.12); color: #4ade80; border: 1px solid rgba(74,222,128,0.25); }
+.hb-badge-yellow { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.25); }
+.hb-badge-blue { background: rgba(96,165,250,0.12); color: #60a5fa; border: 1px solid rgba(96,165,250,0.25); }
+.hb-badge-red { background: rgba(251,113,133,0.12); color: #fb7185; border: 1px solid rgba(251,113,133,0.25); }
+.hb-badge-gray { background: rgba(160,157,153,0.12); color: #a09d99; border: 1px solid rgba(160,157,153,0.2); }
+
+/* --- Formularios --- */
+.hb-input { background: #1a1816; border: 1px solid rgba(255,255,255,0.1); color: #f0ede8; padding: 8px 12px; border-radius: 7px; font-size: 13px; font-family: inherit; width: 100%; outline: none; transition: border-color 0.15s; }
+.hb-input:focus { border-color: rgba(212,175,106,0.4); }
+.hb-input::placeholder { color: #6b6866; }
+.hb-select { background: #1a1816; border: 1px solid rgba(255,255,255,0.1); color: #f0ede8; padding: 7px 12px; border-radius: 7px; font-size: 13px; font-family: inherit; cursor: pointer; outline: none; }
+
+/* --- Misc --- */
+.hb-empty { text-align: center; padding: 40px 20px; color: #6b6866; font-size: 13px; }
+.hb-divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 16px 0; }
+.hb-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.hb-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.hb-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+
+@media (max-width: 768px) {
+  .hb-grid-2, .hb-grid-3, .hb-grid-4 { grid-template-columns: 1fr; }
+  .hb-page { padding: 14px 16px; }
+}

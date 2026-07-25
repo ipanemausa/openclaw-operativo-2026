@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/hb.css';
+import "../../styles/hb.css";
 
 const ProductCard = ({ name, price }) => {
   return (
@@ -13,3 +13,9 @@ const ProductCard = ({ name, price }) => {
 };
 
 export default ProductCard;
+
+
+
+
+
+

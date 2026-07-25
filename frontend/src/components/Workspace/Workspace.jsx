@@ -1,84 +1,34 @@
-import React from 'react';
-import '../../styles/hb.css';
+import React from 'react'
+import '../../styles/hb.css'
 
-const Workspace = () => {
+export default function Workspace() {
   return (
     <div className="hb-page">
       <div className="hb-page-header">
-        <h1 className="hb-page-title">Workspace</h1>
-        <p className="hb-page-subtitle">Manage your projects and tasks</p>
-      </div>
-
-      <div className="hb-form">
-        <div className="hb-form-grid">
-          <input type="text" className="hb-input" placeholder="Search workspace..." />
-          <select className="hb-select">
-            <option>All Projects</option>
-            <option>Active</option>
-            <option>Completed</option>
-          </select>
-          <button className="hb-btn">New Project</button>
+        <div>
+          <div className="hb-page-title">Workspace</div>
+          <div className="hb-page-subtitle">Entorno de trabajo — agentes y herramientas</div>
         </div>
       </div>
 
-      <div className="hb-table-wrap">
-        <table className="hb-table">
-          <thead>
-            <tr>
-              <th>Project Name</th>
-              <th>Status</th>
-              <th>Deadline</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div className="hb-card">
-                  <div className="hb-card-header">
-                    <span className="hb-card-name">Earrings Collection</span>
-                    <span className="hb-card-price">$12,000</span>
-                  </div>
-                  <div className="hb-card-meta">Design Phase - 65%</div>
-                </div>
-              </td>
-              <td><span className="hb-badge hb-badge-green">Active</span></td>
-              <td>2024-03-15</td>
-              <td><button className="hb-btn hb-btn-sm">View</button></td>
-            </tr>
-            <tr>
-              <td>
-                <div className="hb-card">
-                  <div className="hb-card-header">
-                    <span className="hb-card-name">Necklace Prototype</span>
-                    <span className="hb-card-price">$8,500</span>
-                  </div>
-                  <div className="hb-card-meta">Production - 90%</div>
-                </div>
-              </td>
-              <td><span className="hb-badge hb-badge-green">Active</span></td>
-              <td>2024-02-28</td>
-              <td><button className="hb-btn hb-btn-sm">View</button></td>
-            </tr>
-            <tr>
-              <td>
-                <div className="hb-card">
-                  <div className="hb-card-header">
-                    <span className="hb-card-name">Bracelet Line</span>
-                    <span className="hb-card-price">$6,200</span>
-                  </div>
-                  <div className="hb-card-meta">Completed - 100%</div>
-                </div>
-              </td>
-              <td><span className="hb-badge hb-badge-red">Completed</span></td>
-              <td>2024-01-10</td>
-              <td><button className="hb-btn hb-btn-sm">View</button></td>
-            </tr>
-          </tbody>
-        </table>
+      <div className="hb-grid">
+        {[
+          { title: 'Gemini Agent', desc: 'Agente principal IA', status: 'activo', color: '#4ade80' },
+          { title: 'Marketing Agent', desc: 'Campañas y contenido', status: 'activo', color: '#4ade80' },
+          { title: 'Video Agent', desc: 'Generación de videos Veo', status: 'activo', color: '#4ade80' },
+          { title: 'Shopify Agent', desc: 'Sync de tienda online', status: 'activo', color: '#4ade80' },
+          { title: 'Orchestrator', desc: 'Control central de tareas', status: 'activo', color: '#4ade80' },
+          { title: 'Chat Worker', desc: 'Procesamiento de chats', status: 'activo', color: '#4ade80' },
+        ].map((a, i) => (
+          <div key={i} className="hb-card">
+            <div className="hb-card-header">
+              <div className="hb-card-name">{a.title}</div>
+              <span style={{ fontSize: '10px', color: a.color }}>● {a.status}</span>
+            </div>
+            <div className="hb-card-meta">{a.desc}</div>
+          </div>
+        ))}
       </div>
     </div>
-  );
-};
-
-export default Workspace;
+  )
+}

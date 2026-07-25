@@ -45,19 +45,35 @@ try {
     Write-Host "-> WhatsApp Service disponible tras build Docker." -ForegroundColor Gray
 }
 
-# 4. COMPILACIÓN Y DESPLIEGUE EN FIREBASE HOSTING
-Write-Host "`n[4/6] Compilando bundle Vite y desplegando en Firebase..." -ForegroundColor Yellow
+# 4. COMPILACIÓN Y SINCRONIZACIÓN DE FRONTEND (LOCAL 5173 + FIREBASE HOSTING)
+Write-Host "`n[4/6] Compilando y sincronizando Frontend (Localhost 5173 & Firebase)..." -ForegroundColor Yellow
 $appDir = "C:\openclaw\hb-jewelry"
+$frontendDir = "C:\Users\ipane\openclaw-operativo-2026\frontend"
+
 if (Test-Path $appDir) {
     Push-Location $appDir
     try {
-        Write-Host "-> Compilando bundle de producción (npm run build)..." -ForegroundColor Gray
+        Write-Host "-> Compilando bundle de producción en hb-jewelry (npm run build)..." -ForegroundColor Gray
         npm run build
-        Write-Host "-> Sincronizando dist local para Nginx..." -ForegroundColor Gray
-        $distLocal = "C:\Users\ipane\openclaw-operativo-2026\frontend\dist"
-        if (Test-Path $distLocal) {
-            Copy-Item -Recurse -Force "C:\openclaw\hb-jewelry\dist\*" $distLocal
+        
+        Write-Host "-> Sincronizando src, public y dist con frontend local (openclaw-operativo-2026)..." -ForegroundColor Gray
+        if (Test-Path $frontendDir) {
+            Copy-Item -Recurse -Force "$appDir\src\*" "$frontendDir\src\"
+            if (Test-Path "$appDir\public") {
+                New-Item -ItemType Directory -Force -Path "$frontendDir\public" | Out-Null
+                Copy-Item -Recurse -Force "$appDir\public\*" "$frontendDir\public\"
+            }
+            if (Test-Path "$appDir\dist") {
+                New-Item -ItemType Directory -Force -Path "$frontendDir\dist" | Out-Null
+                Copy-Item -Recurse -Force "$appDir\dist\*" "$frontendDir\dist\"
+            }
+            
+            # Restablecer archivos críticos blindados a v2.0-stable
+            Push-Location "C:\Users\ipane\openclaw-operativo-2026"
+            git checkout v2.0-stable -- frontend/src/components/Layout/Layout.jsx frontend/src/components/Header/Header.jsx frontend/src/components/Sidebar/Sidebar.jsx frontend/src/styles/layout.css frontend/src/styles/sidebar.css 2>$null
+            Pop-Location
         }
+
         Write-Host "-> Desplegando en Firebase Hosting..." -ForegroundColor Gray
         npx firebase deploy --only hosting
         Write-Host "-> Firebase Hosting activo en https://hb-jewelry-app.web.app" -ForegroundColor Green

@@ -3,11 +3,11 @@
 ## 🛑 CHECKPOINT DE ARQUITECTURA ESTRATÉGICA (OBLIGATORIO)
 > **INSTRUCCIÓN PARA LA PRÓXIMA SESIÓN CON CLAUDE / ANTIGRAVITY:**  
 > **No modificar ni programar código inmediatamente.**  
-> 1. Revisar el estado actual de Fases 1–4 en [CHECKPOINT_ARQUITECTURA_ESTRATEGICA_2026.md](file:///c:/Users/ipane/openclaw-operativo-2026/CHECKPOINT_ARQUITECTURA_ESTRATEGICA_2026.md).  
-> 2. Consultar el Plan de Ingeniería Inversa Multimodal en [INGENIERIA_INVERSA_MULTIMODAL_AVATAR_2026.md](file:///c:/Users/ipane/openclaw-operativo-2026/INGENIERIA_INVERSA_MULTIMODAL_AVATAR_2026.md) (Stack Open Source $0, Audio Ducking -20dB y TikTok Viral Video Loops).  
-> 3. Consultar la evaluación crítica en [EVALUACION_CRITICA_PROPUESTA_CHATGPT_2026.md](file:///c:/Users/ipane/openclaw-operativo-2026/EVALUACION_CRITICA_PROPUESTA_CHATGPT_2026.md).  
-> 4. Validar la arquitectura, el DAG y la Ruta Crítica (CPM).  
-> 5. Discutir y formalizar el diseño de las Fases 5, 6 y 7 (Event Intelligence Layer, Observability, RAG Governance) **antes** de habilitar la escritura de nuevo código.
+> 1. Consultar el Documento Maestro HB Digital Presenter Engine en [HB_DIGITAL_PRESENTER_ENGINE_2026.md](file:///c:/Users/ipane/openclaw-operativo-2026/HB_DIGITAL_PRESENTER_ENGINE_2026.md) (Avatar Guillermo + Pantalla Virtual + Lip-sync + Ducking -20dB $0 Costo).  
+> 2. Revisar el estado actual de Fases 1–4 en [CHECKPOINT_ARQUITECTURA_ESTRATEGICA_2026.md](file:///c:/Users/ipane/openclaw-operativo-2026/CHECKPOINT_ARQUITECTURA_ESTRATEGICA_2026.md).  
+> 3. Consultar el Plan de Ingeniería Inversa Multimodal en [INGENIERIA_INVERSA_MULTIMODAL_AVATAR_2026.md](file:///c:/Users/ipane/openclaw-operativo-2026/INGENIERIA_INVERSA_MULTIMODAL_AVATAR_2026.md).  
+> 4. Consultar la evaluación crítica en [EVALUACION_CRITICA_PROPUESTA_CHATGPT_2026.md](file:///c:/Users/ipane/openclaw-operativo-2026/EVALUACION_CRITICA_PROPUESTA_CHATGPT_2026.md).  
+> 5. Discutir y formalizar el diseño del HB Digital Presenter Engine en la pestaña de Artefactos de Claude **antes** de habilitar la escritura de nuevo código.
 
 ---
 

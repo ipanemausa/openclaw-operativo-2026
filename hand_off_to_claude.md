@@ -4,8 +4,9 @@
 > **INSTRUCCIÓN PARA LA PRÓXIMA SESIÓN CON CLAUDE / ANTIGRAVITY:**  
 > **No modificar ni programar código inmediatamente.**  
 > 1. Revisar el estado actual de Fases 1–4 en [CHECKPOINT_ARQUITECTURA_ESTRATEGICA_2026.md](file:///c:/Users/ipane/openclaw-operativo-2026/CHECKPOINT_ARQUITECTURA_ESTRATEGICA_2026.md).  
-> 2. Validar la arquitectura, el DAG y la Ruta Crítica (CPM).  
-> 3. Discutir y formalizar el diseño de las Fases 5, 6 y 7 (Event Intelligence Layer, Observability, RAG Governance) **antes** de habilitar la escritura de nuevo código.
+> 2. Consultar la evaluación crítica en [EVALUACION_CRITICA_PROPUESTA_CHATGPT_2026.md](file:///c:/Users/ipane/openclaw-operativo-2026/EVALUACION_CRITICA_PROPUESTA_CHATGPT_2026.md) (lo que SÍ se adopta y lo que se RECHAZA).  
+> 3. Validar la arquitectura, el DAG y la Ruta Crítica (CPM).  
+> 4. Discutir y formalizar el diseño de las Fases 5, 6 y 7 (Event Intelligence Layer, Observability, RAG Governance) **antes** de habilitar la escritura de nuevo código.
 
 ---
 

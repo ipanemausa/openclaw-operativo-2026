@@ -11,6 +11,16 @@
 
 ---
 
+## ⚡ Arquitectura Operativa Top-Down (Cloud-First Vectorization)
+> **REGLA ARQUITECTÓNICA CLAVE:** Las sesiones y workflows operan bajo el patrón **Cloud-First & Vectorización Matemática** (Top-Down):
+> 1. **Vectorización RAG en la Nube:** Fórmulas vectoriales de 768-dim en Firestore / Qdrant.
+> 2. **Despliegue Vivo en Firebase:** `https://hb-jewelry-app.web.app/` es la primera fuente de ejecución.
+> 3. **Sincronización Descendente (Downstream Sync):** Replicación fluida hacia `localhost:5173`, contenedores Docker, Rclone Google Drive 5TB y GitHub.
+> 
+> *Consulte [CLOUD_FIRST_VECTORIZATION_SYNC_PROTOCOL_2026.md](file:///c:/Users/ipane/openclaw-operativo-2026/CLOUD_FIRST_VECTORIZATION_SYNC_PROTOCOL_2026.md) para más detalles.*
+
+---
+
 ## 🏗️ Arquitectura de Ruta Crítica y Colas (Orquestación Ops)
 1. **Pipeline Model (`pipelineModel.js`):** Definición de DAGs de tareas críticas para la producción de joyas y flujos digitales.
 2. **Queue Manager (`queueManager.js`):** Gestión de prioridad, colas de solicitudes y métricas de procesamiento (tasas $\lambda$ y $\mu$).

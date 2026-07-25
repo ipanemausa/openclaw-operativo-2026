@@ -1,5 +1,14 @@
 # HAND-OFF Y RESUMEN DE ESTADO PARA CLAUDE / ANTIGRAVITY (25/07/2026)
 
+## 🛑 CHECKPOINT DE ARQUITECTURA ESTRATÉGICA (OBLIGATORIO)
+> **INSTRUCCIÓN PARA LA PRÓXIMA SESIÓN CON CLAUDE / ANTIGRAVITY:**  
+> **No modificar ni programar código inmediatamente.**  
+> 1. Revisar el estado actual de Fases 1–4 en [CHECKPOINT_ARQUITECTURA_ESTRATEGICA_2026.md](file:///c:/Users/ipane/openclaw-operativo-2026/CHECKPOINT_ARQUITECTURA_ESTRATEGICA_2026.md).  
+> 2. Validar la arquitectura, el DAG y la Ruta Crítica (CPM).  
+> 3. Discutir y formalizar el diseño de las Fases 5, 6 y 7 (Event Intelligence Layer, Observability, RAG Governance) **antes** de habilitar la escritura de nuevo código.
+
+---
+
 ## 📌 Estado Actual del Proyecto
 - **Producción Hosting (Firebase):** `https://hb-jewelry-app.web.app/`
 - **Servidor Local Dev:** `http://localhost:5173/`

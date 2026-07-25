@@ -13,7 +13,7 @@ const SEVEN_QA_ITEMS = [
 
 const CUSTOMER_SAMPLE_QUESTIONS = [
   { id: 'c1', label: '💎 Cadenas Cubanas Oro 14k', q: '¿Cuál es el precio y peso de las Cadenas Cubanas de Oro 14k?', a: 'Nuestras Cadenas Cubanas en Oro Solido de 14k inician desde $1,850 USD, cuentan con cierre de seguridad italiano y garantía de por vida.' },
-  { id: 'c2', label: '🟢 Esmeraldas Colombianas', q: '¿Tienen anillos con Esmeraldas Colombianas naturales?', a: 'Sí, ofrecemos anillos solitarios con Esmeraldas Colombianas certicadas de Muzo y Chivor en monturas de Oro de 18k.' },
+  { id: 'c2', label: '🟢 Esmeraldas Colombianas', q: '¿Tienen anillos con Esmeraldas Colombianas naturales?', a: 'Sí, ofrecemos anillos solitarios con Esmeraldas Colombianas certificadas de Muzo y Chivor en monturas de Oro de 18k.' },
   { id: 'c3', label: '✈️ Envíos & Garantía', q: '¿Cómo funcionan los envíos internacionales y la garantía?', a: 'Realizamos envíos asegurados a nivel mundial por FedEx Express. Cada pieza incluye certificado de autenticidad y garantía de por vida.' },
   { id: 'c4', label: '🎨 Diseños Personalizados', q: '¿Realizan pedidos y diseños de joyería personalizados?', a: '¡Por supuesto! Nuestro taller master diseña piezas únicas en 3D en 48 horas según tus especificaciones.' }
 ];
@@ -37,7 +37,7 @@ const AvatarMeet = () => {
   const videoRef = useRef(null);
   const recognitionRef = useRef(null);
 
-  // Permisos de micrófono y altavoz
+  // Permisos de micrófono y altavoz explícitos
   async function requestMicAndAudioPermissions() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -110,14 +110,43 @@ const AvatarMeet = () => {
     }
   }, [avatarSource]);
 
-  // Setup WebSpeech
-  useEffect(() => {
+  // Captura de micrófono por demanda (WhisperFlow $0 Mic)
+  const toggleMic = async () => {
+    if (!hasMicPermission && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        setHasMicPermission(true);
+        setIsAudioMuted(false);
+        setAudioBlockedByBrowser(false);
+        stream.getTracks().forEach(track => track.stop());
+      } catch (err) {
+        console.warn("Permiso de micrófono denegado:", err);
+        alert("Por favor autoriza el micrófono en tu navegador para hablar con Guillermo AI.");
+        return;
+      }
+    }
+
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (SpeechRecognition) {
+
+    if (!SpeechRecognition) {
+      const manualText = prompt("Escribe tu consulta para Guillermo AI aquí:");
+      if (manualText) handleCustomCustomerQuery(manualText);
+      return;
+    }
+
+    if (isListening && recognitionRef.current) {
+      try { recognitionRef.current.stop(); } catch(e){}
+      setIsListening(false);
+      return;
+    }
+
+    try {
       const rec = new SpeechRecognition();
       rec.continuous = false;
       rec.interimResults = false;
       rec.lang = 'es-ES';
+
+      rec.onstart = () => setIsListening(true);
 
       rec.onresult = (e) => {
         const text = e.results[0][0].transcript;
@@ -125,23 +154,20 @@ const AvatarMeet = () => {
         handleCustomCustomerQuery(text);
       };
 
+      rec.onerror = (e) => {
+        console.warn("Error en captura de voz:", e.error);
+        setIsListening(false);
+        if (e.error === 'not-allowed') {
+          alert("Permiso de micrófono bloqueado en tu navegador. Haz clic en el ícono de candado en la barra de dirección para otorgar acceso.");
+        }
+      };
+
       rec.onend = () => setIsListening(false);
       recognitionRef.current = rec;
-    }
-  }, []);
-
-  const toggleMic = () => {
-    if (!recognitionRef.current) {
-      alert("Mic speech recognition not supported on this browser.");
-      return;
-    }
-    if (isListening) {
-      recognitionRef.current.stop();
+      rec.start();
+    } catch (err) {
+      console.warn("Error iniciando micrófono:", err);
       setIsListening(false);
-    } else {
-      setInputText('');
-      recognitionRef.current.start();
-      setIsListening(true);
     }
   };
 
@@ -318,7 +344,7 @@ const AvatarMeet = () => {
               onClick={toggleMic}
               style={{ background: isListening ? '#ef4444' : '#25d366', color: '#fff', border: 'none', borderRadius: '8px', padding: '10px 16px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}
             >
-              {isListening ? '🔴 Detener' : '🎙️ Hablar'}
+              {isListening ? '🔴 Escuchando...' : '🎙️ Hablar'}
             </button>
             <button 
               onClick={() => handleCustomCustomerQuery(inputText)}

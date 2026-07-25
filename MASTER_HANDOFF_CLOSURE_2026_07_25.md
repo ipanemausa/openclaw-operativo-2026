@@ -1,54 +1,79 @@
-# 🦅 OPENCLAW CLOUD 2026 — INFORME MAESTRO DE HANDOFF Y PIPELINE WF (25 JULIO 2026)
+# 🚀 CIERRE DE JORNADA Y PLAN MAESTRO PARA MAÑANA (26 DE JULIO DE 2026)
 
-**Aplicación:** HB Jewelry Full-Stack Firebase App (`hb-jewelry-app`)  
-**URL Pública en Vivo (Firebase):** [https://hb-jewelry-app.web.app](https://hb-jewelry-app.web.app)  
-**Servidor Local PC:** [http://localhost:5173/](http://localhost:5173/)  
-**Repositorio Git:** [https://github.com/ipanemausa/openclaw-operativo-2026](https://github.com/ipanemausa/openclaw-operativo-2026)  
-**Respaldo 5TB Google Drive:** Sincronizado vía Rclone (`drive:HBJewelry` & `drive:openclaw-cloud-2026-backup`)  
+> **FECHA DE CIERRE:** 25 de Julio de 2026  
+> **ESTADO DEL PROYECTO:** 100% Operativo en Producción Nube ([https://hb-jewelry-app.web.app/](https://hb-jewelry-app.web.app/))  
+> **REPOS SINCRO:** Localhost 5173, GitHub (`origin/main`), Rclone Google Drive 5TB  
 
 ---
 
-## 🛑 1. CHECKPOINT DE ARQUITECTURA ESTRATÉGICA (CÓDIGO CONGELADO)
+## 🏆 1. LOGROS PRINCIPALES DE HOY (25 DE JULIO)
 
-> **INSTRUCCIÓN MAESTRA PARA CLAUDE Y ANTIGRAVITY:**  
-> Se detuvo todo desarrollo impulsivo de código. La próxima sesión inicia con la revisión y elaboración del **Artefacto Unificado de Arquitectura**.
+1. **Fix Definitivo del Avatar & Reproducción de Voz Sintética:**
+   - Eliminado el bucle estático `<video loop>`.
+   - Integrada síntesis de voz hablada TTS en tiempo real (`SpeechSynthesisUtterance`) sincronizada con el estado `🗣️ VOZ ACTIVA (HABLANDO)`.
+   - Añadido manejador de permisos para políticas de autoplay y banner visual de activación de sonido.
+
+2. **Diseño de Interfaz Doble (Cliente Joyería vs Demo Técnica):**
+   - **Sección de Consulta Cliente (Debajo del Robot):** Preguntas de joyería abierta, captura de voz **WhisperFlow $0 Mic** por demanda y botones de consulta rápida (*Cadenas Cubanas, Esmeraldas Colombianas, Envíos, Diseños 3D*).
+   - **Sección de Demo Técnico (Arriba):** Píldoras Q1–Q7 para investigación de arquitectura por ingenieros e inversionistas.
+
+3. **Auditoría Completa Cloud-First (Firebase Live Hosting):**
+   - Navegación visual y funcional en vivo en `https://hb-jewelry-app.web.app/` con **0 errores JavaScript en consola**.
+
+4. **Diseño Arquitectónico HB Digital Presenter Engine:**
+   - Creado el documento maestro [HB_DIGITAL_PRESENTER_ENGINE_2026.md](file:///c:/Users/ipane/openclaw-operativo-2026/HB_DIGITAL_PRESENTER_ENGINE_2026.md) unificando la investigación de ChatGPT, análisis de videos de presentación en YouTube y el stack Open Source $0 costo.
+
+5. **Respaldo Automático 5TB Rclone & GitHub:**
+   - Commits guardados en GitHub (`ac4c1cb`, `5400d21`) y respaldo sincronizado en Google Drive (`drive:HBJewelry` y `drive:openclaw-cloud-2026-backup`).
+
+---
+
+## 🎯 2. TAREA PRINCIPAL Y PLAN MAESTRO PARA MAÑANA (26 DE JULIO)
+
+### **TAREA PRINCIPAL:**
+> **Lograr la creación e integración del video con el Avatar ultra-realista de Guillermo con movimientos naturales de manos, boca y gesticulación facial mediante el HB Digital Presenter Engine ($0 Costo).**
+
+### **PASOS DE EJECUCIÓN (26 DE JULIO):**
 
 ```mermaid
 graph TD
-    A["Fases 1-4 Validadas<br/>(Descubrimiento, DAG, CPM 198ms, Colas λ/μ)"] --> B["🛑 Checkpoint de Arquitectura<br/>(Congelamiento de Código)"]
-    B --> C["Artefacto de Diseño Claude<br/>(Fases 5-7: EventBus, Observabilidad, RAG)"]
-    C --> D["Ejecución Antigravity IDE<br/>(Top-Down Cloud-First Sync)"]
+    A["1. Apertura de Sesión en Claude Artifacts"] --> B["2. Claude genera el Artefacto DAG 'HB Digital Presenter Engine'"]
+    B --> C["3. Antigravity AI recibe la especificación aprobada"]
+    C --> D["4. Ensamblaje del Avatar Guillermo + Pantalla Virtual Dinámica"]
+    D --> E["5. Lip-Sync (LivePortrait / Wav2Lip) + Voice Synth 24kHz"]
+    E --> F["6. Despliegue Cloud-First a Firebase & Respaldo Rclone 5TB"]
+```
+
+1. **Paso 1 (Claude Artifacts):**  
+   Pegar el bloque Handoff en la pestaña de Claude para generar el Artefacto DAG de producción audiovisual.
+2. **Paso 2 (Antigravity AI Execution):**  
+   Antigravity AI ejecutará la integración del avatar con movimientos de manos/boca, la pantalla virtual dinámica y el mezclador FFmpeg con audio ducking a -20dB.
+3. **Paso 3 (Validación Nube & Paridad):**  
+   Verificación visual en Firebase Cloud Hosting y sincronización 1:1 a Localhost 5173 y Rclone 5TB.
+
+---
+
+## 💬 3. BLOQUE DE MANIFIESTO PARA LA APERTURA DE SESIÓN EN CLAUDE
+
+```markdown
+hola Claude, este es el PLAN MAESTRO PARA HOY (26 DE JULIO DE 2026) en HB Jewelry (https://hb-jewelry-app.web.app/).
+
+TAREA PRINCIPAL DE HOY:
+Crear e integrar el video con el Avatar ultra-realista de Guillermo con movimientos de manos, lip-sync y gesticulación facial utilizando la arquitectura HB DIGITAL PRESENTER ENGINE ($0 Costo).
+
+REFERENCIAS REGISTRADAS EN EL REPOSITORIO:
+1. Documento Maestro Presenter Engine: HB_DIGITAL_PRESENTER_ENGINE_2026.md
+2. Checkpoint Estratégico: CHECKPOINT_ARQUITECTURA_ESTRATEGICA_2026.md
+3. Plan de Ingeniería Inversa: INGENIERIA_INVERSA_MULTIMODAL_AVATAR_2026.md
+
+REGLAS INVIOLABLES (v2.0-stable):
+- Cero modificaciones a los 5 archivos blindados (Layout.jsx, Header.jsx, Sidebar.jsx, layout.css, sidebar.css).
+- Protocolo Cloud-First: Probar en Firebase primero y sincronizar hacia Localhost 5173 y Rclone 5TB.
+
+Por favor elabora en la pestaña de Artefactos el nuevo "Artefacto Maestro HB Digital Presenter Engine & DAG Pipeline".
+Antigravity AI ejecutará el plan una vez que lo apruebe el usuario.
 ```
 
 ---
 
-## ⚡ 2. PROTOCOLO OPERATIVO TOP-DOWN CLOUD-FIRST
-
-Las tareas de desarrollo y ejecución siguen estrictamente este flujo descendente:
-
-1. **Vectorización RAG Matemática (768-dim):** Carga de fórmulas espaciales directamente a Firebase Firestore Vector DB / Qdrant.
-2. **Despliegue Vivo en Firebase:** `https://hb-jewelry-app.web.app` es la primera fuente ejecutada y probada.
-3. **Sincronización Descendente (Downstream Sync):** Replicación fluida hacia `http://localhost:5173/`, contenedores Docker, Google Drive 5TB (Rclone) y GitHub (`origin/main`).
-4. **Preservación de Blindaje:** Respeto estricto del tag `v2.0-stable` en `Layout.jsx`, `Header.jsx`, `Sidebar.jsx`, `layout.css` y `sidebar.css`.
-
----
-
-## 📋 3. INSTRUCCIONES EXACTAS PARA EL HANDOFF CON CLAUDE
-
-Claude (como Arquitecto Maestro) debe elaborar el **Artefacto Unificado** para las siguientes fases estratégicas:
-
-- **FASE 5 (Event Intelligence Layer):** Diseño del `EventBus` asíncrono para coordinar agentes de video, voz y chat sin bloqueo de la UI.
-- **FASE 6 (Observability & Telemetry Engine):** Especificación del tablero de control de métricas de colas ($\lambda$ llegada, $\mu$ servicio) y latencias.
-- **FASE 7 (RAG Governance):** Algoritmo de filtrado espacial para vectores de 768 dimensiones que restringe respuestas fuera del negocio de joyas.
-
----
-
-## 🛠️ 4. ROL DE ANTIGRAVITY AI IDE (EJECUTOR NATIVO)
-
-Una vez que Claude devuelva el Artefacto Unificado en la pestaña de Claude:
-1. **Antigravity AI** revisará y validará el artefacto contra los cuellos de botella y la ruta crítica CPM.
-2. Tras la aprobación del usuario, **Antigravity AI** ejecutará los cambios, compilará en Vite, desplegará a Firebase Hosting, probará en `localhost:5173` y respaldará en Google Drive 5TB con Rclone.
-
----
-
-*Informe maestro de Handoff y Pipeline WF registrado y respaldado al 100%.*
+*Cierre de jornada del 25 de Julio completado y respaldado exitosamente.*

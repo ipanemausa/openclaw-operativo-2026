@@ -1,4 +1,32 @@
-# HAND-OFF Y RESUMEN DE ESTADO PARA CLAUDE / ANTIGRAVITY (25/07/2026)
+# HAND-OFF Y RESUMEN DE ESTADO PARA CLAUDE / ANTIGRAVITY (26/07/2026 — ACTUALIZADO)
+
+## 🎬 LOGRO DEL DÍA 26 JULIO: VIDEO TUTORIAL CON AVATAR GUILLERMO
+
+### Videos generados hoy:
+- `C:\openclaw\hb-jewelry\public\hb_tutorial_narrado_v1.mp4` — **5.03 MB, 76s** — Narración TTS AlonsoNeural + EQ profesional + música -20dB
+- `C:\openclaw\hb-jewelry\public\hb_tutorial_avatar_v1.mp4` — **1.18 MB, 15s** — Voz original mejorada con EQ + música
+
+### Pipeline ejecutado (scripts generados):
+- `C:\openclaw\hb-jewelry\scripts\hb_presenter_engine_v1.py` — Engine de composición con FFmpeg
+- `C:\openclaw\hb-jewelry\scripts\hb_tts_tutorial_engine.py` — Engine TTS narración con edge-tts v7.2.8
+
+### Especificaciones de voz profesional aplicadas:
+- Motor TTS: **es-US-AlonsoNeural** | rate=-10% | pitch=+3Hz
+- EQ chain: highpass(80Hz) → EQ(3kHz+3dB) → compresor(4:1) → loudnorm EBU R128 (-16 LUFS)
+- Música: auto-ducking -20dB (10% volume mixing)
+
+### FASE 2 — Próximo paso para el video real con lip-sync:
+```bash
+# Instalar SadTalker (lip sync open source $0)
+git clone https://github.com/OpenTalker/SadTalker.git C:\openclaw\SadTalker
+cd C:\openclaw\SadTalker && pip install -r requirements.txt
+# Correr: foto PNG Guillermo + audio TTS mejorado → video con boca sincronizada
+python inference.py --driven_audio tts_narration_enhanced.wav --source_image guillermo.jpg --result_dir output_lipsync
+```
+
+---
+
+
 
 ## 🛑 CHECKPOINT DE ARQUITECTURA ESTRATÉGICA (OBLIGATORIO)
 > **INSTRUCCIÓN PARA LA PRÓXIMA SESIÓN CON CLAUDE / ANTIGRAVITY:**  

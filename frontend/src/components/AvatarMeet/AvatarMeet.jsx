@@ -26,7 +26,7 @@ const AvatarMeet = () => {
   const [isPlayingAuto, setIsPlayingAuto] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [audioBlockedByBrowser, setAudioBlockedByBrowser] = useState(false);
-  const [viewMode, setViewMode] = useState('customer'); // 'customer' | 'technical'
+  const [viewMode, setViewMode] = useState('customer'); // 'customer' | 'technical' | 'tutorial'
 
   // Voice & Customer Input
   const [inputText, setInputText] = useState('');
@@ -187,6 +187,17 @@ const AvatarMeet = () => {
     playAvatarResponse('/output_avatar_english_7qa.mp4', `Pregunta Técnica Q${item.id}: ${item.q}`, item.a);
   };
 
+  const playTutorialVideo = () => {
+    if (videoRef.current) {
+      videoRef.current.src = '/hb_tutorial_narrado_v1.mp4';
+      videoRef.current.load();
+      videoRef.current.play().catch(e => console.log('Tutorial play:', e));
+      setIsSpeaking(true);
+      setCurrentResponseTitle('📹 Tutorial: Manejo de la App HB Jewelry');
+      setCurrentResponseText('Soy Guillermo, tu asesor de joyería digital. En este tutorial te explico: Ventas, Dashboard de Analytics, el Asistente Avatar y la sincronización en la nube. Duración: 76 segundos.');
+    }
+  };
+
   const selectCustomerQuestion = (item) => {
     playAvatarResponse('/temp_lipsync.mp4', `Consulta de Cliente: ${item.q}`, item.a);
   };
@@ -244,6 +255,17 @@ const AvatarMeet = () => {
             }}
           >
             🛠️ Demo Arquitectura Técnica
+          </button>
+          <button
+            onClick={() => { setViewMode('tutorial'); playTutorialVideo(); }}
+            style={{
+              background: viewMode === 'tutorial' ? 'linear-gradient(135deg, #7c3aed, #4f46e5)' : '#222',
+              color: viewMode === 'tutorial' ? '#fff' : '#aaa',
+              border: viewMode === 'tutorial' ? '1px solid #7c3aed' : '1px solid transparent',
+              borderRadius: '20px', padding: '8px 16px', fontWeight: '700', fontSize: '13px', cursor: 'pointer'
+            }}
+          >
+            📹 Tutorial App
           </button>
         </div>
       </div>
@@ -390,6 +412,48 @@ const AvatarMeet = () => {
                 Q{item.id} Técnico
               </button>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* MODE 3: TUTORIAL VIDEO — Narración AlonsoNeural + EQ Profesional */}
+      {viewMode === 'tutorial' && (
+        <div style={{ background: '#0f0a1e', border: '1px solid rgba(124,58,237,0.4)', borderRadius: '12px', padding: '20px', marginBottom: '16px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px', flexWrap: 'wrap', gap: '8px' }}>
+            <div>
+              <h3 style={{ margin: '0 0 4px 0', color: '#a78bfa', fontSize: '17px' }}>📹 Tutorial: Manejo Completo de la App HB Jewelry</h3>
+              <span style={{ color: '#888', fontSize: '12px' }}>Narrado por el Avatar Guillermo AI · Voz profesional EBU R128 · 76 segundos</span>
+            </div>
+            <button
+              onClick={playTutorialVideo}
+              style={{ background: 'linear-gradient(135deg, #7c3aed, #4f46e5)', color: '#fff', border: 'none', borderRadius: '8px', padding: '8px 18px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+            >
+              ▶ Reproducir Tutorial
+            </button>
+          </div>
+
+          {/* Temario del Tutorial */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '10px', marginBottom: '16px' }}>
+            {[
+              { icon: '💰', title: 'Módulo 1: Ventas', desc: 'Registro de pedidos, catálogo y clientes en tiempo real' },
+              { icon: '📊', title: 'Módulo 2: Analytics', desc: 'Dashboard de métricas diarias, semanales y mensuales' },
+              { icon: '🤖', title: 'Módulo 3: Avatar AI', desc: 'Asistente Guillermo: responde, recomienda y conecta' },
+              { icon: '☁️', title: 'Módulo 4: Nube 5TB', desc: 'Respaldo automático a Google Drive vía Rclone' },
+            ].map((m, i) => (
+              <div key={i} style={{ background: '#1a1030', border: '1px solid rgba(124,58,237,0.25)', borderRadius: '8px', padding: '12px' }}>
+                <div style={{ fontSize: '22px', marginBottom: '4px' }}>{m.icon}</div>
+                <div style={{ color: '#c4b5fd', fontWeight: '700', fontSize: '13px', marginBottom: '4px' }}>{m.title}</div>
+                <div style={{ color: '#888', fontSize: '12px', lineHeight: '1.4' }}>{m.desc}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Especificaciones de Audio */}
+          <div style={{ background: '#1a1030', borderRadius: '8px', padding: '10px 14px', display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+            <span style={{ color: '#a78bfa', fontSize: '11px', fontWeight: '600' }}>🎙️ Voz: es-US-AlonsoNeural</span>
+            <span style={{ color: '#a78bfa', fontSize: '11px', fontWeight: '600' }}>🎛️ EQ: Loudnorm -16 LUFS (EBU R128)</span>
+            <span style={{ color: '#a78bfa', fontSize: '11px', fontWeight: '600' }}>🎵 Música: -20dB auto-ducking</span>
+            <span style={{ color: '#a78bfa', fontSize: '11px', fontWeight: '600' }}>📐 Formato: 720x1280 · 30fps · H.264</span>
           </div>
         </div>
       )}

@@ -18,10 +18,27 @@ const CUSTOMER_SAMPLE_QUESTIONS = [
   { id: 'c4', label: '🎨 Diseños Personalizados', q: '¿Realizan pedidos y diseños de joyería personalizados?', a: '¡Por supuesto! Nuestro taller master diseña piezas únicas en 3D en 48 horas según tus especificaciones.' }
 ];
 
+// ─── CLOUD-FIRST PROTOCOL (Firebase → Rclone → Localhost) ────────────────────
+// Fuente maestra: Firebase Cloud. Rclone derrama hacia localhost.
+// Fórmula de resolución: f(asset) = CLOUD_BASE_URL + asset (prod) | '/' + asset (dev)
+// Optimización de memoria: carga bajo demanda, no preload masivo.
+const CLOUD_BASE_URL = 'https://hb-jewelry-app.web.app';
+const IS_PROD = window.location.hostname !== 'localhost';
+
+// Algoritmo de resolución Cloud-First:
+// Si estamos en Firebase (prod) → usa URL absoluta de Firebase
+// Si estamos en localhost (dev) → usa path relativo (Vite sirve desde /public)
+const cloudAsset = (filename) => IS_PROD ? `${CLOUD_BASE_URL}/${filename}` : `/${filename}`;
+
+// Vector de eficiencia de assets (precarga solo los críticos, lazy para el resto)
+const CRITICAL_ASSETS  = ['output_avatar_english_7qa.mp4'];  // carga inmediata
+const LAZY_ASSETS      = ['hb_tutorial_narrado_v1.mp4', 'showcase_voice.mp3']; // bajo demanda
+
 const AvatarMeet = () => {
   const [hasMicPermission, setHasMicPermission] = useState(false);
   const [isAudioMuted, setIsAudioMuted] = useState(false);
-  const [avatarSource, setAvatarSource] = useState('/output_avatar_english_7qa.mp4');
+  const [avatarSource, setAvatarSource] = useState(cloudAsset('output_avatar_english_7qa.mp4'));
+
   const [activeQAIndex, setActiveQAIndex] = useState(0);
   const [isPlayingAuto, setIsPlayingAuto] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -184,12 +201,12 @@ const AvatarMeet = () => {
   const selectTechnicalQA = (idx) => {
     setActiveQAIndex(idx);
     const item = SEVEN_QA_ITEMS[idx];
-    playAvatarResponse('/output_avatar_english_7qa.mp4', `Pregunta Técnica Q${item.id}: ${item.q}`, item.a);
+    playAvatarResponse(cloudAsset('output_avatar_english_7qa.mp4'), `Pregunta Técnica Q${item.id}: ${item.q}`, item.a);
   };
 
   const playTutorialVideo = () => {
     if (videoRef.current) {
-      videoRef.current.src = '/hb_tutorial_narrado_v1.mp4';
+      videoRef.current.src = cloudAsset('hb_tutorial_narrado_v1.mp4');
       videoRef.current.load();
       videoRef.current.play().catch(e => console.log('Tutorial play:', e));
       setIsSpeaking(true);
@@ -199,13 +216,13 @@ const AvatarMeet = () => {
   };
 
   const selectCustomerQuestion = (item) => {
-    playAvatarResponse('/temp_lipsync.mp4', `Consulta de Cliente: ${item.q}`, item.a);
+    playAvatarResponse(cloudAsset('temp_lipsync.mp4'), `Consulta de Cliente: ${item.q}`, item.a);
   };
 
   const handleCustomCustomerQuery = (text) => {
     if (!text.trim()) return;
     const responseText = `Excelente pregunta sobre "${text}". En HB Jewelry cada pieza es elaborada en oro sólido de 14k y 18k con certificación internacional. ¿Te gustaría que un asesor te contacte por WhatsApp?`;
-    playAvatarResponse('/temp_lipsync.mp4', `Consulta Libre: "${text}"`, responseText);
+    playAvatarResponse(cloudAsset('temp_lipsync.mp4'), `Consulta Libre: "${text}"`, responseText);
     setInputText('');
   };
 

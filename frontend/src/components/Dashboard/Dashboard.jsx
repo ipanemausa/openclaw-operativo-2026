@@ -15,12 +15,12 @@ const AVATARS = [
   { id: 'vip',         name: 'Guillermo — VIP Gold',          style: 'Colección HB · Brazos Abiertos',          img: asset('avatars/dorado.png'),     accent: '#f87171', badge: '👑', badgeBg: '#b91c1c' },
 ]
 
-// ─── 4 VIDEOS ────────────────────────────────────────────────────────────────
+// ─── 4 VIDEOS (Miniaturas de Alta Definición YouTube) ───────────────────────
 const VIDEOS = [
-  { id: 'tutorial',  src: asset('hb_tutorial_narrado_v1.mp4'),    title: 'Tutorial App',           tag: '📹', tagBg: '#7c3aed', accent: '#a78bfa', dur: '1:16',  vert: true },
-  { id: 'qa',        src: asset('output_avatar_english_7qa.mp4'), title: 'Demo Técnico 7 Q&A',     tag: '🛠️', tagBg: '#059669', accent: '#34d399', dur: '0:15',  vert: true },
-  { id: 'showcase',  src: asset('final_showcase.mp4'),            title: 'Showcase HB Jewelry',    tag: '💎', tagBg: '#b45309', accent: '#fbbf24', dur: '~30s',  vert: false },
-  { id: 'avatar',    src: asset('avatar_base.mp4'),               title: 'Avatar Base Loop',       tag: '🤖', tagBg: '#6b7280', accent: '#d4af6a', dur: '0:15',  vert: true },
+  { id: 'tutorial',  src: asset('hb_tutorial_narrado_v1.mp4'),    poster: asset('avatars/studio_mic.png'),   title: 'Tutorial App',           tag: '📹', tagBg: '#7c3aed', accent: '#a78bfa', dur: '1:16',  vert: true },
+  { id: 'qa',        src: asset('output_avatar_english_7qa.mp4'), poster: asset('avatars/desk_mic.png'),     title: 'Demo Técnico 7 Q&A',     tag: '🛠️', tagBg: '#059669', accent: '#34d399', dur: '0:15',  vert: true },
+  { id: 'showcase',  src: asset('final_showcase.mp4'),            poster: asset('video_showcase_thumb.png'), title: 'Showcase HB Jewelry',    tag: '💎', tagBg: '#b45309', accent: '#fbbf24', dur: '~30s',  vert: false },
+  { id: 'avatar',    src: asset('avatar_base.mp4'),               poster: asset('avatar_pro.png'),           title: 'Avatar Base Loop',       tag: '🤖', tagBg: '#6b7280', accent: '#d4af6a', dur: '0:15',  vert: true },
 ]
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -54,16 +54,12 @@ const AvatarCard = memo(({ av, onClick }) => {
           : (h ? `0 12px 32px ${av.accent}40` : '0 2px 8px rgba(0,0,0,0.5)'),
       }}
     >
-      {/* Thumbnail de Cuerpo Entero 100% Completo (sin recortes) */}
       <div style={{ width:'100%', paddingTop:'85%', position:'relative', overflow:'hidden', background:'radial-gradient(circle at center, #18140c 0%, #050505 100%)' }}>
-        {/* Bokeh Ambient Lighting */}
         <div style={{
           position:'absolute', inset:0,
           background: `radial-gradient(circle at 50% 35%, ${av.accent}35 0%, transparent 75%)`,
           animation: 'bokehGlow 6s ease-in-out infinite alternate',
         }} />
-        
-        {/* Foto de Cuerpo Entero de Guillermo (objectFit: contain + padding 4px para 0% recortes) */}
         <img src={av.img} alt={av.name} loading="lazy"
           style={{
             position:'absolute', inset:0, width:'100%', height:'100%',
@@ -73,18 +69,15 @@ const AvatarCard = memo(({ av, onClick }) => {
           }} />
       </div>
 
-      {/* Badge */}
       <div style={{ position:'absolute', top:8, left:8, background:av.badgeBg, color:'#fff', padding:'2px 8px', borderRadius:20, fontSize:10, fontWeight:800 }}>
         {av.badge} {av.isPpal ? 'MAIN AVATAR MASTER' : av.id.toUpperCase()}
       </div>
 
-      {/* Info inferior */}
       <div style={{ padding:'10px 10px 12px', background: av.isPpal ? 'linear-gradient(180deg, #1f1707 0%, #0a0a0a 100%)' : '#0a0a0a' }}>
         <div style={{ color: av.isPpal ? '#fbbf24' : '#fff', fontWeight:700, fontSize:12, marginBottom:2 }}>{av.name}</div>
         <div style={{ color: av.accent, fontSize:10, fontWeight:600 }}>{av.style}</div>
       </div>
 
-      {/* Hover eye */}
       {h && <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', background:'rgba(0,0,0,0.35)', pointerEvents:'none' }}>
         <div style={{ width:48, height:48, borderRadius:'50%', background:'rgba(255,255,255,0.92)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:20, boxShadow:'0 4px 16px rgba(0,0,0,0.4)' }}>👁️</div>
       </div>}
@@ -103,7 +96,6 @@ const AvatarModal = ({ av, onClose }) => {
       <div style={{ position:'relative', maxWidth:750, width:'100%', maxHeight:'90vh', borderRadius:20, overflow:'hidden', background:'#0a0a0a', border:`2px solid ${av.accent}66`, boxShadow:`0 24px 60px ${av.accent}40`, display:'flex', flexDirection:'column' }}>
         <button onClick={onClose} style={{ position:'absolute', top:12, right:12, zIndex:10, width:36, height:36, borderRadius:'50%', background:'rgba(0,0,0,0.75)', border:'1px solid rgba(255,255,255,0.3)', color:'#fff', fontSize:16, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 4px 12px rgba(0,0,0,0.5)' }}>✕</button>
         
-        {/* Contenedor Responsivo 100% Visibilidad Sin Recorte */}
         <div style={{ width:'100%', height:'65vh', display:'flex', justifyContent:'center', alignItems:'center', background:'radial-gradient(circle at center, #18140c 0%, #040404 100%)', padding:'16px', boxSizing:'border-box' }}>
           <img src={av.img} alt={av.name} style={{ maxHeight:'100%', maxWidth:'100%', width:'auto', height:'auto', objectFit:'contain', borderRadius:12, display:'block', filter:'drop-shadow(0 12px 24px rgba(0,0,0,0.8))' }} />
         </div>
@@ -112,9 +104,9 @@ const AvatarModal = ({ av, onClose }) => {
           <div style={{ display:'flex', gap:8, alignItems:'center', marginBottom:6 }}>
             <span style={{ background:av.badgeBg, color:'#fff', padding:'3px 10px', borderRadius:20, fontSize:11, fontWeight:800 }}>{av.badge} {av.isPpal ? 'MAIN AVATAR MASTER' : av.id.toUpperCase()}</span>
           </div>
-          <div style={{ color:'#fff', fontWeight:800, fontSize:18 }}>Guillermo AI — {av.name}</div>
-          <div style={{ color:av.accent, fontSize:13, marginTop:2 }}>{av.style}</div>
-          <div style={{ color:'#444', fontSize:11, marginTop:8 }}>ESC o clic fuera para cerrar</div>
+          <div style={{ color: av.isPpal ? '#fbbf24' : '#fff', fontWeight:800, fontSize:18 }}>Guillermo AI — {av.name}</div>
+          <div style={{ color:av.accent, fontSize:13, marginTop:2, fontWeight:600 }}>{av.style}</div>
+          <div style={{ color:'#555', fontSize:11, marginTop:8 }}>ESC o clic fuera para cerrar</div>
         </div>
       </div>
     </div>
@@ -122,19 +114,16 @@ const AvatarModal = ({ av, onClose }) => {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   VIDEO CARD — miniatura real del video
+   VIDEO CARD — miniatura real del video con poster de alta definición
    ═══════════════════════════════════════════════════════════════════════════ */
 const VidCard = memo(({ v, onClick }) => {
   const [h, setH] = useState(false)
   const ref = useRef(null)
-  const [loaded, setLoaded] = useState(false)
-  useEffect(() => { const el=ref.current; if(!el)return; el.currentTime=0.1; el.addEventListener('loadeddata',()=>setLoaded(true),{once:true}) }, [])
   return (
     <div onClick={()=>onClick(v)} onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)}
       style={{ cursor:'pointer', borderRadius:12, overflow:'hidden', background:'#0a0a0a', border:`1px solid ${h?v.accent+'66':'rgba(255,255,255,0.06)'}`, transition:'all .22s ease', transform:h?'translateY(-3px)':'none', boxShadow:h?`0 8px 24px ${v.accent}22`:'0 2px 8px rgba(0,0,0,0.4)' }}>
       <div style={{ position:'relative', paddingTop:'56.25%', background:'#000' }}>
-        <video ref={ref} src={v.src} muted preload="metadata" playsInline style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:v.vert?'contain':'cover', opacity:loaded?1:0, transition:'opacity .3s' }} />
-        {!loaded && <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center' }}><div style={{ width:24, height:24, border:`2px solid ${v.accent}`, borderTopColor:'transparent', borderRadius:'50%', animation:'spin 1s linear infinite' }} /></div>}
+        <video ref={ref} src={v.src} poster={v.poster} muted preload="metadata" playsInline style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:v.vert?'contain':'cover', display:'block' }} />
         {h && <div style={{ position:'absolute', inset:0, background:'rgba(0,0,0,0.4)', display:'flex', alignItems:'center', justifyContent:'center' }}><div style={{ width:40, height:40, borderRadius:'50%', background:'rgba(255,255,255,0.92)', display:'flex', alignItems:'center', justifyContent:'center' }}><div style={{ width:0, height:0, borderStyle:'solid', borderWidth:'8px 0 8px 14px', borderColor:'transparent transparent transparent #111', marginLeft:3 }}/></div></div>}
         <div style={{ position:'absolute', top:6, left:6, background:v.tagBg, color:'#fff', padding:'2px 7px', borderRadius:20, fontSize:9, fontWeight:800 }}>{v.tag}</div>
         <div style={{ position:'absolute', bottom:5, right:5, background:'rgba(0,0,0,0.85)', color:'#fff', padding:'1px 6px', borderRadius:3, fontSize:10, fontWeight:700 }}>{v.dur}</div>

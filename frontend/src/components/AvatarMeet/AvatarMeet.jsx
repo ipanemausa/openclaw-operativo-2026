@@ -6,9 +6,18 @@ const CLOUD_BASE_URL = 'https://hb-jewelry-app.web.app';
 const IS_PROD = window.location.hostname !== 'localhost';
 const cloudAsset = (f) => IS_PROD ? `${CLOUD_BASE_URL}/${f}` : `/${f}`;
 
+// ─── CATÁLOGO DE AVATARES OFICIALES GUILLERMO AI ─────────────────────────────
+const AVATAR_CATALOG = [
+  { id: 'master',    name: 'Guillermo — Master Principal',  style: 'Identidad Raíz · HB Official Master',   img: cloudAsset('avatar_pro.png'),         accent: '#fbbf24', badge: '👑', badgeBg: '#b45309', isPpal: true },
+  { id: 'studio',    name: 'Guillermo — Studio (De Pie)',   style: 'Cuerpo Entero · Micrófono Boom · Jeans', img: cloudAsset('avatars/studio_mic.png'), accent: '#d4af6a', badge: '🎙️', badgeBg: '#7c3aed' },
+  { id: 'desk',      name: 'Guillermo — Escritorio (Sentado)',style: 'Escritorio · Micrófono al Frente',       img: cloudAsset('avatars/desk_mic.png'),   accent: '#60a5fa', badge: '🎧', badgeBg: '#1d4ed8' },
+  { id: 'casual',    name: 'Guillermo — Casual Azul',       style: 'Confiado · Blue Jeans · Logo HB',        img: cloudAsset('avatars/azul.png'),       accent: '#34d399', badge: '👔', badgeBg: '#059669' },
+  { id: 'premium',   name: 'Guillermo — Premium Blanco',    style: 'Elegante · Blue Jeans · Logo HB',        img: cloudAsset('avatars/blanco.png'),     accent: '#e2e8f0', badge: '⭐', badgeBg: '#475569' },
+  { id: 'vip',       name: 'Guillermo — VIP Gold',          style: 'Colección HB · Brazos Abiertos',          img: cloudAsset('avatars/dorado.png'),     accent: '#f87171', badge: '👑', badgeBg: '#b91c1c' },
+];
+
 // ─── CATÁLOGO DE VIDEOS — cada video es una tarjeta ──────────────────────────
 // Mínimo 6 tarjetas para llenar la sección (2 filas × 3 columnas)
-// Agrega nuevos videos aquí y el shelf se expande automáticamente con scroll
 const VIDEO_CATALOG = [
   {
     id: 'tutorial',

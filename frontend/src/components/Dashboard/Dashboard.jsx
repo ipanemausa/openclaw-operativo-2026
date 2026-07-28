@@ -38,7 +38,7 @@ const SectionHead = ({ icon, title, sub }) => (
    ═══════════════════════════════════════════════════════════════════════════ */
 const AvatarCard = memo(({ av, onClick }) => {
   const [h, setH] = useState(false)
-  const isMaster = av.id === 'guillermo_main'
+  const isMaster = av.id === 'guillermo_main' || av.id === 'studio'
   return (
     <div
       onClick={() => onClick(av)}
@@ -54,20 +54,62 @@ const AvatarCard = memo(({ av, onClick }) => {
           : (h ? `0 12px 32px ${av.accent}30` : '0 2px 8px rgba(0,0,0,0.5)'),
       }}
     >
-      {/* Thumbnail 16:9 estilo YouTube */}
-      <div style={{ width:'100%', paddingTop:'56.25%', position:'relative', overflow:'hidden', background:'#000' }}>
-        <img src={av.img} alt={av.name} loading="lazy"
-          style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', objectPosition:'center 20%', display:'block', transition:'transform .3s', transform: h ? 'scale(1.04)' : 'scale(1)' }} />
+      {/* Thumbnail 16:9 estilo YouTube con Micrófono Studio de fondo y ambientación */}
+      <div style={{ width:'100%', paddingTop:'56.25%', position:'relative', overflow:'hidden', background:'linear-gradient(135deg, #0f0c08 0%, #1a140b 100%)' }}>
+        {/* Bokeh Studio Lighting */}
+        <div style={{
+          position:'absolute', inset:0,
+          background: `radial-gradient(circle at 70% 30%, ${av.accent}25 0%, transparent 60%)`,
+          animation: 'bokehGlow 6s ease-in-out infinite alternate',
+        }} />
+        
+        {/* Cara Auténtica de Guillermo (avatar_pro.png) con animación de respiración studio */}
+        <img src={asset('avatar_pro.png')} alt={av.name} loading="lazy"
+          style={{
+            position:'absolute', inset:0, width:'100%', height:'100%',
+            objectFit:'cover', objectPosition:'center 20%', display:'block',
+            transition:'transform .3s',
+            transform: h ? 'scale(1.04)' : 'scale(1)',
+            animation: 'studioBreathe 4s ease-in-out infinite alternate',
+          }} />
+
+        {/* Micrófono de Estudio Pro en Brazo (Studio Microphone Overlay) */}
+        <svg viewBox="0 0 100 100" style={{
+          position:'absolute', bottom:-5, right:15, width:64, height:64,
+          filter:'drop-shadow(0 4px 10px rgba(0,0,0,0.8))',
+          pointerEvents:'none',
+          animation: 'micSway 5s ease-in-out infinite alternate',
+        }}>
+          {/* Boom Arm */}
+          <path d="M 90 95 L 60 50 L 45 42" stroke="#444" strokeWidth="3" fill="none" />
+          <path d="M 60 50 L 58 48" stroke="#d4af6a" strokeWidth="4" strokeLinecap="round" />
+          {/* Shock Mount */}
+          <circle cx="42" cy="38" r="9" stroke="#666" strokeWidth="1.5" fill="rgba(20,20,20,0.6)" />
+          {/* Capsule Condenser Mic */}
+          <rect x="37" y="28" width="10" height="18" rx="5" fill="url(#goldMicGrad)" stroke="#d4af6a" strokeWidth="1" />
+          <line x1="37" y1="34" x2="47" y2="34" stroke="#888" strokeWidth="0.8" />
+          <line x1="37" y1="38" x2="47" y2="38" stroke="#888" strokeWidth="0.8" />
+          <defs>
+            <linearGradient id="goldMicGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#d4af6a" />
+              <stop offset="50%" stopColor="#8a6f3b" />
+              <stop offset="100%" stopColor="#222" />
+            </linearGradient>
+          </defs>
+        </svg>
       </div>
+
       {/* Badge */}
       <div style={{ position:'absolute', top:8, left:8, background:av.badgeBg, color:'#fff', padding:'2px 8px', borderRadius:20, fontSize:10, fontWeight:800 }}>
         {av.badge} {isMaster ? 'AVATAR MASTER' : av.id.toUpperCase()}
       </div>
+
       {/* Info inferior */}
       <div style={{ padding:'10px 10px 12px', background: isMaster ? 'linear-gradient(180deg, #141008 0%, #0a0a0a 100%)' : '#0a0a0a' }}>
         <div style={{ color: isMaster ? '#d4af6a' : '#fff', fontWeight:700, fontSize:12, marginBottom:2 }}>{av.name}</div>
         <div style={{ color: av.accent, fontSize:10, fontWeight:600 }}>{av.style}</div>
       </div>
+
       {/* Hover eye */}
       {h && <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', background:'rgba(0,0,0,0.35)', pointerEvents:'none' }}>
         <div style={{ width:48, height:48, borderRadius:'50%', background:'rgba(255,255,255,0.92)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:20, boxShadow:'0 4px 16px rgba(0,0,0,0.4)' }}>👁️</div>

@@ -54,20 +54,20 @@ const AvatarCard = memo(({ av, onClick }) => {
           : (h ? `0 12px 32px ${av.accent}30` : '0 2px 8px rgba(0,0,0,0.5)'),
       }}
     >
-      {/* Thumbnail 16:9 estilo YouTube con render de Cuerpo Entero + Blue Jeans */}
-      <div style={{ width:'100%', paddingTop:'56.25%', position:'relative', overflow:'hidden', background:'linear-gradient(135deg, #0a0a0a 0%, #15120c 100%)' }}>
+      {/* Thumbnail de Cuerpo Entero (100% visibilidad de cabeza a tenis) */}
+      <div style={{ width:'100%', paddingTop:'75%', position:'relative', overflow:'hidden', background:'radial-gradient(circle at center, #1a1610 0%, #080808 100%)' }}>
         {/* Bokeh Ambient Lighting */}
         <div style={{
           position:'absolute', inset:0,
-          background: `radial-gradient(circle at 70% 30%, ${av.accent}20 0%, transparent 60%)`,
+          background: `radial-gradient(circle at 50% 40%, ${av.accent}30 0%, transparent 70%)`,
           animation: 'bokehGlow 6s ease-in-out infinite alternate',
         }} />
         
-        {/* Foto de Cuerpo Entero de Guillermo (Camiseta + Logo HB + Blue Jeans + Tenis) */}
+        {/* Foto de Cuerpo Entero de Guillermo abierta en Antigravity (objectFit: contain para ver de cabeza a tenis) */}
         <img src={av.img} alt={av.name} loading="lazy"
           style={{
             position:'absolute', inset:0, width:'100%', height:'100%',
-            objectFit:'cover', objectPosition:'center center', display:'block',
+            objectFit:'contain', objectPosition:'center center', display:'block',
             transition:'transform .3s',
             transform: h ? 'scale(1.04)' : 'scale(1)',
           }} />

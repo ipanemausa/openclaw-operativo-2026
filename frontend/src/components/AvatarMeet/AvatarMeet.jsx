@@ -192,7 +192,7 @@ const VideoCard = ({ video, onPlay }) => {
           playsInline
           style={{
             position: 'absolute', inset: 0, width: '100%', height: '100%',
-            objectFit: video.isVertical ? 'contain' : 'cover',
+            objectFit: 'contain',
             background: '#000',
             opacity: thumbLoaded ? 1 : 0,
             transition: 'opacity 0.3s',

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 export default function Certificaciones() {
-  const [activeTab, setActiveTab] = useState('claude')
+  const [activeTab, setActiveTab] = useState('video')
   const [ragQuery, setRagQuery] = useState('')
   const [ragResult, setRagResult] = useState(null)
   const [isSearching, setIsSearching] = useState(false)
@@ -33,55 +33,118 @@ export default function Certificaciones() {
               Hub de Certificaciones Oficiales & Orquestación de IA Enterprise
             </h1>
             <p style={{ margin: '4px 0 0', color: '#aaa', fontSize: '13px' }}>
-              Demostración interactiva en tiempo real de competencias para Anthropic Claude, Google Cloud, Microsoft Azure & AWS
+              Demostración interactiva en tiempo real: Adobe, DaVinci Resolve, Google Veo 3.1, Claude AI, Azure & AWS ML
             </p>
           </div>
         </div>
       </div>
 
-      {/* Tabs Nav (4 Certificaciones) */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginBottom: '24px' }}>
+      {/* Tabs Nav (5 Certificaciones) */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px', marginBottom: '24px' }}>
+        <button
+          onClick={() => setActiveTab('video')}
+          style={{
+            padding: '12px', borderRadius: '12px', border: activeTab === 'video' ? '2px solid #EC4899' : '1px solid #333',
+            background: activeTab === 'video' ? 'rgba(236,72,153,0.18)' : '#111', color: activeTab === 'video' ? '#f472b6' : '#888',
+            fontWeight: 800, fontSize: '12px', cursor: 'pointer', transition: 'all .2s'
+          }}
+        >
+          🎬 Master Video & Gen-AI
+        </button>
         <button
           onClick={() => setActiveTab('claude')}
           style={{
             padding: '12px', borderRadius: '12px', border: activeTab === 'claude' ? '2px solid #D97706' : '1px solid #333',
             background: activeTab === 'claude' ? 'rgba(217,119,6,0.15)' : '#111', color: activeTab === 'claude' ? '#fbbf24' : '#888',
-            fontWeight: 800, fontSize: '13px', cursor: 'pointer', transition: 'all .2s'
+            fontWeight: 800, fontSize: '12px', cursor: 'pointer', transition: 'all .2s'
           }}
         >
-          🟣 Anthropic Claude AI Architect
+          🟣 Claude AI Architect
         </button>
         <button
           onClick={() => setActiveTab('google')}
           style={{
             padding: '12px', borderRadius: '12px', border: activeTab === 'google' ? '2px solid #4285F4' : '1px solid #333',
             background: activeTab === 'google' ? 'rgba(66,133,244,0.12)' : '#111', color: activeTab === 'google' ? '#60a5fa' : '#888',
-            fontWeight: 800, fontSize: '13px', cursor: 'pointer', transition: 'all .2s'
+            fontWeight: 800, fontSize: '12px', cursor: 'pointer', transition: 'all .2s'
           }}
         >
-          🔵 Google Cloud ML Engineer
+          🔵 Google Cloud ML
         </button>
         <button
           onClick={() => setActiveTab('microsoft')}
           style={{
             padding: '12px', borderRadius: '12px', border: activeTab === 'microsoft' ? '2px solid #00A4EF' : '1px solid #333',
             background: activeTab === 'microsoft' ? 'rgba(0,164,239,0.12)' : '#111', color: activeTab === 'microsoft' ? '#38bdf8' : '#888',
-            fontWeight: 800, fontSize: '13px', cursor: 'pointer', transition: 'all .2s'
+            fontWeight: 800, fontSize: '12px', cursor: 'pointer', transition: 'all .2s'
           }}
         >
-          🟦 Microsoft Azure AI-102
+          🟦 Azure AI-102
         </button>
         <button
           onClick={() => setActiveTab('aws')}
           style={{
             padding: '12px', borderRadius: '12px', border: activeTab === 'aws' ? '2px solid #FF9900' : '1px solid #333',
             background: activeTab === 'aws' ? 'rgba(255,153,0,0.12)' : '#111', color: activeTab === 'aws' ? '#f59e0b' : '#888',
-            fontWeight: 800, fontSize: '13px', cursor: 'pointer', transition: 'all .2s'
+            fontWeight: 800, fontSize: '12px', cursor: 'pointer', transition: 'all .2s'
           }}
         >
           🟧 AWS ML Specialty
         </button>
       </div>
+
+      {/* Content Tab: MASTER VIDEO & GEN-AI */}
+      {activeTab === 'video' && (
+        <div style={{ background: '#0e0e0e', border: '1px solid rgba(236,72,153,0.3)', borderRadius: '16px', padding: '24px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+            <h2 style={{ margin: 0, color: '#f472b6', fontSize: '20px' }}>🎬 Master Video Director & Architectura de Video IA Generativo 2026</h2>
+            <span style={{ background: '#831843', color: '#fbcfe8', padding: '4px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 700 }}>MATRIZ DE EMBEDDING 768-DIM INDEXADA</span>
+          </div>
+
+          <p style={{ color: '#ccc', fontSize: '14px', lineHeight: '1.6' }}>
+            Dominio integrado de la suite profesional de edición NLE (Adobe Premiere Pro & After Effects, DaVinci Resolve Studio 20) orquestado con generadores de video de inteligencia artificial de última generación (Google Veo 3.1, SadTalker PyTorch local, Runway Gen-4.5 y Kling 3.0).
+          </p>
+
+          {/* Matrix Levels */}
+          <div style={{ marginTop: '20px', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
+            <div style={{ background: '#180e15', border: '1px solid #9d174d', borderRadius: '12px', padding: '16px' }}>
+              <h4 style={{ margin: '0 0 8px', color: '#f472b6', fontSize: '14px' }}>🎞️ Nivel 1: Edición & Color Grading</h4>
+              <ul style={{ paddingLeft: '18px', margin: 0, fontSize: '12px', color: '#cbd5e1', lineHeight: '1.7' }}>
+                <li><strong>Adobe Certified Professional</strong> (Premiere Pro)</li>
+                <li><strong>DaVinci Resolve 20 Studio</strong> (Blackmagic Certified)</li>
+                <li><strong>Fairlight Audio Post</strong> (EBU R128 Norming)</li>
+                <li><strong>CapCut Pro Social</strong> (Dynamic TikTok/Reels)</li>
+              </ul>
+            </div>
+            <div style={{ background: '#180e15', border: '1px solid #9d174d', borderRadius: '12px', padding: '16px' }}>
+              <h4 style={{ margin: '0 0 8px', color: '#f472b6', fontSize: '14px' }}>🎨 Nivel 2: Motion Graphics & VFX</h4>
+              <ul style={{ paddingLeft: '18px', margin: 0, fontSize: '12px', color: '#cbd5e1', lineHeight: '1.7' }}>
+                <li><strong>Adobe Certified Expert</strong> (After Effects)</li>
+                <li><strong>Cinema 4D / Maxon MoGraph</strong> (Render 3D)</li>
+                <li><strong>3D Camera Tracking & Keying</strong> (Chroma Studio)</li>
+                <li><strong>Unreal Engine 5</strong> (Virtual Production ICVFX)</li>
+              </ul>
+            </div>
+            <div style={{ background: '#180e15', border: '1px solid #9d174d', borderRadius: '12px', padding: '16px' }}>
+              <h4 style={{ margin: '0 0 8px', color: '#f472b6', fontSize: '14px' }}>🤖 Nivel 3: IA Generativa & Lip-Sync</h4>
+              <ul style={{ paddingLeft: '18px', margin: 0, fontSize: '12px', color: '#cbd5e1', lineHeight: '1.7' }}>
+                <li><strong>Google Veo 3.1</strong> (Cinematic Gold & Jewels)</li>
+                <li><strong>SadTalker PyTorch Local</strong> ($0 Lip-Sync 1080p)</li>
+                <li><strong>Runway Gen-4.5 / Kling 3.0</strong> (Image-to-Video)</li>
+                <li><strong>RAG Vectorstore 768-dim</strong> (Firestore Index)</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* RAG Vector Formula snippet */}
+          <div style={{ marginTop: '20px', background: '#0f0a10', border: '1px solid #be185d', borderRadius: '12px', padding: '16px' }}>
+            <h4 style={{ margin: '0 0 8px', color: '#fb7185', fontSize: '14px' }}>🧮 Fórmula de Vectorización Algorítmica E_video(cert)</h4>
+            <div style={{ fontFamily: 'monospace', fontSize: '12px', color: '#fecdd3', background: '#000', padding: '12px', borderRadius: '8px', border: '1px solid #831843' }}>
+              E_video(cert) = 0.35 · E_técnico + 0.25 · E_plataforma + 0.25 · E_herramienta_IA + 0.15 · E_HBJewelry
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Content Tab 1: ANTHROPIC CLAUDE */}
       {activeTab === 'claude' && (
@@ -132,7 +195,7 @@ export default function Certificaciones() {
                 type="text"
                 value={ragQuery}
                 onChange={(e) => setRagQuery(e.target.value)}
-                placeholder="Ejemplo: ¿Cuál es el protocolo de atención y collares de oro 14k?"
+                placeholder="Ejemplo: ¿Cuál es la herramienta recomendada para video de joyas?"
                 style={{ flex: 1, padding: '12px', borderRadius: '8px', border: '1px solid #334155', background: '#0f172a', color: '#fff', fontSize: '13px' }}
               />
               <button

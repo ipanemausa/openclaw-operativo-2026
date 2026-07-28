@@ -5,15 +5,14 @@ const CLOUD_BASE = 'https://hb-jewelry-app.web.app'
 const IS_PROD = window.location.hostname !== 'localhost'
 const asset = (f) => IS_PROD ? `${CLOUD_BASE}/${f}` : `/${f}`
 
-// ─── 6 AVATARES REALES (imágenes únicas generadas por AI) ────────────────────
+// ─── AVATARES OFICIALES GUILLERMO AI (Basados en avatar_pro.png auténtico) ──────
 const AVATARS = [
-  { id: 'studio',  name: 'Studio Presenter', style: 'Estudio · Micrófono Pro', img: asset('avatars/studio_mic.png'), accent: '#fbbf24', badge: '🎙️', badgeBg: '#7c3aed' },
-  { id: 'azul',   name: 'Casual Azul',     style: 'Confiado · Relajado',   img: asset('avatars/azul.png'),   accent: '#60a5fa', badge: '👔', badgeBg: '#1d4ed8' },
-  { id: 'negro',  name: 'Formal Negro',    style: 'Profesional · Ejecutivo', img: asset('avatars/negro.png'),  accent: '#d4af6a', badge: '💼', badgeBg: '#374151' },
-  { id: 'blanco', name: 'Premium Blanco',  style: 'Elegante · Premium',    img: asset('avatars/blanco.png'), accent: '#e2e8f0', badge: '⭐', badgeBg: '#475569' },
-  { id: 'verde',  name: 'Sport Verde',     style: 'Dinámico · Energético', img: asset('avatars/verde.png'),  accent: '#34d399', badge: '⚡', badgeBg: '#059669' },
-  { id: 'rojo',   name: 'Dynamic Rojo',    style: 'Apasionado · Líder',    img: asset('avatars/rojo.png'),   accent: '#f87171', badge: '🔥', badgeBg: '#b91c1c' },
-  { id: 'dorado', name: 'VIP Dorado',      style: 'Exclusivo · Top Level', img: asset('avatars/dorado.png'), accent: '#d4af6a', badge: '👑', badgeBg: '#b45309' },
+  { id: 'guillermo_main', name: 'Guillermo — Principal', style: 'Avatar Oficial · HB Master', img: asset('avatar_pro.png'), accent: '#d4af6a', badge: '👑', badgeBg: '#b45309' },
+  { id: 'studio',          name: 'Guillermo — Studio',    style: 'Presentador · Micrófono Pro', img: asset('avatar_pro.png'), accent: '#fbbf24', badge: '🎙️', badgeBg: '#7c3aed' },
+  { id: 'casual',          name: 'Guillermo — Casual',    style: 'Confiado · Explicativo',     img: asset('avatar_pro.png'), accent: '#60a5fa', badge: '👔', badgeBg: '#1d4ed8' },
+  { id: 'executive',       name: 'Guillermo — Ejecutivos',style: 'Corporativo · HB Gold',      img: asset('avatar_pro.png'), accent: '#e2e8f0', badge: '💼', badgeBg: '#374151' },
+  { id: 'tech',            name: 'Guillermo — Técnico',   style: 'Demostración · AI Engine',   img: asset('avatar_pro.png'), accent: '#34d399', badge: '⚡', badgeBg: '#059669' },
+  { id: 'showcase',        name: 'Guillermo — Showcase',  style: 'Joyería · Colección VIP',    img: asset('avatar_pro.png'), accent: '#f87171', badge: '💎', badgeBg: '#b91c1c' },
 ]
 
 // ─── 4 VIDEOS ────────────────────────────────────────────────────────────────
@@ -39,16 +38,20 @@ const SectionHead = ({ icon, title, sub }) => (
    ═══════════════════════════════════════════════════════════════════════════ */
 const AvatarCard = memo(({ av, onClick }) => {
   const [h, setH] = useState(false)
+  const isMaster = av.id === 'guillermo_main'
   return (
     <div
       onClick={() => onClick(av)}
       onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
       style={{
         cursor:'pointer', borderRadius:12, overflow:'hidden', position:'relative',
-        background:'#0a0a0a', border:`1px solid ${h ? av.accent+'88' : 'rgba(255,255,255,0.06)'}`,
+        background:'#0a0a0a',
+        border: isMaster ? '2px solid #d4af6a' : `1px solid ${h ? av.accent+'88' : 'rgba(255,255,255,0.06)'}`,
         transition:'all .22s ease',
         transform: h ? 'translateY(-4px)' : 'none',
-        boxShadow: h ? `0 12px 32px ${av.accent}30` : '0 2px 8px rgba(0,0,0,0.5)',
+        boxShadow: isMaster
+          ? (h ? '0 16px 40px rgba(212,175,106,0.5)' : '0 4px 20px rgba(212,175,106,0.25)')
+          : (h ? `0 12px 32px ${av.accent}30` : '0 2px 8px rgba(0,0,0,0.5)'),
       }}
     >
       {/* Thumbnail 16:9 estilo YouTube */}
@@ -57,11 +60,13 @@ const AvatarCard = memo(({ av, onClick }) => {
           style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', objectPosition:'center 20%', display:'block', transition:'transform .3s', transform: h ? 'scale(1.04)' : 'scale(1)' }} />
       </div>
       {/* Badge */}
-      <div style={{ position:'absolute', top:8, left:8, background:av.badgeBg, color:'#fff', padding:'2px 8px', borderRadius:20, fontSize:10, fontWeight:800 }}>{av.badge} {av.id.toUpperCase()}</div>
+      <div style={{ position:'absolute', top:8, left:8, background:av.badgeBg, color:'#fff', padding:'2px 8px', borderRadius:20, fontSize:10, fontWeight:800 }}>
+        {av.badge} {isMaster ? 'AVATAR MASTER' : av.id.toUpperCase()}
+      </div>
       {/* Info inferior */}
-      <div style={{ padding:'10px 10px 12px', background:'#0a0a0a' }}>
-        <div style={{ color:'#fff', fontWeight:700, fontSize:12, marginBottom:2 }}>{av.name}</div>
-        <div style={{ color:av.accent, fontSize:10, fontWeight:600 }}>{av.style}</div>
+      <div style={{ padding:'10px 10px 12px', background: isMaster ? 'linear-gradient(180deg, #141008 0%, #0a0a0a 100%)' : '#0a0a0a' }}>
+        <div style={{ color: isMaster ? '#d4af6a' : '#fff', fontWeight:700, fontSize:12, marginBottom:2 }}>{av.name}</div>
+        <div style={{ color: av.accent, fontSize:10, fontWeight:600 }}>{av.style}</div>
       </div>
       {/* Hover eye */}
       {h && <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', background:'rgba(0,0,0,0.35)', pointerEvents:'none' }}>

@@ -242,13 +242,13 @@ export default function Dashboard({ onNavigate }) {
         </div>
       </div>
 
-      {/* ══════════════ AVATAR SECTION — scroll interno ══════════════ */}
-      <div style={{ marginBottom:20 }}>
-        <SectionHead icon="👤" title="Avatar Personal — Guillermo AI" sub="6 variantes · Clic para ver en grande" />
+      {/* ══════════════ AVATAR SECTION — Parrilla 3x2 con scroll interno ══════════════ */}
+      <div style={{ marginBottom:24 }}>
+        <SectionHead icon="👤" title="Avatar Personal — Guillermo AI (Parrilla 3x2)" sub="6 tarjetas de cuerpo entero · Clic para ver en grande" />
         <div id="av-shelf" style={{
-          display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(280px, 1fr))', gap:14,
-          maxHeight:440, overflowY:'auto', overflowX:'hidden',
-          paddingRight:4, scrollbarWidth:'thin', scrollbarColor:'#d4af6a44 transparent',
+          display:'grid', gridTemplateColumns:'repeat(3, 1fr)', gap:16,
+          maxHeight: 520, overflowY:'auto', overflowX:'hidden',
+          paddingRight:6, scrollbarWidth:'thin', scrollbarColor:'#d4af6a66 transparent',
         }}>
           {AVATARS.map(av => <AvatarCard key={av.id} av={av} onClick={setAvModal} />)}
         </div>

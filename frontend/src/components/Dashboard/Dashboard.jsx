@@ -5,14 +5,14 @@ const CLOUD_BASE = 'https://hb-jewelry-app.web.app'
 const IS_PROD = window.location.hostname !== 'localhost'
 const asset = (f) => IS_PROD ? `${CLOUD_BASE}/${f}` : `/${f}`
 
-// ─── AVATARES OFICIALES GUILLERMO AI (Basados en avatar_pro.png auténtico) ──────
+// ─── 6 AVATARES OFICIALES GUILLERMO AI (Cuerpo Entero · Blue Jeans · Logo HB) ───
 const AVATARS = [
-  { id: 'guillermo_main', name: 'Guillermo — Principal', style: 'Avatar Oficial · HB Master', img: asset('avatar_pro.png'), accent: '#d4af6a', badge: '👑', badgeBg: '#b45309' },
-  { id: 'studio',          name: 'Guillermo — Studio',    style: 'Presentador · Micrófono Pro', img: asset('avatar_pro.png'), accent: '#fbbf24', badge: '🎙️', badgeBg: '#7c3aed' },
-  { id: 'casual',          name: 'Guillermo — Casual',    style: 'Confiado · Explicativo',     img: asset('avatar_pro.png'), accent: '#60a5fa', badge: '👔', badgeBg: '#1d4ed8' },
-  { id: 'executive',       name: 'Guillermo — Ejecutivos',style: 'Corporativo · HB Gold',      img: asset('avatar_pro.png'), accent: '#e2e8f0', badge: '💼', badgeBg: '#374151' },
-  { id: 'tech',            name: 'Guillermo — Técnico',   style: 'Demostración · AI Engine',   img: asset('avatar_pro.png'), accent: '#34d399', badge: '⚡', badgeBg: '#059669' },
-  { id: 'showcase',        name: 'Guillermo — Showcase',  style: 'Joyería · Colección VIP',    img: asset('avatar_pro.png'), accent: '#f87171', badge: '💎', badgeBg: '#b91c1c' },
+  { id: 'studio',   name: 'Guillermo — Studio Mic',  style: 'Presentador Pro · Micrófono Studio', img: asset('avatars/studio_mic.png'), accent: '#fbbf24', badge: '🎙️', badgeBg: '#7c3aed' },
+  { id: 'azul',     name: 'Guillermo — Casual Azul', style: 'Confiado · Blue Jeans · Logo HB',  img: asset('avatars/azul.png'),       accent: '#60a5fa', badge: '👔', badgeBg: '#1d4ed8' },
+  { id: 'blanco',   name: 'Guillermo — Premium',     style: 'Elegante Blanco · Blue Jeans',      img: asset('avatars/blanco.png'),     accent: '#e2e8f0', badge: '⭐', badgeBg: '#475569' },
+  { id: 'verde',    name: 'Guillermo — Sport',       style: 'Energético Verde · Thumbs Up',      img: asset('avatars/verde.png'),      accent: '#34d399', badge: '⚡', badgeBg: '#059669' },
+  { id: 'rojo',     name: 'Guillermo — Dynamic',     style: 'Líder Rojo · Explicativo',          img: asset('avatars/rojo.png'),       accent: '#f87171', badge: '🔥', badgeBg: '#b91c1c' },
+  { id: 'dorado',   name: 'Guillermo — VIP Gold',    style: 'Colección HB · Brazos Abiertos',    img: asset('avatars/dorado.png'),     accent: '#d4af6a', badge: '👑', badgeBg: '#b45309' },
 ]
 
 // ─── 4 VIDEOS ────────────────────────────────────────────────────────────────
@@ -34,11 +34,11 @@ const SectionHead = ({ icon, title, sub }) => (
 )
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   AVATAR CARD — imagen real, full-width, sin filtros
+   AVATAR CARD — imagen real de cuerpo entero, full-width
    ═══════════════════════════════════════════════════════════════════════════ */
 const AvatarCard = memo(({ av, onClick }) => {
   const [h, setH] = useState(false)
-  const isMaster = av.id === 'guillermo_main' || av.id === 'studio'
+  const isStudio = av.id === 'studio'
   return (
     <div
       onClick={() => onClick(av)}
@@ -46,57 +46,31 @@ const AvatarCard = memo(({ av, onClick }) => {
       style={{
         cursor:'pointer', borderRadius:12, overflow:'hidden', position:'relative',
         background:'#0a0a0a',
-        border: isMaster ? '2px solid #d4af6a' : `1px solid ${h ? av.accent+'88' : 'rgba(255,255,255,0.06)'}`,
+        border: isStudio ? '2px solid #d4af6a' : `1px solid ${h ? av.accent+'88' : 'rgba(255,255,255,0.06)'}`,
         transition:'all .22s ease',
         transform: h ? 'translateY(-4px)' : 'none',
-        boxShadow: isMaster
+        boxShadow: isStudio
           ? (h ? '0 16px 40px rgba(212,175,106,0.5)' : '0 4px 20px rgba(212,175,106,0.25)')
           : (h ? `0 12px 32px ${av.accent}30` : '0 2px 8px rgba(0,0,0,0.5)'),
       }}
     >
-      {/* Thumbnail 16:9 estilo YouTube con Micrófono Studio de fondo y ambientación */}
-      <div style={{ width:'100%', paddingTop:'56.25%', position:'relative', overflow:'hidden', background:'linear-gradient(135deg, #0f0c08 0%, #1a140b 100%)' }}>
-        {/* Bokeh Studio Lighting */}
+      {/* Thumbnail 16:9 estilo YouTube con render de Cuerpo Entero + Blue Jeans */}
+      <div style={{ width:'100%', paddingTop:'56.25%', position:'relative', overflow:'hidden', background:'linear-gradient(135deg, #0a0a0a 0%, #15120c 100%)' }}>
+        {/* Bokeh Ambient Lighting */}
         <div style={{
           position:'absolute', inset:0,
-          background: `radial-gradient(circle at 70% 30%, ${av.accent}25 0%, transparent 60%)`,
+          background: `radial-gradient(circle at 70% 30%, ${av.accent}20 0%, transparent 60%)`,
           animation: 'bokehGlow 6s ease-in-out infinite alternate',
         }} />
         
-        {/* Cara Auténtica de Guillermo (avatar_pro.png) con animación de respiración studio */}
-        <img src={asset('avatar_pro.png')} alt={av.name} loading="lazy"
+        {/* Foto de Cuerpo Entero de Guillermo (Camiseta + Logo HB + Blue Jeans + Tenis) */}
+        <img src={av.img} alt={av.name} loading="lazy"
           style={{
             position:'absolute', inset:0, width:'100%', height:'100%',
-            objectFit:'cover', objectPosition:'center 20%', display:'block',
+            objectFit:'cover', objectPosition:'center center', display:'block',
             transition:'transform .3s',
             transform: h ? 'scale(1.04)' : 'scale(1)',
-            animation: 'studioBreathe 4s ease-in-out infinite alternate',
           }} />
-
-        {/* Micrófono de Estudio Pro en Brazo (Studio Microphone Overlay) */}
-        <svg viewBox="0 0 100 100" style={{
-          position:'absolute', bottom:-5, right:15, width:64, height:64,
-          filter:'drop-shadow(0 4px 10px rgba(0,0,0,0.8))',
-          pointerEvents:'none',
-          animation: 'micSway 5s ease-in-out infinite alternate',
-        }}>
-          {/* Boom Arm */}
-          <path d="M 90 95 L 60 50 L 45 42" stroke="#444" strokeWidth="3" fill="none" />
-          <path d="M 60 50 L 58 48" stroke="#d4af6a" strokeWidth="4" strokeLinecap="round" />
-          {/* Shock Mount */}
-          <circle cx="42" cy="38" r="9" stroke="#666" strokeWidth="1.5" fill="rgba(20,20,20,0.6)" />
-          {/* Capsule Condenser Mic */}
-          <rect x="37" y="28" width="10" height="18" rx="5" fill="url(#goldMicGrad)" stroke="#d4af6a" strokeWidth="1" />
-          <line x1="37" y1="34" x2="47" y2="34" stroke="#888" strokeWidth="0.8" />
-          <line x1="37" y1="38" x2="47" y2="38" stroke="#888" strokeWidth="0.8" />
-          <defs>
-            <linearGradient id="goldMicGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#d4af6a" />
-              <stop offset="50%" stopColor="#8a6f3b" />
-              <stop offset="100%" stopColor="#222" />
-            </linearGradient>
-          </defs>
-        </svg>
       </div>
 
       {/* Badge */}

@@ -7,6 +7,7 @@ const asset = (f) => IS_PROD ? `${CLOUD_BASE}/${f}` : `/${f}`
 
 // ─── 6 AVATARES REALES (imágenes únicas generadas por AI) ────────────────────
 const AVATARS = [
+  { id: 'studio',  name: 'Studio Presenter', style: 'Estudio · Micrófono Pro', img: asset('avatars/studio_mic.png'), accent: '#fbbf24', badge: '🎙️', badgeBg: '#7c3aed' },
   { id: 'azul',   name: 'Casual Azul',     style: 'Confiado · Relajado',   img: asset('avatars/azul.png'),   accent: '#60a5fa', badge: '👔', badgeBg: '#1d4ed8' },
   { id: 'negro',  name: 'Formal Negro',    style: 'Profesional · Ejecutivo', img: asset('avatars/negro.png'),  accent: '#d4af6a', badge: '💼', badgeBg: '#374151' },
   { id: 'blanco', name: 'Premium Blanco',  style: 'Elegante · Premium',    img: asset('avatars/blanco.png'), accent: '#e2e8f0', badge: '⭐', badgeBg: '#475569' },

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 export default function Certificaciones() {
-  const [activeTab, setActiveTab] = useState('google')
+  const [activeTab, setActiveTab] = useState('claude')
   const [ragQuery, setRagQuery] = useState('')
   const [ragResult, setRagResult] = useState(null)
   const [isSearching, setIsSearching] = useState(false)
@@ -33,47 +33,86 @@ export default function Certificaciones() {
               Hub de Certificaciones Oficiales & Orquestación de IA Enterprise
             </h1>
             <p style={{ margin: '4px 0 0', color: '#aaa', fontSize: '13px' }}>
-              Demostración interactiva en tiempo real de competencias para Google Cloud, Microsoft Azure & AWS
+              Demostración interactiva en tiempo real de competencias para Anthropic Claude, Google Cloud, Microsoft Azure & AWS
             </p>
           </div>
         </div>
       </div>
 
-      {/* Tabs Nav */}
-      <div style={{ display: 'flex', gap: '12px', marginBottom: '24px' }}>
+      {/* Tabs Nav (4 Certificaciones) */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginBottom: '24px' }}>
+        <button
+          onClick={() => setActiveTab('claude')}
+          style={{
+            padding: '12px', borderRadius: '12px', border: activeTab === 'claude' ? '2px solid #D97706' : '1px solid #333',
+            background: activeTab === 'claude' ? 'rgba(217,119,6,0.15)' : '#111', color: activeTab === 'claude' ? '#fbbf24' : '#888',
+            fontWeight: 800, fontSize: '13px', cursor: 'pointer', transition: 'all .2s'
+          }}
+        >
+          🟣 Anthropic Claude AI Architect
+        </button>
         <button
           onClick={() => setActiveTab('google')}
           style={{
-            flex: 1, padding: '14px', borderRadius: '12px', border: activeTab === 'google' ? '2px solid #4285F4' : '1px solid #333',
+            padding: '12px', borderRadius: '12px', border: activeTab === 'google' ? '2px solid #4285F4' : '1px solid #333',
             background: activeTab === 'google' ? 'rgba(66,133,244,0.12)' : '#111', color: activeTab === 'google' ? '#60a5fa' : '#888',
-            fontWeight: 800, fontSize: '14px', cursor: 'pointer', transition: 'all .2s'
+            fontWeight: 800, fontSize: '13px', cursor: 'pointer', transition: 'all .2s'
           }}
         >
-          🔵 Google Cloud ML Engineer (Professional)
+          🔵 Google Cloud ML Engineer
         </button>
         <button
           onClick={() => setActiveTab('microsoft')}
           style={{
-            flex: 1, padding: '14px', borderRadius: '12px', border: activeTab === 'microsoft' ? '2px solid #00A4EF' : '1px solid #333',
+            padding: '12px', borderRadius: '12px', border: activeTab === 'microsoft' ? '2px solid #00A4EF' : '1px solid #333',
             background: activeTab === 'microsoft' ? 'rgba(0,164,239,0.12)' : '#111', color: activeTab === 'microsoft' ? '#38bdf8' : '#888',
-            fontWeight: 800, fontSize: '14px', cursor: 'pointer', transition: 'all .2s'
+            fontWeight: 800, fontSize: '13px', cursor: 'pointer', transition: 'all .2s'
           }}
         >
-          🟦 Microsoft Azure AI Engineer (AI-102)
+          🟦 Microsoft Azure AI-102
         </button>
         <button
           onClick={() => setActiveTab('aws')}
           style={{
-            flex: 1, padding: '14px', borderRadius: '12px', border: activeTab === 'aws' ? '2px solid #FF9900' : '1px solid #333',
-            background: activeTab === 'aws' ? 'rgba(255,153,0,0.12)' : '#111', color: activeTab === 'aws' ? '#fbbf24' : '#888',
-            fontWeight: 800, fontSize: '14px', cursor: 'pointer', transition: 'all .2s'
+            padding: '12px', borderRadius: '12px', border: activeTab === 'aws' ? '2px solid #FF9900' : '1px solid #333',
+            background: activeTab === 'aws' ? 'rgba(255,153,0,0.12)' : '#111', color: activeTab === 'aws' ? '#f59e0b' : '#888',
+            fontWeight: 800, fontSize: '13px', cursor: 'pointer', transition: 'all .2s'
           }}
         >
-          🟧 AWS ML Specialty (MLS-C01)
+          🟧 AWS ML Specialty
         </button>
       </div>
 
-      {/* Content Tab 1: GOOGLE CLOUD */}
+      {/* Content Tab 1: ANTHROPIC CLAUDE */}
+      {activeTab === 'claude' && (
+        <div style={{ background: '#0e0e0e', border: '1px solid rgba(217,119,6,0.3)', borderRadius: '16px', padding: '24px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+            <h2 style={{ margin: 0, color: '#fbbf24', fontSize: '20px' }}>🟣 Anthropic Claude — Architect & Handoff Híbrido Ininterrumpido</h2>
+            <span style={{ background: '#78350f', color: '#fef08a', padding: '4px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 700 }}>CERTIFICACIÓN MAESTRA ACTIVE</span>
+          </div>
+
+          <p style={{ color: '#ccc', fontSize: '14px', lineHeight: '1.6' }}>
+            Arquitectura de desarrollo continuo entre la web app de Claude y el IDE Antigravity local mediante el protocolo <strong>Hybrid Handoff Protocol</strong> sincronizado a través de Firebase Hosting en tiempo real.
+          </p>
+
+          <div style={{ marginTop: '20px', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
+            <div style={{ background: '#1c1308', border: '1px solid #b45309', borderRadius: '12px', padding: '16px' }}>
+              <h4 style={{ margin: '0 0 8px', color: '#fbbf24' }}>📄 Manifiesto Handoff Cloud</h4>
+              <p style={{ fontSize: '12px', color: '#94a3b8', margin: 0 }}>Acceso directo para Claude a <code style={{ color: '#fde047' }}>/claude_hybrid_handoff.txt</code> en Firebase sin perder contexto.</p>
+            </div>
+            <div style={{ background: '#1c1308', border: '1px solid #b45309', borderRadius: '12px', padding: '16px' }}>
+              <h4 style={{ margin: '0 0 8px', color: '#fbbf24' }}>⚡ Orquestación DAG Autónomo</h4>
+              <p style={{ fontSize: '12px', color: '#94a3b8', margin: 0 }}>Ejecución de pipeline <code style={{ color: '#fde047' }}>pipeline-cierre.ps1</code> con git commit, push y rclone 5TB.</p>
+            </div>
+            <div style={{ background: '#1c1308', border: '1px solid #b45309', borderRadius: '12px', padding: '16px' }}>
+              <h4 style={{ margin: '0 0 8px', color: '#fbbf24' }}>⚙️ Prompt & Memory Engineering</h4>
+              <p style={{ fontSize: '12px', color: '#94a3b8', margin: 0 }}>Estructuras de artefactos interactivos deterministas en Markdown, JSON y JSX.</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Content Tab 2: GOOGLE CLOUD */}
       {activeTab === 'google' && (
         <div style={{ background: '#0e0e0e', border: '1px solid rgba(66,133,244,0.3)', borderRadius: '16px', padding: '24px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
@@ -122,7 +161,7 @@ export default function Certificaciones() {
         </div>
       )}
 
-      {/* Content Tab 2: MICROSOFT AZURE */}
+      {/* Content Tab 3: MICROSOFT AZURE */}
       {activeTab === 'microsoft' && (
         <div style={{ background: '#0e0e0e', border: '1px solid rgba(0,164,239,0.3)', borderRadius: '16px', padding: '24px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
@@ -147,7 +186,7 @@ export default function Certificaciones() {
         </div>
       )}
 
-      {/* Content Tab 3: AWS */}
+      {/* Content Tab 4: AWS */}
       {activeTab === 'aws' && (
         <div style={{ background: '#0e0e0e', border: '1px solid rgba(255,153,0,0.3)', borderRadius: '16px', padding: '24px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>

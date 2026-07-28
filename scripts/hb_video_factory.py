@@ -15,11 +15,15 @@ import sys
 import subprocess
 import asyncio
 
+# Configurar encoding UTF-8 para consola de Windows PowerShell
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
+
 # Rutas principales del sistema
 SADTALKER_DIR = r"C:\openclaw\SadTalker"
 OUTPUT_DIR = r"C:\openclaw\hb-jewelry\public"
 
-async def generate_speech(text: str, output_wav: str, voice: str = "es-ES-AlonsoNeural"):
+async def generate_speech(text: str, output_wav: str, voice: str = "es-MX-JorgeNeural"):
     """Paso 1: Genera la voz profesional usando Edge-TTS"""
     print(f"🎙️ [1/3] Generando locución de voz para: '{text[:40]}...'")
     mp3_tmp = output_wav.replace(".wav", ".mp3")

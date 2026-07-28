@@ -5,14 +5,14 @@ const CLOUD_BASE = 'https://hb-jewelry-app.web.app'
 const IS_PROD = window.location.hostname !== 'localhost'
 const asset = (f) => IS_PROD ? `${CLOUD_BASE}/${f}` : `/${f}`
 
-// ─── 6 AVATARES OFICIALES GUILLERMO AI (Cuerpo Entero · Blue Jeans · Logo HB) ───
+// ─── AVATARES OFICIALES GUILLERMO AI (De Pie & Sentado en Escritorio) ────────
 const AVATARS = [
-  { id: 'studio',   name: 'Guillermo — Studio Mic',  style: 'Presentador Pro · Micrófono Studio', img: asset('avatars/studio_mic.png'), accent: '#fbbf24', badge: '🎙️', badgeBg: '#7c3aed' },
-  { id: 'azul',     name: 'Guillermo — Casual Azul', style: 'Confiado · Blue Jeans · Logo HB',  img: asset('avatars/azul.png'),       accent: '#60a5fa', badge: '👔', badgeBg: '#1d4ed8' },
-  { id: 'blanco',   name: 'Guillermo — Premium',     style: 'Elegante Blanco · Blue Jeans',      img: asset('avatars/blanco.png'),     accent: '#e2e8f0', badge: '⭐', badgeBg: '#475569' },
-  { id: 'verde',    name: 'Guillermo — Sport',       style: 'Energético Verde · Thumbs Up',      img: asset('avatars/verde.png'),      accent: '#34d399', badge: '⚡', badgeBg: '#059669' },
-  { id: 'rojo',     name: 'Guillermo — Dynamic',     style: 'Líder Rojo · Explicativo',          img: asset('avatars/rojo.png'),       accent: '#f87171', badge: '🔥', badgeBg: '#b91c1c' },
-  { id: 'dorado',   name: 'Guillermo — VIP Gold',    style: 'Colección HB · Brazos Abiertos',    img: asset('avatars/dorado.png'),     accent: '#d4af6a', badge: '👑', badgeBg: '#b45309' },
+  { id: 'studio_mic',  name: 'Guillermo — Studio (De Pie)',     style: 'Cuerpo Entero · Micrófono Boom · Jeans', img: asset('avatars/studio_mic.png'), accent: '#fbbf24', badge: '🎙️', badgeBg: '#7c3aed' },
+  { id: 'desk_mic',    name: 'Guillermo — Escritorio (Sentado)',style: 'Escritorio · Micrófono al Frente',       img: asset('avatars/desk_mic.png'),   accent: '#d4af6a', badge: '🎧', badgeBg: '#b45309' },
+  { id: 'casual',      name: 'Guillermo — Casual Azul',         style: 'Confiado · Blue Jeans · Logo HB',        img: asset('avatars/azul.png'),       accent: '#60a5fa', badge: '👔', badgeBg: '#1d4ed8' },
+  { id: 'premium',     name: 'Guillermo — Premium Blanco',      style: 'Elegante · Blue Jeans · Logo HB',        img: asset('avatars/blanco.png'),     accent: '#e2e8f0', badge: '⭐', badgeBg: '#475569' },
+  { id: 'sport',       name: 'Guillermo — Sport Verde',         style: 'Energético · Thumbs Up · Logo HB',       img: asset('avatars/verde.png'),      accent: '#34d399', badge: '⚡', badgeBg: '#059669' },
+  { id: 'vip',         name: 'Guillermo — VIP Gold',            style: 'Colección HB · Brazos Abiertos',          img: asset('avatars/dorado.png'),     accent: '#f87171', badge: '👑', badgeBg: '#b91c1c' },
 ]
 
 // ─── 4 VIDEOS ────────────────────────────────────────────────────────────────

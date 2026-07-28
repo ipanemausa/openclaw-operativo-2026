@@ -5,7 +5,7 @@ const CLOUD_BASE = 'https://hb-jewelry-app.web.app'
 const IS_PROD = window.location.hostname !== 'localhost'
 const asset = (f) => IS_PROD ? `${CLOUD_BASE}/${f}` : `/${f}`
 
-// ─── AVATARES OFICIALES GUILLERMO AI (Card #1: Avatar Master Principal) ───────
+// ─── AVATARES OFICIALES GUILLERMO AI (Card #1: Main Avatar Master) ───────────
 const AVATARS = [
   { id: 'master_ppal', name: 'Guillermo — Master Principal',  style: 'Identidad Raíz · HB Official Master',   img: asset('avatar_pro.png'),         accent: '#fbbf24', badge: '👑', badgeBg: '#b45309', isPpal: true },
   { id: 'studio_mic',  name: 'Guillermo — Studio (De Pie)',   style: 'Cuerpo Entero · Micrófono Boom · Jeans', img: asset('avatars/studio_mic.png'), accent: '#d4af6a', badge: '🎙️', badgeBg: '#7c3aed' },
@@ -93,19 +93,24 @@ const AvatarCard = memo(({ av, onClick }) => {
 })
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   AVATAR MODAL — fullscreen
+   AVATAR MODAL — 100% responsivo, sin recorte (Cabeza a pies visible)
    ═══════════════════════════════════════════════════════════════════════════ */
 const AvatarModal = ({ av, onClose }) => {
   useEffect(() => { const h=e=>{if(e.key==='Escape')onClose()}; window.addEventListener('keydown',h); return ()=>window.removeEventListener('keydown',h) }, [onClose])
   return (
     <div id="av-modal-bg" onClick={e=>e.target.id==='av-modal-bg'&&onClose()}
-      style={{ position:'fixed', inset:0, zIndex:9999, background:'rgba(0,0,0,0.94)', backdropFilter:'blur(10px)', display:'flex', alignItems:'center', justifyContent:'center', padding:20, animation:'fadeIn .2s ease' }}>
-      <div style={{ position:'relative', maxWidth:800, width:'100%', borderRadius:20, overflow:'hidden', background:'#0a0a0a', border:`2px solid ${av.accent}55`, boxShadow:`0 24px 60px ${av.accent}30` }}>
-        <button onClick={onClose} style={{ position:'absolute', top:12, right:12, zIndex:10, width:34, height:34, borderRadius:'50%', background:'rgba(0,0,0,0.7)', border:'1px solid rgba(255,255,255,0.2)', color:'#fff', fontSize:16, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center' }}>✕</button>
-        <img src={av.img} alt={av.name} style={{ width:'100%', aspectRatio:'16/9', objectFit:'cover', objectPosition:'center 20%', display:'block', background:'#000' }} />
-        <div style={{ padding:'14px 18px 18px', borderTop:`1px solid ${av.accent}33` }}>
+      style={{ position:'fixed', inset:0, zIndex:9999, background:'rgba(0,0,0,0.94)', backdropFilter:'blur(12px)', display:'flex', alignItems:'center', justifyContent:'center', padding:16, animation:'fadeIn .2s ease' }}>
+      <div style={{ position:'relative', maxWidth:750, width:'100%', maxHeight:'90vh', borderRadius:20, overflow:'hidden', background:'#0a0a0a', border:`2px solid ${av.accent}66`, boxShadow:`0 24px 60px ${av.accent}40`, display:'flex', flexDirection:'column' }}>
+        <button onClick={onClose} style={{ position:'absolute', top:12, right:12, zIndex:10, width:36, height:36, borderRadius:'50%', background:'rgba(0,0,0,0.75)', border:'1px solid rgba(255,255,255,0.3)', color:'#fff', fontSize:16, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 4px 12px rgba(0,0,0,0.5)' }}>✕</button>
+        
+        {/* Contenedor Responsivo 100% Visibilidad Sin Recorte */}
+        <div style={{ width:'100%', height:'65vh', display:'flex', justifyContent:'center', alignItems:'center', background:'radial-gradient(circle at center, #18140c 0%, #040404 100%)', padding:'16px', boxSizing:'border-box' }}>
+          <img src={av.img} alt={av.name} style={{ maxHeight:'100%', maxWidth:'100%', width:'auto', height:'auto', objectFit:'contain', borderRadius:12, display:'block', filter:'drop-shadow(0 12px 24px rgba(0,0,0,0.8))' }} />
+        </div>
+
+        <div style={{ padding:'14px 20px 18px', borderTop:`1px solid ${av.accent}33`, background:'#0a0a0a' }}>
           <div style={{ display:'flex', gap:8, alignItems:'center', marginBottom:6 }}>
-            <span style={{ background:av.badgeBg, color:'#fff', padding:'3px 10px', borderRadius:20, fontSize:11, fontWeight:800 }}>{av.badge} {av.id.toUpperCase()}</span>
+            <span style={{ background:av.badgeBg, color:'#fff', padding:'3px 10px', borderRadius:20, fontSize:11, fontWeight:800 }}>{av.badge} {av.isPpal ? 'MAIN AVATAR MASTER' : av.id.toUpperCase()}</span>
           </div>
           <div style={{ color:'#fff', fontWeight:800, fontSize:18 }}>Guillermo AI — {av.name}</div>
           <div style={{ color:av.accent, fontSize:13, marginTop:2 }}>{av.style}</div>

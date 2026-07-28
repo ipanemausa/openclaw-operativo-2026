@@ -5,14 +5,14 @@ const CLOUD_BASE = 'https://hb-jewelry-app.web.app'
 const IS_PROD = window.location.hostname !== 'localhost'
 const asset = (f) => IS_PROD ? `${CLOUD_BASE}/${f}` : `/${f}`
 
-// ─── AVATARES OFICIALES GUILLERMO AI (De Pie & Sentado en Escritorio) ────────
+// ─── AVATARES OFICIALES GUILLERMO AI (Card #1: Avatar Master Principal) ───────
 const AVATARS = [
-  { id: 'studio_mic',  name: 'Guillermo — Studio (De Pie)',     style: 'Cuerpo Entero · Micrófono Boom · Jeans', img: asset('avatars/studio_mic.png'), accent: '#fbbf24', badge: '🎙️', badgeBg: '#7c3aed' },
-  { id: 'desk_mic',    name: 'Guillermo — Escritorio (Sentado)',style: 'Escritorio · Micrófono al Frente',       img: asset('avatars/desk_mic.png'),   accent: '#d4af6a', badge: '🎧', badgeBg: '#b45309' },
-  { id: 'casual',      name: 'Guillermo — Casual Azul',         style: 'Confiado · Blue Jeans · Logo HB',        img: asset('avatars/azul.png'),       accent: '#60a5fa', badge: '👔', badgeBg: '#1d4ed8' },
-  { id: 'premium',     name: 'Guillermo — Premium Blanco',      style: 'Elegante · Blue Jeans · Logo HB',        img: asset('avatars/blanco.png'),     accent: '#e2e8f0', badge: '⭐', badgeBg: '#475569' },
-  { id: 'sport',       name: 'Guillermo — Sport Verde',         style: 'Energético · Thumbs Up · Logo HB',       img: asset('avatars/verde.png'),      accent: '#34d399', badge: '⚡', badgeBg: '#059669' },
-  { id: 'vip',         name: 'Guillermo — VIP Gold',            style: 'Colección HB · Brazos Abiertos',          img: asset('avatars/dorado.png'),     accent: '#f87171', badge: '👑', badgeBg: '#b91c1c' },
+  { id: 'master_ppal', name: 'Guillermo — Master Principal',  style: 'Identidad Raíz · HB Official Master',   img: asset('avatar_pro.png'),         accent: '#fbbf24', badge: '👑', badgeBg: '#b45309', isPpal: true },
+  { id: 'studio_mic',  name: 'Guillermo — Studio (De Pie)',   style: 'Cuerpo Entero · Micrófono Boom · Jeans', img: asset('avatars/studio_mic.png'), accent: '#d4af6a', badge: '🎙️', badgeBg: '#7c3aed' },
+  { id: 'desk_mic',    name: 'Guillermo — Escritorio (Sentado)',style: 'Escritorio · Micrófono al Frente',       img: asset('avatars/desk_mic.png'),   accent: '#60a5fa', badge: '🎧', badgeBg: '#1d4ed8' },
+  { id: 'casual',      name: 'Guillermo — Casual Azul',       style: 'Confiado · Blue Jeans · Logo HB',        img: asset('avatars/azul.png'),       accent: '#34d399', badge: '👔', badgeBg: '#059669' },
+  { id: 'premium',     name: 'Guillermo — Premium Blanco',    style: 'Elegante · Blue Jeans · Logo HB',        img: asset('avatars/blanco.png'),     accent: '#e2e8f0', badge: '⭐', badgeBg: '#475569' },
+  { id: 'vip',         name: 'Guillermo — VIP Gold',          style: 'Colección HB · Brazos Abiertos',          img: asset('avatars/dorado.png'),     accent: '#f87171', badge: '👑', badgeBg: '#b91c1c' },
 ]
 
 // ─── 4 VIDEOS ────────────────────────────────────────────────────────────────
@@ -34,11 +34,11 @@ const SectionHead = ({ icon, title, sub }) => (
 )
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   AVATAR CARD — imagen real de cuerpo entero, full-width
+   AVATAR CARD — 100% sin recorte (Cabeza a tenis, micrófono y logo HB)
    ═══════════════════════════════════════════════════════════════════════════ */
 const AvatarCard = memo(({ av, onClick }) => {
   const [h, setH] = useState(false)
-  const isStudio = av.id === 'studio'
+  const isMaster = av.isPpal || av.id === 'studio_mic' || av.id === 'desk_mic'
   return (
     <div
       onClick={() => onClick(av)}
@@ -46,41 +46,41 @@ const AvatarCard = memo(({ av, onClick }) => {
       style={{
         cursor:'pointer', borderRadius:12, overflow:'hidden', position:'relative',
         background:'#0a0a0a',
-        border: isStudio ? '2px solid #d4af6a' : `1px solid ${h ? av.accent+'88' : 'rgba(255,255,255,0.06)'}`,
+        border: av.isPpal ? '2px solid #fbbf24' : (isMaster ? '1px solid #d4af6a' : `1px solid ${h ? av.accent+'88' : 'rgba(255,255,255,0.06)'}`),
         transition:'all .22s ease',
         transform: h ? 'translateY(-4px)' : 'none',
-        boxShadow: isStudio
-          ? (h ? '0 16px 40px rgba(212,175,106,0.5)' : '0 4px 20px rgba(212,175,106,0.25)')
-          : (h ? `0 12px 32px ${av.accent}30` : '0 2px 8px rgba(0,0,0,0.5)'),
+        boxShadow: av.isPpal
+          ? (h ? '0 16px 40px rgba(251,191,36,0.6)' : '0 4px 20px rgba(251,191,36,0.3)')
+          : (h ? `0 12px 32px ${av.accent}40` : '0 2px 8px rgba(0,0,0,0.5)'),
       }}
     >
-      {/* Thumbnail de Cuerpo Entero (100% visibilidad de cabeza a tenis) */}
-      <div style={{ width:'100%', paddingTop:'75%', position:'relative', overflow:'hidden', background:'radial-gradient(circle at center, #1a1610 0%, #080808 100%)' }}>
+      {/* Thumbnail de Cuerpo Entero 100% Completo (sin recortes) */}
+      <div style={{ width:'100%', paddingTop:'85%', position:'relative', overflow:'hidden', background:'radial-gradient(circle at center, #18140c 0%, #050505 100%)' }}>
         {/* Bokeh Ambient Lighting */}
         <div style={{
           position:'absolute', inset:0,
-          background: `radial-gradient(circle at 50% 40%, ${av.accent}30 0%, transparent 70%)`,
+          background: `radial-gradient(circle at 50% 35%, ${av.accent}35 0%, transparent 75%)`,
           animation: 'bokehGlow 6s ease-in-out infinite alternate',
         }} />
         
-        {/* Foto de Cuerpo Entero de Guillermo abierta en Antigravity (objectFit: contain para ver de cabeza a tenis) */}
+        {/* Foto de Cuerpo Entero de Guillermo (objectFit: contain + padding 4px para 0% recortes) */}
         <img src={av.img} alt={av.name} loading="lazy"
           style={{
             position:'absolute', inset:0, width:'100%', height:'100%',
-            objectFit:'contain', objectPosition:'center center', display:'block',
+            objectFit:'contain', objectPosition:'center center', display:'block', padding:'4px', boxSizing:'border-box',
             transition:'transform .3s',
-            transform: h ? 'scale(1.04)' : 'scale(1)',
+            transform: h ? 'scale(1.03)' : 'scale(1)',
           }} />
       </div>
 
       {/* Badge */}
       <div style={{ position:'absolute', top:8, left:8, background:av.badgeBg, color:'#fff', padding:'2px 8px', borderRadius:20, fontSize:10, fontWeight:800 }}>
-        {av.badge} {isMaster ? 'AVATAR MASTER' : av.id.toUpperCase()}
+        {av.badge} {av.isPpal ? 'MAIN AVATAR MASTER' : av.id.toUpperCase()}
       </div>
 
       {/* Info inferior */}
-      <div style={{ padding:'10px 10px 12px', background: isMaster ? 'linear-gradient(180deg, #141008 0%, #0a0a0a 100%)' : '#0a0a0a' }}>
-        <div style={{ color: isMaster ? '#d4af6a' : '#fff', fontWeight:700, fontSize:12, marginBottom:2 }}>{av.name}</div>
+      <div style={{ padding:'10px 10px 12px', background: av.isPpal ? 'linear-gradient(180deg, #1f1707 0%, #0a0a0a 100%)' : '#0a0a0a' }}>
+        <div style={{ color: av.isPpal ? '#fbbf24' : '#fff', fontWeight:700, fontSize:12, marginBottom:2 }}>{av.name}</div>
         <div style={{ color: av.accent, fontSize:10, fontWeight:600 }}>{av.style}</div>
       </div>
 

@@ -241,9 +241,24 @@ export default function Dashboard({ onNavigate }) {
           <h1 style={{ margin:0, color:'#d4af6a', fontSize:18, fontWeight:800 }}>💎 HB Jewelry — Dashboard</h1>
           <span style={{ color:'#555', fontSize:11 }}>Auto-refresh 10s · Cloud-First</span>
         </div>
-        <div style={{ display:'flex', alignItems:'center', gap:5, background:'rgba(52,211,153,0.08)', border:'1px solid rgba(52,211,153,0.25)', borderRadius:20, padding:'4px 12px' }}>
-          <div style={{ width:7, height:7, borderRadius:'50%', background:'#34d399', animation:'pulse-d 2s infinite' }} />
-          <span style={{ color:'#34d399', fontSize:11, fontWeight:700 }}>{IS_PROD ? 'Firebase' : 'Dev'}</span>
+        <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+          {onNavigate && (
+            <button
+              onClick={() => onNavigate('certificaciones')}
+              style={{
+                background: 'linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 100%)',
+                border: '1px solid #3b82f6', color: '#93c5fd', borderRadius: 20,
+                padding: '5px 14px', fontSize: 11, fontWeight: 800, cursor: 'pointer',
+                boxShadow: '0 2px 10px rgba(59,130,246,0.3)'
+              }}
+            >
+              🎓 Certificaciones IA Enterprise
+            </button>
+          )}
+          <div style={{ display:'flex', alignItems:'center', gap:5, background:'rgba(52,211,153,0.08)', border:'1px solid rgba(52,211,153,0.25)', borderRadius:20, padding:'4px 12px' }}>
+            <div style={{ width:7, height:7, borderRadius:'50%', background:'#34d399', animation:'pulse-d 2s infinite' }} />
+            <span style={{ color:'#34d399', fontSize:11, fontWeight:700 }}>{IS_PROD ? 'Firebase' : 'Dev'}</span>
+          </div>
         </div>
       </div>
 

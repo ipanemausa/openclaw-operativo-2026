@@ -21,6 +21,7 @@ import Auditoria from './components/Auditoria/Auditoria'
 import AvatarMeet from './components/AvatarMeet/AvatarMeet'
 import VoiceCall from './components/VoiceCall/VoiceCall'
 import Integraciones from './components/Integraciones/Integraciones'
+import Certificaciones from './components/Certificaciones/Certificaciones'
 import FloatingVoiceWidget from './components/FloatingVoiceWidget/FloatingVoiceWidget'
 
 export default function App() {
@@ -49,6 +50,7 @@ export default function App() {
       case 'avatar':         return <AvatarMeet />
       case 'voicecall':      return <VoiceCall />
       case 'integraciones':  return <Integraciones />
+      case 'certificaciones': return <Certificaciones />
       default:               return <Dashboard onNavigate={setActiveSection} />
     }
   }

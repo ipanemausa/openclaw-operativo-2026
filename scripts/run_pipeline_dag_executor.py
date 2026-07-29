@@ -81,6 +81,13 @@ ok1c = run_dag_node(
     "python C:\\Users\\ipane\\openclaw-operativo-2026\\agents\\video_agent\\sadtalker_veo_rag_pipeline.py"
 )
 
+ok1d = run_dag_node(
+    "NODO-1D-COMMERCIAL-VIDEO-ENGINE",
+    1,
+    "Commercial Video Production Engine v1.0 (Full Traceability & Automated Video QA)",
+    "python C:\\Users\\ipane\\openclaw-operativo-2026\\agents\\video_agent\\hb_jewelry_video_production_engine.py"
+)
+
 ok2 = run_dag_node(
     "NODO-2-AVATAR", 
     1, 

@@ -3,13 +3,13 @@ import React, { useState, useRef, useEffect, useCallback, memo } from 'react'
 // ─── CLOUD-FIRST & CACHE BUSTING ─────────────────────────────────────────────
 const CLOUD_BASE = 'https://hb-jewelry-app.web.app'
 const IS_PROD = window.location.hostname !== 'localhost'
-const asset = (f) => (IS_PROD ? `${CLOUD_BASE}/${f}?v=20260729_v4` : `/${f}?v=20260729_v4`)
+const asset = (f) => (IS_PROD ? `${CLOUD_BASE}/${f}?v=20260729_v5` : `/${f}?v=20260729_v5`)
 
 // ─── AVATARES OFICIALES GUILLERMO AI (Card #1: Main Avatar Master) ───────────
 const AVATARS = [
   { id: 'master_ppal', name: 'Guillermo — Master Principal',  style: 'Identidad Raíz · HB Official Master',   img: asset('avatar_pro.png'),         accent: '#fbbf24', badge: '👑', badgeBg: '#b45309', isPpal: true },
-  { id: 'studio_mic',  name: 'Guillermo — Studio (De Pie)',   style: 'Cuerpo Entero · Micrófono Boom · Jeans', img: asset('avatars/studio_mic.png'), accent: '#d4af6a', badge: '🎙️', badgeBg: '#7c3aed' },
-  { id: 'desk_mic',    name: 'Guillermo — Escritorio (Sentado)',style: 'Escritorio · Micrófono al Frente',       img: asset('avatars/desk_mic.png'),   accent: '#60a5fa', badge: '🎧', badgeBg: '#1d4ed8' },
+  { id: 'studio_mic',  name: 'Guillermo — Studio (De Pie con Jeans)', style: 'Cuerpo Entero · Micrófono Boom · Jeans', img: asset('avatars/studio_mic.png'), accent: '#d4af6a', badge: '🎙️', badgeBg: '#7c3aed' },
+  { id: 'desk_mic',    name: 'Guillermo — Escritorio (Silla Ejecutiva)', style: 'Silla de Cuero · Micrófono al Frente', img: asset('avatars/desk_mic.png'),   accent: '#60a5fa', badge: '🎧', badgeBg: '#1d4ed8' },
   { id: 'casual',      name: 'Guillermo — Casual Azul',       style: 'Confiado · Blue Jeans · Logo HB',        img: asset('avatars/azul.png'),       accent: '#34d399', badge: '👔', badgeBg: '#059669' },
   { id: 'premium',     name: 'Guillermo — Premium Blanco',    style: 'Elegante · Blue Jeans · Logo HB',        img: asset('avatars/blanco.png'),     accent: '#e2e8f0', badge: '⭐', badgeBg: '#475569' },
   { id: 'vip',         name: 'Guillermo — VIP Gold',          style: 'Colección HB · Brazos Abiertos',          img: asset('avatars/dorado.png'),     accent: '#f87171', badge: '👑', badgeBg: '#b91c1c' },

@@ -1,3 +1,5 @@
+import React, { useState, useRef, useEffect, useCallback, memo } from 'react'
+
 // ─── CLOUD-FIRST & CACHE BUSTING ─────────────────────────────────────────────
 const CLOUD_BASE = 'https://hb-jewelry-app.web.app'
 const IS_PROD = window.location.hostname !== 'localhost'

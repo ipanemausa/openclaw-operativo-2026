@@ -74,6 +74,13 @@ ok1b = run_dag_node(
     "python C:\\Users\\ipane\\openclaw-operativo-2026\\agents\\video_agent\\digital_human_podcast_dag.py"
 )
 
+ok1c = run_dag_node(
+    "NODO-1C-SADTALKER-VEO-RAG",
+    1,
+    "SadTalker 3D LipSync + Google Veo 3.1 1080p Engine + RAG Firebase (768-dim)",
+    "python C:\\Users\\ipane\\openclaw-operativo-2026\\agents\\video_agent\\sadtalker_veo_rag_pipeline.py"
+)
+
 ok2 = run_dag_node(
     "NODO-2-AVATAR", 
     1, 

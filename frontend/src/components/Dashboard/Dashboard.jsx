@@ -1,9 +1,7 @@
-import React, { useState, useRef, useEffect, useCallback, memo } from 'react'
-
-// ─── CLOUD-FIRST ─────────────────────────────────────────────────────────────
+// ─── CLOUD-FIRST & CACHE BUSTING ─────────────────────────────────────────────
 const CLOUD_BASE = 'https://hb-jewelry-app.web.app'
 const IS_PROD = window.location.hostname !== 'localhost'
-const asset = (f) => IS_PROD ? `${CLOUD_BASE}/${f}` : `/${f}`
+const asset = (f) => (IS_PROD ? `${CLOUD_BASE}/${f}?v=20260728_v3` : `/${f}?v=20260728_v3`)
 
 // ─── AVATARES OFICIALES GUILLERMO AI (Card #1: Main Avatar Master) ───────────
 const AVATARS = [
@@ -15,12 +13,64 @@ const AVATARS = [
   { id: 'vip',         name: 'Guillermo — VIP Gold',          style: 'Colección HB · Brazos Abiertos',          img: asset('avatars/dorado.png'),     accent: '#f87171', badge: '👑', badgeBg: '#b91c1c' },
 ]
 
-// ─── 4 VIDEOS (Miniaturas de Alta Definición YouTube) ───────────────────────
+// ─── VIDEOS CON ASSETS REALES E INDEPENDIENTES ────────────────────────────────
 const VIDEOS = [
-  { id: 'podcast',   src: asset('hb_tutorial_narrado_v1.mp4'),    poster: asset('avatars/studio_mic.png'),   title: 'Podcast: Ecosistema Ilimitado AI', tag: '🎙️ PODCAST', tagBg: '#b91c1c', accent: '#ef4444', dur: '1:35',  vert: true },
-  { id: 'tutorial',  src: asset('hb_tutorial_narrado_v1.mp4'),    poster: asset('avatars/studio_mic.png'),   title: 'Tutorial App HB Jewelry',tag: '📹', tagBg: '#7c3aed', accent: '#a78bfa', dur: '1:16',  vert: true },
-  { id: 'qa',        src: asset('output_avatar_english_7qa.mp4'), poster: asset('avatars/desk_mic.png'),     title: 'Demo Técnico 7 Q&A RAG', tag: '🛠️', tagBg: '#059669', accent: '#34d399', dur: '0:15',  vert: true },
-  { id: 'showcase',  src: asset('final_showcase.mp4'),            poster: asset('video_showcase_thumb.png'), title: 'Showcase HB Jewelry',    tag: '💎', tagBg: '#b45309', accent: '#fbbf24', dur: '~30s',  vert: false },
+  {
+    id: 'yt-special-claude',
+    src: asset('output_avatar_english_7qa.mp4'),
+    poster: asset('avatars/studio_mic.png'),
+    title: '🔥 YOUTUBE SPECIAL: Convertir a Claude en Agente Permanente e Ilimitado',
+    tag: '🔴 YOUTUBE HD 1080p',
+    tagBg: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
+    accent: '#ef4444',
+    dur: '0:15',
+    isYouTubeMaster: true,
+    vert: false
+  },
+  {
+    id: 'podcast',
+    src: asset('hb_tutorial_avatar_v1.mp4'),
+    poster: asset('avatars/desk_mic.png'),
+    title: 'Podcast: Ecosistema Ilimitado AI (Guillermo Speaking)',
+    tag: '🎙️ PODCAST',
+    tagBg: '#b91c1c',
+    accent: '#ef4444',
+    dur: '1:35',
+    vert: true
+  },
+  {
+    id: 'tutorial',
+    src: asset('hb_tutorial_narrado_v1.mp4'),
+    poster: asset('video_showcase_thumb.png'),
+    title: 'Tutorial App HB Jewelry Completo',
+    tag: '📹 TUTORIAL',
+    tagBg: '#7c3aed',
+    accent: '#a78bfa',
+    dur: '1:16',
+    vert: true
+  },
+  {
+    id: 'qa',
+    src: asset('output_avatar_english_7qa.mp4'),
+    poster: asset('avatars/desk_mic.png'),
+    title: 'Demo Técnico 7 Q&A RAG Vectorial',
+    tag: '🛠️ TÉCNICO',
+    tagBg: '#059669',
+    accent: '#34d399',
+    dur: '0:15',
+    vert: true
+  },
+  {
+    id: 'showcase',
+    src: asset('final_showcase.mp4'),
+    poster: asset('video_showcase_thumb.png'),
+    title: 'Showcase Colección HB Jewelry 18k',
+    tag: '💎 SHOWCASE',
+    tagBg: '#b45309',
+    accent: '#fbbf24',
+    dur: '~30s',
+    vert: false
+  },
 ]
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -34,7 +84,7 @@ const SectionHead = ({ icon, title, sub }) => (
 )
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   AVATAR CARD — 100% sin recorte (Cabeza a tenis, micrófono y logo HB)
+   AVATAR CARD — 100% sin recorte
    ═══════════════════════════════════════════════════════════════════════════ */
 const AvatarCard = memo(({ av, onClick }) => {
   const [h, setH] = useState(false)
@@ -86,27 +136,61 @@ const AvatarCard = memo(({ av, onClick }) => {
 })
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   AVATAR MODAL — 100% responsivo, sin recorte (Cabeza a pies visible)
+   AVATAR MODAL CON NAVEGACIÓN POR FLECHAS (IZQ / DER & TECLADO)
    ═══════════════════════════════════════════════════════════════════════════ */
-const AvatarModal = ({ av, onClose }) => {
-  useEffect(() => { const h=e=>{if(e.key==='Escape')onClose()}; window.addEventListener('keydown',h); return ()=>window.removeEventListener('keydown',h) }, [onClose])
+const AvatarModal = ({ av, onClose, onPrev, onNext, currentIndex, totalCount }) => {
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowLeft' && onPrev) onPrev();
+      if (e.key === 'ArrowRight' && onNext) onNext();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose, onPrev, onNext]);
+
   return (
-    <div id="av-modal-bg" onClick={e=>e.target.id==='av-modal-bg'&&onClose()}
-      style={{ position:'fixed', inset:0, zIndex:9999, background:'rgba(0,0,0,0.94)', backdropFilter:'blur(12px)', display:'flex', alignItems:'center', justifyContent:'center', padding:16, animation:'fadeIn .2s ease' }}>
-      <div style={{ position:'relative', maxWidth:750, width:'100%', maxHeight:'90vh', borderRadius:20, overflow:'hidden', background:'#0a0a0a', border:`2px solid ${av.accent}66`, boxShadow:`0 24px 60px ${av.accent}40`, display:'flex', flexDirection:'column' }}>
-        <button onClick={onClose} style={{ position:'absolute', top:12, right:12, zIndex:10, width:36, height:36, borderRadius:'50%', background:'rgba(0,0,0,0.75)', border:'1px solid rgba(255,255,255,0.3)', color:'#fff', fontSize:16, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 4px 12px rgba(0,0,0,0.5)' }}>✕</button>
+    <div id="av-modal-bg" onClick={e => e.target.id === 'av-modal-bg' && onClose()}
+      style={{ position:'fixed', inset:0, zIndex:9999, background:'rgba(0,0,0,0.95)', backdropFilter:'blur(12px)', display:'flex', alignItems:'center', justifyContent:'center', padding:16, animation:'fadeIn .2s ease' }}>
+      
+      {/* FLECHA IZQUIERDA */}
+      {onPrev && (
+        <button onClick={onPrev} title="Anterior (Flecha Izquierda)"
+          style={{ position:'absolute', left:20, zIndex:20, width:48, height:48, borderRadius:'50%', background:'rgba(20,20,20,0.85)', border:`1px solid ${av.accent}`, color:'#fff', fontSize:22, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 4px 20px rgba(0,0,0,0.8)' }}>
+          ◀
+        </button>
+      )}
+
+      {/* FLECHA DERECHA */}
+      {onNext && (
+        <button onClick={onNext} title="Siguiente (Flecha Derecha)"
+          style={{ position:'absolute', right:20, zIndex:20, width:48, height:48, borderRadius:'50%', background:'rgba(20,20,20,0.85)', border:`1px solid ${av.accent}`, color:'#fff', fontSize:22, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 4px 20px rgba(0,0,0,0.8)' }}>
+          ▶
+        </button>
+      )}
+
+      <div style={{ position:'relative', maxWidth:750, width:'100%', maxHeight:'90vh', borderRadius:20, overflow:'hidden', background:'#0a0a0a', border:`2px solid ${av.accent}88`, boxShadow:`0 24px 60px ${av.accent}40`, display:'flex', flexDirection:'column' }}>
         
+        {/* BOTÓN CERRAR */}
+        <button onClick={onClose} style={{ position:'absolute', top:12, right:12, zIndex:15, width:36, height:36, borderRadius:'50%', background:'rgba(0,0,0,0.75)', border:'1px solid rgba(255,255,255,0.3)', color:'#fff', fontSize:16, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 4px 12px rgba(0,0,0,0.5)' }}>✕</button>
+
         <div style={{ width:'100%', height:'65vh', display:'flex', justifyContent:'center', alignItems:'center', background:'radial-gradient(circle at center, #18140c 0%, #040404 100%)', padding:'16px', boxSizing:'border-box' }}>
           <img src={av.img} alt={av.name} style={{ maxHeight:'100%', maxWidth:'100%', width:'auto', height:'auto', objectFit:'contain', borderRadius:12, display:'block', filter:'drop-shadow(0 12px 24px rgba(0,0,0,0.8))' }} />
         </div>
 
-        <div style={{ padding:'14px 20px 18px', borderTop:`1px solid ${av.accent}33`, background:'#0a0a0a' }}>
-          <div style={{ display:'flex', gap:8, alignItems:'center', marginBottom:6 }}>
-            <span style={{ background:av.badgeBg, color:'#fff', padding:'3px 10px', borderRadius:20, fontSize:11, fontWeight:800 }}>{av.badge} {av.isPpal ? 'MAIN AVATAR MASTER' : av.id.toUpperCase()}</span>
+        <div style={{ padding:'14px 20px 18px', borderTop:`1px solid ${av.accent}33`, background:'#0a0a0a', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+          <div>
+            <div style={{ display:'flex', gap:8, alignItems:'center', marginBottom:4 }}>
+              <span style={{ background:av.badgeBg, color:'#fff', padding:'3px 10px', borderRadius:20, fontSize:11, fontWeight:800 }}>{av.badge} {av.isPpal ? 'MAIN AVATAR MASTER' : av.id.toUpperCase()}</span>
+              {totalCount && <span style={{ color:'#888', fontSize:11 }}>Avatar {currentIndex + 1} de {totalCount}</span>}
+            </div>
+            <div style={{ color: av.isPpal ? '#fbbf24' : '#fff', fontWeight:800, fontSize:18 }}>Guillermo AI — {av.name}</div>
+            <div style={{ color:av.accent, fontSize:13, marginTop:2, fontWeight:600 }}>{av.style}</div>
           </div>
-          <div style={{ color: av.isPpal ? '#fbbf24' : '#fff', fontWeight:800, fontSize:18 }}>Guillermo AI — {av.name}</div>
-          <div style={{ color:av.accent, fontSize:13, marginTop:2, fontWeight:600 }}>{av.style}</div>
-          <div style={{ color:'#555', fontSize:11, marginTop:8 }}>ESC o clic fuera para cerrar</div>
+          
+          <div style={{ color:'#666', fontSize:11, textAlign:'right' }}>
+            Usa las flechas ◀ ▶ o teclado para navegar
+          </div>
         </div>
       </div>
     </div>
@@ -114,48 +198,116 @@ const AvatarModal = ({ av, onClose }) => {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   VIDEO CARD — miniatura real del video con poster de alta definición
+   VIDEO CARD — MINIATURA LIMPIA Y UNIFORME SIN RECORTES
    ═══════════════════════════════════════════════════════════════════════════ */
 const VidCard = memo(({ v, onClick }) => {
   const [h, setH] = useState(false)
   const ref = useRef(null)
+  const isYT = v.isYouTubeMaster
+
   return (
     <div onClick={()=>onClick(v)} onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)}
-      style={{ cursor:'pointer', borderRadius:12, overflow:'hidden', background:'#0a0a0a', border:`1px solid ${h?v.accent+'66':'rgba(255,255,255,0.06)'}`, transition:'all .22s ease', transform:h?'translateY(-3px)':'none', boxShadow:h?`0 8px 24px ${v.accent}22`:'0 2px 8px rgba(0,0,0,0.4)' }}>
-      <div style={{ position:'relative', paddingTop:'56.25%', background:'#000' }}>
-        <video ref={ref} src={v.src} poster={v.poster} muted preload="metadata" playsInline style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:v.vert?'contain':'cover', display:'block' }} />
-        {h && <div style={{ position:'absolute', inset:0, background:'rgba(0,0,0,0.4)', display:'flex', alignItems:'center', justifyContent:'center' }}><div style={{ width:40, height:40, borderRadius:'50%', background:'rgba(255,255,255,0.92)', display:'flex', alignItems:'center', justifyContent:'center' }}><div style={{ width:0, height:0, borderStyle:'solid', borderWidth:'8px 0 8px 14px', borderColor:'transparent transparent transparent #111', marginLeft:3 }}/></div></div>}
-        <div style={{ position:'absolute', top:6, left:6, background:v.tagBg, color:'#fff', padding:'2px 7px', borderRadius:20, fontSize:9, fontWeight:800 }}>{v.tag}</div>
-        <div style={{ position:'absolute', bottom:5, right:5, background:'rgba(0,0,0,0.85)', color:'#fff', padding:'1px 6px', borderRadius:3, fontSize:10, fontWeight:700 }}>{v.dur}</div>
+      style={{
+        cursor:'pointer', borderRadius:14, overflow:'hidden', background: isYT ? 'linear-gradient(145deg, #1f0808 0%, #0a0a0a 100%)' : '#0a0a0a',
+        border: isYT ? (h ? '2px solid #ef4444' : '1px solid rgba(239,68,68,0.6)') : `1px solid ${h ? v.accent+'66' : 'rgba(255,255,255,0.08)'}`,
+        transition:'all .25s ease', transform:h?'translateY(-4px)':'none',
+        boxShadow: isYT
+          ? (h ? '0 12px 35px rgba(239,68,68,0.45)' : '0 4px 20px rgba(239,68,68,0.2)')
+          : (h ? `0 8px 24px ${v.accent}22` : '0 2px 8px rgba(0,0,0,0.4)')
+      }}>
+      <div style={{ position:'relative', paddingTop:'56.25%', background:'#000', overflow:'hidden' }}>
+        <video ref={ref} src={v.src} poster={v.poster} muted preload="metadata" playsInline style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', display:'block' }} />
+        <div style={{ position:'absolute', inset:0, background: isYT ? 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.4) 100%)' : 'rgba(0,0,0,0.2)' }} />
+        
+        {h && <div style={{ position:'absolute', inset:0, background:'rgba(0,0,0,0.45)', display:'flex', alignItems:'center', justifyContent:'center' }}>
+          <div style={{ width:isYT?52:42, height:isYT?52:42, borderRadius:'50%', background:'rgba(239,68,68,0.95)', boxShadow:'0 0 20px rgba(239,68,68,0.8)', display:'flex', alignItems:'center', justifyContent:'center' }}>
+            <div style={{ width:0, height:0, borderStyle:'solid', borderWidth:isYT?'10px 0 10px 18px':'8px 0 8px 14px', borderColor:'transparent transparent transparent #fff', marginLeft:4 }}/>
+          </div>
+        </div>}
+        
+        <div style={{ position:'absolute', top:8, left:8, background:v.tagBg, color:'#fff', padding:'3px 9px', borderRadius:20, fontSize:10, fontWeight:800, letterSpacing:0.5, boxShadow:'0 2px 8px rgba(0,0,0,0.6)' }}>{v.tag}</div>
+        {isYT && <div style={{ position:'absolute', top:8, right:8, background:'rgba(212,175,106,0.95)', color:'#000', padding:'3px 9px', borderRadius:20, fontSize:10, fontWeight:800 }}>⭐ EDICIÓN MAESTRA RAG</div>}
+        <div style={{ position:'absolute', bottom:8, right:8, background:'rgba(0,0,0,0.88)', color:'#fff', padding:'2px 8px', borderRadius:4, fontSize:10, fontWeight:800 }}>{v.dur}</div>
       </div>
-      <div style={{ padding:'8px 10px 10px' }}>
-        <div style={{ color:'#fff', fontWeight:700, fontSize:11, lineHeight:'1.3' }}>{v.title}</div>
+
+      <div style={{ padding:'10px 12px 12px' }}>
+        <div style={{ color: isYT ? '#ef4444' : '#fff', fontWeight:800, fontSize: isYT ? 13 : 12, lineHeight:'1.3' }}>{v.title}</div>
+        {isYT && <div style={{ color:'#999', fontSize:11, marginTop:4 }}>Estudio Presentador Micrófono Pro · Avatar Guillermo HB · Licencias 768-dim Firebase</div>}
       </div>
     </div>
   )
 })
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   VIDEO MODAL
+   VIDEO MODAL CON AUDIO HD & CONTROL DE VOLUMEN
    ═══════════════════════════════════════════════════════════════════════════ */
 const VidModal = ({ v, onClose }) => {
   const ref = useRef(null)
   const [snd, setSnd] = useState(false)
-  useEffect(() => { const h=e=>{if(e.key==='Escape')onClose()}; window.addEventListener('keydown',h); return ()=>window.removeEventListener('keydown',h) }, [onClose])
-  useEffect(() => { const el=ref.current; if(el){el.muted=true; el.play().catch(()=>{})} }, [])
-  const unlock = () => { const el=ref.current; if(el){el.muted=false; setSnd(true); el.play().catch(()=>{})} }
+
+  const toggleSound = useCallback(() => {
+    const el = ref.current
+    if (el) {
+      el.muted = !el.muted
+      el.volume = 1.0
+      setSnd(!el.muted)
+      if (el.paused) el.play().catch(() => {})
+    }
+  }, [])
+
+  const startWithSound = useCallback(() => {
+    const el = ref.current
+    if (el) {
+      el.currentTime = 0
+      el.muted = false
+      el.volume = 1.0
+      setSnd(true)
+      el.play().catch(() => {})
+    }
+  }, [])
+
+  useEffect(() => {
+    const h = e => { if (e.key === 'Escape') onClose() }
+    window.addEventListener('keydown', h)
+    return () => window.removeEventListener('keydown', h)
+  }, [onClose])
+
+  useEffect(() => {
+    const el = ref.current
+    if (el) {
+      el.muted = false
+      el.volume = 1.0
+      el.play().then(() => setSnd(true)).catch(() => {
+        el.muted = true
+        el.play().catch(() => {})
+      })
+    }
+  }, [])
+
   return (
-    <div id="vid-modal-bg" onClick={e=>e.target.id==='vid-modal-bg'&&onClose()}
-      style={{ position:'fixed', inset:0, zIndex:9999, background:'rgba(0,0,0,0.94)', backdropFilter:'blur(10px)', display:'flex', alignItems:'center', justifyContent:'center', padding:20, animation:'fadeIn .2s ease' }}>
-      <div style={{ position:'relative', width:'100%', maxWidth:v.vert?400:1000, borderRadius:16, overflow:'hidden', background:'#000', boxShadow:'0 24px 60px rgba(0,0,0,0.8)' }}>
-        <button onClick={onClose} style={{ position:'absolute', top:10, right:10, zIndex:10, width:32, height:32, borderRadius:'50%', background:'rgba(0,0,0,0.7)', border:'1px solid rgba(255,255,255,0.2)', color:'#fff', fontSize:15, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center' }}>✕</button>
-        {!snd && <div onClick={unlock} style={{ position:'absolute', inset:0, zIndex:8, cursor:'pointer', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', background:'rgba(0,0,0,0.55)' }}>
-          <div style={{ fontSize:40, marginBottom:6 }}>🔊</div>
-          <div style={{ color:'#fff', fontWeight:800, fontSize:15 }}>Clic para sonido</div>
-        </div>}
-        <video ref={ref} src={v.src} muted playsInline controls autoPlay style={{ width:'100%', maxHeight:'85vh', display:'block', objectFit:'contain', background:'#000' }} />
-        <div style={{ padding:'8px 12px', background:'rgba(0,0,0,0.9)', borderTop:'1px solid rgba(255,255,255,0.06)' }}>
-          <div style={{ color:'#fff', fontWeight:700, fontSize:12 }}>{v.title} · {v.dur}</div>
+    <div id="vid-modal-bg" onClick={e => e.target.id === 'vid-modal-bg' && onClose()}
+      style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(0,0,0,0.96)', backdropFilter: 'blur(12px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16, animation: 'fadeIn .2s ease' }}>
+      <div style={{ position: 'relative', width: '100%', maxWidth: v.vert ? 440 : 960, borderRadius: 16, overflow: 'hidden', background: '#0a0a0a', border: '1px solid rgba(212,175,106,0.3)', boxShadow: '0 24px 60px rgba(0,0,0,0.9)' }}>
+        
+        {/* BOTÓN CERRAR */}
+        <button onClick={onClose} style={{ position: 'absolute', top: 12, right: 12, zIndex: 15, width: 36, height: 36, borderRadius: '50%', background: 'rgba(0,0,0,0.85)', border: '1px solid rgba(255,255,255,0.3)', color: '#fff', fontSize: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✕</button>
+
+        {/* OVERLAY ACTIVAR AUDIO HD */}
+        {!snd && (
+          <div onClick={startWithSound} style={{ position: 'absolute', inset: 0, zIndex: 10, cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.72)', backdropFilter: 'blur(4px)' }}>
+            <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'linear-gradient(135deg, #ef4444 0%, #b91c1c 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 34, boxShadow: '0 0 30px rgba(239,68,68,0.8)', marginBottom: 12 }}>🔊</div>
+            <div style={{ color: '#fff', fontWeight: 800, fontSize: 16, textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>CLIC PARA ACTIVAR AUDIO HD DEL AVATAR</div>
+            <div style={{ color: '#d4af6a', fontSize: 12, marginTop: 4 }}>Voz de Guillermo AI · Alta Fidelidad EBU R128</div>
+          </div>
+        )}
+
+        <video ref={ref} src={v.src} playsInline controls autoPlay style={{ width: '100%', maxHeight: '78vh', display: 'block', objectFit: 'contain', background: '#000' }} />
+
+        <div style={{ padding: '12px 16px', background: '#080808', borderTop: '1px solid rgba(255,255,255,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>
+            <div style={{ color: '#fff', fontWeight: 800, fontSize: 13 }}>{v.title}</div>
+            <div style={{ color: '#777', fontSize: 11 }}>Duración: {v.dur} · Guillermo AI Avatar Speaking</div>
+          </div>
         </div>
       </div>
     </div>
@@ -289,9 +441,26 @@ export default function Dashboard({ onNavigate }) {
         ))}
       </div>
 
-      {/* MODALES */}
-      {avModal && <AvatarModal av={avModal} onClose={()=>setAvModal(null)} />}
-      {vidModal && <VidModal v={vidModal} onClose={()=>setVidModal(null)} />}
+      {/* MODALES CON NAVEGACIÓN EN TIEMPO REAL */}
+      {avModal && (
+        <AvatarModal
+          av={avModal}
+          onClose={() => setAvModal(null)}
+          currentIndex={AVATARS.findIndex(a => a.id === avModal.id)}
+          totalCount={AVATARS.length}
+          onPrev={() => {
+            const idx = AVATARS.findIndex(a => a.id === avModal.id);
+            const prevIdx = (idx - 1 + AVATARS.length) % AVATARS.length;
+            setAvModal(AVATARS[prevIdx]);
+          }}
+          onNext={() => {
+            const idx = AVATARS.findIndex(a => a.id === avModal.id);
+            const nextIdx = (idx + 1) % AVATARS.length;
+            setAvModal(AVATARS[nextIdx]);
+          }}
+        />
+      )}
+      {vidModal && <VidModal v={vidModal} onClose={() => setVidModal(null)} />}
 
       {/* CSS */}
       <style>{`

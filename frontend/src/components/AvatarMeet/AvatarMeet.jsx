@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import './AvatarMeet.css';
 
-// ─── CLOUD-FIRST PROTOCOL ────────────────────────────────────────────────────
+// ─── CLOUD-FIRST PROTOCOL & CACHE BUSTING ──────────────────────────────────
 const CLOUD_BASE_URL = 'https://hb-jewelry-app.web.app';
 const IS_PROD = window.location.hostname !== 'localhost';
-const cloudAsset = (f) => IS_PROD ? `${CLOUD_BASE_URL}/${f}` : `/${f}`;
+const cloudAsset = (f) => IS_PROD ? `${CLOUD_BASE_URL}/${f}?v=20260728_v3` : `/${f}?v=20260728_v3`;
 
 // ─── CATÁLOGO DE AVATARES OFICIALES GUILLERMO AI ─────────────────────────────
 const AVATAR_CATALOG = [
@@ -16,9 +16,36 @@ const AVATAR_CATALOG = [
   { id: 'vip',       name: 'Guillermo — VIP Gold',          style: 'Colección HB · Brazos Abiertos',          img: cloudAsset('avatars/dorado.png'),     accent: '#f87171', badge: '👑', badgeBg: '#b91c1c' },
 ];
 
-// ─── CATÁLOGO DE VIDEOS — cada video es una tarjeta ──────────────────────────
-// Mínimo 6 tarjetas para llenar la sección (2 filas × 3 columnas)
+// ─── CATÁLOGO DE VIDEOS REALES E INDEPENDIENTES ──────────────────────────────
 const VIDEO_CATALOG = [
+  {
+    id: 'yt-special-claude',
+    src: cloudAsset('output_avatar_english_7qa.mp4'),
+    title: '🔥 YOUTUBE SPECIAL: Convertir a Claude en Agente Permanente e Ilimitado',
+    subtitle: 'Estudio Presentador · Micrófono Pro · RAG 768-dim',
+    duration: '0:15',
+    tag: '🔴 YOUTUBE SPECIAL',
+    tagColor: '#dc2626',
+    description: 'Presentación del ecosistema OpenClaw 2026: licencias vectorizadas de Claude, Google y Microsoft embebidas en Firebase sin límites.',
+    gradient: 'linear-gradient(135deg, #3b0707 0%, #1f0404 50%, #0a0000 100%)',
+    accentColor: '#ef4444',
+    isVertical: false,
+    available: true,
+  },
+  {
+    id: 'podcast',
+    src: cloudAsset('hb_tutorial_avatar_v1.mp4'),
+    title: 'Podcast Guillermo AI Avatar Speaking',
+    subtitle: 'Narrado por Guillermo Avatar AI',
+    duration: '1:35',
+    tag: '🎙️ PODCAST',
+    tagColor: '#b91c1c',
+    description: 'Guillermo AI en estudio explicando la automatización del negocio con licencias vectorizadas.',
+    gradient: 'linear-gradient(135deg, #1a0a3e 0%, #2d1265 50%, #0f0a1e 100%)',
+    accentColor: '#a78bfa',
+    isVertical: true,
+    available: true,
+  },
   {
     id: 'tutorial',
     src: cloudAsset('hb_tutorial_narrado_v1.mp4'),
@@ -263,32 +290,46 @@ const VideoCard = ({ video, onPlay }) => {
   );
 };
 
-// ─── MODAL DE VIDEO FULLSCREEN RESPONSIVE ─────────────────────────────────────
+// ─── MODAL DE VIDEO FULLSCREEN RESPONSIVE CON AUDIO HD ───────────────────────
 const VideoModal = ({ video, onClose }) => {
   const videoRef = useRef(null);
   const [soundUnlocked, setSoundUnlocked] = useState(false);
 
-  // Cerrar con ESC
+  const toggleSound = useCallback(() => {
+    const vid = videoRef.current;
+    if (vid) {
+      vid.muted = !vid.muted;
+      vid.volume = 1.0;
+      setSoundUnlocked(!vid.muted);
+      if (vid.paused) vid.play().catch(() => {});
+    }
+  }, []);
+
+  const unlockSound = useCallback(() => {
+    const vid = videoRef.current;
+    if (!vid) return;
+    vid.currentTime = 0;
+    vid.muted = false;
+    vid.volume = 1.0;
+    setSoundUnlocked(true);
+    vid.play().catch(() => {});
+  }, []);
+
   useEffect(() => {
     const handler = (e) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
   }, [onClose]);
 
-  // Auto-play al abrir
   useEffect(() => {
     const vid = videoRef.current;
     if (!vid) return;
-    vid.muted = true;
-    vid.play().catch(() => {});
-  }, []);
-
-  const unlockSound = useCallback(() => {
-    const vid = videoRef.current;
-    if (!vid) return;
     vid.muted = false;
-    setSoundUnlocked(true);
-    vid.play().catch(() => {});
+    vid.volume = 1.0;
+    vid.play().then(() => setSoundUnlocked(true)).catch(() => {
+      vid.muted = true;
+      vid.play().catch(() => {});
+    });
   }, []);
 
   return (
@@ -297,23 +338,23 @@ const VideoModal = ({ video, onClose }) => {
       onClick={(e) => e.target.id === 'video-modal-overlay' && onClose()}
       style={{
         position: 'fixed', inset: 0, zIndex: 9999,
-        background: 'rgba(0,0,0,0.95)',
+        background: 'rgba(0,0,0,0.96)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        padding: '20px',
-        backdropFilter: 'blur(8px)',
+        padding: '16px',
+        backdropFilter: 'blur(10px)',
         animation: 'fadeIn 0.2s ease',
       }}
     >
-      {/* Contenedor del video — responsive */}
       <div style={{
         position: 'relative',
         width: '100%',
-        maxWidth: video.isVertical ? '420px' : '1100px',  // 9:16 → angosto, 16:9 → ancho
+        maxWidth: video.isVertical ? '440px' : '960px',
         maxHeight: '90vh',
         borderRadius: '16px',
         overflow: 'hidden',
-        background: '#000',
-        boxShadow: '0 24px 80px rgba(0,0,0,0.8)',
+        background: '#0a0a0a',
+        border: '1px solid rgba(212,175,106,0.3)',
+        boxShadow: '0 24px 80px rgba(0,0,0,0.9)',
       }}>
 
         {/* Botón cerrar */}
@@ -321,32 +362,27 @@ const VideoModal = ({ video, onClose }) => {
           id="btn-close-modal"
           onClick={onClose}
           style={{
-            position: 'absolute', top: '12px', right: '12px', zIndex: 10,
+            position: 'absolute', top: '12px', right: '12px', zIndex: 15,
             width: '36px', height: '36px', borderRadius: '50%',
-            background: 'rgba(0,0,0,0.7)', border: '1px solid rgba(255,255,255,0.2)',
+            background: 'rgba(0,0,0,0.85)', border: '1px solid rgba(255,255,255,0.3)',
             color: '#fff', fontSize: '18px', cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            backdropFilter: 'blur(4px)',
           }}
         >
           ✕
         </button>
 
-        {/* Overlay de sonido — se muestra solo si no se ha desbloqueado */}
+        {/* Overlay de activar sonido HD */}
         {!soundUnlocked && (
           <div
             id="btn-unlock-sound-modal"
             onClick={unlockSound}
             style={{
-              position: 'absolute', inset: 0, zIndex: 8,
+              position: 'absolute', inset: 0, zIndex: 10,
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-              background: 'rgba(0,0,0,0.6)', cursor: 'pointer',
+              background: 'rgba(0,0,0,0.72)', backdropFilter: 'blur(4px)', cursor: 'pointer',
             }}
           >
-            <div style={{ fontSize: '48px', marginBottom: '10px' }}>🔊</div>
-            <div style={{ color: '#fff', fontWeight: '800', fontSize: '18px', textAlign: 'center' }}>
-              Clic para activar el sonido
-            </div>
             <div style={{ color: '#d4af6a', fontSize: '12px', marginTop: '6px' }}>
               Requerido por política del navegador
             </div>

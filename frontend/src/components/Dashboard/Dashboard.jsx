@@ -17,10 +17,10 @@ const AVATARS = [
 
 // ─── 4 VIDEOS (Miniaturas de Alta Definición YouTube) ───────────────────────
 const VIDEOS = [
-  { id: 'tutorial',  src: asset('hb_tutorial_narrado_v1.mp4'),    poster: asset('avatars/studio_mic.png'),   title: 'Tutorial App',           tag: '📹', tagBg: '#7c3aed', accent: '#a78bfa', dur: '1:16',  vert: true },
-  { id: 'qa',        src: asset('output_avatar_english_7qa.mp4'), poster: asset('avatars/desk_mic.png'),     title: 'Demo Técnico 7 Q&A',     tag: '🛠️', tagBg: '#059669', accent: '#34d399', dur: '0:15',  vert: true },
+  { id: 'podcast',   src: asset('hb_tutorial_narrado_v1.mp4'),    poster: asset('avatars/studio_mic.png'),   title: 'Podcast: Ecosistema Ilimitado AI', tag: '🎙️ PODCAST', tagBg: '#b91c1c', accent: '#ef4444', dur: '1:35',  vert: true },
+  { id: 'tutorial',  src: asset('hb_tutorial_narrado_v1.mp4'),    poster: asset('avatars/studio_mic.png'),   title: 'Tutorial App HB Jewelry',tag: '📹', tagBg: '#7c3aed', accent: '#a78bfa', dur: '1:16',  vert: true },
+  { id: 'qa',        src: asset('output_avatar_english_7qa.mp4'), poster: asset('avatars/desk_mic.png'),     title: 'Demo Técnico 7 Q&A RAG', tag: '🛠️', tagBg: '#059669', accent: '#34d399', dur: '0:15',  vert: true },
   { id: 'showcase',  src: asset('final_showcase.mp4'),            poster: asset('video_showcase_thumb.png'), title: 'Showcase HB Jewelry',    tag: '💎', tagBg: '#b45309', accent: '#fbbf24', dur: '~30s',  vert: false },
-  { id: 'avatar',    src: asset('avatar_base.mp4'),               poster: asset('avatar_pro.png'),           title: 'Avatar Base Loop',       tag: '🤖', tagBg: '#6b7280', accent: '#d4af6a', dur: '0:15',  vert: true },
 ]
 
 /* ═══════════════════════════════════════════════════════════════════════════

@@ -67,6 +67,13 @@ ok1 = run_dag_node(
     "python -c \"import json; print('[OK] RAG 580 Formulas Loaded')\""
 )
 
+ok1b = run_dag_node(
+    "NODO-1B-DIGITAL-HUMAN-PODCAST", 
+    1, 
+    "Digital Human Studio Podcast RAG 768-dim script generated & metadata published", 
+    "python C:\\Users\\ipane\\openclaw-operativo-2026\\agents\\video_agent\\digital_human_podcast_dag.py"
+)
+
 ok2 = run_dag_node(
     "NODO-2-AVATAR", 
     1, 

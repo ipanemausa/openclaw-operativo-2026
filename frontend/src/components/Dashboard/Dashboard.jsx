@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect, useCallback, memo } from 'react'
 // ─── CLOUD-FIRST & CACHE BUSTING ─────────────────────────────────────────────
 const CLOUD_BASE = 'https://hb-jewelry-app.web.app'
 const IS_PROD = window.location.hostname !== 'localhost'
-const asset = (f) => (IS_PROD ? `${CLOUD_BASE}/${f}?v=20260728_v3` : `/${f}?v=20260728_v3`)
+const asset = (f) => (IS_PROD ? `${CLOUD_BASE}/${f}?v=20260729_v4` : `/${f}?v=20260729_v4`)
 
 // ─── AVATARES OFICIALES GUILLERMO AI (Card #1: Main Avatar Master) ───────────
 const AVATARS = [
@@ -106,7 +106,7 @@ const AvatarCard = memo(({ av, onClick }) => {
           : (h ? `0 12px 32px ${av.accent}40` : '0 2px 8px rgba(0,0,0,0.5)'),
       }}
     >
-      <div style={{ width:'100%', paddingTop:'65%', position:'relative', overflow:'hidden', background:'radial-gradient(circle at center, #18140c 0%, #050505 100%)' }}>
+      <div style={{ width:'100%', paddingTop:'90%', position:'relative', overflow:'hidden', background:'radial-gradient(circle at center, #18140c 0%, #050505 100%)' }}>
         <div style={{
           position:'absolute', inset:0,
           background: `radial-gradient(circle at 50% 35%, ${av.accent}35 0%, transparent 75%)`,
@@ -115,7 +115,7 @@ const AvatarCard = memo(({ av, onClick }) => {
         <img src={av.img} alt={av.name} loading="lazy"
           style={{
             position:'absolute', inset:0, width:'100%', height:'100%',
-            objectFit:'cover', objectPosition:'center 12%', display:'block', padding:'0px', boxSizing:'border-box',
+            objectFit:'contain', objectPosition:'center center', display:'block', padding:'6px', boxSizing:'border-box',
             transition:'transform .3s',
             transform: h ? 'scale(1.04)' : 'scale(1)',
           }} />
@@ -217,9 +217,9 @@ const VidCard = memo(({ v, onClick }) => {
           ? (h ? '0 12px 35px rgba(239,68,68,0.45)' : '0 4px 20px rgba(239,68,68,0.2)')
           : (h ? `0 8px 24px ${v.accent}22` : '0 2px 8px rgba(0,0,0,0.4)')
       }}>
-      <div style={{ position:'relative', paddingTop:'56.25%', background:'#000', overflow:'hidden' }}>
-        <img src={v.poster} alt={v.title} style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', objectPosition:'center 12%', display:'block' }} />
-        <video ref={ref} src={v.src} poster={v.poster} muted preload="metadata" playsInline style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', objectPosition:'center 12%', display:'block', opacity: 0.95 }} />
+      <div style={{ position:'relative', paddingTop:'60%', background:'#000', overflow:'hidden' }}>
+        <img src={v.poster} alt={v.title} style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'contain', objectPosition:'center center', display:'block', padding:'4px', boxSizing:'border-box' }} />
+        <video ref={ref} src={v.src} poster={v.poster} muted preload="metadata" playsInline style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'contain', objectPosition:'center center', display:'block' }} />
         <div style={{ position:'absolute', inset:0, background: isYT ? 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.4) 100%)' : 'rgba(0,0,0,0.2)' }} />
         
         {h && <div style={{ position:'absolute', inset:0, background:'rgba(0,0,0,0.45)', display:'flex', alignItems:'center', justifyContent:'center' }}>

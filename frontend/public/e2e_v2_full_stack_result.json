@@ -1,0 +1,81 @@
+{
+  "system": "HB Jewelry OpenClaw E2E V2 Full Stack Suite v2026.7.1",
+  "timestamp": 1785298850.9275196,
+  "date": "2026-07-29 00:20:50",
+  "passed": true,
+  "total_checks": 9,
+  "trace": [
+    {
+      "check": "Firebase Main Web App",
+      "url": "https://hb-jewelry-app.web.app/",
+      "status": "PASSED",
+      "http_code": 200,
+      "latency_ms": 478.29,
+      "error": null
+    },
+    {
+      "check": "SEO robots.txt",
+      "url": "https://hb-jewelry-app.web.app/robots.txt",
+      "status": "PASSED",
+      "http_code": 200,
+      "latency_ms": 96.29,
+      "error": null
+    },
+    {
+      "check": "SEO sitemap.xml",
+      "url": "https://hb-jewelry-app.web.app/sitemap.xml",
+      "status": "PASSED",
+      "http_code": 200,
+      "latency_ms": 220.31,
+      "error": null
+    },
+    {
+      "check": "Avatar Master Asset PNG",
+      "url": "https://hb-jewelry-app.web.app/avatar_pro.png",
+      "status": "PASSED",
+      "http_code": 200,
+      "latency_ms": 333.24,
+      "error": null
+    },
+    {
+      "check": "Avatar Desk Mic Asset PNG",
+      "url": "https://hb-jewelry-app.web.app/avatars/desk_mic.png",
+      "status": "PASSED",
+      "http_code": 200,
+      "latency_ms": 279.91,
+      "error": null
+    },
+    {
+      "check": "Video Q&A MP4 Asset",
+      "url": "https://hb-jewelry-app.web.app/output_avatar_english_7qa.mp4",
+      "status": "PASSED",
+      "http_code": 200,
+      "latency_ms": 321.46,
+      "error": null
+    },
+    {
+      "check": "Video Showcase MP4 Asset",
+      "url": "https://hb-jewelry-app.web.app/final_showcase.mp4",
+      "status": "PASSED",
+      "http_code": 200,
+      "latency_ms": 1910.83,
+      "error": null
+    },
+    {
+      "check": "RAG Vector Status Manifest",
+      "url": "https://hb-jewelry-app.web.app/sadtalker_veo_rag_status.json",
+      "status": "PASSED",
+      "http_code": 200,
+      "latency_ms": 141.27,
+      "error": null
+    },
+    {
+      "check": "DAG Execution Result Manifest",
+      "url": "https://hb-jewelry-app.web.app/dag_pipeline_execution_result.json",
+      "status": "PASSED",
+      "http_code": 200,
+      "latency_ms": 117.21,
+      "error": null
+    }
+  ]
+}

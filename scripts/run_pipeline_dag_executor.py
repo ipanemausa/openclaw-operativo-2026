@@ -111,12 +111,19 @@ ok5 = run_dag_node(
     "powershell -ExecutionPolicy Bypass -File .\\scripts\\pipeline-cierre.ps1"
 )
 
-# FASE 4: SECURITY GATE 2 & E2E VALIDATION
+# FASE 4: SECURITY GATE 2 & E2E FULL STACK VALIDATION
 ok6 = run_dag_node(
-    "SECURITY-GATE-2", 
+    "SECURITY-GATE-2-E2E-V2", 
     4, 
-    "All E2E tests pass + signatures verified", 
-    "python scripts/e2e_integration_test_2026_07_24.py"
+    "All E2E V2 full stack endpoint & asset tests pass (100% OK)", 
+    "python C:\\Users\\ipane\\openclaw-operativo-2026\\scripts\\e2e_v2_full_stack.py"
+)
+
+ok7 = run_dag_node(
+    "NODO-5-SEO-VALIDATOR",
+    4,
+    "SEO Technical Tags (Title, Meta Description, Robots, Canonical, Schema.org JSON-LD) verified",
+    "python C:\\Users\\ipane\\openclaw-operativo-2026\\scripts\\e2e_seo_validator.py"
 )
 
 pipeline_result = {

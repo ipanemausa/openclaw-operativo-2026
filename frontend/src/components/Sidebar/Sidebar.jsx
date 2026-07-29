@@ -1,68 +1,67 @@
 import React from 'react'
 import '../../styles/sidebar.css'
 
-const sectionGroups = [
+const GROUPS = [
   {
-    title: 'Principal',
+    label: 'PRINCIPAL',
     items: [
-      { id: 'dashboard', label: 'Dashboard', icon: '◈' },
-      { id: 'chat', label: 'Chat Agentes', icon: '◎' },
-      { id: 'workspace', label: 'Workspace', icon: '⬡' },
-      { id: 'monitor', label: 'Monitor', icon: '🖥' },
-    ]
+      { id: 'dashboard',     label: 'Dashboard',      icon: '◈' },
+      { id: 'chat',          label: 'Chat Agentes',    icon: '◎' },
+      { id: 'workspace',     label: 'Workspace',       icon: '○' },
+      { id: 'monitor',       label: 'Monitor',         icon: '○' },
+      { id: 'terminal',      label: 'Terminal Logs',   icon: '▶_' },
+    ],
   },
   {
-    title: 'Operaciones',
+    label: 'OPERACIONES',
     items: [
-      { id: 'ventas', label: 'Ventas', icon: '◆' },
-      { id: 'productos', label: 'Productos', icon: '◇' },
-      { id: 'inventario', label: 'Inventario', icon: '📦' },
-      { id: 'clientes', label: 'Clientes', icon: '👥' },
-      { id: 'ordenes', label: 'Ordenes', icon: '▣' },
-    ]
+      { id: 'ventas',        label: 'Ventas',          icon: '◆' },
+      { id: 'productos',     label: 'Productos',       icon: '◇' },
+      { id: 'inventario',    label: 'Inventario',      icon: '▣' },
+      { id: 'clientes',      label: 'Clientes',        icon: '○' },
+      { id: 'ordenes',       label: 'Ordenes',         icon: '▣' },
+    ],
   },
   {
-    title: 'Marketing & Analytics',
+    label: 'MARKETING & ANALYTICS',
     items: [
-      { id: 'marketing', label: 'Marketing', icon: '◉' },
-      { id: 'analytics', label: 'Analytics', icon: '📈' },
-      { id: 'reportes', label: 'Reportes', icon: '📊' },
-      { id: 'pipeline', label: 'Pipeline', icon: '🚀' },
-    ]
+      { id: 'marketing',     label: 'Marketing',       icon: '▣' },
+      { id: 'analytics',     label: 'Analytics',       icon: '▣' },
+      { id: 'reportes',      label: 'Reportes',        icon: '▣' },
+      { id: 'pipeline',      label: 'Pipeline',        icon: '○' },
+    ],
   },
   {
-    title: 'Sistema',
+    label: 'SISTEMA',
     items: [
-      { id: 'historial', label: 'Historial', icon: '◷' },
-      { id: 'chathistorial', label: 'Chat Historial', icon: '💬' },
-      { id: 'auditoria', label: 'Auditoria', icon: '🔍' },
-      { id: 'notificaciones', label: 'Notificaciones', icon: '🔔' },
-      { id: 'configuracion', label: 'Configuracion', icon: '⚙️' },
-    ]
-  }
+      { id: 'voicecall',      label: 'Voz Bilingüe',    icon: '🎙️' },
+      { id: 'integraciones',  label: 'WhatsApp ($0)',   icon: '📲' },
+      { id: 'historial',      label: 'Historial',       icon: '○' },
+      { id: 'chat-historial', label: 'Chat Historial',  icon: '▣' },
+      { id: 'auditoria',      label: 'Auditoria',       icon: '▣' },
+      { id: 'avatar',         label: 'Avatar (Gemini)', icon: '👤' },
+      { id: 'admin',          label: 'Backend Admin',   icon: '⚙️' },
+    ],
+  },
 ]
 
 export default function Sidebar({ activeSection, onSelect }) {
   return (
     <aside className="sidebar">
       <nav className="sidebar-nav">
-        {sectionGroups.map((group, idx) => (
-          <div key={idx} className="sidebar-section">
-            {idx > 0 && <hr className="sidebar-divider" />}
-            <h3 className="sidebar-section-title">{group.title}</h3>
-            <ul className="sidebar-menu">
-              {group.items.map(item => (
-                <li key={item.id}>
-                  <button
-                    className={'sidebar-item' + (activeSection === item.id ? ' active' : '')}
-                    onClick={() => onSelect(item.id)}
-                  >
-                    <span className="sidebar-icon">{item.icon}</span>
-                    <span className="sidebar-label">{item.label}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
+        {GROUPS.map(group => (
+          <div key={group.label} className="sidebar-group">
+            <div className="sidebar-group-label">{group.label}</div>
+            {group.items.map(s => (
+              <button
+                key={s.id}
+                className={'sidebar-item' + (activeSection === s.id ? ' active' : '')}
+                onClick={() => onSelect && onSelect(s.id)}
+              >
+                <span className="sidebar-icon">{s.icon}</span>
+                <span className="sidebar-label">{s.label}</span>
+              </button>
+            ))}
           </div>
         ))}
       </nav>

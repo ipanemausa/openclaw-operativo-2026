@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect, useCallback, memo } from 'react'
 // ─── CLOUD-FIRST & CACHE BUSTING ─────────────────────────────────────────────
 const CLOUD_BASE = 'https://hb-jewelry-app.web.app'
 const IS_PROD = window.location.hostname !== 'localhost'
-const asset = (f) => (IS_PROD ? `${CLOUD_BASE}/${f}?v=20260731_v8` : `/${f}?v=20260731_v8`)
+const asset = (f) => (IS_PROD ? `${CLOUD_BASE}/${f}?v=20260731_v9` : `/${f}?v=20260731_v9`)
 
 // ─── AVATARES OFICIALES GUILLERMO AI (Card #1: Main Avatar Master) ───────────
 const AVATARS = [

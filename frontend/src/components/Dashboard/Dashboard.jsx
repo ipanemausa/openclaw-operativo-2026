@@ -302,7 +302,7 @@ const VidModal = ({ v, onClose }) => {
   return (
     <div id="vid-modal-bg" onClick={e => e.target.id === 'vid-modal-bg' && onClose()}
       style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(0,0,0,0.96)', backdropFilter: 'blur(12px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16, animation: 'fadeIn .2s ease' }}>
-      <div style={{ position: 'relative', width: '100%', maxWidth: v.vert ? 440 : 960, borderRadius: 16, overflow: 'hidden', background: '#0a0a0a', border: '1px solid rgba(212,175,106,0.3)', boxShadow: '0 24px 60px rgba(0,0,0,0.9)' }}>
+      <div style={{ position: 'relative', width: '92vw', maxWidth: v.vert ? 440 : 1280, borderRadius: 16, overflow: 'hidden', background: '#0a0a0a', border: '1px solid rgba(212,175,106,0.3)', boxShadow: '0 24px 60px rgba(0,0,0,0.9)' }}>
         
         {/* BOTÓN CERRAR */}
         <button onClick={onClose} style={{ position: 'absolute', top: 12, right: 12, zIndex: 15, width: 36, height: 36, borderRadius: '50%', background: 'rgba(0,0,0,0.85)', border: '1px solid rgba(255,255,255,0.3)', color: '#fff', fontSize: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✕</button>
@@ -316,7 +316,7 @@ const VidModal = ({ v, onClose }) => {
           </div>
         )}
 
-        <video ref={ref} src={v.src} playsInline controls autoPlay style={{ width: '100%', maxHeight: '78vh', display: 'block', objectFit: 'contain', background: '#000' }} />
+        <video ref={ref} src={v.src} playsInline controls autoPlay style={{ width: '100%', aspectRatio: v.vert ? '9/16' : '16/9', maxHeight: '82vh', display: 'block', objectFit: 'contain', background: '#000' }} />
 
         <div style={{ padding: '12px 16px', background: '#080808', borderTop: '1px solid rgba(255,255,255,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>

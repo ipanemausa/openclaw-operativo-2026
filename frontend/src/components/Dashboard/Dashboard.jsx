@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect, useCallback, memo } from 'react'
 // ─── CLOUD-FIRST & CACHE BUSTING ─────────────────────────────────────────────
 const CLOUD_BASE = 'https://hb-jewelry-app.web.app'
 const IS_PROD = window.location.hostname !== 'localhost'
-const asset = (f) => (IS_PROD ? `${CLOUD_BASE}/${f}?v=20260729_v5` : `/${f}?v=20260729_v5`)
+const asset = (f) => (IS_PROD ? `${CLOUD_BASE}/${f}?v=20260731_v6` : `/${f}?v=20260731_v6`)
 
 // ─── AVATARES OFICIALES GUILLERMO AI (Card #1: Main Avatar Master) ───────────
 const AVATARS = [
@@ -17,6 +17,18 @@ const AVATARS = [
 
 // ─── VIDEOS CON ASSETS REALES E INDEPENDIENTES ────────────────────────────────
 const VIDEOS = [
+  {
+    id: 'talk-grow-educational',
+    src: asset('videos/talk_grow_format/talk_grow_1785505494.mp4'),
+    poster: asset('avatars/studio_mic.png'),
+    title: '🎓 EDUCATIVO: Talk Grow English & 7 Hacks de Claude AI (Format Split-Screen)',
+    tag: '⭐ TALK-GROW HD',
+    tagBg: 'linear-gradient(135deg, #f59e0b 0%, #b45309 100%)',
+    accent: '#fbbf24',
+    dur: '0:15',
+    isYouTubeMaster: true,
+    vert: false
+  },
   {
     id: 'yt-special-claude',
     src: asset('output_avatar_english_7qa.mp4'),

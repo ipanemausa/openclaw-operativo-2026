@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect, useCallback, memo } from 'react'
 // ─── CLOUD-FIRST & CACHE BUSTING ─────────────────────────────────────────────
 const CLOUD_BASE = 'https://hb-jewelry-app.web.app'
 const IS_PROD = window.location.hostname !== 'localhost'
-const asset = (f) => (IS_PROD ? `${CLOUD_BASE}/${f}?v=20260731_v6` : `/${f}?v=20260731_v6`)
+const asset = (f) => (IS_PROD ? `${CLOUD_BASE}/${f}?v=20260731_v8` : `/${f}?v=20260731_v8`)
 
 // ─── AVATARES OFICIALES GUILLERMO AI (Card #1: Main Avatar Master) ───────────
 const AVATARS = [
@@ -19,20 +19,20 @@ const AVATARS = [
 const VIDEOS = [
   {
     id: 'talk-grow-educational',
-    src: asset('videos/talk_grow_format/talk_grow_1785505494.mp4'),
-    poster: asset('avatars/studio_mic.png'),
+    src: asset('videos/talk_grow_format/real_talk_grow_educational.mp4'),
+    poster: asset('posters/poster_talk_grow.png'),
     title: '🎓 EDUCATIVO: Talk Grow English & 7 Hacks de Claude AI (Format Split-Screen)',
     tag: '⭐ TALK-GROW HD',
     tagBg: 'linear-gradient(135deg, #f59e0b 0%, #b45309 100%)',
     accent: '#fbbf24',
-    dur: '0:15',
+    dur: '0:10',
     isYouTubeMaster: true,
     vert: false
   },
   {
     id: 'yt-special-claude',
     src: asset('output_avatar_english_7qa.mp4'),
-    poster: asset('avatars/studio_mic.png'),
+    poster: asset('posters/poster_yt_special.png'),
     title: '🔥 YOUTUBE SPECIAL: Convertir a Claude en Agente Permanente e Ilimitado',
     tag: '🔴 YOUTUBE HD 1080p',
     tagBg: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
@@ -44,40 +44,40 @@ const VIDEOS = [
   {
     id: 'podcast',
     src: asset('hb_tutorial_avatar_v1.mp4'),
-    poster: asset('avatars/desk_mic.png'),
+    poster: asset('posters/poster_podcast.png'),
     title: 'Podcast: Ecosistema Ilimitado AI (Guillermo Speaking)',
     tag: '🎙️ PODCAST',
     tagBg: '#b91c1c',
     accent: '#ef4444',
     dur: '1:35',
-    vert: true
+    vert: false
   },
   {
     id: 'tutorial',
     src: asset('hb_tutorial_narrado_v1.mp4'),
-    poster: asset('video_showcase_thumb.png'),
+    poster: asset('posters/poster_tutorial.png'),
     title: 'Tutorial App HB Jewelry Completo',
     tag: '📹 TUTORIAL',
     tagBg: '#7c3aed',
     accent: '#a78bfa',
     dur: '1:16',
-    vert: true
+    vert: false
   },
   {
     id: 'qa',
     src: asset('output_avatar_english_7qa.mp4'),
-    poster: asset('avatars/desk_mic.png'),
+    poster: asset('posters/poster_tecnico.png'),
     title: 'Demo Técnico 7 Q&A RAG Vectorial',
     tag: '🛠️ TÉCNICO',
     tagBg: '#059669',
     accent: '#34d399',
     dur: '0:15',
-    vert: true
+    vert: false
   },
   {
     id: 'showcase',
     src: asset('final_showcase.mp4'),
-    poster: asset('video_showcase_thumb.png'),
+    poster: asset('posters/poster_showcase.png'),
     title: 'Showcase Colección HB Jewelry 18k',
     tag: '💎 SHOWCASE',
     tagBg: '#b45309',

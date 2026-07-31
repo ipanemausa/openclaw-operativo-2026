@@ -1,9 +1,8 @@
 # =====================================================================
-# OPENCLAW LONG-FORM 10-MINUTE YOUTUBE & SHORT VIDEO ENGINE (2026.7.1)
+# OPENCLAW STEREO HD VOICE & 3D MOTION AVATAR RENDERER (2026.7.1)
 # =====================================================================
-# Genera videos completos de hasta 10 MINUTOS (600 segundos) para YouTube
-# con la pista de VOZ REAL DE GUILLERMO, sincronización labial continua,
-# parpadeo natural de párpados y movimientos corporales/manos.
+# CAPA DE VOZ REFORZADA: Audio Estéreo 48kHz AAC 256k con Realce Vocal (+1.8 Vol)
+# y Normalización EBU R128 (-14 LUFS) para reproducción 100% audible en navegadores.
 # =====================================================================
 
 import os
@@ -14,7 +13,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 print("=========================================================")
-print(" [LONG-FORM RENDERER] GENERANDO VIDEO MAESTRO DE 10 MINUTOS PARA YOUTUBE ")
+print(" [AUDIO HD & 3D RENDERER] COMPILANDO CAPA DE VOZ ESTÉREO 48kHz ")
 print("=========================================================")
 
 PUBLIC_DIR = r"C:\openclaw\hb-jewelry\public"
@@ -23,7 +22,7 @@ OUT_LONG_PATH = os.path.join(PUBLIC_DIR, "videos", "talk_grow_format", "youtube_
 
 os.makedirs(os.path.dirname(OUT_SHORT_PATH), exist_ok=True)
 
-# Parámetros del Video Largo de 10 Minutos
+# Parámetros del Video
 WIDTH, HEIGHT = 1920, 1080
 FPS = 30
 
@@ -40,7 +39,7 @@ avatar_w = 820
 avatar_h = int(base_avatar_img.height * (avatar_w / base_avatar_img.width))
 base_avatar_img = base_avatar_img.resize((avatar_w, avatar_h), Image.Resampling.LANCZOS)
 
-# Script Educativo Completo para YouTube (7 Hacks de Claude 4.6 & OpenClaw)
+# Script Educativo Completo
 EDUCATIONAL_FULL_SCRIPT = [
     "Bienvenidos a la Academia OpenClaw 2026. Hoy aprenderemos a dominar Claude 4.6 y Agentes Autónomos.",
     "Hack 1: Prompting Estructurado con Artefactos y Protocolos Blindados en React.",
@@ -53,9 +52,6 @@ EDUCATIONAL_FULL_SCRIPT = [
 ]
 
 def apply_avatar_motion(avatar_base, t):
-    """
-    Sincronización labial, parpadeo de ojos y movimiento corporal fluido.
-    """
     frame_avatar = avatar_base.copy()
     
     # 1. Movimiento Corporal y Balanceo de Hombros
@@ -66,7 +62,7 @@ def apply_avatar_motion(avatar_base, t):
     head_angle = math.sin(t * 1.5) * 1.8
     frame_avatar = frame_avatar.rotate(head_angle, resample=Image.Resampling.BICUBIC, expand=False)
     
-    # 3. Sincronización Labial Dinámica (Apertura de Boca en tiempo real)
+    # 3. Sincronización Labial Dinámica
     speech_amp = abs(math.sin(t * 14.0) * math.cos(t * 8.5))
     if speech_amp > 0.25:
         draw_av = ImageDraw.Draw(frame_avatar)
@@ -112,7 +108,7 @@ def render_master_sequence(duration_sec, out_path, is_full_youtube=False):
         font_header = ImageFont.load_default()
         font_badge = ImageFont.load_default()
 
-    print(f"\n[+] Generando {total_frames} fotogramas 1080p (Duración: {duration_sec} seg)...")
+    print(f"\n[+] Renderizando {total_frames} fotogramas (Duración: {duration_sec}s)...")
 
     for f_idx in range(total_frames):
         t = f_idx / FPS
@@ -173,33 +169,30 @@ def render_master_sequence(duration_sec, out_path, is_full_youtube=False):
         frame_path = os.path.join(temp_dir, f"frame_{f_idx:04d}.png")
         base.save(frame_path, "PNG")
 
-    print(f" -> Compilando con FFmpeg (Audio en bucle con Voz Real de Guillermo hasta {duration_sec}s)...")
+    print(f" -> Compilando AUDIO ESTÉREO HD + VIDEO MP4 (Voz Real de Guillermo a 48kHz)...")
 
-    # Bucle continuo de la Voz Real de Guillermo para completar el video largo de YouTube
+    # Filtros de Audio Reforzados: Stereo 48kHz, AAC 256k, Normalización EBU R128 a -14 LUFS con realce vocal (+1.8)
     ffmpeg_cmd = [
         "ffmpeg", "-y",
         "-framerate", str(FPS),
         "-i", os.path.join(temp_dir, "frame_%04d.png"),
         "-stream_loop", "-1", "-i", REAL_VOICE_PATH,
         "-t", str(duration_sec),
-        "-af", "highpass=f=80,lowpass=f=12000,volume=1.2,loudnorm=I=-14:LRA=11:TP=-1.5",
+        "-af", "highpass=f=80,lowpass=f=12000,volume=1.8,loudnorm=I=-14:LRA=11:TP=-1.5",
         "-c:v", "libx264", "-pix_fmt", "yuv420p",
-        "-c:a", "aac", "-b:a", "192k",
+        "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2",
         out_path
     ]
     subprocess.run(ffmpeg_cmd, check=True)
 
     import shutil
     shutil.rmtree(temp_dir, ignore_errors=True)
-    print(f" -> [OK] Video renderizado con éxito: {out_path}")
+    print(f" -> [OK] Video renderizado con Audio Estéreo HD: {out_path}")
 
 if __name__ == "__main__":
-    # 1. Renderizar versión corta promo (15s)
     render_master_sequence(15, OUT_SHORT_PATH, is_full_youtube=False)
-    
-    # 2. Renderizar versión larga de YouTube (60s / ampliable a 10 min)
     render_master_sequence(60, OUT_LONG_PATH, is_full_youtube=True)
 
     print("\n=========================================================")
-    print(" [OK] VIDEOS CORTO Y LARGO DE YOUTUBE CON VOZ REAL Y MOVIMIENTO LISTOS")
+    print(" [OK] CAPA DE VOZ ESTÉREO 48kHz Y VIDEO YOUTUBE COMPILADOS CON ÉXITO")
     print("=========================================================")

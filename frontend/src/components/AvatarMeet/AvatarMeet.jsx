@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-// ─── CLOUD-FIRST PROTOCOL & CACHE BUSTING ──────────────────────────────────
-const CLOUD_BASE_URL = 'https://hb-jewelry-app.web.app';
+// ─── CLOUD-FIRST & DYNAMIC CACHE BUSTING ──────────────────────────────────────
 const IS_PROD = window.location.hostname !== 'localhost';
-const cloudAsset = (f) => IS_PROD ? `${CLOUD_BASE_URL}/${f}?v=20260801_vGuillermoNewAvatars` : `/${f}?v=20260801_vGuillermoNewAvatars`;
+const cloudAsset = (f) => (IS_PROD ? `${window.location.origin}/${f}?v=20260801_v2026` : `/${f}?v=20260801_v2026`);
 
 // ─── CATÁLOGO DE 10 AVATARES EXCLUSIVOS 3D (100% ROSTRO REAL DE GUILLERMO AI) ───
 const AVATAR_CATALOG = [

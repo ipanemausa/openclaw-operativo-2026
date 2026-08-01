@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 
 // ─── CLOUD-FIRST & DYNAMIC CACHE BUSTING ─────────────────────────────────────────────
-const CLOUD_BASE = 'https://hb-jewelry-app.web.app';
 const IS_PROD = window.location.hostname !== 'localhost';
-const asset = (f) => IS_PROD ? `${CLOUD_BASE}/${f}?v=20260801_v4LayersPacing` : `/${f}?v=20260801_v4LayersPacing`;
+const asset = (f) => (IS_PROD ? `${window.location.origin}/${f}?v=20260801_v2026` : `/${f}?v=20260801_v2026`);
 
 // ─── CATÁLOGO DE VIDEOS REALES (POSTERS 100% LIMPIOS DE GUILLERMO SIN TEXTO BASTARDO) ───
 const VIDEO_CATALOG = [

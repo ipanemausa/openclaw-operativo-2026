@@ -21,7 +21,7 @@ print("=========================================================")
 print(" [AI] INICIANDO VALIDADOR AUTOMÁTICO DE SEO TÉCNICO ")
 print("=========================================================")
 
-FIREBASE_URL = "https://hb-jewelry-app.web.app/"
+FIREBASE_URL = "https://hb-jewelry-cloud-2026-2dff9.web.app/"
 seo_trace = []
 
 def log_seo_check(check_name, status, detail):

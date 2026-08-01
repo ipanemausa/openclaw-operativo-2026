@@ -18,7 +18,7 @@ print("=========================================================")
 print(" [AI] INICIANDO E2E V2 FULL STACK VERIFICATION (2026)")
 print("=========================================================")
 
-FIREBASE_BASE = "https://hb-jewelry-app.web.app"
+FIREBASE_BASE = "https://hb-jewelry-cloud-2026-2dff9.web.app"
 e2e_trace = []
 
 def check_url(name, url, expected_code=200):

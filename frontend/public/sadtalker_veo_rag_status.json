@@ -1,7 +1,7 @@
 {
   "pipeline": "SadTalker + Veo 3.1 + RAG Firebase",
   "version": "v2026.7.1-Enterprise",
-  "timestamp": "2026-08-01 13:14:58",
+  "timestamp": "2026-08-01 13:16:59",
   "rag": {
     "vector_dim": 768,
     "formulas_indexed": 580,

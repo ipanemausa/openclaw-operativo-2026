@@ -2,7 +2,7 @@
   "source": "Adrián Sáenz - 7 Hacks de Claude AI 2026",
   "embedding_model": "text-embedding-004 (768-dim)",
   "database": "Firebase Firestore / OpenClaw Vector Index",
-  "vectorized_at": "2026-07-31 17:24:00",
+  "vectorized_at": "2026-08-01 02:39:13",
   "total_items": 7,
   "hacks": [
     {

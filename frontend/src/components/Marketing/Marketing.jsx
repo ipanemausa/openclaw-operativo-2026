@@ -143,6 +143,33 @@ function VidModal({ v, onClose }) {
           <video ref={ref} key={v.src} src={v.src} playsInline controls autoPlay style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#000' }} />
         </div>
 
+        {/* ACTION BAR CON BOTÓN DE COMPRA DIRECTA EN WHATSAPP $0 */}
+        <div style={{ padding: '8px 18px', background: 'rgba(212,175,106,0.08)', borderTop: '1px solid rgba(212,175,106,0.15)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ color: '#d4af6a', fontSize: 11, fontWeight: 700 }}>
+            📲 Canal Directo WhatsApp Business ($0 Costo por Transacción)
+          </div>
+          <a
+            href="https://wa.me/?text=Hola%20HB%20Jewelry%2018k,%20vengo%20desde%20el%20video%20de%20demostración%20y%20quisiera%20más%20información."
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              padding: '6px 14px',
+              borderRadius: 20,
+              background: '#25D366',
+              color: '#fff',
+              fontSize: 11,
+              fontWeight: 800,
+              textDecoration: 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 6
+            }}
+          >
+            <span>💬 PEDIR POR WHATSAPP ($0)</span>
+            <span>➔</span>
+          </a>
+        </div>
+
         {/* SUBTÍTULOS BILINGÜES EN 2 COLUMNAS */}
         <div style={{ padding: '14px 18px', background: '#161412', borderTop: '1px solid rgba(212,175,106,0.15)', maxHeight: '22vh', overflowY: 'auto' }}>
           <div style={{ color: '#d4af6a', fontSize: 11, fontWeight: 700, letterSpacing: 1, marginBottom: 8, display: 'flex', gap: 6, alignItems: 'center' }}>

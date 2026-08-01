@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 // ─── CLOUD-FIRST & DYNAMIC CACHE BUSTING ──────────────────────────────────────
 const CLOUD_BASE = 'https://hb-jewelry-app.web.app';
 const IS_PROD = window.location.hostname !== 'localhost';
-const asset = (f) => (IS_PROD ? `${CLOUD_BASE}/${f}?v=20260801_vSidebarUnified` : `/${f}?v=20260801_vSidebarUnified`);
+const asset = (f) => (IS_PROD ? `${CLOUD_BASE}/${f}?v=20260801_vFriendlyButtons` : `/${f}?v=20260801_vFriendlyButtons`);
 
-// ─── REGISTROS DE ACTIVIDAD RECIENTE (100% PALETA DORADO SIDEBAR #d4af6a) ──────
+// ─── REGISTROS DE ACTIVIDAD RECIENTE (PALETA DORADO HB #d4af6a) ──────────────
 const RECENT_ACTIVITIES = [
   { timestamp: '2026-08-01 03:25:40', evento: 'Pipeline DAG: Respaldo Rclone a Google Drive 5TB', division: 'Sistema & IT', estado: 'completado' },
   { timestamp: '2026-08-01 03:20:12', evento: 'Firebase Hosting CDN: Build de producción desplegado', division: 'Infraestructura', estado: 'completado' },
@@ -29,35 +29,35 @@ export default function Dashboard({ onNavigate }) {
   return (
     <div style={{ padding: '20px 24px', maxWidth: 1400, margin: '0 auto', color: '#f0ede8', fontFamily: 'Inter, system-ui, sans-serif' }}>
       
-      {/* ─── CABECERA EJECUTIVA 100% UNIFICADA CON SIDEBAR (#d4af6a) ─── */}
+      {/* ─── CABECERA EJECUTIVA AMIGABLE Y ELEGANTE CON DORADO HB (#d4af6a) ─── */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20, paddingBottom: 14, borderBottom: '1px solid rgba(212,175,106,0.15)' }}>
         <div>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '3px 10px', borderRadius: 16, background: 'rgba(212,175,106,0.08)', border: '1px solid rgba(212,175,106,0.2)', color: '#d4af6a', fontSize: 10, fontWeight: 700, letterSpacing: 1 }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '4px 12px', borderRadius: 20, background: 'rgba(212,175,106,0.08)', border: '1px solid rgba(212,175,106,0.2)', color: '#d4af6a', fontSize: 10, fontWeight: 700, letterSpacing: 0.5 }}>
             <span>✨ OPENCLAW ENTERPRISE v2026.7.1</span>
             <span style={{ color: '#d4af6a', fontSize: 9 }}>● ONLINE</span>
           </div>
 
-          <h1 style={{ fontSize: 22, fontWeight: 700, color: '#d4af6a', margin: '6px 0 2px 0', letterSpacing: '-0.3px' }}>
+          <h1 style={{ fontSize: 22, fontWeight: 800, color: '#d4af6a', margin: '6px 0 2px 0', letterSpacing: '-0.3px' }}>
             Plataforma Integral de Control Corporativo
           </h1>
           <p style={{ fontSize: 12, color: '#a09d99', margin: 0 }}>
-            Ecosistema de gestión para Directivas, CEO, Gerencia, Supervisores y Operaciones
+            Ecosistema de gestión unificado para Directivas, CEO, Gerencia, Supervisores y Operaciones
           </p>
         </div>
 
         <div style={{ display: 'flex', gap: 8 }}>
-          <div style={{ background: '#161412', border: '1px solid rgba(212,175,106,0.15)', padding: '6px 12px', borderRadius: 6, textAlign: 'right' }}>
+          <div style={{ background: '#161412', border: '1px solid rgba(212,175,106,0.15)', padding: '6px 12px', borderRadius: 8, textAlign: 'right' }}>
             <div style={{ color: '#d4af6a', fontSize: 11, fontWeight: 700 }}>HB Jewelry 18k</div>
             <div style={{ color: '#6b6866', fontSize: 9 }}>Firebase CDN</div>
           </div>
-          <div style={{ background: '#161412', border: '1px solid rgba(212,175,106,0.15)', padding: '6px 12px', borderRadius: 6, textAlign: 'right' }}>
+          <div style={{ background: '#161412', border: '1px solid rgba(212,175,106,0.15)', padding: '6px 12px', borderRadius: 8, textAlign: 'right' }}>
             <div style={{ color: '#d4af6a', fontSize: 11, fontWeight: 700 }}>Drive 5TB</div>
             <div style={{ color: '#6b6866', fontSize: 9 }}>Rclone Sync</div>
           </div>
         </div>
       </div>
 
-      {/* ─── SECCIÓN 1: 2 BOTONES MAESTROS (100% PALETA SIDEBAR DORADO Y NEGRO) ─── */}
+      {/* ─── SECCIÓN 1: 2 BOTONES MAESTROS (DISEÑO LIVIANO, AMIGABLE Y ELEGANTE) ─── */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24 }}>
         
         {/* BOTÓN 1: DESPLEGAR AVATARES 3D */}
@@ -67,46 +67,49 @@ export default function Dashboard({ onNavigate }) {
           onMouseLeave={() => setHoverAvatars(false)}
           style={{
             cursor: 'pointer',
-            borderRadius: 8,
-            padding: '20px',
+            borderRadius: 12,
+            padding: '18px 20px',
             background: hoverAvatars ? 'rgba(212,175,106,0.08)' : '#161412',
             border: hoverAvatars ? '1px solid #d4af6a' : '1px solid rgba(212,175,106,0.15)',
             transition: 'all 0.2s ease',
             display: 'flex',
-            flexDirection: 'column',
+            alignItems: 'center',
             justifyContent: 'space-between',
-            minHeight: 160
+            gap: 16
           }}
         >
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
-              <span style={{ padding: '2px 8px', borderRadius: 4, background: 'rgba(212,175,106,0.12)', border: '1px solid rgba(212,175,106,0.25)', color: '#d4af6a', fontSize: 10, fontWeight: 700, letterSpacing: 1 }}>
-                PARRILLA 6 COLUMNAS
-              </span>
-              <span style={{ color: '#d4af6a', fontSize: 16 }}>👤</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(212,175,106,0.1)', border: '1px solid rgba(212,175,106,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, color: '#d4af6a', flexShrink: 0 }}>
+              👤
             </div>
-            <h2 style={{ fontSize: 18, fontWeight: 700, color: '#f0ede8', margin: '0 0 4px 0' }}>
-              Avatares Digitales 3D (Guillermo AI)
-            </h2>
-            <p style={{ fontSize: 11, color: '#a09d99', lineHeight: 1.4, margin: 0 }}>
-              Catálogo de 8 modelos oficiales con fotos estáticas PNG transparentes RGBA HD e Inspector 3D.
-            </p>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 2 }}>
+                <span style={{ color: '#d4af6a', fontSize: 10, fontWeight: 700, letterSpacing: 0.5 }}>PARRILLA 6 COLUMNAS</span>
+              </div>
+              <h2 style={{ fontSize: 16, fontWeight: 700, color: '#f0ede8', margin: 0 }}>
+                Avatares Digitales 3D (Guillermo AI)
+              </h2>
+              <p style={{ fontSize: 11, color: '#a09d99', margin: '2px 0 0 0' }}>
+                8 modelos de Guillermo AI con imágenes PNG e Inspector 3D.
+              </p>
+            </div>
           </div>
 
           <div style={{
-            marginTop: 12,
-            padding: '8px 14px',
-            borderRadius: 6,
+            padding: '8px 16px',
+            borderRadius: 20,
             background: hoverAvatars ? 'rgba(212,175,106,0.2)' : 'rgba(212,175,106,0.1)',
-            border: '1px solid rgba(212,175,106,0.25)',
+            border: '1px solid rgba(212,175,106,0.3)',
             color: '#d4af6a',
             fontWeight: 700,
             fontSize: 11,
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between'
+            gap: 6,
+            whiteSpace: 'nowrap',
+            flexShrink: 0
           }}>
-            <span>DESPLEGAR SECCIÓN DE AVATARES 3D</span>
+            <span>DESPLEGAR</span>
             <span style={{ fontSize: 12 }}>➔</span>
           </div>
         </div>
@@ -118,55 +121,58 @@ export default function Dashboard({ onNavigate }) {
           onMouseLeave={() => setHoverVideos(false)}
           style={{
             cursor: 'pointer',
-            borderRadius: 8,
-            padding: '20px',
+            borderRadius: 12,
+            padding: '18px 20px',
             background: hoverVideos ? 'rgba(212,175,106,0.08)' : '#161412',
             border: hoverVideos ? '1px solid #d4af6a' : '1px solid rgba(212,175,106,0.15)',
             transition: 'all 0.2s ease',
             display: 'flex',
-            flexDirection: 'column',
+            alignItems: 'center',
             justifyContent: 'space-between',
-            minHeight: 160
+            gap: 16
           }}
         >
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
-              <span style={{ padding: '2px 8px', borderRadius: 4, background: 'rgba(212,175,106,0.12)', border: '1px solid rgba(212,175,106,0.25)', color: '#d4af6a', fontSize: 10, fontWeight: 700, letterSpacing: 1 }}>
-                8 VIDEOS MP4 ÚNICOS
-              </span>
-              <span style={{ color: '#d4af6a', fontSize: 16 }}>🎬</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(212,175,106,0.1)', border: '1px solid rgba(212,175,106,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, color: '#d4af6a', flexShrink: 0 }}>
+              🎬
             </div>
-            <h2 style={{ fontSize: 18, fontWeight: 700, color: '#f0ede8', margin: '0 0 4px 0' }}>
-              Estudio de Video & Cursos de Automatización
-            </h2>
-            <p style={{ fontSize: 11, color: '#a09d99', lineHeight: 1.4, margin: 0 }}>
-              Parrilla de 6 columnas con videos de 7 Hacks de Claude, voz FM 48kHz y subtítulos bilingües.
-            </p>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 2 }}>
+                <span style={{ color: '#d4af6a', fontSize: 10, fontWeight: 700, letterSpacing: 0.5 }}>8 VIDEOS MP4 ÚNICOS</span>
+              </div>
+              <h2 style={{ fontSize: 16, fontWeight: 700, color: '#f0ede8', margin: 0 }}>
+                Estudio de Video & Cursos de Automatización
+              </h2>
+              <p style={{ fontSize: 11, color: '#a09d99', margin: '2px 0 0 0' }}>
+                Videos con voz FM 48kHz y subtítulos bilingües en 2 columnas.
+              </p>
+            </div>
           </div>
 
           <div style={{
-            marginTop: 12,
-            padding: '8px 14px',
-            borderRadius: 6,
+            padding: '8px 16px',
+            borderRadius: 20,
             background: hoverVideos ? 'rgba(212,175,106,0.2)' : 'rgba(212,175,106,0.1)',
-            border: '1px solid rgba(212,175,106,0.25)',
+            border: '1px solid rgba(212,175,106,0.3)',
             color: '#d4af6a',
             fontWeight: 700,
             fontSize: 11,
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between'
+            gap: 6,
+            whiteSpace: 'nowrap',
+            flexShrink: 0
           }}>
-            <span>DESPLEGAR ESTUDIO DE VIDEOS Y CURSOS</span>
+            <span>DESPLEGAR</span>
             <span style={{ fontSize: 12 }}>➔</span>
           </div>
         </div>
 
       </div>
 
-      {/* ─── SECCIÓN 2: LA AUTONOMÍA — TARJETAS CON PALETA SIDEBAR UNIFICADA ─── */}
+      {/* ─── SECCIÓN 2: LA AUTONOMÍA — TARJETAS DE CONTROL LIVIANAS ─── */}
       <div style={{ marginBottom: 10 }}>
-        <h3 style={{ fontSize: 11, fontWeight: 700, color: '#d4af6a', margin: '0 0 10px 0', textTransform: 'uppercase', letterSpacing: '1.5px' }}>
+        <h3 style={{ fontSize: 11, fontWeight: 700, color: '#d4af6a', margin: '0 0 10px 0', textTransform: 'uppercase', letterSpacing: '1px' }}>
           ⚡ LA AUTONOMÍA — CONTROL OPERATIVO POR DIVISIONES
         </h3>
       </div>
@@ -189,9 +195,9 @@ export default function Dashboard({ onNavigate }) {
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
             <span style={{ color: '#d4af6a', fontSize: 12, fontWeight: 700 }}>🤖 Agentes Autónomos & RAG</span>
-            <span style={{ fontSize: 10, background: 'rgba(212,175,106,0.12)', border: '1px solid rgba(212,175,106,0.2)', color: '#d4af6a', padding: '1px 6px', borderRadius: 4 }}>3 Activos</span>
+            <span style={{ fontSize: 10, background: 'rgba(212,175,106,0.1)', border: '1px solid rgba(212,175,106,0.2)', color: '#d4af6a', padding: '1px 6px', borderRadius: 12 }}>3 Activos</span>
           </div>
-          <p style={{ fontSize: 10, color: '#a09d99', margin: '0 0 8px 0' }}>
+          <p style={{ fontSize: 10, color: '#a09d99', margin: '0 0 6px 0' }}>
             Memoria vectorial RAG 768-dim en Firestore y 7 Hacks de Claude 4.6.
           </p>
           <div style={{ color: '#d4af6a', fontSize: 10, fontWeight: 700 }}>GESTIONAR AGENTES ➔</div>
@@ -213,9 +219,9 @@ export default function Dashboard({ onNavigate }) {
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
             <span style={{ color: '#d4af6a', fontSize: 12, fontWeight: 700 }}>🔍 Auditoría & Trazabilidad</span>
-            <span style={{ fontSize: 10, background: 'rgba(212,175,106,0.12)', border: '1px solid rgba(212,175,106,0.2)', color: '#d4af6a', padding: '1px 6px', borderRadius: 4 }}>100% Ok</span>
+            <span style={{ fontSize: 10, background: 'rgba(212,175,106,0.1)', border: '1px solid rgba(212,175,106,0.2)', color: '#d4af6a', padding: '1px 6px', borderRadius: 12 }}>100% Ok</span>
           </div>
-          <p style={{ fontSize: 10, color: '#a09d99', margin: '0 0 8px 0' }}>
+          <p style={{ fontSize: 10, color: '#a09d99', margin: '0 0 6px 0' }}>
             Registro de logs en tiempo real y protocolo de blindaje AGENTS.md.
           </p>
           <div style={{ color: '#d4af6a', fontSize: 10, fontWeight: 700 }}>VER AUDITORÍA ➔</div>
@@ -237,9 +243,9 @@ export default function Dashboard({ onNavigate }) {
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
             <span style={{ color: '#d4af6a', fontSize: 12, fontWeight: 700 }}>⚡ Tareas & Pipeline DAG</span>
-            <span style={{ fontSize: 10, background: 'rgba(212,175,106,0.12)', border: '1px solid rgba(212,175,106,0.2)', color: '#d4af6a', padding: '1px 6px', borderRadius: 4 }}>Drive 5TB</span>
+            <span style={{ fontSize: 10, background: 'rgba(212,175,106,0.1)', border: '1px solid rgba(212,175,106,0.2)', color: '#d4af6a', padding: '1px 6px', borderRadius: 12 }}>Drive 5TB</span>
           </div>
-          <p style={{ fontSize: 10, color: '#a09d99', margin: '0 0 8px 0' }}>
+          <p style={{ fontSize: 10, color: '#a09d99', margin: '0 0 6px 0' }}>
             Estado de tareas en segundo plano, respaldos Rclone y despliegue continuo.
           </p>
           <div style={{ color: '#d4af6a', fontSize: 10, fontWeight: 700 }}>MONITOR PIPELINE ➔</div>
@@ -261,9 +267,9 @@ export default function Dashboard({ onNavigate }) {
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
             <span style={{ color: '#d4af6a', fontSize: 12, fontWeight: 700 }}>💎 Ventas & Catálogo 18k</span>
-            <span style={{ fontSize: 10, background: 'rgba(212,175,106,0.12)', border: '1px solid rgba(212,175,106,0.2)', color: '#d4af6a', padding: '1px 6px', borderRadius: 4 }}>Activo</span>
+            <span style={{ fontSize: 10, background: 'rgba(212,175,106,0.1)', border: '1px solid rgba(212,175,106,0.2)', color: '#d4af6a', padding: '1px 6px', borderRadius: 12 }}>Activo</span>
           </div>
-          <p style={{ fontSize: 10, color: '#a09d99', margin: '0 0 8px 0' }}>
+          <p style={{ fontSize: 10, color: '#a09d99', margin: '0 0 6px 0' }}>
             Joyería Fina HB Jewelry con checkout automático y cierre a WhatsApp $0.
           </p>
           <div style={{ color: '#d4af6a', fontSize: 10, fontWeight: 700 }}>IR A VENTAS ➔</div>
@@ -285,9 +291,9 @@ export default function Dashboard({ onNavigate }) {
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
             <span style={{ color: '#d4af6a', fontSize: 12, fontWeight: 700 }}>📲 WhatsApp Business ($0)</span>
-            <span style={{ fontSize: 10, background: 'rgba(212,175,106,0.12)', border: '1px solid rgba(212,175,106,0.2)', color: '#d4af6a', padding: '1px 6px', borderRadius: 4 }}>Puerto 3001</span>
+            <span style={{ fontSize: 10, background: 'rgba(212,175,106,0.1)', border: '1px solid rgba(212,175,106,0.2)', color: '#d4af6a', padding: '1px 6px', borderRadius: 12 }}>Puerto 3001</span>
           </div>
-          <p style={{ fontSize: 10, color: '#a09d99', margin: '0 0 8px 0' }}>
+          <p style={{ fontSize: 10, color: '#a09d99', margin: '0 0 6px 0' }}>
             Canal de comunicación 24/7 sin costo por mensaje ni intermediarios.
           </p>
           <div style={{ color: '#d4af6a', fontSize: 10, fontWeight: 700 }}>CANAL WHATSAPP ➔</div>
@@ -309,9 +315,9 @@ export default function Dashboard({ onNavigate }) {
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
             <span style={{ color: '#d4af6a', fontSize: 12, fontWeight: 700 }}>📦 Control de Inventario</span>
-            <span style={{ fontSize: 10, background: 'rgba(212,175,106,0.12)', border: '1px solid rgba(212,175,106,0.2)', color: '#d4af6a', padding: '1px 6px', borderRadius: 4 }}>Stock Ok</span>
+            <span style={{ fontSize: 10, background: 'rgba(212,175,106,0.1)', border: '1px solid rgba(212,175,106,0.2)', color: '#d4af6a', padding: '1px 6px', borderRadius: 12 }}>Stock Ok</span>
           </div>
-          <p style={{ fontSize: 10, color: '#a09d99', margin: '0 0 8px 0' }}>
+          <p style={{ fontSize: 10, color: '#a09d99', margin: '0 0 6px 0' }}>
             Gestión de stock de piezas finas en oro 18k e indicadores de inventario.
           </p>
           <div style={{ color: '#d4af6a', fontSize: 10, fontWeight: 700 }}>VER INVENTARIO ➔</div>
@@ -319,22 +325,22 @@ export default function Dashboard({ onNavigate }) {
 
       </div>
 
-      {/* ─── SECCIÓN 3: ACCIONES RECIENTES 100% UNIFICADAS CON SIDEBAR ─── */}
+      {/* ─── SECCIÓN 3: ACCIONES RECIENTES CON BOTONES TIPO PILL AMIGABLES ─── */}
       <div style={{ background: '#161412', border: '1px solid rgba(212,175,106,0.15)', borderRadius: 8, padding: '16px 18px' }}>
         
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
           <div>
-            <h3 style={{ fontSize: 11, fontWeight: 700, color: '#d4af6a', margin: '0 0 2px 0', textTransform: 'uppercase', letterSpacing: '1.5px' }}>
+            <h3 style={{ fontSize: 11, fontWeight: 700, color: '#d4af6a', margin: '0 0 2px 0', textTransform: 'uppercase', letterSpacing: '1px' }}>
               🚀 ACCIONES RECIENTES & DEPLOYS DIRECTOS
             </h3>
             <p style={{ fontSize: 11, color: '#6b6866', margin: 0 }}>Acciones rápidas para CEO, Gerencia, Supervisores y Operaciones</p>
           </div>
 
-          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-            <button onClick={() => handleNav('productos')} style={{ background: 'rgba(212,175,106,0.1)', border: '1px solid rgba(212,175,106,0.25)', color: '#d4af6a', padding: '5px 12px', borderRadius: 6, fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>➕ AGREGAR PRODUCTO</button>
-            <button onClick={() => handleNav('ordenes')} style={{ background: 'rgba(212,175,106,0.1)', border: '1px solid rgba(212,175,106,0.25)', color: '#d4af6a', padding: '5px 12px', borderRadius: 6, fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>📦 VER PEDIDOS</button>
-            <button onClick={() => handleNav('reportes')} style={{ background: 'rgba(212,175,106,0.1)', border: '1px solid rgba(212,175,106,0.25)', color: '#d4af6a', padding: '5px 12px', borderRadius: 6, fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>📊 REPORTES FINANCIEROS</button>
-            <button onClick={() => handleNav('pipeline')} style={{ background: 'rgba(212,175,106,0.1)', border: '1px solid rgba(212,175,106,0.25)', color: '#d4af6a', padding: '5px 12px', borderRadius: 6, fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>⚡ EJECUTAR PIPELINE DAG</button>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            <button onClick={() => handleNav('productos')} style={{ background: 'rgba(212,175,106,0.08)', border: '1px solid rgba(212,175,106,0.2)', color: '#d4af6a', padding: '6px 14px', borderRadius: 20, fontSize: 11, fontWeight: 600, cursor: 'pointer', transition: 'all 0.15s ease' }}>➕ Agregar Producto</button>
+            <button onClick={() => handleNav('ordenes')} style={{ background: 'rgba(212,175,106,0.08)', border: '1px solid rgba(212,175,106,0.2)', color: '#d4af6a', padding: '6px 14px', borderRadius: 20, fontSize: 11, fontWeight: 600, cursor: 'pointer', transition: 'all 0.15s ease' }}>📦 Ver Pedidos</button>
+            <button onClick={() => handleNav('reportes')} style={{ background: 'rgba(212,175,106,0.08)', border: '1px solid rgba(212,175,106,0.2)', color: '#d4af6a', padding: '6px 14px', borderRadius: 20, fontSize: 11, fontWeight: 600, cursor: 'pointer', transition: 'all 0.15s ease' }}>📊 Reportes Financieros</button>
+            <button onClick={() => handleNav('pipeline')} style={{ background: 'rgba(212,175,106,0.08)', border: '1px solid rgba(212,175,106,0.2)', color: '#d4af6a', padding: '6px 14px', borderRadius: 20, fontSize: 11, fontWeight: 600, cursor: 'pointer', transition: 'all 0.15s ease' }}>⚡ Ejecutar Pipeline</button>
           </div>
         </div>
 
@@ -355,7 +361,7 @@ export default function Dashboard({ onNavigate }) {
                 <td style={{ padding: '8px', color: '#f0ede8' }}>{act.evento}</td>
                 <td style={{ padding: '8px', color: '#a09d99' }}>{act.division}</td>
                 <td style={{ padding: '8px' }}>
-                  <span style={{ padding: '2px 8px', borderRadius: 4, background: 'rgba(212,175,106,0.12)', color: '#d4af6a', border: '1px solid rgba(212,175,106,0.25)', fontSize: 10, fontWeight: 600 }}>
+                  <span style={{ padding: '2px 8px', borderRadius: 12, background: 'rgba(212,175,106,0.1)', color: '#d4af6a', border: '1px solid rgba(212,175,106,0.2)', fontSize: 10, fontWeight: 600 }}>
                     {act.estado}
                   </span>
                 </td>

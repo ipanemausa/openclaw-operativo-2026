@@ -181,7 +181,7 @@ export default function Marketing() {
   const [hoverId, setHoverId] = useState(null);
 
   return (
-    <div style={{ padding: '20px 24px', maxWidth: 1400, margin: '0 auto', color: '#f0ede8', fontFamily: 'Inter, system-ui, sans-serif' }}>
+    <div style={{ padding: '24px 36px', width: '100%', maxWidth: '100%', boxSizing: 'border-box', color: '#f0ede8', fontFamily: 'Inter, system-ui, sans-serif' }}>
       
       {/* HEADER PESTAÑA VIDEOS UNIFICADO PALETA HB GOLD (#d4af6a) */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 18, paddingBottom: 14, borderBottom: '1px solid rgba(212,175,106,0.15)' }}>

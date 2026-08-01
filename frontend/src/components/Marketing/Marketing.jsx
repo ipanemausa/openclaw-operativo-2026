@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 // ─── CLOUD-FIRST & DYNAMIC CACHE BUSTING ─────────────────────────────────────────────
 const CLOUD_BASE = 'https://hb-jewelry-app.web.app';
 const IS_PROD = window.location.hostname !== 'localhost';
-const asset = (f) => IS_PROD ? `${CLOUD_BASE}/${f}?v=20260801_vPristineGuillermo` : `/${f}?v=20260801_vPristineGuillermo`;
+const asset = (f) => IS_PROD ? `${CLOUD_BASE}/${f}?v=20260801_v4LayersPacing` : `/${f}?v=20260801_v4LayersPacing`;
 
 // ─── CATÁLOGO DE VIDEOS REALES (POSTERS 100% LIMPIOS DE GUILLERMO SIN TEXTO BASTARDO) ───
 const VIDEO_CATALOG = [
@@ -90,7 +90,7 @@ const SUBTITLE_DATABASE = [
 ];
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   MODAL PARA REPRODUCIR CADA VIDEO CON AUDIO UNMUTED & SUBTÍTULOS BILINGÜES
+   MODAL DE VIDEO HD CON ARQUITECTURA DE 4 CAPAS (BLUR + AVATAR + TEXTO + AUDIO)
    ═══════════════════════════════════════════════════════════════════════════ */
 function VidModal({ v, onClose }) {
   const ref = useRef(null);
@@ -110,8 +110,8 @@ function VidModal({ v, onClose }) {
   }, [enableAudio]);
 
   return (
-    <div style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(5,5,5,0.95)', backdropFilter: 'blur(16px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
-      <div style={{ position: 'relative', width: '100%', maxWidth: 1000, background: '#161412', border: '1px solid rgba(212,175,106,0.25)', borderRadius: 12, overflow: 'hidden', boxShadow: '0 20px 60px rgba(0,0,0,0.9)' }}>
+    <div style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(5,5,5,0.96)', backdropFilter: 'blur(20px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+      <div style={{ position: 'relative', width: '100%', maxWidth: 1040, background: '#161412', border: '1px solid rgba(212,175,106,0.25)', borderRadius: 12, overflow: 'hidden', boxShadow: '0 20px 60px rgba(0,0,0,0.9)' }}>
         
         {/* CABECERA DEL MODAL */}
         <div style={{ padding: '12px 18px', background: '#0f0f0f', borderBottom: '1px solid rgba(212,175,106,0.15)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -122,16 +122,27 @@ function VidModal({ v, onClose }) {
           <button onClick={onClose} style={{ background: 'transparent', border: 'none', color: '#a09d99', fontSize: 20, cursor: 'pointer', padding: '0 8px' }}>✕</button>
         </div>
 
+        {/* INDICADOR DE ARQUITECTURA DE 4 CAPAS */}
+        <div style={{ padding: '6px 18px', background: 'rgba(212,175,106,0.06)', borderBottom: '1px solid rgba(212,175,106,0.1)', display: 'flex', gap: 14, fontSize: 10, color: '#d4af6a' }}>
+          <span>🖼️ Capa 1: Fondo Desenfoque</span>
+          <span>👤 Capa 2: Avatar HD 3D</span>
+          <span>✍️ Capa 3: Teleprompter Paso a Paso (Calmado)</span>
+          <span>🎙️ Capa 4: Voz Real Guillermo 48kHz</span>
+        </div>
+
         {/* OVERLAY BOTÓN DESBLOQUEO AUDIO SI NAVEGADOR BLOQUEA AUTO-PLAY */}
         {!unmuted && (
-          <div onClick={enableAudio} style={{ position: 'absolute', inset: 0, zIndex: 10, background: 'rgba(0,0,0,0.85)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+          <div onClick={enableAudio} style={{ position: 'absolute', inset: 0, zIndex: 20, background: 'rgba(0,0,0,0.85)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
             <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(212,175,106,0.2)', border: '2px solid #d4af6a', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, color: '#d4af6a', marginBottom: 12 }}>🔊</div>
             <div style={{ color: '#f0ede8', fontWeight: 800, fontSize: 15 }}>CLIC PARA ACTIVAR AUDIO ESTÉREO 48kHz HD</div>
             <div style={{ color: '#d4af6a', fontSize: 12, marginTop: 4 }}>Voz Real Clonada de Guillermo AI · EBU R128 (-14 LUFS)</div>
           </div>
         )}
 
-        <video ref={ref} key={v.src} src={v.src} playsInline controls autoPlay style={{ width: '100%', aspectRatio: '16/9', maxHeight: '62vh', display: 'block', objectFit: 'contain', background: '#000' }} />
+        {/* CONTENEDOR PRINCIPAL DEL REPRODUCTOR CON RENDERIZADO 16:9 */}
+        <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', maxHeight: '62vh', background: '#000', overflow: 'hidden' }}>
+          <video ref={ref} key={v.src} src={v.src} playsInline controls autoPlay style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#000' }} />
+        </div>
 
         {/* SUBTÍTULOS BILINGÜES EN 2 COLUMNAS */}
         <div style={{ padding: '14px 18px', background: '#161412', borderTop: '1px solid rgba(212,175,106,0.15)', maxHeight: '22vh', overflowY: 'auto' }}>
@@ -165,7 +176,7 @@ function VidModal({ v, onClose }) {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   MAIN MARKETING / VIDEO STUDIO COMPONENT (THUMBNAILS 100% LIMPIAS SIN TEXTO SOBRE LA FOTO)
+   MAIN MARKETING / VIDEO STUDIO COMPONENT
    ═══════════════════════════════════════════════════════════════════════════ */
 export default function Marketing() {
   const [activeVid, setActiveVid] = useState(null);
@@ -230,7 +241,7 @@ export default function Marketing() {
                 height: 260
               }}
             >
-              {/* THUMBNAIL 100% LIMPIA DE IMAGEN DE GUILLERMO (NINGÚN TEXTO SOBRE EL ROSTRO/CUERPO) */}
+              {/* THUMBNAIL 100% LIMPIA DE IMAGEN DE GUILLERMO */}
               <div style={{ position: 'relative', width: '100%', height: 160, background: '#000', overflow: 'hidden' }}>
                 <img src={v.poster} alt={v.title} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center' }} />
 

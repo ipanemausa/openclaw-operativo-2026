@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 // ─── CLOUD-FIRST PROTOCOL & CACHE BUSTING ──────────────────────────────────
 const CLOUD_BASE_URL = 'https://hb-jewelry-app.web.app';
 const IS_PROD = window.location.hostname !== 'localhost';
-const cloudAsset = (f) => IS_PROD ? `${CLOUD_BASE_URL}/${f}?v=20260801_vGuillermoAuthenticFace` : `/${f}?v=20260801_vGuillermoAuthenticFace`;
+const cloudAsset = (f) => IS_PROD ? `${CLOUD_BASE_URL}/${f}?v=20260801_vGuillermoNewAvatars` : `/${f}?v=20260801_vGuillermoNewAvatars`;
 
-// ─── CATÁLOGO DE 8 AVATARES EXCLUSIVOS CON EL ROSTRO REAL DE GUILLERMO AI ───
+// ─── CATÁLOGO DE 10 AVATARES EXCLUSIVOS 3D (100% ROSTRO REAL DE GUILLERMO AI) ───
 const AVATAR_CATALOG = [
   {
     id: 'master',
@@ -17,6 +17,28 @@ const AVATAR_CATALOG = [
     badgeBg: '#b45309',
     mesh: 'Malla Facial FLAME 3D (52 Blendshapes)',
     pose: 'De Pie · Presencia Corporativa'
+  },
+  {
+    id: 'polo_negro',
+    name: 'Guillermo — Polo Negro (Brazos Cruzados)',
+    style: 'Camisa de Cuello Negra · Logo HB · Mangas Arremangadas',
+    img: cloudAsset('avatars/negro.png'),
+    accent: '#d4af6a',
+    badge: '👔 POLO NEGRO 3D',
+    badgeBg: '#0f172a',
+    mesh: 'Malla Facial 3D + Brazos Cruzados Rig',
+    pose: 'Brazos Cruzados · Mangas Arremangadas'
+  },
+  {
+    id: 'polo_blanco',
+    name: 'Guillermo — Polo Blanco (Brazos Cruzados)',
+    style: 'Camisa de Cuello Blanca · Logo HB · Mangas Arremangadas',
+    img: cloudAsset('avatars/blanco.png'),
+    accent: '#d4af6a',
+    badge: '👔 POLO BLANCO 3D',
+    badgeBg: '#475569',
+    mesh: 'Malla Facial 3D + Brazos Cruzados Rig',
+    pose: 'Brazos Cruzados · Mangas Arremangadas'
   },
   {
     id: 'studio',
@@ -137,13 +159,13 @@ export default function AvatarMeet() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 18, paddingBottom: 14, borderBottom: '1px solid rgba(212,175,106,0.15)' }}>
         <div>
           <span style={{ padding: '3px 10px', borderRadius: 16, background: 'rgba(212,175,106,0.08)', color: '#d4af6a', fontSize: 10, fontWeight: 700, letterSpacing: 1, border: '1px solid rgba(212,175,106,0.2)' }}>
-            👑 PARRILLA OFICIAL DE AVATARES 3D (100% GUILLERMO AI)
+            👑 PARRILLA OFICIAL DE AVATARES 3D (10 MOdelos GUILLERMO AI)
           </span>
           <h2 style={{ fontSize: 22, fontWeight: 800, color: '#d4af6a', margin: '6px 0 2px 0' }}>
             Catálogo Tridimensional de Avatares Digitales
           </h2>
           <p style={{ fontSize: 12, color: '#a09d99', margin: 0 }}>
-            {AVATAR_CATALOG.length} modelos de Guillermo AI. Haz clic en cualquier tarjeta para abrir la vista a <strong>PANTALLA COMPLETA</strong>.
+            {AVATAR_CATALOG.length} modelos 3D de Guillermo AI. Incluye polos ejecutivos en negro y blanco con brazos cruzados. Haz clic para <strong>PANTALLA COMPLETA</strong>.
           </p>
         </div>
 
@@ -153,11 +175,11 @@ export default function AvatarMeet() {
         </div>
       </div>
 
-      {/* ─── PARRILLA HORIZONTAL DE 6 COLUMNAS CON IMÁGENES ESTÁTICAS DE GUILLERMO ─── */}
+      {/* ─── PARRILLA HORIZONTAL DE 5 COLUMNAS CON IMÁGENES 3D DE GUILLERMO ─── */}
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(6, 1fr)',
+          gridTemplateColumns: 'repeat(5, 1fr)',
           gap: 14,
           maxHeight: '52vh',
           overflowY: 'auto',
@@ -188,11 +210,11 @@ export default function AvatarMeet() {
                 boxShadow: isSelected ? '0 8px 20px rgba(212,175,106,0.2)' : '0 4px 10px rgba(0,0,0,0.5)',
                 display: 'flex',
                 flexDirection: 'column',
-                height: 260
+                height: 250
               }}
             >
-              {/* Imagen Avatar Estática 100% Guillermo */}
-              <div style={{ position: 'relative', width: '100%', height: 185, background: '#000', overflow: 'hidden' }}>
+              {/* Imagen Avatar 3D de Guillermo */}
+              <div style={{ position: 'relative', width: '100%', height: 175, background: '#000', overflow: 'hidden' }}>
                 <img
                   src={av.img}
                   alt={av.name}

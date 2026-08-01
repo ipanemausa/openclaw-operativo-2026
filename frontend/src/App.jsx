@@ -1,4 +1,5 @@
-import React, { useState, Component } from 'react'
+import React, { useState } from 'react'
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
 import Layout from './components/Layout/Layout'
 import Chat from './components/Chat/Chat'
 import Productos from './components/Productos/Productos'
@@ -24,79 +25,37 @@ import Integraciones from './components/Integraciones/Integraciones'
 import Certificaciones from './components/Certificaciones/Certificaciones'
 import FloatingVoiceWidget from './components/FloatingVoiceWidget/FloatingVoiceWidget'
 
-// ─── ERROR BOUNDARY DE PROTECCIÓN TOTAL CONTRA PANTALLA NEGRA ────────────────
-class ErrorBoundary extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { hasError: false, error: null }
-  }
-
-  static getDerivedStateFromError(error) {
-    return { hasError: true, error }
-  }
-
-  componentDidCatch(error, errorInfo) {
-    console.error("⚠️ Exception interceptada en React App Root:", error, errorInfo)
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div style={{ padding: 40, background: '#0d0d0d', color: '#d4af6a', fontFamily: 'sans-serif', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-          <h2 style={{ fontSize: 24, margin: '0 0 10px 0' }}>✨ OpenClaw Enterprise — Modo de Recuperación</h2>
-          <p style={{ color: '#a09d99', fontSize: 14 }}>Se ha restaurado la sesión tras un ajuste de interfaz.</p>
-          <button
-            onClick={() => {
-              this.setState({ hasError: false, error: null });
-              window.location.reload();
-            }}
-            style={{ background: '#d4af6a', color: '#000', border: 'none', padding: '10px 24px', borderRadius: 8, fontWeight: 'bold', cursor: 'pointer', marginTop: 15 }}
-          >
-            RECARGAR DASHBOARD PRINCIPAL ➔
-          </button>
-        </div>
-      )
-    }
-    return this.props.children
-  }
-}
-
 export default function App() {
   const [activeSection, setActiveSection] = useState('dashboard')
-
-  const renderSection = () => {
-    switch (activeSection) {
-      case 'dashboard':      return <Dashboard onNavigate={setActiveSection} />
-      case 'chat':           return <Chat />
-      case 'productos':      return <Productos />
-      case 'ventas':         return <Ventas />
-      case 'marketing':      return <Marketing />
-      case 'ordenes':        return <Ordenes />
-      case 'inventario':     return <Inventario />
-      case 'clientes':       return <Clientes />
-      case 'analytics':      return <Analytics />
-      case 'reportes':       return <Reportes />
-      case 'pipeline':       return <Pipeline />
-      case 'workspace':      return <Workspace />
-      case 'monitor':        return <Monitor />
-      case 'terminal':       return <Terminal />
-      case 'admin':          return <AdminDashboard />
-      case 'historial':      return <Historial />
-      case 'chat-historial': return <Chathistorial />
-      case 'auditoria':      return <Auditoria />
-      case 'avatar':         return <AvatarMeet />
-      case 'voicecall':      return <VoiceCall />
-      case 'integraciones':  return <Integraciones />
-      case 'certificaciones': return <Certificaciones />
-      default:               return <Dashboard onNavigate={setActiveSection} />
-    }
-  }
 
   return (
     <ErrorBoundary>
       <Layout activeSection={activeSection} onSelect={setActiveSection}>
-        {renderSection()}
-        <FloatingVoiceWidget />
+        {activeSection === 'dashboard' && <ErrorBoundary><Dashboard onNavigate={setActiveSection} /></ErrorBoundary>}
+        {activeSection === 'chat' && <ErrorBoundary><Chat /></ErrorBoundary>}
+        {activeSection === 'productos' && <ErrorBoundary><Productos /></ErrorBoundary>}
+        {activeSection === 'ventas' && <ErrorBoundary><Ventas /></ErrorBoundary>}
+        {activeSection === 'marketing' && <ErrorBoundary><Marketing /></ErrorBoundary>}
+        {activeSection === 'ordenes' && <ErrorBoundary><Ordenes /></ErrorBoundary>}
+        {activeSection === 'inventario' && <ErrorBoundary><Inventario /></ErrorBoundary>}
+        {activeSection === 'clientes' && <ErrorBoundary><Clientes /></ErrorBoundary>}
+        {activeSection === 'analytics' && <ErrorBoundary><Analytics /></ErrorBoundary>}
+        {activeSection === 'reportes' && <ErrorBoundary><Reportes /></ErrorBoundary>}
+        {activeSection === 'pipeline' && <ErrorBoundary><Pipeline /></ErrorBoundary>}
+        {activeSection === 'workspace' && <ErrorBoundary><Workspace /></ErrorBoundary>}
+        {activeSection === 'monitor' && <ErrorBoundary><Monitor /></ErrorBoundary>}
+        {activeSection === 'terminal' && <ErrorBoundary><Terminal /></ErrorBoundary>}
+        {activeSection === 'admin' && <ErrorBoundary><AdminDashboard /></ErrorBoundary>}
+        {activeSection === 'historial' && <ErrorBoundary><Historial /></ErrorBoundary>}
+        {activeSection === 'chat-historial' && <ErrorBoundary><Chathistorial /></ErrorBoundary>}
+        {activeSection === 'auditoria' && <ErrorBoundary><Auditoria /></ErrorBoundary>}
+        {activeSection === 'avatar' && <ErrorBoundary><AvatarMeet /></ErrorBoundary>}
+        {activeSection === 'voicecall' && <ErrorBoundary><VoiceCall /></ErrorBoundary>}
+        {activeSection === 'integraciones' && <ErrorBoundary><Integraciones /></ErrorBoundary>}
+        {activeSection === 'certificaciones' && <ErrorBoundary><Certificaciones /></ErrorBoundary>}
+        <ErrorBoundary>
+          <FloatingVoiceWidget />
+        </ErrorBoundary>
       </Layout>
     </ErrorBoundary>
   )

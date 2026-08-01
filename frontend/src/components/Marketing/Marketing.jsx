@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 
 // ─── CLOUD-FIRST & DYNAMIC CACHE BUSTING ─────────────────────────────────────────────
+const IS_PROD = typeof window !== 'undefined' && window.location.hostname !== 'localhost';
 const asset = (f) => (IS_PROD ? `${window.location.origin}/${f}?v=20260801_NO_CACHE_${Date.now()}` : `/${f}?v=20260801_NO_CACHE_${Date.now()}`);
 
 // ─── CATÁLOGO DE VIDEOS REALES (POSTERS DIVERSIFICADOS DE LA COLECCIÓN DE AVATARES) ───

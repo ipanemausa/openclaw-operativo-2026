@@ -40,6 +40,50 @@ const AVATAR_CATALOG = [
     pose: 'Brazos Cruzados · Mangas Arremangadas'
   },
   {
+    id: 'polo_azul',
+    name: 'Guillermo — Polo Azul (Brazos Cruzados)',
+    style: 'Camisa de Cuello Azul · Logo HB · Mangas Arremangadas',
+    img: cloudAsset('avatars/azul.png'),
+    accent: '#d4af6a',
+    badge: '👔 POLO AZUL 3D',
+    badgeBg: '#1d4ed8',
+    mesh: 'Malla Facial 3D + Brazos Cruzados Rig',
+    pose: 'Brazos Cruzados · Mangas Arremangadas'
+  },
+  {
+    id: 'polo_rojo',
+    name: 'Guillermo — Polo Rojo (Brazos Cruzados)',
+    style: 'Camisa de Cuello Roja · Logo HB · Mangas Arremangadas',
+    img: cloudAsset('avatars/rojo.png'),
+    accent: '#d4af6a',
+    badge: '👔 POLO ROJO 3D',
+    badgeBg: '#b91c1c',
+    mesh: 'Malla Facial 3D + Brazos Cruzados Rig',
+    pose: 'Brazos Cruzados · Mangas Arremangadas'
+  },
+  {
+    id: 'polo_verde',
+    name: 'Guillermo — Polo Verde (Brazos Cruzados)',
+    style: 'Camisa de Cuello Verde · Logo HB · Mangas Arremangadas',
+    img: cloudAsset('avatars/verde.png'),
+    accent: '#d4af6a',
+    badge: '👔 POLO VERDE 3D',
+    badgeBg: '#059669',
+    mesh: 'Malla Facial 3D + Brazos Cruzados Rig',
+    pose: 'Brazos Cruzados · Mangas Arremangadas'
+  },
+  {
+    id: 'polo_dorado',
+    name: 'Guillermo — Polo Dorado (Brazos Cruzados)',
+    style: 'Camisa de Cuello Dorada · Logo HB · Mangas Arremangadas',
+    img: cloudAsset('avatars/dorado.png'),
+    accent: '#d4af6a',
+    badge: '👔 POLO DORADO 3D',
+    badgeBg: '#b45309',
+    mesh: 'Malla Facial 3D + Brazos Cruzados Rig',
+    pose: 'Brazos Cruzados · Mangas Arremangadas'
+  },
+  {
     id: 'studio',
     name: 'Guillermo — Studio 3D (De Pie)',
     style: 'Cuerpo Entero · Micrófono Boom · Jeans',

@@ -1,10 +1,9 @@
 # =====================================================================
 # OPENCLAW FM BROADCAST STEREO HD VOICE & 3D MOTION AVATAR RENDERER (2026.7.1)
 # =====================================================================
-# SISTEMA DE VOZ HUMANIZADA FILTRADA Y ECUALIZADA EN ESTUDIO FM:
-# - Sustitución total de TTS robótico por Voz Real Clonada de Guillermo
-# - Cadena FFmpeg FM Broadcast: Highpass 75Hz, EQ de 5 Bandas (Cálida 250Hz + Presencia 3.2kHz),
-#   Compresión Dinámica FM Compand, De-Esser, Estéreo 48kHz AAC 256k (-14 LUFS EBU R128).
+# - RENDERIZADO DE CARACTERES PASO A PASO (TELEPROMPTER CHARACTER-BY-CHARACTER)
+# - SINOPSIS VOCAL SINCRONIZADA Y BOCA ANIMADA DINÁMICA
+# - CADENA FFMPEG FM BROADCAST 48kHz ESTÉREO AAC 256K (-14 LUFS)
 # =====================================================================
 
 import os
@@ -15,7 +14,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 print("=========================================================")
-print(" [AUDIO MASTER FM & 3D RENDERER] APLICANDO VOZ HUMANIZADA ECUALIZADA FM ")
+print(" [RENDERIZADOR RAG 3D & CARACTER PASO A PASO] INICIANDO ")
 print("=========================================================")
 
 PUBLIC_DIR = r"C:\openclaw\hb-jewelry\public"
@@ -28,7 +27,7 @@ os.makedirs(os.path.dirname(OUT_SHORT_PATH), exist_ok=True)
 WIDTH, HEIGHT = 1920, 1080
 FPS = 30
 
-# Voz Real Clonada de Guillermo (TikTok Master Audio)
+# Voz Real Clonada de Guillermo
 REAL_VOICE_PATH = os.path.join(PUBLIC_DIR, "showcase_voice.mp3")
 
 # Avatar Transparente de Guillermo AI
@@ -57,31 +56,39 @@ def apply_avatar_motion(avatar_base, t):
     frame_avatar = avatar_base.copy()
     
     # 1. Movimiento Corporal y Balanceo de Hombros
-    body_x_shift = math.sin(t * 1.8) * 6
-    body_y_shift = math.cos(t * 2.4) * 8
+    body_x_shift = math.sin(t * 1.8) * 8
+    body_y_shift = math.cos(t * 2.4) * 6
     
     # 2. Rotación de Cabeza Anatómica
-    head_angle = math.sin(t * 1.5) * 1.8
+    head_angle = math.sin(t * 1.5) * 2.2
     frame_avatar = frame_avatar.rotate(head_angle, resample=Image.Resampling.BICUBIC, expand=False)
     
     # 3. Sincronización Labial Dinámica Basada en Frecuencia Vocal
-    speech_amp = abs(math.sin(t * 14.0) * math.cos(t * 8.5))
-    if speech_amp > 0.25:
+    speech_amp = abs(math.sin(t * 16.0) * math.cos(t * 9.5))
+    if speech_amp > 0.15:
         draw_av = ImageDraw.Draw(frame_avatar)
         mouth_center_x = int(avatar_w * 0.48)
         mouth_center_y = int(avatar_h * 0.38)
-        mouth_w = int(24 + speech_amp * 18)
-        mouth_h = int(6 + speech_amp * 16)
+        mouth_w = int(28 + speech_amp * 22)
+        mouth_h = int(8 + speech_amp * 20)
         
+        # Cavidad Bucal
         draw_av.ellipse(
             [mouth_center_x - mouth_w//2, mouth_center_y - mouth_h//2,
              mouth_center_x + mouth_w//2, mouth_center_y + mouth_h//2],
-            fill=(60, 20, 20, 220)
+            fill=(40, 10, 10, 240)
         )
+        # Lengua / Dientes
+        draw_av.ellipse(
+            [mouth_center_x - mouth_w//3, mouth_center_y + 2,
+             mouth_center_x + mouth_w//3, mouth_center_y + mouth_h//2 - 1],
+            fill=(200, 70, 70, 240)
+        )
+        # Borde de Labios
         draw_av.arc(
-            [mouth_center_x - mouth_w//2, mouth_center_y - mouth_h//2 - 2,
-             mouth_center_x + mouth_w//2, mouth_center_y + mouth_h//2 + 2],
-            start=0, end=180, fill=(180, 80, 80, 255), width=2
+            [mouth_center_x - mouth_w//2 - 1, mouth_center_y - mouth_h//2 - 2,
+             mouth_center_x + mouth_w//2 + 1, mouth_center_y + mouth_h//2 + 2],
+            start=0, end=360, fill=(220, 100, 100, 255), width=3
         )
         
     # 4. Parpadeo Ocular (Blinking Fisiológico cada 3.2s)
@@ -91,8 +98,8 @@ def apply_avatar_motion(avatar_base, t):
         eye_y = int(avatar_h * 0.30)
         eye1_x = int(avatar_w * 0.43)
         eye2_x = int(avatar_w * 0.53)
-        draw_av.line([eye1_x - 12, eye_y, eye1_x + 12, eye_y], fill=(40, 20, 15, 240), width=4)
-        draw_av.line([eye2_x - 12, eye_y, eye2_x + 12, eye_y], fill=(40, 20, 15, 240), width=4)
+        draw_av.line([eye1_x - 14, eye_y, eye1_x + 14, eye_y], fill=(40, 20, 15, 240), width=5)
+        draw_av.line([eye2_x - 14, eye_y, eye2_x + 14, eye_y], fill=(40, 20, 15, 240), width=5)
 
     return frame_avatar, body_x_shift, body_y_shift
 
@@ -102,7 +109,7 @@ def render_master_sequence(duration_sec, out_path, is_full_youtube=False):
     os.makedirs(temp_dir, exist_ok=True)
 
     try:
-        font_large = ImageFont.truetype("arialbd.ttf", 46 if is_full_youtube else 54)
+        font_large = ImageFont.truetype("arialbd.ttf", 52 if is_full_youtube else 58)
         font_header = ImageFont.truetype("arialbd.ttf", 36)
         font_badge = ImageFont.truetype("arialbd.ttf", 26)
     except Exception:
@@ -110,11 +117,23 @@ def render_master_sequence(duration_sec, out_path, is_full_youtube=False):
         font_header = ImageFont.load_default()
         font_badge = ImageFont.load_default()
 
-    print(f"\n[+] Renderizando {total_frames} fotogramas (Duración: {duration_sec}s)...")
+    print(f"\n[+] Renderizando {total_frames} fotogramas con Caracteres Paso a Paso (Duración: {duration_sec}s)...")
+
+    num_sentences = len(EDUCATIONAL_FULL_SCRIPT)
+    sec_per_sentence = duration_sec / num_sentences
 
     for f_idx in range(total_frames):
         t = f_idx / FPS
-        progress = f_idx / total_frames
+        
+        # Sentencia y Progreso de Caracteres Paso a Paso
+        sentence_idx = min(int(t / sec_per_sentence), num_sentences - 1)
+        current_sentence = EDUCATIONAL_FULL_SCRIPT[sentence_idx]
+        
+        t_in_sentence = t - (sentence_idx * sec_per_sentence)
+        sent_progress = min(1.0, max(0.0, t_in_sentence / (sec_per_sentence * 0.85)))
+        
+        num_chars_to_show = int(sent_progress * len(current_sentence))
+        visible_text = current_sentence[:num_chars_to_show]
 
         # Fondo Azul Marino Gradiente 3D HSL
         base = Image.new("RGBA", (WIDTH, HEIGHT), (15, 23, 42, 255))
@@ -124,7 +143,7 @@ def render_master_sequence(duration_sec, out_path, is_full_youtube=False):
             alpha = int(45 * (1 - r / 650))
             draw.ellipse([WIDTH/2 - r, HEIGHT/2 - r, WIDTH/2 + r, HEIGHT/2 + r], fill=(30, 27, 75, alpha))
 
-        # Avatar Transparente animado
+        # Avatar Transparente animado con lip-sync activo
         anim_avatar, body_x, body_y = apply_avatar_motion(base_avatar_img, t)
         avatar_x = int(WIDTH - avatar_w - 40 + body_x)
         avatar_y = int(HEIGHT - avatar_h + body_y + 10)
@@ -132,25 +151,22 @@ def render_master_sequence(duration_sec, out_path, is_full_youtube=False):
 
         # Header Badge YouTube Pro
         badge_x, badge_y = 80, 60
-        badge_w, badge_h = 360, 52
+        badge_w, badge_h = 380, 52
         draw.rounded_rectangle([badge_x, badge_y, badge_x + badge_w, badge_y + badge_h], radius=26, fill=(71, 85, 105, 240), outline=(255, 255, 255, 120), width=2)
         draw.text((badge_x + 22, badge_y + 11), "OPENCLAW YOUTUBE MASTER 🔴", font=font_badge, fill=(255, 255, 255, 255))
-        draw.text((badge_x + badge_w + 30, badge_y + 5), "OpenClaw 2026 · Curso Completo con Voz Real FM", font=font_header, fill=(132, 204, 22, 255))
+        draw.text((badge_x + badge_w + 30, badge_y + 5), "OpenClaw 2026 · Renderizado de Caracteres Paso a Paso", font=font_header, fill=(132, 204, 22, 255))
 
-        # Generador de Caracteres Continuo (Subtítulos Amarillos Dinámicos)
-        sentence_idx = int(progress * len(EDUCATIONAL_FULL_SCRIPT)) % len(EDUCATIONAL_FULL_SCRIPT)
-        current_sentence = EDUCATIONAL_FULL_SCRIPT[sentence_idx]
-
-        words = current_sentence.split()
-        line1 = " ".join(words[:min(5, len(words))])
-        line2 = " ".join(words[5:min(10, len(words))])
-        line3 = " ".join(words[10:])
+        # RENDERIZADO DE CARACTERES PASO A PASO EN 3 LÍNEAS
+        words = visible_text.split()
+        line1 = " ".join(words[:min(5, len(words))]) if len(words) > 0 else ""
+        line2 = " ".join(words[5:min(10, len(words))]) if len(words) > 5 else ""
+        line3 = " ".join(words[10:]) if len(words) > 10 else ""
 
         text_x, text_y = 80, 380
         for line_idx, line_text in enumerate([line1, line2, line3]):
             if not line_text:
                 continue
-            curr_y = text_y + (line_idx * 75)
+            curr_y = text_y + (line_idx * 80)
 
             # Borde negro de 4px para legibilidad tipo YouTube
             for dx in range(-4, 5):
@@ -200,12 +216,12 @@ def render_master_sequence(duration_sec, out_path, is_full_youtube=False):
 
     import shutil
     shutil.rmtree(temp_dir, ignore_errors=True)
-    print(f" -> [OK] Video renderizado con Voz Humanizada Ecualizada FM (48kHz): {out_path}")
+    print(f" -> [OK] Video renderizado con Caracteres Paso a Paso y Voz FM (48kHz): {out_path}")
 
 if __name__ == "__main__":
     render_master_sequence(15, OUT_SHORT_PATH, is_full_youtube=False)
     render_master_sequence(60, OUT_LONG_PATH, is_full_youtube=True)
 
     print("\n=========================================================")
-    print(" [OK] CADENA DE VOZ REAL HUMANIZADA FM Y VIDEO COMPILADOS CON ÉXITO")
+    print(" [OK] CARACTERES PASO A PASO Y VOZ HUMANIZADA COMPILADOS CON ÉXITO")
     print("=========================================================")

@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 // ─── CLOUD-FIRST & DYNAMIC CACHE BUSTING ─────────────────────────────────────────────
 const CLOUD_BASE = 'https://hb-jewelry-app.web.app';
 const IS_PROD = window.location.hostname !== 'localhost';
-const asset = (f) => IS_PROD ? `${CLOUD_BASE}/${f}?v=20260801_vUniqueVid` : `/${f}?v=20260801_vUniqueVid`;
+const asset = (f) => IS_PROD ? `${CLOUD_BASE}/${f}?v=20260801_vCharByCharTeleprompter` : `/${f}?v=20260801_vCharByCharTeleprompter`;
 
 // ─── CATÁLOGO DE VIDEOS REALES 100% ÚNICOS E INDEPENDIENTES ──────────────────
 const VIDEO_CATALOG = [
@@ -11,12 +11,12 @@ const VIDEO_CATALOG = [
     id: 'talk-grow-educational',
     src: asset('videos/talk_grow_format/real_talk_grow_educational.mp4'),
     poster: asset('posters/poster_talk_grow.png'),
-    title: '🎓 EDUCATIVO 3D: 7 Hacks de Claude AI 4.6 (Split-Screen HD)',
+    title: '🎓 EDUCATIVO 3D: 7 Hacks de Claude AI 4.6 (Caracteres Paso a Paso)',
     tag: '⭐ TALK-GROW 3D',
     tagBg: 'linear-gradient(135deg, #f59e0b 0%, #b45309 100%)',
     accent: '#fbbf24',
     dur: '0:15',
-    description: 'Demostración de los 7 hacks de Claude 4.6 con formato educativo dividido y voz estéreo a 48kHz.'
+    description: 'Demostración de los 7 hacks de Claude 4.6 con formato teleprompter paso a paso y voz estéreo a 48kHz.'
   },
   {
     id: 'yt-special-claude-master',
@@ -259,55 +259,42 @@ export default function Marketing() {
                 boxShadow: isHovered ? `0 12px 28px ${v.accent}44` : '0 4px 12px rgba(0,0,0,0.5)',
                 display: 'flex',
                 flexDirection: 'column',
-                height: 290
+                height: 270
               }}
             >
-              {/* Poster Video */}
+              {/* Poster limpia static thumbnail */}
               <div style={{ position: 'relative', width: '100%', height: 180, background: '#000', overflow: 'hidden' }}>
-                <img
-                  src={v.poster}
-                  alt={v.title}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    filter: isHovered ? 'brightness(1.08)' : 'brightness(0.85)',
-                    transition: 'all 0.3s ease'
-                  }}
-                />
-                
-                {/* Badge Tag */}
-                <div style={{ position: 'absolute', top: 8, left: 8, zIndex: 3, padding: '3px 8px', borderRadius: 6, background: v.tagBg, color: '#fff', fontSize: 10, fontWeight: 900, boxShadow: '0 2px 8px rgba(0,0,0,0.6)' }}>
+                <img src={v.poster} alt={v.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+
+                <div style={{ position: 'absolute', top: 8, left: 8, zIndex: 3, padding: '3px 8px', borderRadius: 20, background: v.tagBg, color: '#fff', fontSize: 10, fontWeight: 900 }}>
                   {v.tag}
                 </div>
 
-                {/* Play Icon */}
-                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 4 }}>
-                  <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(0,0,0,0.8)', border: `2px solid ${v.accent}`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 18, transform: isHovered ? 'scale(1.15)' : 'scale(1)', transition: 'all 0.2s ease' }}>
-                    ▶
-                  </div>
+                <div style={{ position: 'absolute', bottom: 8, right: 8, zIndex: 3, padding: '2px 6px', borderRadius: 4, background: 'rgba(0,0,0,0.8)', color: '#fff', fontSize: 10, fontWeight: 700 }}>
+                  {v.dur}
                 </div>
 
-                <div style={{ position: 'absolute', bottom: 8, right: 8, zIndex: 3, padding: '2px 6px', borderRadius: 4, background: 'rgba(0,0,0,0.85)', color: '#fff', fontSize: 10, fontWeight: 700 }}>
-                  {v.dur}
+                <div style={{ position: 'absolute', inset: 0, zIndex: 2, background: isHovered ? 'rgba(0,0,0,0.2)' : 'rgba(0,0,0,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.25s ease' }}>
+                  <div style={{ width: 44, height: 44, borderRadius: '50%', background: v.accent, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.6)', transform: isHovered ? 'scale(1.15)' : 'scale(1)', transition: 'all 0.25s ease' }}>
+                    <span style={{ color: '#000', fontSize: 18, marginLeft: 2 }}>▶</span>
+                  </div>
                 </div>
               </div>
 
-              {/* Info Inferior */}
               <div style={{ padding: '10px 12px', background: '#0a0a0a', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                <div style={{ color: '#ffffff', fontWeight: 800, fontSize: 12, lineHeight: 1.3, marginBottom: 2, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                <div style={{ color: '#ffffff', fontWeight: 800, fontSize: 11, marginBottom: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {v.title}
                 </div>
-                <div style={{ color: '#888', fontSize: 10 }}>Guillermo AI Avatar Master 3D</div>
+                <div style={{ color: '#888', fontSize: 9, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {v.description}
+                </div>
               </div>
             </div>
           );
         })}
       </div>
 
-      {/* MODAL DE VIDEO Y BASE DE DATOS */}
       {activeVid && <VidModal v={activeVid} onClose={() => setActiveVid(null)} />}
-
     </div>
   );
 }

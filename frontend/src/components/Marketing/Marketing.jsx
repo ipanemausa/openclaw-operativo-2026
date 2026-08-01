@@ -1,80 +1,100 @@
-import React, { useState, useRef, useEffect, useCallback, memo } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 
-// ─── CLOUD-FIRST & CACHE BUSTING ─────────────────────────────────────────────
+// ─── CLOUD-FIRST & DYNAMIC CACHE BUSTING ─────────────────────────────────────────────
 const CLOUD_BASE = 'https://hb-jewelry-app.web.app';
 const IS_PROD = window.location.hostname !== 'localhost';
-const asset = (f) => IS_PROD ? `${CLOUD_BASE}/${f}?v=20260801_v6VidGrid` : `/${f}?v=20260801_v6VidGrid`;
+const asset = (f) => IS_PROD ? `${CLOUD_BASE}/${f}?v=20260801_vUniqueVid` : `/${f}?v=20260801_vUniqueVid`;
 
-// ─── CATÁLOGO DE VIDEOS REALES E INDEPENDIENTES 3D ──────────────────────────────
+// ─── CATÁLOGO DE VIDEOS REALES 100% ÚNICOS E INDEPENDIENTES ──────────────────
 const VIDEO_CATALOG = [
   {
     id: 'talk-grow-educational',
     src: asset('videos/talk_grow_format/real_talk_grow_educational.mp4'),
     poster: asset('posters/poster_talk_grow.png'),
-    title: '🎓 EDUCATIVO 3D: 7 Hacks de Claude AI 4.6 & Voz Real (Format Split-Screen HD)',
-    tag: '⭐ TALK-GROW 3D STÉREO',
+    title: '🎓 EDUCATIVO 3D: 7 Hacks de Claude AI 4.6 (Split-Screen HD)',
+    tag: '⭐ TALK-GROW 3D',
     tagBg: 'linear-gradient(135deg, #f59e0b 0%, #b45309 100%)',
     accent: '#fbbf24',
     dur: '0:15',
-    isYouTubeMaster: true,
-    vert: false
+    description: 'Demostración de los 7 hacks de Claude 4.6 con formato educativo dividido y voz estéreo a 48kHz.'
   },
   {
     id: 'yt-special-claude-master',
     src: asset('videos/talk_grow_format/youtube_master_10min_educational.mp4'),
     poster: asset('posters/poster_yt_special.png'),
-    title: '🔥 YOUTUBE MASTER 3D: Curso Completo de Agentes Autónomos & 7 Hacks de Claude (10 Min)',
-    tag: '🔴 YOUTUBE MASTER 1080p',
+    title: '🔴 YOUTUBE MASTER: Curso Completo de Agentes AI & 7 Hacks (10 Min)',
+    tag: '🔴 MASTER 1080p',
     tagBg: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
     accent: '#ef4444',
     dur: '1:00',
-    isYouTubeMaster: true,
-    vert: false
+    description: 'Curso intensivo de agentes autónomos, arquitectura RAG y vectorización en Firestore.'
   },
   {
     id: 'podcast',
-    src: asset('videos/talk_grow_format/real_talk_grow_educational.mp4'),
+    src: asset('hb_tutorial_avatar_v1.mp4'),
     poster: asset('posters/poster_podcast.png'),
-    title: 'Podcast 3D: Ecosistema Ilimitado AI (Guillermo Speaking Voz Real 48kHz)',
-    tag: '🎙️ PODCAST 3D',
-    tagBg: '#b91c1c',
-    accent: '#ef4444',
-    dur: '0:15',
-    vert: false
+    title: '🎙️ PODCAST: Ecosistema Ilimitado AI (Voz Real Guillermo Avatar)',
+    tag: '🎙️ PODCAST',
+    tagBg: '#7c3aed',
+    accent: '#a78bfa',
+    dur: '1:35',
+    description: 'Guillermo AI en estudio explicando el ecosistema ilimitado de IA y automatización comercial.'
   },
   {
     id: 'tutorial',
-    src: asset('videos/talk_grow_format/youtube_master_10min_educational.mp4'),
+    src: asset('hb_tutorial_narrado_v1.mp4'),
     poster: asset('posters/poster_tutorial.png'),
-    title: 'Tutorial App HB Jewelry 18k Completo (Voz Real & Malla 3D)',
-    tag: '📹 TUTORIAL 3D',
-    tagBg: '#7c3aed',
-    accent: '#a78bfa',
-    dur: '1:00',
-    vert: false
-  },
-  {
-    id: 'qa',
-    src: asset('videos/talk_grow_format/real_talk_grow_educational.mp4'),
-    poster: asset('posters/poster_tecnico.png'),
-    title: 'Demo Técnico 7 Q&A RAG Vectorial (768 Dimensions)',
-    tag: '🛠️ TÉCNICO 3D',
+    title: '📹 TUTORIAL: Manejo Completo de la App HB Jewelry 18k',
+    tag: '📹 TUTORIAL APP',
     tagBg: '#059669',
     accent: '#34d399',
-    dur: '0:15',
-    vert: false
+    dur: '1:16',
+    description: 'Guía paso a paso: módulo de ventas, WhatsApp $0, gestión de inventario y respaldo en la nube.'
   },
   {
-    id: 'showcase',
-    src: asset('videos/talk_grow_format/youtube_master_10min_educational.mp4'),
+    id: 'qa-english',
+    src: asset('output_avatar_english_7qa.mp4'),
+    poster: asset('posters/poster_tecnico.png'),
+    title: '🛠️ TÉCNICO: Demo Arquitectura 7 Q&A RAG 768-dim (English)',
+    tag: '🛠️ TECHNICAL DEMO',
+    tagBg: '#1d4ed8',
+    accent: '#60a5fa',
+    dur: '0:15',
+    description: 'Demostración técnica en inglés: arquitectura vectorial RAG 768-dim, WhisperFlow $0 y Rclone.'
+  },
+  {
+    id: 'showcase-18k',
+    src: asset('final_showcase.mp4'),
     poster: asset('posters/poster_showcase.png'),
-    title: 'Showcase Colección HB Jewelry 18k & Ventas WhatsApp $0',
+    title: '💎 SHOWCASE: Colección Joyería 18k & Ventas WhatsApp $0',
     tag: '💎 SHOWCASE 18K',
     tagBg: '#b45309',
     accent: '#fbbf24',
-    dur: '1:00',
-    vert: false
+    dur: '0:45',
+    description: 'Presentación comercial de la colección de joyería fina HB Jewelry con cierre automático.'
   },
+  {
+    id: 'tiktok-viral',
+    src: asset('tiktok_showcase.mp4'),
+    poster: asset('posters/poster_talk_grow_guillermo.png'),
+    title: '📱 TIKTOK VIRAL: Promocional Vertical 1080p TikTok/Reels',
+    tag: '📱 TIKTOK 9:16',
+    tagBg: '#be185d',
+    accent: '#f43f5e',
+    dur: '0:30',
+    description: 'Video vertical promocional optimizado para redes sociales con subtítulos amarillos de alto impacto.'
+  },
+  {
+    id: 'showcase-human-loop',
+    src: asset('showcase_human_loop.mp4'),
+    poster: asset('avatar_pro.png'),
+    title: '🤖 AVATAR BASE: Guillermo AI Human Digital Studio Loop',
+    tag: '🤖 AVATAR LOOP',
+    tagBg: '#475569',
+    accent: '#cbd5e1',
+    dur: '0:20',
+    description: 'Video base en estudio con loop continuo para gesticulación vocal y composición tridimensional.'
+  }
 ];
 
 // ─── TRANSCRIPCIÓN BILINGÜE BASE DE DATOS (2 COLUMNAS) ─────────────────────
@@ -90,7 +110,7 @@ const SUBTITLE_DATABASE = [
 ];
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   VID MODAL PLAYER CON AUDIO HD
+   VID MODAL PLAYER CON AUDIO HD E INDEPENDENCIA ÚNICA
    ═══════════════════════════════════════════════════════════════════════════ */
 const VidModal = ({ v, onClose }) => {
   const ref = useRef(null)
@@ -116,7 +136,7 @@ const VidModal = ({ v, onClose }) => {
         el.play().catch(() => {})
       })
     }
-  }, [])
+  }, [v.src])
 
   return (
     <div id="vid-modal-bg" onClick={e => e.target.id === 'vid-modal-bg' && onClose()}
@@ -128,19 +148,30 @@ const VidModal = ({ v, onClose }) => {
         {!snd && (
           <div onClick={startWithSound} style={{ position: 'absolute', inset: 0, zIndex: 10, cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.72)', backdropFilter: 'blur(4px)' }}>
             <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'linear-gradient(135deg, #ef4444 0%, #b91c1c 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 34, boxShadow: '0 0 30px rgba(239,68,68,0.8)', marginBottom: 12 }}>🔊</div>
-            <div style={{ color: '#fff', fontWeight: 800, fontSize: 16 }}>CLIC PARA ACTIVAR AUDIO ESTÉREO 48kHz HD DEL AVATAR</div>
+            <div style={{ color: '#fff', fontWeight: 800, fontSize: 16 }}>CLIC PARA ACTIVAR AUDIO ESTÉREO 48kHz HD DEL VIDEO</div>
             <div style={{ color: '#d4af6a', fontSize: 12, marginTop: 4 }}>Voz Real Clonada de Guillermo AI · EBU R128 (-14 LUFS)</div>
           </div>
         )}
 
-        <video ref={ref} src={v.src} playsInline controls autoPlay style={{ width: '100%', aspectRatio: '16/9', maxHeight: '70vh', display: 'block', objectFit: 'contain', background: '#000' }} />
+        <video ref={ref} key={v.src} src={v.src} playsInline controls autoPlay style={{ width: '100%', aspectRatio: '16/9', maxHeight: '65vh', display: 'block', objectFit: 'contain', background: '#000' }} />
 
-        {/* ─── BASE DE DATOS BILINGÜE EN 2 COLUMNAS (TIME | ES | EN) ─── */}
-        <div style={{ padding: '14px 18px', background: '#080808', borderTop: '1px solid rgba(255,255,255,0.1)', maxHeight: '18vh', overflowY: 'auto' }}>
+        {/* ─── INFO DEL VIDEO SELECCIONADO & BASE DE DATOS BILINGÜE EN 2 COLUMNAS ─── */}
+        <div style={{ padding: '14px 18px', background: '#080808', borderTop: '1px solid rgba(255,255,255,0.1)', maxHeight: '22vh', overflowY: 'auto' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+            <div>
+              <span style={{ color: '#fbbf24', fontSize: 12, fontWeight: 900, marginRight: 8 }}>{v.tag}</span>
+              <strong style={{ color: '#fff', fontSize: 14 }}>{v.title}</strong>
+            </div>
+            <span style={{ color: '#94a3b8', fontSize: 11, background: 'rgba(255,255,255,0.06)', padding: '2px 8px', borderRadius: 4 }}>{v.dur}</span>
+          </div>
+
+          <p style={{ color: '#cbd5e1', fontSize: 12, margin: '0 0 10px 0', lineHeight: 1.4 }}>{v.description}</p>
+
           <div style={{ color: '#fbbf24', fontSize: 11, fontWeight: 800, letterSpacing: 1, marginBottom: 8, display: 'flex', gap: 6, alignItems: 'center' }}>
-            <span>📄 BASE DE DATOS BILINGÜE DE SUBTÍTULOS</span>
+            <span>📄 BASE DE DATOS BILINGÜE DE SUBTÍTULOS DE ESTE VIDEO</span>
             <span style={{ color: '#64748b', fontSize: 10 }}>(2 Columnas en Tiempo Real)</span>
           </div>
+          
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 11 }}>
             <thead>
               <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', color: '#94a3b8', textAlign: 'left' }}>
@@ -166,7 +197,7 @@ const VidModal = ({ v, onClose }) => {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   MAIN MARKETING / VIDEO STUDIO COMPONENT
+   MAIN MARKETING / VIDEO STUDIO COMPONENT (100% UNIQUE VIDEOS)
    ═══════════════════════════════════════════════════════════════════════════ */
 export default function Marketing() {
   const [activeVid, setActiveVid] = useState(null);
@@ -179,18 +210,18 @@ export default function Marketing() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20, paddingBottom: 16, borderBottom: '1px solid rgba(239,68,68,0.2)' }}>
         <div>
           <span style={{ padding: '4px 12px', borderRadius: 20, background: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)', color: '#fff', fontSize: 11, fontWeight: 800, letterSpacing: 1, boxShadow: '0 4px 12px rgba(220,38,38,0.3)' }}>
-            🔴 PARRILLA OFICIAL DE VIDEOS & CURSOS CLAUDE 4.6
+            🔴 PARRILLA OFICIAL DE VIDEOS 100% ÚNICOS & INDEPENDIENTES
           </span>
           <h2 style={{ fontSize: 24, fontWeight: 900, color: '#ffffff', margin: '8px 0 4px 0' }}>
             Estudio de Video HD & Cursos de Automatización
           </h2>
           <p style={{ fontSize: 13, color: '#94a3b8', margin: 0 }}>
-            Visualización en 6 columnas con scroll vertical continuo, audio estéreo a 48kHz y base bilingüe de subtítulos
+            Visualización en 6 columnas con scroll vertical continuo. Cada tarjeta reproduce su propio archivo de video MP4 único.
           </p>
         </div>
 
         <div style={{ background: 'rgba(15,23,42,0.8)', border: '1px solid rgba(239,68,68,0.4)', padding: '10px 18px', borderRadius: 12, textAlign: 'right' }}>
-          <div style={{ color: '#ef4444', fontSize: 13, fontWeight: 800 }}>6 Videos Master 1080p HD</div>
+          <div style={{ color: '#ef4444', fontSize: 13, fontWeight: 800 }}>{VIDEO_CATALOG.length} Videos Únicos</div>
           <div style={{ color: '#94a3b8', fontSize: 11 }}>Calidad Estudio DaVinci AI</div>
         </div>
       </div>
@@ -222,10 +253,10 @@ export default function Marketing() {
                 overflow: 'hidden',
                 position: 'relative',
                 background: '#090d16',
-                border: v.isYouTubeMaster ? '2px solid #ef4444' : (isHovered ? `1px solid ${v.accent}` : '1px solid rgba(255,255,255,0.08)'),
+                border: isHovered ? `2px solid ${v.accent}` : '1px solid rgba(255,255,255,0.08)',
                 transition: 'all 0.25s ease',
                 transform: isHovered ? 'translateY(-4px)' : 'none',
-                boxShadow: isHovered ? `0 12px 28px ${v.accent}33` : '0 4px 12px rgba(0,0,0,0.5)',
+                boxShadow: isHovered ? `0 12px 28px ${v.accent}44` : '0 4px 12px rgba(0,0,0,0.5)',
                 display: 'flex',
                 flexDirection: 'column',
                 height: 290

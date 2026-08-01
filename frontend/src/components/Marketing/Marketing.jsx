@@ -3,14 +3,14 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 // ─── CLOUD-FIRST & DYNAMIC CACHE BUSTING ─────────────────────────────────────────────
 const CLOUD_BASE = 'https://hb-jewelry-app.web.app';
 const IS_PROD = window.location.hostname !== 'localhost';
-const asset = (f) => IS_PROD ? `${CLOUD_BASE}/${f}?v=20260801_vCleanThumbnails` : `/${f}?v=20260801_vCleanThumbnails`;
+const asset = (f) => IS_PROD ? `${CLOUD_BASE}/${f}?v=20260801_vPristineGuillermo` : `/${f}?v=20260801_vPristineGuillermo`;
 
-// ─── CATÁLOGO DE VIDEOS REALES 100% ÚNICOS E INDEPENDIENTES ──────────────────
+// ─── CATÁLOGO DE VIDEOS REALES (POSTERS 100% LIMPIOS DE GUILLERMO SIN TEXTO BASTARDO) ───
 const VIDEO_CATALOG = [
   {
     id: 'talk-grow-educational',
     src: asset('videos/talk_grow_format/real_talk_grow_educational.mp4'),
-    poster: asset('posters/poster_talk_grow.png'),
+    poster: asset('avatars/studio_mic.png'),
     title: 'Educativo 3D: 7 Hacks de Claude AI 4.6',
     tag: 'TALK-GROW 3D',
     dur: '0:15',
@@ -19,7 +19,7 @@ const VIDEO_CATALOG = [
   {
     id: 'yt-special-claude-master',
     src: asset('videos/talk_grow_format/youtube_master_10min_educational.mp4'),
-    poster: asset('posters/poster_yt_special.png'),
+    poster: asset('avatars/desk_mic.png'),
     title: 'YouTube Master: Agentes AI & 7 Hacks (10 Min)',
     tag: 'MASTER 1080p',
     dur: '1:00',
@@ -37,7 +37,7 @@ const VIDEO_CATALOG = [
   {
     id: 'tutorial',
     src: asset('hb_tutorial_narrado_v1.mp4'),
-    poster: asset('posters/poster_tutorial.png'),
+    poster: asset('avatars/studio_mic.png'),
     title: 'Tutorial: Manejo Completo de App HB 18k',
     tag: 'TUTORIAL APP',
     dur: '1:16',
@@ -46,7 +46,7 @@ const VIDEO_CATALOG = [
   {
     id: 'qa-english',
     src: asset('output_avatar_english_7qa.mp4'),
-    poster: asset('posters/poster_tecnico.png'),
+    poster: asset('avatars/desk_mic.png'),
     title: 'Técnico: Demo Arquitectura 7 Q&A RAG (English)',
     tag: 'TECHNICAL DEMO',
     dur: '0:15',
@@ -55,7 +55,7 @@ const VIDEO_CATALOG = [
   {
     id: 'showcase-18k',
     src: asset('final_showcase.mp4'),
-    poster: asset('posters/poster_showcase.png'),
+    poster: asset('avatar_pro.png'),
     title: 'Showcase: Colección Joyería 18k & WhatsApp $0',
     tag: 'SHOWCASE 18K',
     dur: '0:45',
@@ -64,7 +64,7 @@ const VIDEO_CATALOG = [
   {
     id: 'tiktok-viral',
     src: asset('tiktok_showcase.mp4'),
-    poster: asset('posters/poster_talk_grow_guillermo.png'),
+    poster: asset('avatar_pro.png'),
     title: 'TikTok Viral: Promocional Vertical 1080p',
     tag: 'TIKTOK 9:16',
     dur: '0:30',
@@ -165,7 +165,7 @@ function VidModal({ v, onClose }) {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   MAIN MARKETING / VIDEO STUDIO COMPONENT (THUMBNAILS LIMPIAS SIN TEXTO ENCIMA)
+   MAIN MARKETING / VIDEO STUDIO COMPONENT (THUMBNAILS 100% LIMPIAS SIN TEXTO SOBRE LA FOTO)
    ═══════════════════════════════════════════════════════════════════════════ */
 export default function Marketing() {
   const [activeVid, setActiveVid] = useState(null);
@@ -230,14 +230,14 @@ export default function Marketing() {
                 height: 260
               }}
             >
-              {/* THUMBNAIL 100% LIMPIA DE IMAGEN (NINGÚN TEXTO SOBRE LA FOTO) */}
+              {/* THUMBNAIL 100% LIMPIA DE IMAGEN DE GUILLERMO (NINGÚN TEXTO SOBRE EL ROSTRO/CUERPO) */}
               <div style={{ position: 'relative', width: '100%', height: 160, background: '#000', overflow: 'hidden' }}>
-                <img src={v.poster} alt={v.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src={v.poster} alt={v.title} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center' }} />
 
                 {/* BOTÓN PLAY SUTIL CENTRADO */}
-                <div style={{ position: 'absolute', inset: 0, zIndex: 2, background: isHovered ? 'rgba(0,0,0,0.15)' : 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s ease' }}>
-                  <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'rgba(212,175,106,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.6)', transform: isHovered ? 'scale(1.1)' : 'scale(1)', transition: 'all 0.2s ease' }}>
-                    <span style={{ color: '#000', fontSize: 16, marginLeft: 2 }}>▶</span>
+                <div style={{ position: 'absolute', inset: 0, zIndex: 2, background: isHovered ? 'rgba(0,0,0,0.15)' : 'rgba(0,0,0,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s ease' }}>
+                  <div style={{ width: 38, height: 38, borderRadius: '50%', background: 'rgba(212,175,106,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.6)', transform: isHovered ? 'scale(1.1)' : 'scale(1)', transition: 'all 0.2s ease' }}>
+                    <span style={{ color: '#000', fontSize: 15, marginLeft: 2 }}>▶</span>
                   </div>
                 </div>
               </div>

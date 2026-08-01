@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 // ─── CLOUD-FIRST & DYNAMIC CACHE BUSTING ─────────────────────────────────────────────
 const CLOUD_BASE = 'https://hb-jewelry-app.web.app';
 const IS_PROD = window.location.hostname !== 'localhost';
-const asset = (f) => IS_PROD ? `${CLOUD_BASE}/${f}?v=20260801_vCharByCharTeleprompter` : `/${f}?v=20260801_vCharByCharTeleprompter`;
+const asset = (f) => IS_PROD ? `${CLOUD_BASE}/${f}?v=20260801_vCleanThumbnails` : `/${f}?v=20260801_vCleanThumbnails`;
 
 // ─── CATÁLOGO DE VIDEOS REALES 100% ÚNICOS E INDEPENDIENTES ──────────────────
 const VIDEO_CATALOG = [
@@ -11,170 +11,138 @@ const VIDEO_CATALOG = [
     id: 'talk-grow-educational',
     src: asset('videos/talk_grow_format/real_talk_grow_educational.mp4'),
     poster: asset('posters/poster_talk_grow.png'),
-    title: '🎓 EDUCATIVO 3D: 7 Hacks de Claude AI 4.6 (Caracteres Paso a Paso)',
-    tag: '⭐ TALK-GROW 3D',
-    tagBg: 'linear-gradient(135deg, #f59e0b 0%, #b45309 100%)',
-    accent: '#fbbf24',
+    title: 'Educativo 3D: 7 Hacks de Claude AI 4.6',
+    tag: 'TALK-GROW 3D',
     dur: '0:15',
-    description: 'Demostración de los 7 hacks de Claude 4.6 con formato teleprompter paso a paso y voz estéreo a 48kHz.'
+    description: 'Demostración de 7 hacks con teleprompter paso a paso y voz FM 48kHz.'
   },
   {
     id: 'yt-special-claude-master',
     src: asset('videos/talk_grow_format/youtube_master_10min_educational.mp4'),
     poster: asset('posters/poster_yt_special.png'),
-    title: '🔴 YOUTUBE MASTER: Curso Completo de Agentes AI & 7 Hacks (10 Min)',
-    tag: '🔴 MASTER 1080p',
-    tagBg: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
-    accent: '#ef4444',
+    title: 'YouTube Master: Agentes AI & 7 Hacks (10 Min)',
+    tag: 'MASTER 1080p',
     dur: '1:00',
-    description: 'Curso intensivo de agentes autónomos, arquitectura RAG y vectorización en Firestore.'
+    description: 'Curso intensivo de agentes autónomos y vectorización RAG en Firestore.'
   },
   {
     id: 'podcast',
     src: asset('hb_tutorial_avatar_v1.mp4'),
     poster: asset('posters/poster_podcast.png'),
-    title: '🎙️ PODCAST: Ecosistema Ilimitado AI (Voz Real Guillermo Avatar)',
-    tag: '🎙️ PODCAST',
-    tagBg: '#7c3aed',
-    accent: '#a78bfa',
+    title: 'Podcast: Ecosistema Ilimitado AI',
+    tag: 'PODCAST',
     dur: '1:35',
-    description: 'Guillermo AI en estudio explicando el ecosistema ilimitado de IA y automatización comercial.'
+    description: 'Guillermo AI en estudio explicando la automatización comercial.'
   },
   {
     id: 'tutorial',
     src: asset('hb_tutorial_narrado_v1.mp4'),
     poster: asset('posters/poster_tutorial.png'),
-    title: '📹 TUTORIAL: Manejo Completo de la App HB Jewelry 18k',
-    tag: '📹 TUTORIAL APP',
-    tagBg: '#059669',
-    accent: '#34d399',
+    title: 'Tutorial: Manejo Completo de App HB 18k',
+    tag: 'TUTORIAL APP',
     dur: '1:16',
-    description: 'Guía paso a paso: módulo de ventas, WhatsApp $0, gestión de inventario y respaldo en la nube.'
+    description: 'Guía paso a paso: módulo de ventas, WhatsApp $0 e inventario.'
   },
   {
     id: 'qa-english',
     src: asset('output_avatar_english_7qa.mp4'),
     poster: asset('posters/poster_tecnico.png'),
-    title: '🛠️ TÉCNICO: Demo Arquitectura 7 Q&A RAG 768-dim (English)',
-    tag: '🛠️ TECHNICAL DEMO',
-    tagBg: '#1d4ed8',
-    accent: '#60a5fa',
+    title: 'Técnico: Demo Arquitectura 7 Q&A RAG (English)',
+    tag: 'TECHNICAL DEMO',
     dur: '0:15',
-    description: 'Demostración técnica en inglés: arquitectura vectorial RAG 768-dim, WhisperFlow $0 y Rclone.'
+    description: 'Demostración técnica en inglés con arquitectura RAG 768-dim.'
   },
   {
     id: 'showcase-18k',
     src: asset('final_showcase.mp4'),
     poster: asset('posters/poster_showcase.png'),
-    title: '💎 SHOWCASE: Colección Joyería 18k & Ventas WhatsApp $0',
-    tag: '💎 SHOWCASE 18K',
-    tagBg: '#b45309',
-    accent: '#fbbf24',
+    title: 'Showcase: Colección Joyería 18k & WhatsApp $0',
+    tag: 'SHOWCASE 18K',
     dur: '0:45',
-    description: 'Presentación comercial de la colección de joyería fina HB Jewelry con cierre automático.'
+    description: 'Presentación comercial de joyería fina con cierre automático.'
   },
   {
     id: 'tiktok-viral',
     src: asset('tiktok_showcase.mp4'),
     poster: asset('posters/poster_talk_grow_guillermo.png'),
-    title: '📱 TIKTOK VIRAL: Promocional Vertical 1080p TikTok/Reels',
-    tag: '📱 TIKTOK 9:16',
-    tagBg: '#be185d',
-    accent: '#f43f5e',
+    title: 'TikTok Viral: Promocional Vertical 1080p',
+    tag: 'TIKTOK 9:16',
     dur: '0:30',
-    description: 'Video vertical promocional optimizado para redes sociales con subtítulos amarillos de alto impacto.'
+    description: 'Video vertical promocional optimizado para redes sociales.'
   },
   {
     id: 'showcase-human-loop',
     src: asset('showcase_human_loop.mp4'),
     poster: asset('avatar_pro.png'),
-    title: '🤖 AVATAR BASE: Guillermo AI Human Digital Studio Loop',
-    tag: '🤖 AVATAR LOOP',
-    tagBg: '#475569',
-    accent: '#cbd5e1',
+    title: 'Avatar Base: Guillermo AI Studio Loop',
+    tag: 'AVATAR LOOP',
     dur: '0:20',
-    description: 'Video base en estudio con loop continuo para gesticulación vocal y composición tridimensional.'
+    description: 'Video base en estudio con loop continuo para gesticulación vocal.'
   }
 ];
 
 // ─── TRANSCRIPCIÓN BILINGÜE BASE DE DATOS (2 COLUMNAS) ─────────────────────
 const SUBTITLE_DATABASE = [
-  { time: '0s', es: 'Bien, seamos claros, la inteligencia artificial es una absoluta locura.', en: 'Well, let us be clear, artificial intelligence is absolute madness.' },
-  { time: '7s', es: 'Mientras parecía una competición entre ChatGPT y Gemini, Claude los ha adelantado.', en: 'While it seemed like a race between ChatGPT and Gemini, Claude passed them.' },
-  { time: '15s', es: 'Claude es superior tanto en programación como en diseño y agentes autónomos.', en: 'Claude is superior in programming, design, and autonomous agents.' },
-  { time: '31s', es: 'Comparto contigo 7 hacks de Claude para ganar dinero y multiplicar tu productividad.', en: 'I share with you 7 Claude hacks to earn money and multiply your productivity.' },
-  { time: '1:15', es: 'Hack 1: Crear páginas web increíbles en 1 minuto con Claude Code y React Vite.', en: 'Hack 1: Create incredible websites in 1 minute with Claude Code and React Vite.' },
-  { time: '3:00', es: 'Hack 2: Crear aplicaciones no-code con visión artificial y memoria RAG 768-dim.', en: 'Hack 2: Create no-code apps with computer vision and 768-dim RAG memory.' },
-  { time: '5:00', es: 'Hack 4: Investigación profunda 2.0 lanzando 20 agentes simultáneos en paralelo.', en: 'Hack 4: Deep research 2.0 launching 20 simultaneous parallel agents.' },
-  { time: '7:00', es: 'Hack 5: Programas reales instalables, extensiones de Chrome y automatización DaVinci.', en: 'Hack 5: Real installable software, Chrome extensions, and DaVinci automation.' },
+  { time: '00:01', es: 'Hola, soy Guillermo de HB Jewelry. Bienvenidos a nuestra colección.', en: 'Hello, I am Guillermo from HB Jewelry. Welcome to our collection.' },
+  { time: '00:05', es: 'Hoy les mostraré los 7 hacks avanzados para dominar Claude 4.6 en su empresa.', en: 'Today I will show you the 7 advanced hacks to master Claude 4.6 in your business.' },
+  { time: '00:09', es: 'Cada pedido se procesa automáticamente a través de WhatsApp Business sin costo.', en: 'Every order is automatically processed through WhatsApp Business at zero cost.' },
+  { time: '00:12', es: 'Toda nuestra información está respaldada en tiempo real en Google Drive 5TB.', en: 'All our information is backed up in real time on Google Drive 5TB.' }
 ];
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   VID MODAL PLAYER CON AUDIO HD E INDEPENDENCIA ÚNICA
+   MODAL PARA REPRODUCIR CADA VIDEO CON AUDIO UNMUTED & SUBTÍTULOS BILINGÜES
    ═══════════════════════════════════════════════════════════════════════════ */
-const VidModal = ({ v, onClose }) => {
-  const ref = useRef(null)
-  const [snd, setSnd] = useState(false)
+function VidModal({ v, onClose }) {
+  const ref = useRef(null);
+  const [unmuted, setUnmuted] = useState(false);
 
-  const startWithSound = useCallback(() => {
-    const el = ref.current
-    if (el) {
-      el.muted = false
-      el.volume = 1.0
-      setSnd(true)
-      el.play().catch(() => {})
+  const enableAudio = useCallback(() => {
+    if (ref.current) {
+      ref.current.muted = false;
+      ref.current.volume = 1.0;
+      ref.current.play().catch(() => {});
+      setUnmuted(true);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    const el = ref.current
-    if (el) {
-      el.muted = false
-      el.volume = 1.0
-      el.play().then(() => setSnd(true)).catch(() => {
-        el.muted = true
-        el.play().catch(() => {})
-      })
-    }
-  }, [v.src])
+    enableAudio();
+  }, [enableAudio]);
 
   return (
-    <div id="vid-modal-bg" onClick={e => e.target.id === 'vid-modal-bg' && onClose()}
-      style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(0,0,0,0.96)', backdropFilter: 'blur(12px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
-      <div style={{ position: 'relative', width: '92vw', maxWidth: 1280, borderRadius: 16, overflow: 'hidden', background: '#0a0a0a', border: '1px solid rgba(212,175,106,0.3)', boxShadow: '0 24px 60px rgba(0,0,0,0.9)' }}>
+    <div style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(5,5,5,0.95)', backdropFilter: 'blur(16px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+      <div style={{ position: 'relative', width: '100%', maxWidth: 1000, background: '#161412', border: '1px solid rgba(212,175,106,0.25)', borderRadius: 12, overflow: 'hidden', boxShadow: '0 20px 60px rgba(0,0,0,0.9)' }}>
         
-        <button onClick={onClose} style={{ position: 'absolute', top: 12, right: 12, zIndex: 15, width: 36, height: 36, borderRadius: '50%', background: 'rgba(0,0,0,0.85)', border: '1px solid rgba(255,255,255,0.3)', color: '#fff', fontSize: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✕</button>
+        {/* CABECERA DEL MODAL */}
+        <div style={{ padding: '12px 18px', background: '#0f0f0f', borderBottom: '1px solid rgba(212,175,106,0.15)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span style={{ padding: '2px 8px', borderRadius: 4, background: 'rgba(212,175,106,0.12)', border: '1px solid rgba(212,175,106,0.25)', color: '#d4af6a', fontSize: 10, fontWeight: 700 }}>{v.tag}</span>
+            <strong style={{ color: '#d4af6a', fontSize: 15 }}>{v.title}</strong>
+          </div>
+          <button onClick={onClose} style={{ background: 'transparent', border: 'none', color: '#a09d99', fontSize: 20, cursor: 'pointer', padding: '0 8px' }}>✕</button>
+        </div>
 
-        {!snd && (
-          <div onClick={startWithSound} style={{ position: 'absolute', inset: 0, zIndex: 10, cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.72)', backdropFilter: 'blur(4px)' }}>
-            <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'linear-gradient(135deg, #ef4444 0%, #b91c1c 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 34, boxShadow: '0 0 30px rgba(239,68,68,0.8)', marginBottom: 12 }}>🔊</div>
-            <div style={{ color: '#fff', fontWeight: 800, fontSize: 16 }}>CLIC PARA ACTIVAR AUDIO ESTÉREO 48kHz HD DEL VIDEO</div>
+        {/* OVERLAY BOTÓN DESBLOQUEO AUDIO SI NAVEGADOR BLOQUEA AUTO-PLAY */}
+        {!unmuted && (
+          <div onClick={enableAudio} style={{ position: 'absolute', inset: 0, zIndex: 10, background: 'rgba(0,0,0,0.85)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+            <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(212,175,106,0.2)', border: '2px solid #d4af6a', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, color: '#d4af6a', marginBottom: 12 }}>🔊</div>
+            <div style={{ color: '#f0ede8', fontWeight: 800, fontSize: 15 }}>CLIC PARA ACTIVAR AUDIO ESTÉREO 48kHz HD</div>
             <div style={{ color: '#d4af6a', fontSize: 12, marginTop: 4 }}>Voz Real Clonada de Guillermo AI · EBU R128 (-14 LUFS)</div>
           </div>
         )}
 
-        <video ref={ref} key={v.src} src={v.src} playsInline controls autoPlay style={{ width: '100%', aspectRatio: '16/9', maxHeight: '65vh', display: 'block', objectFit: 'contain', background: '#000' }} />
+        <video ref={ref} key={v.src} src={v.src} playsInline controls autoPlay style={{ width: '100%', aspectRatio: '16/9', maxHeight: '62vh', display: 'block', objectFit: 'contain', background: '#000' }} />
 
-        {/* ─── INFO DEL VIDEO SELECCIONADO & BASE DE DATOS BILINGÜE EN 2 COLUMNAS ─── */}
-        <div style={{ padding: '14px 18px', background: '#080808', borderTop: '1px solid rgba(255,255,255,0.1)', maxHeight: '22vh', overflowY: 'auto' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-            <div>
-              <span style={{ color: '#fbbf24', fontSize: 12, fontWeight: 900, marginRight: 8 }}>{v.tag}</span>
-              <strong style={{ color: '#fff', fontSize: 14 }}>{v.title}</strong>
-            </div>
-            <span style={{ color: '#94a3b8', fontSize: 11, background: 'rgba(255,255,255,0.06)', padding: '2px 8px', borderRadius: 4 }}>{v.dur}</span>
-          </div>
-
-          <p style={{ color: '#cbd5e1', fontSize: 12, margin: '0 0 10px 0', lineHeight: 1.4 }}>{v.description}</p>
-
-          <div style={{ color: '#fbbf24', fontSize: 11, fontWeight: 800, letterSpacing: 1, marginBottom: 8, display: 'flex', gap: 6, alignItems: 'center' }}>
+        {/* SUBTÍTULOS BILINGÜES EN 2 COLUMNAS */}
+        <div style={{ padding: '14px 18px', background: '#161412', borderTop: '1px solid rgba(212,175,106,0.15)', maxHeight: '22vh', overflowY: 'auto' }}>
+          <div style={{ color: '#d4af6a', fontSize: 11, fontWeight: 700, letterSpacing: 1, marginBottom: 8, display: 'flex', gap: 6, alignItems: 'center' }}>
             <span>📄 BASE DE DATOS BILINGÜE DE SUBTÍTULOS DE ESTE VIDEO</span>
-            <span style={{ color: '#64748b', fontSize: 10 }}>(2 Columnas en Tiempo Real)</span>
+            <span style={{ color: '#6b6866', fontSize: 10 }}>(2 Columnas en Tiempo Real)</span>
           </div>
           
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 11 }}>
             <thead>
-              <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', color: '#94a3b8', textAlign: 'left' }}>
+              <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', color: '#6b6866', textAlign: 'left' }}>
                 <th style={{ padding: '4px 8px', width: '50px' }}>Tiempo</th>
                 <th style={{ padding: '4px 8px' }}>Subtítulo Español (Voz Real)</th>
                 <th style={{ padding: '4px 8px' }}>Traducción Automática Inglés</th>
@@ -182,10 +150,10 @@ const VidModal = ({ v, onClose }) => {
             </thead>
             <tbody>
               {SUBTITLE_DATABASE.map((row, idx) => (
-                <tr key={idx} style={{ borderBottom: '1px solid rgba(255,255,255,0.03)', color: idx % 2 === 0 ? '#e2e8f0' : '#cbd5e1' }}>
-                  <td style={{ padding: '4px 8px', color: '#fbbf24', fontWeight: 700 }}>{row.time}</td>
+                <tr key={idx} style={{ borderBottom: '1px solid rgba(255,255,255,0.03)', color: '#c0bcb8' }}>
+                  <td style={{ padding: '4px 8px', color: '#d4af6a', fontWeight: 700 }}>{row.time}</td>
                   <td style={{ padding: '4px 8px' }}>{row.es}</td>
-                  <td style={{ padding: '4px 8px', color: '#94a3b8' }}>{row.en}</td>
+                  <td style={{ padding: '4px 8px', color: '#a09d99' }}>{row.en}</td>
                 </tr>
               ))}
             </tbody>
@@ -193,40 +161,40 @@ const VidModal = ({ v, onClose }) => {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   MAIN MARKETING / VIDEO STUDIO COMPONENT (100% UNIQUE VIDEOS)
+   MAIN MARKETING / VIDEO STUDIO COMPONENT (THUMBNAILS LIMPIAS SIN TEXTO ENCIMA)
    ═══════════════════════════════════════════════════════════════════════════ */
 export default function Marketing() {
   const [activeVid, setActiveVid] = useState(null);
   const [hoverId, setHoverId] = useState(null);
 
   return (
-    <div style={{ padding: '24px 28px', maxWidth: 1440, margin: '0 auto', color: '#fff', fontFamily: 'Inter, system-ui, sans-serif' }}>
+    <div style={{ padding: '20px 24px', maxWidth: 1400, margin: '0 auto', color: '#f0ede8', fontFamily: 'Inter, system-ui, sans-serif' }}>
       
-      {/* HEADER PESTAÑA VIDEOS */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20, paddingBottom: 16, borderBottom: '1px solid rgba(239,68,68,0.2)' }}>
+      {/* HEADER PESTAÑA VIDEOS UNIFICADO PALETA HB GOLD (#d4af6a) */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 18, paddingBottom: 14, borderBottom: '1px solid rgba(212,175,106,0.15)' }}>
         <div>
-          <span style={{ padding: '4px 12px', borderRadius: 20, background: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)', color: '#fff', fontSize: 11, fontWeight: 800, letterSpacing: 1, boxShadow: '0 4px 12px rgba(220,38,38,0.3)' }}>
-            🔴 PARRILLA OFICIAL DE VIDEOS 100% ÚNICOS & INDEPENDIENTES
+          <span style={{ padding: '3px 10px', borderRadius: 16, background: 'rgba(212,175,106,0.08)', border: '1px solid rgba(212,175,106,0.2)', color: '#d4af6a', fontSize: 10, fontWeight: 700, letterSpacing: 1 }}>
+            🎬 PARRILLA OFICIAL DE VIDEOS 100% ÚNICOS & INDEPENDIENTES
           </span>
-          <h2 style={{ fontSize: 24, fontWeight: 900, color: '#ffffff', margin: '8px 0 4px 0' }}>
+          <h2 style={{ fontSize: 22, fontWeight: 700, color: '#d4af6a', margin: '6px 0 2px 0' }}>
             Estudio de Video HD & Cursos de Automatización
           </h2>
-          <p style={{ fontSize: 13, color: '#94a3b8', margin: 0 }}>
-            Visualización en 6 columnas con scroll vertical continuo. Cada tarjeta reproduce su propio archivo de video MP4 único.
+          <p style={{ fontSize: 12, color: '#a09d99', margin: 0 }}>
+            Parrilla de 6 columnas con scroll vertical. Cada tarjeta reproduce su propio archivo MP4 único.
           </p>
         </div>
 
-        <div style={{ background: 'rgba(15,23,42,0.8)', border: '1px solid rgba(239,68,68,0.4)', padding: '10px 18px', borderRadius: 12, textAlign: 'right' }}>
-          <div style={{ color: '#ef4444', fontSize: 13, fontWeight: 800 }}>{VIDEO_CATALOG.length} Videos Únicos</div>
-          <div style={{ color: '#94a3b8', fontSize: 11 }}>Calidad Estudio DaVinci AI</div>
+        <div style={{ background: '#161412', border: '1px solid rgba(212,175,106,0.15)', padding: '8px 14px', borderRadius: 8, textAlign: 'right' }}>
+          <div style={{ color: '#d4af6a', fontSize: 12, fontWeight: 700 }}>{VIDEO_CATALOG.length} Videos Únicos</div>
+          <div style={{ color: '#6b6866', fontSize: 10 }}>Estudio DaVinci AI 1080p</div>
         </div>
       </div>
 
-      {/* ─── PARRILLA HORIZONTAL DE 6 CARDS CON SCROLL VERTICAL INDEFINIDO ─── */}
+      {/* ─── PARRILLA DE 6 COLUMNAS CON THUMBNAILS 100% LIMPIAS (TEXTO AFUERA) ─── */}
       <div
         style={{
           display: 'grid',
@@ -234,8 +202,8 @@ export default function Marketing() {
           gap: 14,
           maxHeight: '75vh',
           overflowY: 'auto',
-          paddingRight: 6,
-          paddingBottom: 24
+          paddingRight: 4,
+          paddingBottom: 20
         }}
       >
         {VIDEO_CATALOG.map((v) => {
@@ -249,44 +217,46 @@ export default function Marketing() {
               onMouseLeave={() => setHoverId(null)}
               style={{
                 cursor: 'pointer',
-                borderRadius: 14,
+                borderRadius: 8,
                 overflow: 'hidden',
                 position: 'relative',
-                background: '#090d16',
-                border: isHovered ? `2px solid ${v.accent}` : '1px solid rgba(255,255,255,0.08)',
-                transition: 'all 0.25s ease',
-                transform: isHovered ? 'translateY(-4px)' : 'none',
-                boxShadow: isHovered ? `0 12px 28px ${v.accent}44` : '0 4px 12px rgba(0,0,0,0.5)',
+                background: isHovered ? 'rgba(212,175,106,0.06)' : '#161412',
+                border: isHovered ? '1px solid #d4af6a' : '1px solid rgba(212,175,106,0.12)',
+                transition: 'all 0.2s ease',
+                transform: isHovered ? 'translateY(-3px)' : 'none',
+                boxShadow: isHovered ? '0 8px 20px rgba(212,175,106,0.15)' : '0 4px 10px rgba(0,0,0,0.5)',
                 display: 'flex',
                 flexDirection: 'column',
-                height: 270
+                height: 260
               }}
             >
-              {/* Poster limpia static thumbnail */}
-              <div style={{ position: 'relative', width: '100%', height: 180, background: '#000', overflow: 'hidden' }}>
+              {/* THUMBNAIL 100% LIMPIA DE IMAGEN (NINGÚN TEXTO SOBRE LA FOTO) */}
+              <div style={{ position: 'relative', width: '100%', height: 160, background: '#000', overflow: 'hidden' }}>
                 <img src={v.poster} alt={v.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
 
-                <div style={{ position: 'absolute', top: 8, left: 8, zIndex: 3, padding: '3px 8px', borderRadius: 20, background: v.tagBg, color: '#fff', fontSize: 10, fontWeight: 900 }}>
-                  {v.tag}
-                </div>
-
-                <div style={{ position: 'absolute', bottom: 8, right: 8, zIndex: 3, padding: '2px 6px', borderRadius: 4, background: 'rgba(0,0,0,0.8)', color: '#fff', fontSize: 10, fontWeight: 700 }}>
-                  {v.dur}
-                </div>
-
-                <div style={{ position: 'absolute', inset: 0, zIndex: 2, background: isHovered ? 'rgba(0,0,0,0.2)' : 'rgba(0,0,0,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.25s ease' }}>
-                  <div style={{ width: 44, height: 44, borderRadius: '50%', background: v.accent, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.6)', transform: isHovered ? 'scale(1.15)' : 'scale(1)', transition: 'all 0.25s ease' }}>
-                    <span style={{ color: '#000', fontSize: 18, marginLeft: 2 }}>▶</span>
+                {/* BOTÓN PLAY SUTIL CENTRADO */}
+                <div style={{ position: 'absolute', inset: 0, zIndex: 2, background: isHovered ? 'rgba(0,0,0,0.15)' : 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s ease' }}>
+                  <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'rgba(212,175,106,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.6)', transform: isHovered ? 'scale(1.1)' : 'scale(1)', transition: 'all 0.2s ease' }}>
+                    <span style={{ color: '#000', fontSize: 16, marginLeft: 2 }}>▶</span>
                   </div>
                 </div>
               </div>
 
-              <div style={{ padding: '10px 12px', background: '#0a0a0a', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                <div style={{ color: '#ffffff', fontWeight: 800, fontSize: 11, marginBottom: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  {v.title}
-                </div>
-                <div style={{ color: '#888', fontSize: 9, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  {v.description}
+              {/* PANEL METADATA ESTRUCTURADO Y REUBICADO 100% AFUERA DEL THUMBNAIL */}
+              <div style={{ padding: '10px 12px', background: '#161412', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+                    <span style={{ padding: '1px 6px', borderRadius: 4, background: 'rgba(212,175,106,0.12)', border: '1px solid rgba(212,175,106,0.2)', color: '#d4af6a', fontSize: 9, fontWeight: 700 }}>
+                      {v.tag}
+                    </span>
+                    <span style={{ color: '#6b6866', fontSize: 9, fontWeight: 700 }}>{v.dur}</span>
+                  </div>
+                  <div style={{ color: '#f0ede8', fontWeight: 700, fontSize: 11, marginBottom: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    {v.title}
+                  </div>
+                  <div style={{ color: '#a09d99', fontSize: 9, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    {v.description}
+                  </div>
                 </div>
               </div>
             </div>

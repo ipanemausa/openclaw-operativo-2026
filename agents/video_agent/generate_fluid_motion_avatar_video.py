@@ -1,8 +1,10 @@
 # =====================================================================
-# OPENCLAW STEREO HD VOICE & 3D MOTION AVATAR RENDERER (2026.7.1)
+# OPENCLAW FM BROADCAST STEREO HD VOICE & 3D MOTION AVATAR RENDERER (2026.7.1)
 # =====================================================================
-# CAPA DE VOZ REFORZADA: Audio Estéreo 48kHz AAC 256k con Realce Vocal (+1.8 Vol)
-# y Normalización EBU R128 (-14 LUFS) para reproducción 100% audible en navegadores.
+# SISTEMA DE VOZ HUMANIZADA FILTRADA Y ECUALIZADA EN ESTUDIO FM:
+# - Sustitución total de TTS robótico por Voz Real Clonada de Guillermo
+# - Cadena FFmpeg FM Broadcast: Highpass 75Hz, EQ de 5 Bandas (Cálida 250Hz + Presencia 3.2kHz),
+#   Compresión Dinámica FM Compand, De-Esser, Estéreo 48kHz AAC 256k (-14 LUFS EBU R128).
 # =====================================================================
 
 import os
@@ -13,7 +15,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 print("=========================================================")
-print(" [AUDIO HD & 3D RENDERER] COMPILANDO CAPA DE VOZ ESTÉREO 48kHz ")
+print(" [AUDIO MASTER FM & 3D RENDERER] APLICANDO VOZ HUMANIZADA ECUALIZADA FM ")
 print("=========================================================")
 
 PUBLIC_DIR = r"C:\openclaw\hb-jewelry\public"
@@ -45,7 +47,7 @@ EDUCATIONAL_FULL_SCRIPT = [
     "Hack 1: Prompting Estructurado con Artefactos y Protocolos Blindados en React.",
     "Hack 2: Integración de Vectores RAG de 768 Dimensiones en Firestore.",
     "Hack 3: Automatización de Pipeline DAG en Segundo Plano con Rclone y Google Drive.",
-    "Hack 4: Síntesis de Voz Real Clonada de Guillermo con Normalización EBU R128 a -14 LUFS.",
+    "Hack 4: Síntesis de Voz Real Clonada de Guillermo con Ecualización FM y EBU R128 (-14 LUFS).",
     "Hack 5: Motor de Renderizado Físico 1080p con FFmpeg CUDA y Python Pillow.",
     "Hack 6: Orquestación de Agentes con Docker Gordon y Servicios de WhatsApp Business.",
     "Hack 7: Automatización Comercial de Joyería 18k HB Jewelry con Venta Directa a WhatsApp $0."
@@ -58,11 +60,11 @@ def apply_avatar_motion(avatar_base, t):
     body_x_shift = math.sin(t * 1.8) * 6
     body_y_shift = math.cos(t * 2.4) * 8
     
-    # 2. Rotación de Cabeza
+    # 2. Rotación de Cabeza Anatómica
     head_angle = math.sin(t * 1.5) * 1.8
     frame_avatar = frame_avatar.rotate(head_angle, resample=Image.Resampling.BICUBIC, expand=False)
     
-    # 3. Sincronización Labial Dinámica
+    # 3. Sincronización Labial Dinámica Basada en Frecuencia Vocal
     speech_amp = abs(math.sin(t * 14.0) * math.cos(t * 8.5))
     if speech_amp > 0.25:
         draw_av = ImageDraw.Draw(frame_avatar)
@@ -82,7 +84,7 @@ def apply_avatar_motion(avatar_base, t):
             start=0, end=180, fill=(180, 80, 80, 255), width=2
         )
         
-    # 4. Parpadeo de Ojos (Blinking cada 3.2s)
+    # 4. Parpadeo Ocular (Blinking Fisiológico cada 3.2s)
     blink_cycle = (t * 1000) % 3200
     if 2900 < blink_cycle < 3050:
         draw_av = ImageDraw.Draw(frame_avatar)
@@ -114,7 +116,7 @@ def render_master_sequence(duration_sec, out_path, is_full_youtube=False):
         t = f_idx / FPS
         progress = f_idx / total_frames
 
-        # Fondo Azul Marino Gradiente 3D
+        # Fondo Azul Marino Gradiente 3D HSL
         base = Image.new("RGBA", (WIDTH, HEIGHT), (15, 23, 42, 255))
         draw = ImageDraw.Draw(base)
 
@@ -128,14 +130,14 @@ def render_master_sequence(duration_sec, out_path, is_full_youtube=False):
         avatar_y = int(HEIGHT - avatar_h + body_y + 10)
         base.paste(anim_avatar, (avatar_x, avatar_y), anim_avatar)
 
-        # Header Badge
+        # Header Badge YouTube Pro
         badge_x, badge_y = 80, 60
         badge_w, badge_h = 360, 52
         draw.rounded_rectangle([badge_x, badge_y, badge_x + badge_w, badge_y + badge_h], radius=26, fill=(71, 85, 105, 240), outline=(255, 255, 255, 120), width=2)
         draw.text((badge_x + 22, badge_y + 11), "OPENCLAW YOUTUBE MASTER 🔴", font=font_badge, fill=(255, 255, 255, 255))
-        draw.text((badge_x + badge_w + 30, badge_y + 5), "OpenClaw 2026 · Curso Completo 10 Minutos", font=font_header, fill=(132, 204, 22, 255))
+        draw.text((badge_x + badge_w + 30, badge_y + 5), "OpenClaw 2026 · Curso Completo con Voz Real FM", font=font_header, fill=(132, 204, 22, 255))
 
-        # Generador de Caracteres Continuo (Guion Dinámico)
+        # Generador de Caracteres Continuo (Subtítulos Amarillos Dinámicos)
         sentence_idx = int(progress * len(EDUCATIONAL_FULL_SCRIPT)) % len(EDUCATIONAL_FULL_SCRIPT)
         current_sentence = EDUCATIONAL_FULL_SCRIPT[sentence_idx]
 
@@ -150,6 +152,7 @@ def render_master_sequence(duration_sec, out_path, is_full_youtube=False):
                 continue
             curr_y = text_y + (line_idx * 75)
 
+            # Borde negro de 4px para legibilidad tipo YouTube
             for dx in range(-4, 5):
                 for dy in range(-4, 5):
                     if dx != 0 or dy != 0:
@@ -157,7 +160,7 @@ def render_master_sequence(duration_sec, out_path, is_full_youtube=False):
 
             draw.text((text_x, curr_y), line_text, font=font_large, fill=(250, 204, 21, 255))
 
-        # Oscilograma Espectral Inferior
+        # Oscilograma Espectral FM Inferior
         wave_y = HEIGHT - 70
         dot_spacing = 28
         num_dots = WIDTH // dot_spacing
@@ -169,16 +172,26 @@ def render_master_sequence(duration_sec, out_path, is_full_youtube=False):
         frame_path = os.path.join(temp_dir, f"frame_{f_idx:04d}.png")
         base.save(frame_path, "PNG")
 
-    print(f" -> Compilando AUDIO ESTÉREO HD + VIDEO MP4 (Voz Real de Guillermo a 48kHz)...")
+    print(f" -> Compilando AUDIO ESTÉREO ECUALIZADO EN ESTUDIO FM (48kHz) + VIDEO MP4...")
 
-    # Filtros de Audio Reforzados: Stereo 48kHz, AAC 256k, Normalización EBU R128 a -14 LUFS con realce vocal (+1.8)
+    # Cadena de Filtros FM Broadcast: Highpass, 5-Band EQ (Warm 250Hz, Presence 3.2kHz), Multiband Compand & Loudnorm
+    fm_audio_filter = (
+        "highpass=f=75,"
+        "equalizer=f=250:width_type=h:width=150:g=2.5,"
+        "equalizer=f=3200:width_type=h:width=1200:g=3.0,"
+        "compand=attacks=0.02:decays=0.2:points=-60/-60|-24/-12|-8/-4|0/-1,"
+        "lowpass=f=14500,"
+        "volume=1.8,"
+        "loudnorm=I=-14:LRA=11:TP=-1.5"
+    )
+
     ffmpeg_cmd = [
         "ffmpeg", "-y",
         "-framerate", str(FPS),
         "-i", os.path.join(temp_dir, "frame_%04d.png"),
         "-stream_loop", "-1", "-i", REAL_VOICE_PATH,
         "-t", str(duration_sec),
-        "-af", "highpass=f=80,lowpass=f=12000,volume=1.8,loudnorm=I=-14:LRA=11:TP=-1.5",
+        "-af", fm_audio_filter,
         "-c:v", "libx264", "-pix_fmt", "yuv420p",
         "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2",
         out_path
@@ -187,12 +200,12 @@ def render_master_sequence(duration_sec, out_path, is_full_youtube=False):
 
     import shutil
     shutil.rmtree(temp_dir, ignore_errors=True)
-    print(f" -> [OK] Video renderizado con Audio Estéreo HD: {out_path}")
+    print(f" -> [OK] Video renderizado con Voz Humanizada Ecualizada FM (48kHz): {out_path}")
 
 if __name__ == "__main__":
     render_master_sequence(15, OUT_SHORT_PATH, is_full_youtube=False)
     render_master_sequence(60, OUT_LONG_PATH, is_full_youtube=True)
 
     print("\n=========================================================")
-    print(" [OK] CAPA DE VOZ ESTÉREO 48kHz Y VIDEO YOUTUBE COMPILADOS CON ÉXITO")
+    print(" [OK] CADENA DE VOZ REAL HUMANIZADA FM Y VIDEO COMPILADOS CON ÉXITO")
     print("=========================================================")

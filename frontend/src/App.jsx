@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, Component } from 'react'
 import Layout from './components/Layout/Layout'
 import Chat from './components/Chat/Chat'
 import Productos from './components/Productos/Productos'
@@ -23,6 +23,43 @@ import VoiceCall from './components/VoiceCall/VoiceCall'
 import Integraciones from './components/Integraciones/Integraciones'
 import Certificaciones from './components/Certificaciones/Certificaciones'
 import FloatingVoiceWidget from './components/FloatingVoiceWidget/FloatingVoiceWidget'
+
+// ─── ERROR BOUNDARY DE PROTECCIÓN TOTAL CONTRA PANTALLA NEGRA ────────────────
+class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { hasError: false, error: null }
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error }
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error("⚠️ Exception interceptada en React App Root:", error, errorInfo)
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ padding: 40, background: '#0d0d0d', color: '#d4af6a', fontFamily: 'sans-serif', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <h2 style={{ fontSize: 24, margin: '0 0 10px 0' }}>✨ OpenClaw Enterprise — Modo de Recuperación</h2>
+          <p style={{ color: '#a09d99', fontSize: 14 }}>Se ha restaurado la sesión tras un ajuste de interfaz.</p>
+          <button
+            onClick={() => {
+              this.setState({ hasError: false, error: null });
+              window.location.reload();
+            }}
+            style={{ background: '#d4af6a', color: '#000', border: 'none', padding: '10px 24px', borderRadius: 8, fontWeight: 'bold', cursor: 'pointer', marginTop: 15 }}
+          >
+            RECARGAR DASHBOARD PRINCIPAL ➔
+          </button>
+        </div>
+      )
+    }
+    return this.props.children
+  }
+}
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('dashboard')
@@ -56,9 +93,11 @@ export default function App() {
   }
 
   return (
-    <Layout activeSection={activeSection} onSelect={setActiveSection}>
-      {renderSection()}
-      <FloatingVoiceWidget />
-    </Layout>
+    <ErrorBoundary>
+      <Layout activeSection={activeSection} onSelect={setActiveSection}>
+        {renderSection()}
+        <FloatingVoiceWidget />
+      </Layout>
+    </ErrorBoundary>
   )
 }

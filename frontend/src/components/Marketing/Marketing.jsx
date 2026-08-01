@@ -4,12 +4,12 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 const IS_PROD = window.location.hostname !== 'localhost';
 const asset = (f) => (IS_PROD ? `${window.location.origin}/${f}?v=20260801_v2026` : `/${f}?v=20260801_v2026`);
 
-// ─── CATÁLOGO DE VIDEOS REALES (POSTERS 100% LIMPIOS DE GUILLERMO SIN TEXTO BASTARDO) ───
+// ─── CATÁLOGO DE VIDEOS REALES (POSTERS DIVERSIFICADOS DE LA COLECCIÓN DE AVATARES) ───
 const VIDEO_CATALOG = [
   {
     id: 'talk-grow-educational',
     src: asset('videos/talk_grow_format/real_talk_grow_educational.mp4'),
-    poster: asset('avatars/studio_mic.png'),
+    poster: asset('avatars/negro.png'),
     title: 'Educativo 3D: 7 Hacks de Claude AI 4.6',
     tag: 'TALK-GROW 3D',
     dur: '0:15',
@@ -18,7 +18,7 @@ const VIDEO_CATALOG = [
   {
     id: 'yt-special-claude-master',
     src: asset('videos/talk_grow_format/youtube_master_10min_educational.mp4'),
-    poster: asset('avatars/desk_mic.png'),
+    poster: asset('avatars/blanco.png'),
     title: 'YouTube Master: Agentes AI & 7 Hacks (10 Min)',
     tag: 'MASTER 1080p',
     dur: '1:00',
@@ -27,7 +27,7 @@ const VIDEO_CATALOG = [
   {
     id: 'podcast',
     src: asset('hb_tutorial_avatar_v1.mp4'),
-    poster: asset('posters/poster_podcast.png'),
+    poster: asset('avatars/azul.png'),
     title: 'Podcast: Ecosistema Ilimitado AI',
     tag: 'PODCAST',
     dur: '1:35',
@@ -36,7 +36,7 @@ const VIDEO_CATALOG = [
   {
     id: 'tutorial',
     src: asset('hb_tutorial_narrado_v1.mp4'),
-    poster: asset('avatars/studio_mic.png'),
+    poster: asset('avatars/dorado.png'),
     title: 'Tutorial: Manejo Completo de App HB 18k',
     tag: 'TUTORIAL APP',
     dur: '1:16',
@@ -45,7 +45,7 @@ const VIDEO_CATALOG = [
   {
     id: 'qa-english',
     src: asset('output_avatar_english_7qa.mp4'),
-    poster: asset('avatars/desk_mic.png'),
+    poster: asset('avatars/rojo.png'),
     title: 'Técnico: Demo Arquitectura 7 Q&A RAG (English)',
     tag: 'TECHNICAL DEMO',
     dur: '0:15',
@@ -54,7 +54,7 @@ const VIDEO_CATALOG = [
   {
     id: 'showcase-18k',
     src: asset('final_showcase.mp4'),
-    poster: asset('avatar_pro.png'),
+    poster: asset('avatars/verde.png'),
     title: 'Showcase: Colección Joyería 18k & WhatsApp $0',
     tag: 'SHOWCASE 18K',
     dur: '0:45',
@@ -63,7 +63,7 @@ const VIDEO_CATALOG = [
   {
     id: 'tiktok-viral',
     src: asset('tiktok_showcase.mp4'),
-    poster: asset('avatar_pro.png'),
+    poster: asset('avatars/studio_mic.png'),
     title: 'TikTok Viral: Promocional Vertical 1080p',
     tag: 'TIKTOK 9:16',
     dur: '0:30',
@@ -72,7 +72,7 @@ const VIDEO_CATALOG = [
   {
     id: 'showcase-human-loop',
     src: asset('showcase_human_loop.mp4'),
-    poster: asset('avatar_pro.png'),
+    poster: asset('avatars/desk_mic.png'),
     title: 'Avatar Base: Guillermo AI Studio Loop',
     tag: 'AVATAR LOOP',
     dur: '0:20',
@@ -204,7 +204,7 @@ export default function Marketing() {
         </div>
       </div>
 
-      {/* ─── PARRILLA DE 6 COLUMNAS CON THUMBNAILS 100% LIMPIAS (TEXTO AFUERA) ─── */}
+      {/* ─── PARRILLA DE 6 COLUMNAS CON THUMBNAILS 100% LIMPIAS (NUNGÚN BOTÓN O TEXTO SOBRE LA IMAGEN) ─── */}
       <div
         style={{
           display: 'grid',
@@ -237,31 +237,31 @@ export default function Marketing() {
                 boxShadow: isHovered ? '0 8px 20px rgba(212,175,106,0.15)' : '0 4px 10px rgba(0,0,0,0.5)',
                 display: 'flex',
                 flexDirection: 'column',
-                height: 260
+                height: 270
               }}
             >
-              {/* THUMBNAIL 100% LIMPIA DE IMAGEN DE GUILLERMO */}
-              <div style={{ position: 'relative', width: '100%', height: 160, background: '#000', overflow: 'hidden' }}>
+              {/* THUMBNAIL 100% LIMPIA E INTACTA DE GUILLERMO (SIN NINGÚN BOTÓN SOBRE EL ROSTRO/CUERPO) */}
+              <div style={{ position: 'relative', width: '100%', height: 165, background: '#000', overflow: 'hidden' }}>
                 <img src={v.poster} alt={v.title} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center' }} />
-
-                {/* BOTÓN PLAY SUTIL CENTRADO */}
-                <div style={{ position: 'absolute', inset: 0, zIndex: 2, background: isHovered ? 'rgba(0,0,0,0.15)' : 'rgba(0,0,0,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s ease' }}>
-                  <div style={{ width: 38, height: 38, borderRadius: '50%', background: 'rgba(212,175,106,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.6)', transform: isHovered ? 'scale(1.1)' : 'scale(1)', transition: 'all 0.2s ease' }}>
-                    <span style={{ color: '#000', fontSize: 15, marginLeft: 2 }}>▶</span>
-                  </div>
-                </div>
               </div>
 
-              {/* PANEL METADATA ESTRUCTURADO Y REUBICADO 100% AFUERA DEL THUMBNAIL */}
+              {/* PANEL METADATA ESTRUCTURADO ABAJO — INCLUYE EL BOTÓN PLAY Y DIVERSIFICACIÓN */}
               <div style={{ padding: '10px 12px', background: '#161412', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-                    <span style={{ padding: '1px 6px', borderRadius: 4, background: 'rgba(212,175,106,0.12)', border: '1px solid rgba(212,175,106,0.2)', color: '#d4af6a', fontSize: 9, fontWeight: 700 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                    <span style={{ padding: '2px 6px', borderRadius: 4, background: 'rgba(212,175,106,0.12)', border: '1px solid rgba(212,175,106,0.2)', color: '#d4af6a', fontSize: 9, fontWeight: 700 }}>
                       {v.tag}
                     </span>
+
+                    {/* BOTÓN PLAY UBICADO ABAJO EN EL PANEL DE INFORMACIÓN SIN TAPAR EL AVATAR */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 4, background: isHovered ? '#d4af6a' : 'rgba(212,175,106,0.15)', border: '1px solid #d4af6a', padding: '2px 8px', borderRadius: 12, transition: 'all 0.2s ease' }}>
+                      <span style={{ color: isHovered ? '#000' : '#d4af6a', fontSize: 10, fontWeight: 800 }}>▶ VER</span>
+                    </div>
+
                     <span style={{ color: '#6b6866', fontSize: 9, fontWeight: 700 }}>{v.dur}</span>
                   </div>
-                  <div style={{ color: '#f0ede8', fontWeight: 700, fontSize: 11, marginBottom: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+
+                  <div style={{ color: '#f0ede8', fontWeight: 700, fontSize: 11, marginBottom: 3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                     {v.title}
                   </div>
                   <div style={{ color: '#a09d99', fontSize: 9, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>

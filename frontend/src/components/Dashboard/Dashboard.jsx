@@ -3,11 +3,18 @@ import React, { useState } from 'react';
 // ─── CLOUD-FIRST & DYNAMIC CACHE BUSTING ──────────────────────────────────────
 const CLOUD_BASE = 'https://hb-jewelry-app.web.app';
 const IS_PROD = window.location.hostname !== 'localhost';
-const asset = (f) => (IS_PROD ? `${CLOUD_BASE}/${f}?v=20260801_vExecutiveHub` : `/${f}?v=20260801_vExecutiveHub`);
+const asset = (f) => (IS_PROD ? `${CLOUD_BASE}/${f}?v=20260801_vUnifiedTheme` : `/${f}?v=20260801_vUnifiedTheme`);
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   EXECUTIVE COMMAND DASHBOARD (2 MASTER LAUNCH BUTTONS + 6 BUSINESS CARDS)
-   ═══════════════════════════════════════════════════════════════════════════ */
+// ─── REGISTROS DE ACTIVIDAD RECIENTE (ESTILO UNIFICADO PALETA HB GOLD) ──────
+const RECENT_ACTIVITIES = [
+  { timestamp: '2026-08-01 03:25:40', evento: 'Pipeline DAG: Respaldo Rclone a Google Drive 5TB', division: 'Sistema & IT', estado: 'completado' },
+  { timestamp: '2026-08-01 03:20:12', evento: 'Firebase Hosting CDN: Build de producción desplegado', division: 'Infraestructura', estado: 'completado' },
+  { timestamp: '2026-08-01 03:15:05', evento: 'Motor Video RAG: Renderizado teleprompter caracteres paso a paso', division: 'Marketing AI', estado: 'completado' },
+  { timestamp: '2026-08-01 03:00:00', evento: 'Vectorización RAG: 768 dimensiones cargadas en Firestore', division: 'Agentes IA', estado: 'completado' },
+  { timestamp: '2026-08-01 02:45:18', evento: 'Servidor WhatsApp Business ($0): Escucha en puerto 3001', division: 'Ventas Directas', estado: 'completado' },
+  { timestamp: '2026-08-01 02:30:00', evento: 'Catálogo HB Jewelry 18k: Actualización de stock de piezas finas', division: 'Inventario & Logística', estado: 'completado' }
+];
+
 export default function Dashboard({ onNavigate }) {
   const [hoverAvatars, setHoverAvatars] = useState(false);
   const [hoverVideos, setHoverVideos] = useState(false);
@@ -20,38 +27,38 @@ export default function Dashboard({ onNavigate }) {
   };
 
   return (
-    <div style={{ padding: '28px 32px', maxWidth: 1440, margin: '0 auto', color: '#fff', fontFamily: 'Inter, system-ui, sans-serif' }}>
+    <div style={{ padding: '20px 24px', maxWidth: 1400, margin: '0 auto', color: '#f0ede8', fontFamily: 'Inter, system-ui, sans-serif' }}>
       
-      {/* ─── CABECERA EJECUTIVA DE ALTO IMPACTO ─── */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 28, paddingBottom: 16, borderBottom: '1px solid rgba(212,175,106,0.2)' }}>
+      {/* ─── CABECERA EJECUTIVA UNIFICADA CON PALETA HB GOLD (#d4af6a) ─── */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20, paddingBottom: 14, borderBottom: '1px solid rgba(212,175,106,0.15)' }}>
         <div>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '4px 12px', borderRadius: 20, background: 'linear-gradient(135deg, #b45309 0%, #78350f 100%)', border: '1px solid #fbbf24', color: '#fbbf24', fontSize: 11, fontWeight: 800, letterSpacing: 1 }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '3px 10px', borderRadius: 16, background: 'rgba(212,175,106,0.1)', border: '1px solid rgba(212,175,106,0.25)', color: '#d4af6a', fontSize: 10, fontWeight: 800, letterSpacing: 1 }}>
             <span>✨ OPENCLAW ENTERPRISE v2026.7.1</span>
-            <span style={{ color: '#4ade80', fontSize: 10 }}>● ONLINE</span>
+            <span style={{ color: '#4ade80', fontSize: 9 }}>● ONLINE</span>
           </div>
 
-          <h1 style={{ fontSize: 26, fontWeight: 900, color: '#ffffff', margin: '8px 0 4px 0', letterSpacing: '-0.5px' }}>
-            Plataforma Integrada de Control y Operaciones
+          <h1 style={{ fontSize: 22, fontWeight: 800, color: '#d4af6a', margin: '6px 0 2px 0', letterSpacing: '-0.3px' }}>
+            Plataforma Integral de Control Corporativo
           </h1>
-          <p style={{ fontSize: 13, color: '#94a3b8', margin: 0 }}>
-            Visión global del negocio: Avatares 3D, Estudio de Video, Ventas WhatsApp $0, RAG 768-dim y Respaldo Cloud 5TB
+          <p style={{ fontSize: 12, color: '#a09d99', margin: 0 }}>
+            Ecosistema de gestión para Directivas, CEO, Gerencia, Supervisores y Operaciones
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: 10 }}>
-          <div style={{ background: 'rgba(15,23,42,0.85)', border: '1px solid rgba(251,191,36,0.3)', padding: '8px 14px', borderRadius: 10, textAlign: 'right' }}>
-            <div style={{ color: '#fbbf24', fontSize: 12, fontWeight: 800 }}>HB Jewelry 18k</div>
-            <div style={{ color: '#94a3b8', fontSize: 10 }}>Firebase Cloud CDN</div>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <div style={{ background: '#161412', border: '1px solid rgba(212,175,106,0.2)', padding: '6px 12px', borderRadius: 6, textAlign: 'right' }}>
+            <div style={{ color: '#d4af6a', fontSize: 11, fontWeight: 700 }}>HB Jewelry 18k</div>
+            <div style={{ color: '#6b6866', fontSize: 9 }}>Firebase CDN</div>
           </div>
-          <div style={{ background: 'rgba(15,23,42,0.85)', border: '1px solid rgba(52,211,153,0.3)', padding: '8px 14px', borderRadius: 10, textAlign: 'right' }}>
-            <div style={{ color: '#34d399', fontSize: 12, fontWeight: 800 }}>Rclone Drive 5TB</div>
-            <div style={{ color: '#94a3b8', fontSize: 10 }}>Pipeline DAG Sincronizado</div>
+          <div style={{ background: '#161412', border: '1px solid rgba(212,175,106,0.2)', padding: '6px 12px', borderRadius: 6, textAlign: 'right' }}>
+            <div style={{ color: '#d4af6a', fontSize: 11, fontWeight: 700 }}>Drive 5TB</div>
+            <div style={{ color: '#6b6866', fontSize: 9 }}>Rclone Sync</div>
           </div>
         </div>
       </div>
 
-      {/* ─── 2 BOTONES PRINCIPALES DE DESPLIEGUE (PANTONE STYLED) ─── */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 32 }}>
+      {/* ─── SECCIÓN 1: 2 BOTONES MAESTROS DE DESPLIEGUE (SÓLO LAS THUMBNAILS TIENEN COLOR COMPLETO) ─── */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24 }}>
         
         {/* BOTÓN 1: DESPLEGAR AVATARES 3D */}
         <div
@@ -60,52 +67,53 @@ export default function Dashboard({ onNavigate }) {
           onMouseLeave={() => setHoverAvatars(false)}
           style={{
             cursor: 'pointer',
-            borderRadius: 18,
-            padding: '28px 28px',
-            background: hoverAvatars 
-              ? 'linear-gradient(145deg, #1e1b4b 0%, #0f172a 100%)' 
-              : 'linear-gradient(145deg, #111827 0%, #0b0f19 100%)',
-            backdropFilter: 'blur(16px)',
-            border: hoverAvatars ? '2px solid #fbbf24' : '1px solid rgba(251,191,36,0.35)',
-            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-            transform: hoverAvatars ? 'translateY(-4px)' : 'none',
-            boxShadow: hoverAvatars ? '0 16px 40px rgba(251,191,36,0.25)' : '0 8px 24px rgba(0,0,0,0.5)',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            minHeight: 220
+            borderRadius: 12,
+            padding: '20px',
+            background: hoverAvatars ? 'rgba(212,175,106,0.08)' : '#161412',
+            border: hoverAvatars ? '1px solid #d4af6a' : '1px solid rgba(212,175,106,0.2)',
+            transition: 'all 0.2s ease',
+            display: 'grid',
+            gridTemplateColumns: '110px 1fr',
+            gap: 16,
+            alignItems: 'center'
           }}
         >
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
-              <span style={{ padding: '4px 10px', borderRadius: 20, background: '#b45309', color: '#fff', fontSize: 10, fontWeight: 900, letterSpacing: 1 }}>
-                👑 PARRILLA 6 COLUMNAS
-              </span>
-              <span style={{ fontSize: 24 }}>👤</span>
-            </div>
-            <h2 style={{ fontSize: 22, fontWeight: 900, color: '#ffffff', margin: '0 0 6px 0' }}>
-              Avatares Digitales 3D (Guillermo AI)
-            </h2>
-            <p style={{ fontSize: 12, color: '#cbd5e1', lineHeight: 1.5, margin: 0 }}>
-              Catálogo tridimensional de 8 avatares oficiales con fotos estáticas PNG transparentes RGBA e Inspector 3D FLAME.
-            </p>
+          {/* THUMBNAIL EN COLOR COMPLETO (AVATAR HD) */}
+          <div style={{ width: 110, height: 130, borderRadius: 8, overflow: 'hidden', background: '#000', border: '1px solid rgba(212,175,106,0.3)', flexShrink: 0 }}>
+            <img src={asset('avatar_pro.png')} alt="Avatar 3D Guillermo AI" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center' }} />
           </div>
 
-          <div style={{
-            marginTop: 18,
-            padding: '12px 20px',
-            borderRadius: 10,
-            background: 'linear-gradient(135deg, #fbbf24 0%, #d4af6a 100%)',
-            color: '#000',
-            fontWeight: 900,
-            fontSize: 12,
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            boxShadow: '0 4px 16px rgba(251,191,36,0.3)'
-          }}>
-            <span>👑 DESPLEGAR SECCIÓN DE AVATARES 3D</span>
-            <span style={{ fontSize: 14 }}>➔</span>
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                <span style={{ padding: '2px 8px', borderRadius: 4, background: 'rgba(212,175,106,0.15)', color: '#d4af6a', fontSize: 9, fontWeight: 800, border: '1px solid rgba(212,175,106,0.3)' }}>
+                  👑 PARRILLA 6 COLUMNAS
+                </span>
+              </div>
+              <h2 style={{ fontSize: 17, fontWeight: 800, color: '#f0ede8', margin: '0 0 4px 0' }}>
+                Avatares Digitales 3D (Guillermo AI)
+              </h2>
+              <p style={{ fontSize: 11, color: '#a09d99', lineHeight: 1.4, margin: 0 }}>
+                Catálogo de 8 modelos oficiales con fotos estáticas PNG transparentes RGBA HD e Inspector 3D.
+              </p>
+            </div>
+
+            <div style={{
+              marginTop: 10,
+              padding: '8px 14px',
+              borderRadius: 6,
+              background: 'rgba(212,175,106,0.12)',
+              border: '1px solid rgba(212,175,106,0.3)',
+              color: '#d4af6a',
+              fontWeight: 800,
+              fontSize: 11,
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}>
+              <span>DESPLEGAR SECCIÓN DE AVATARES 3D</span>
+              <span style={{ fontSize: 12 }}>➔</span>
+            </div>
           </div>
         </div>
 
@@ -116,215 +124,260 @@ export default function Dashboard({ onNavigate }) {
           onMouseLeave={() => setHoverVideos(false)}
           style={{
             cursor: 'pointer',
-            borderRadius: 18,
-            padding: '28px 28px',
-            background: hoverVideos 
-              ? 'linear-gradient(145deg, #450a0a 0%, #0f172a 100%)' 
-              : 'linear-gradient(145deg, #111827 0%, #0b0f19 100%)',
-            backdropFilter: 'blur(16px)',
-            border: hoverVideos ? '2px solid #ef4444' : '1px solid rgba(239,68,68,0.35)',
-            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-            transform: hoverVideos ? 'translateY(-4px)' : 'none',
-            boxShadow: hoverVideos ? '0 16px 40px rgba(239,68,68,0.25)' : '0 8px 24px rgba(0,0,0,0.5)',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            minHeight: 220
+            borderRadius: 12,
+            padding: '20px',
+            background: hoverVideos ? 'rgba(212,175,106,0.08)' : '#161412',
+            border: hoverVideos ? '1px solid #d4af6a' : '1px solid rgba(212,175,106,0.2)',
+            transition: 'all 0.2s ease',
+            display: 'grid',
+            gridTemplateColumns: '110px 1fr',
+            gap: 16,
+            alignItems: 'center'
           }}
         >
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
-              <span style={{ padding: '4px 10px', borderRadius: 20, background: '#991b1b', color: '#fff', fontSize: 10, fontWeight: 900, letterSpacing: 1 }}>
-                🔴 8 VIDEOS MP4 ÚNICOS
-              </span>
-              <span style={{ fontSize: 24 }}>🎬</span>
+          {/* THUMBNAIL EN COLOR COMPLETO (VIDEO POSTER HD) */}
+          <div style={{ width: 110, height: 130, borderRadius: 8, overflow: 'hidden', background: '#000', border: '1px solid rgba(212,175,106,0.3)', flexShrink: 0, position: 'relative' }}>
+            <img src={asset('posters/poster_talk_grow.png')} alt="Estudio de Video HD" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <span style={{ color: '#fff', fontSize: 20 }}>▶</span>
             </div>
-            <h2 style={{ fontSize: 22, fontWeight: 900, color: '#ffffff', margin: '0 0 6px 0' }}>
-              Estudio de Video & Cursos de Automatización
-            </h2>
-            <p style={{ fontSize: 12, color: '#cbd5e1', lineHeight: 1.5, margin: 0 }}>
-              Parrilla de 6 columnas con videos de 7 Hacks de Claude, voz real FM estéreo a 48kHz y subtítulos bilingües.
-            </p>
           </div>
 
-          <div style={{
-            marginTop: 18,
-            padding: '12px 20px',
-            borderRadius: 10,
-            background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
-            color: '#fff',
-            fontWeight: 900,
-            fontSize: 12,
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            boxShadow: '0 4px 16px rgba(239,68,68,0.3)'
-          }}>
-            <span>🔴 DESPLEGAR ESTUDIO DE VIDEOS Y CURSOS</span>
-            <span style={{ fontSize: 14 }}>➔</span>
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                <span style={{ padding: '2px 8px', borderRadius: 4, background: 'rgba(212,175,106,0.15)', color: '#d4af6a', fontSize: 9, fontWeight: 800, border: '1px solid rgba(212,175,106,0.3)' }}>
+                  🔴 8 VIDEOS MP4 ÚNICOS
+                </span>
+              </div>
+              <h2 style={{ fontSize: 17, fontWeight: 800, color: '#f0ede8', margin: '0 0 4px 0' }}>
+                Estudio de Video & Cursos de Automatización
+              </h2>
+              <p style={{ fontSize: 11, color: '#a09d99', lineHeight: 1.4, margin: 0 }}>
+                Parrilla de 6 columnas con videos de 7 Hacks de Claude, voz FM 48kHz y subtítulos bilingües.
+              </p>
+            </div>
+
+            <div style={{
+              marginTop: 10,
+              padding: '8px 14px',
+              borderRadius: 6,
+              background: 'rgba(212,175,106,0.12)',
+              border: '1px solid rgba(212,175,106,0.3)',
+              color: '#d4af6a',
+              fontWeight: 800,
+              fontSize: 11,
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}>
+              <span>DESPLEGAR ESTUDIO DE VIDEOS Y CURSOS</span>
+              <span style={{ fontSize: 12 }}>➔</span>
+            </div>
           </div>
         </div>
 
       </div>
 
-      {/* ─── 6 CARDS DE OPERACIÓN GLOBAL DEL NEGOCIO (RECONSTRUIDAS) ─── */}
-      <div style={{ marginBottom: 14 }}>
-        <h3 style={{ fontSize: 16, fontWeight: 900, color: '#fbbf24', margin: '0 0 14px 0', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span>🌐 MÓDULOS OPERATIVOS DEL ECOSISTEMA DE NEGOCIO</span>
+      {/* ─── SECCIÓN 2: LA AUTONOMÍA — TARJETAS CON LA PALETA DORADA UNIFICADA HB ─── */}
+      <div style={{ marginBottom: 10 }}>
+        <h3 style={{ fontSize: 14, fontWeight: 800, color: '#d4af6a', margin: '0 0 10px 0', textTransform: 'uppercase', letterSpacing: 1 }}>
+          ⚡ LA AUTONOMÍA — CONTROL OPERATIVO POR DIVISIONES
         </h3>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginBottom: 24 }}>
         
-        {/* CARD 1: VENTAS & CATALOGO */}
-        <div
-          onClick={() => handleNav('ventas')}
-          onMouseEnter={() => setHoverCard('ventas')}
-          onMouseLeave={() => setHoverCard(null)}
-          style={{
-            cursor: 'pointer',
-            borderRadius: 14,
-            padding: '18px 20px',
-            background: hoverCard === 'ventas' ? 'linear-gradient(145deg, #1e1b4b 0%, #090d16 100%)' : '#090d16',
-            border: hoverCard === 'ventas' ? '1px solid #fbbf24' : '1px solid rgba(255,255,255,0.08)',
-            transition: 'all 0.2s ease',
-            transform: hoverCard === 'ventas' ? 'translateY(-2px)' : 'none'
-          }}
-        >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-            <span style={{ color: '#fbbf24', fontSize: 13, fontWeight: 800 }}>💎 Ventas & Catálogo 18k</span>
-            <span style={{ fontSize: 18 }}>◆</span>
-          </div>
-          <p style={{ fontSize: 11, color: '#94a3b8', margin: '0 0 10px 0' }}>
-            Colección de Joyería Fina HB Jewelry con checkout automático y cierre directo a WhatsApp $0.
-          </p>
-          <div style={{ color: '#fbbf24', fontSize: 10, fontWeight: 700 }}>VER SECCIÓN DE VENTAS ➔</div>
-        </div>
-
-        {/* CARD 2: AGENTES IA & RAG */}
+        {/* TARJETA 1: AGENTES AUTÓNOMOS */}
         <div
           onClick={() => handleNav('chat')}
           onMouseEnter={() => setHoverCard('chat')}
           onMouseLeave={() => setHoverCard(null)}
           style={{
             cursor: 'pointer',
-            borderRadius: 14,
-            padding: '18px 20px',
-            background: hoverCard === 'chat' ? 'linear-gradient(145deg, #1e1b4b 0%, #090d16 100%)' : '#090d16',
-            border: hoverCard === 'chat' ? '1px solid #60a5fa' : '1px solid rgba(255,255,255,0.08)',
-            transition: 'all 0.2s ease',
-            transform: hoverCard === 'chat' ? 'translateY(-2px)' : 'none'
+            borderRadius: 8,
+            padding: '14px 16px',
+            background: hoverCard === 'chat' ? 'rgba(212,175,106,0.06)' : '#161412',
+            border: hoverCard === 'chat' ? '1px solid #d4af6a' : '1px solid rgba(255,255,255,0.07)',
+            transition: 'all 0.15s ease'
           }}
         >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-            <span style={{ color: '#60a5fa', fontSize: 13, fontWeight: 800 }}>🤖 Agentes IA & RAG 768-dim</span>
-            <span style={{ fontSize: 18 }}>◎</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+            <span style={{ color: '#d4af6a', fontSize: 12, fontWeight: 700 }}>🤖 Agentes Autónomos & RAG</span>
+            <span style={{ fontSize: 10, background: 'rgba(212,175,106,0.12)', color: '#d4af6a', padding: '1px 6px', borderRadius: 4 }}>3 Activos</span>
           </div>
-          <p style={{ fontSize: 11, color: '#94a3b8', margin: '0 0 10px 0' }}>
-            Orquestación de agentes autónomos con memoria RAG en Firestore y 7 Hacks de Claude 4.6.
+          <p style={{ fontSize: 10, color: '#a09d99', margin: '0 0 6px 0' }}>
+            Memoria vectorial RAG 768-dim en Firestore y 7 Hacks de Claude 4.6.
           </p>
-          <div style={{ color: '#60a5fa', fontSize: 10, fontWeight: 700 }}>ABRIR CHAT AGENTES ➔</div>
+          <div style={{ color: '#d4af6a', fontSize: 10, fontWeight: 700 }}>GESTIONAR AGENTES ➔</div>
         </div>
 
-        {/* CARD 3: WHATSAPP BUSINESS ($0) */}
+        {/* TARJETA 2: AUDITORÍA & SEGURIDAD */}
         <div
-          onClick={() => handleNav('integraciones')}
-          onMouseEnter={() => setHoverCard('wa')}
+          onClick={() => handleNav('auditoria')}
+          onMouseEnter={() => setHoverCard('auditoria')}
           onMouseLeave={() => setHoverCard(null)}
           style={{
             cursor: 'pointer',
-            borderRadius: 14,
-            padding: '18px 20px',
-            background: hoverCard === 'wa' ? 'linear-gradient(145deg, #064e3b 0%, #090d16 100%)' : '#090d16',
-            border: hoverCard === 'wa' ? '1px solid #34d399' : '1px solid rgba(255,255,255,0.08)',
-            transition: 'all 0.2s ease',
-            transform: hoverCard === 'wa' ? 'translateY(-2px)' : 'none'
+            borderRadius: 8,
+            padding: '14px 16px',
+            background: hoverCard === 'auditoria' ? 'rgba(212,175,106,0.06)' : '#161412',
+            border: hoverCard === 'auditoria' ? '1px solid #d4af6a' : '1px solid rgba(255,255,255,0.07)',
+            transition: 'all 0.15s ease'
           }}
         >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-            <span style={{ color: '#34d399', fontSize: 13, fontWeight: 800 }}>📲 WhatsApp Business ($0)</span>
-            <span style={{ fontSize: 18 }}>💬</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+            <span style={{ color: '#d4af6a', fontSize: 12, fontWeight: 700 }}>🔍 Auditoría & Trazabilidad</span>
+            <span style={{ fontSize: 10, background: 'rgba(212,175,106,0.12)', color: '#d4af6a', padding: '1px 6px', borderRadius: 4 }}>100% Ok</span>
           </div>
-          <p style={{ fontSize: 11, color: '#94a3b8', margin: '0 0 10px 0' }}>
-            Canal de ventas y atención autónoma 24/7 en puerto 3001 sin costo por mensaje.
+          <p style={{ fontSize: 10, color: '#a09d99', margin: '0 0 6px 0' }}>
+            Registro de logs en tiempo real y protocolo de blindaje AGENTS.md.
           </p>
-          <div style={{ color: '#34d399', fontSize: 10, fontWeight: 700 }}>CONFIGURAR WHATSAPP ➔</div>
+          <div style={{ color: '#d4af6a', fontSize: 10, fontWeight: 700 }}>VER AUDITORÍA ➔</div>
         </div>
 
-        {/* CARD 4: INVENTARIO & PRODUCTOS */}
-        <div
-          onClick={() => handleNav('inventario')}
-          onMouseEnter={() => setHoverCard('inv')}
-          onMouseLeave={() => setHoverCard(null)}
-          style={{
-            cursor: 'pointer',
-            borderRadius: 14,
-            padding: '18px 20px',
-            background: hoverCard === 'inv' ? 'linear-gradient(145deg, #1e1b4b 0%, #090d16 100%)' : '#090d16',
-            border: hoverCard === 'inv' ? '1px solid #a78bfa' : '1px solid rgba(255,255,255,0.08)',
-            transition: 'all 0.2s ease',
-            transform: hoverCard === 'inv' ? 'translateY(-2px)' : 'none'
-          }}
-        >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-            <span style={{ color: '#a78bfa', fontSize: 13, fontWeight: 800 }}>📦 Control de Inventario</span>
-            <span style={{ fontSize: 18 }}>▣</span>
-          </div>
-          <p style={{ fontSize: 11, color: '#94a3b8', margin: '0 0 10px 0' }}>
-            Gestión de stock de piezas en oro 18k, diamantes e indicadores de reabastecimiento.
-          </p>
-          <div style={{ color: '#a78bfa', fontSize: 10, fontWeight: 700 }}>VER INVENTARIO ➔</div>
-        </div>
-
-        {/* CARD 5: ANALYTICS & REPORTES */}
-        <div
-          onClick={() => handleNav('analytics')}
-          onMouseEnter={() => setHoverCard('an')}
-          onMouseLeave={() => setHoverCard(null)}
-          style={{
-            cursor: 'pointer',
-            borderRadius: 14,
-            padding: '18px 20px',
-            background: hoverCard === 'an' ? 'linear-gradient(145deg, #1e1b4b 0%, #090d16 100%)' : '#090d16',
-            border: hoverCard === 'an' ? '1px solid #f43f5e' : '1px solid rgba(255,255,255,0.08)',
-            transition: 'all 0.2s ease',
-            transform: hoverCard === 'an' ? 'translateY(-2px)' : 'none'
-          }}
-        >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-            <span style={{ color: '#f43f5e', fontSize: 13, fontWeight: 800 }}>📊 Analytics & Conversión</span>
-            <span style={{ fontSize: 18 }}>📈</span>
-          </div>
-          <p style={{ fontSize: 11, color: '#94a3b8', margin: '0 0 10px 0' }}>
-            Métricas de tráfico, conversión de ventas, engagement de avatares y retorno operativo.
-          </p>
-          <div style={{ color: '#f43f5e', fontSize: 10, fontWeight: 700 }}>ABRIR ANALYTICS ➔</div>
-        </div>
-
-        {/* CARD 6: PIPELINE DAG & RESPALDO 5TB */}
+        {/* TARJETA 3: TAREAS EN EJECUCIÓN & MONITOR DAG */}
         <div
           onClick={() => handleNav('pipeline')}
           onMouseEnter={() => setHoverCard('pipe')}
           onMouseLeave={() => setHoverCard(null)}
           style={{
             cursor: 'pointer',
-            borderRadius: 14,
-            padding: '18px 20px',
-            background: hoverCard === 'pipe' ? 'linear-gradient(145deg, #1e1b4b 0%, #090d16 100%)' : '#090d16',
-            border: hoverCard === 'pipe' ? '1px solid #cbd5e1' : '1px solid rgba(255,255,255,0.08)',
-            transition: 'all 0.25s ease',
-            transform: hoverCard === 'pipe' ? 'translateY(-2px)' : 'none'
+            borderRadius: 8,
+            padding: '14px 16px',
+            background: hoverCard === 'pipe' ? 'rgba(212,175,106,0.06)' : '#161412',
+            border: hoverCard === 'pipe' ? '1px solid #d4af6a' : '1px solid rgba(255,255,255,0.07)',
+            transition: 'all 0.15s ease'
           }}
         >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-            <span style={{ color: '#cbd5e1', fontSize: 13, fontWeight: 800 }}>⚡ Pipeline DAG & Drive 5TB</span>
-            <span style={{ fontSize: 18 }}>☁️</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+            <span style={{ color: '#d4af6a', fontSize: 12, fontWeight: 700 }}>⚡ Tareas & Pipeline DAG</span>
+            <span style={{ fontSize: 10, background: 'rgba(212,175,106,0.12)', color: '#d4af6a', padding: '1px 6px', borderRadius: 4 }}>Drive 5TB</span>
           </div>
-          <p style={{ fontSize: 11, color: '#94a3b8', margin: '0 0 10px 0' }}>
-            Estado de tareas en segundo plano, respaldos Rclone y despliegue autómata de cierre.
+          <p style={{ fontSize: 10, color: '#a09d99', margin: '0 0 6px 0' }}>
+            Estado de tareas en segundo plano, respaldos Rclone y despliegue continuo.
           </p>
-          <div style={{ color: '#cbd5e1', fontSize: 10, fontWeight: 700 }}>VER MONITOR PIPELINE ➔</div>
+          <div style={{ color: '#d4af6a', fontSize: 10, fontWeight: 700 }}>MONITOR PIPELINE ➔</div>
         </div>
+
+        {/* TARJETA 4: VENTAS & CATALOGO 18K */}
+        <div
+          onClick={() => handleNav('ventas')}
+          onMouseEnter={() => setHoverCard('ventas')}
+          onMouseLeave={() => setHoverCard(null)}
+          style={{
+            cursor: 'pointer',
+            borderRadius: 8,
+            padding: '14px 16px',
+            background: hoverCard === 'ventas' ? 'rgba(212,175,106,0.06)' : '#161412',
+            border: hoverCard === 'ventas' ? '1px solid #d4af6a' : '1px solid rgba(255,255,255,0.07)',
+            transition: 'all 0.15s ease'
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+            <span style={{ color: '#d4af6a', fontSize: 12, fontWeight: 700 }}>💎 Ventas & Catálogo 18k</span>
+            <span style={{ fontSize: 10, background: 'rgba(212,175,106,0.12)', color: '#d4af6a', padding: '1px 6px', borderRadius: 4 }}>Activo</span>
+          </div>
+          <p style={{ fontSize: 10, color: '#a09d99', margin: '0 0 6px 0' }}>
+            Joyería Fina HB Jewelry con checkout automático y cierre a WhatsApp $0.
+          </p>
+          <div style={{ color: '#d4af6a', fontSize: 10, fontWeight: 700 }}>IR A VENTAS ➔</div>
+        </div>
+
+        {/* TARJETA 5: WHATSAPP BUSINESS ($0) */}
+        <div
+          onClick={() => handleNav('integraciones')}
+          onMouseEnter={() => setHoverCard('wa')}
+          onMouseLeave={() => setHoverCard(null)}
+          style={{
+            cursor: 'pointer',
+            borderRadius: 8,
+            padding: '14px 16px',
+            background: hoverCard === 'wa' ? 'rgba(212,175,106,0.06)' : '#161412',
+            border: hoverCard === 'wa' ? '1px solid #d4af6a' : '1px solid rgba(255,255,255,0.07)',
+            transition: 'all 0.15s ease'
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+            <span style={{ color: '#d4af6a', fontSize: 12, fontWeight: 700 }}>📲 WhatsApp Business ($0)</span>
+            <span style={{ fontSize: 10, background: 'rgba(212,175,106,0.12)', color: '#d4af6a', padding: '1px 6px', borderRadius: 4 }}>Puerto 3001</span>
+          </div>
+          <p style={{ fontSize: 10, color: '#a09d99', margin: '0 0 6px 0' }}>
+            Canal de comunicación 24/7 sin costo por mensaje ni intermediarios.
+          </p>
+          <div style={{ color: '#d4af6a', fontSize: 10, fontWeight: 700 }}>CANAL WHATSAPP ➔</div>
+        </div>
+
+        {/* TARJETA 6: INVENTARIO & PRODUCTOS */}
+        <div
+          onClick={() => handleNav('inventario')}
+          onMouseEnter={() => setHoverCard('inv')}
+          onMouseLeave={() => setHoverCard(null)}
+          style={{
+            cursor: 'pointer',
+            borderRadius: 8,
+            padding: '14px 16px',
+            background: hoverCard === 'inv' ? 'rgba(212,175,106,0.06)' : '#161412',
+            border: hoverCard === 'inv' ? '1px solid #d4af6a' : '1px solid rgba(255,255,255,0.07)',
+            transition: 'all 0.15s ease'
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+            <span style={{ color: '#d4af6a', fontSize: 12, fontWeight: 700 }}>📦 Control de Inventario</span>
+            <span style={{ fontSize: 10, background: 'rgba(212,175,106,0.12)', color: '#d4af6a', padding: '1px 6px', borderRadius: 4 }}>Stock Ok</span>
+          </div>
+          <p style={{ fontSize: 10, color: '#a09d99', margin: '0 0 6px 0' }}>
+            Gestión de stock de piezas finas en oro 18k e indicadores de inventario.
+          </p>
+          <div style={{ color: '#d4af6a', fontSize: 10, fontWeight: 700 }}>VER INVENTARIO ➔</div>
+        </div>
+
+      </div>
+
+      {/* ─── SECCIÓN 3: ACCIONES RECIENTES & TABLA CORPORATIVA UNIFICADA ─── */}
+      <div style={{ background: '#161412', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 10, padding: '16px 18px' }}>
+        
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+          <div>
+            <h3 style={{ fontSize: 14, fontWeight: 800, color: '#d4af6a', margin: '0 0 2px 0', textTransform: 'uppercase', letterSpacing: 1 }}>
+              🚀 ACCIONES RECIENTES & DEPLOYS DIRECTOS
+            </h3>
+            <p style={{ fontSize: 11, color: '#6b6866', margin: 0 }}>Acciones rápidas para CEO, Gerencia, Supervisores y Operaciones</p>
+          </div>
+
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+            <button onClick={() => handleNav('productos')} style={{ background: 'rgba(212,175,106,0.1)', border: '1px solid rgba(212,175,106,0.25)', color: '#d4af6a', padding: '4px 10px', borderRadius: 6, fontSize: 10, fontWeight: 700, cursor: 'pointer' }}>➕ AGREGAR PRODUCTO</button>
+            <button onClick={() => handleNav('ordenes')} style={{ background: 'rgba(212,175,106,0.1)', border: '1px solid rgba(212,175,106,0.25)', color: '#d4af6a', padding: '4px 10px', borderRadius: 6, fontSize: 10, fontWeight: 700, cursor: 'pointer' }}>📦 VER PEDIDOS</button>
+            <button onClick={() => handleNav('reportes')} style={{ background: 'rgba(212,175,106,0.1)', border: '1px solid rgba(212,175,106,0.25)', color: '#d4af6a', padding: '4px 10px', borderRadius: 6, fontSize: 10, fontWeight: 700, cursor: 'pointer' }}>📊 REPORTES FINANCIEROS</button>
+            <button onClick={() => handleNav('pipeline')} style={{ background: 'rgba(212,175,106,0.1)', border: '1px solid rgba(212,175,106,0.25)', color: '#d4af6a', padding: '4px 10px', borderRadius: 6, fontSize: 10, fontWeight: 700, cursor: 'pointer' }}>⚡ EJECUTAR PIPELINE DAG</button>
+          </div>
+        </div>
+
+        {/* TABLA DE ACTIVIDAD RECIENTE */}
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 11 }}>
+          <thead>
+            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', color: '#6b6866', textAlign: 'left', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <th style={{ padding: '6px 8px', width: '150px' }}>Timestamp</th>
+              <th style={{ padding: '6px 8px' }}>Evento Corporativo</th>
+              <th style={{ padding: '6px 8px', width: '140px' }}>División</th>
+              <th style={{ padding: '6px 8px', width: '100px' }}>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {RECENT_ACTIVITIES.map((act, idx) => (
+              <tr key={idx} style={{ borderBottom: '1px solid rgba(255,255,255,0.03)', color: '#c0bcb8' }}>
+                <td style={{ padding: '6px 8px', color: '#d4af6a', fontWeight: 600 }}>{act.timestamp}</td>
+                <td style={{ padding: '6px 8px', color: '#f0ede8' }}>{act.evento}</td>
+                <td style={{ padding: '6px 8px', color: '#a09d99' }}>{act.division}</td>
+                <td style={{ padding: '6px 8px' }}>
+                  <span style={{ padding: '2px 8px', borderRadius: 4, background: 'rgba(74,222,128,0.12)', color: '#4ade80', border: '1px solid rgba(74,222,128,0.25)', fontSize: 10, fontWeight: 600 }}>
+                    {act.estado}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
       </div>
 

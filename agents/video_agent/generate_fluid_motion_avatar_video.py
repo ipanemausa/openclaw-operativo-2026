@@ -186,6 +186,7 @@ def render_master_sequence(duration_sec, out_path, is_full_youtube=False):
             draw.line([(dot_x, wave_y - dot_h), (dot_x, wave_y + dot_h)], fill=(255, 255, 255, 230), width=4)
 
         frame_path = os.path.join(temp_dir, f"frame_{f_idx:04d}.png")
+        os.makedirs(temp_dir, exist_ok=True)
         base.save(frame_path, "PNG")
 
     print(f" -> Compilando AUDIO ESTÉREO ECUALIZADO EN ESTUDIO FM (48kHz) + VIDEO MP4...")

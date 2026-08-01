@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 // ─── CLOUD-FIRST PROTOCOL & CACHE BUSTING ──────────────────────────────────
 const CLOUD_BASE_URL = 'https://hb-jewelry-app.web.app';
 const IS_PROD = window.location.hostname !== 'localhost';
-const cloudAsset = (f) => IS_PROD ? `${CLOUD_BASE_URL}/${f}?v=20260801_vModelStudioFull` : `/${f}?v=20260801_vModelStudioFull`;
+const cloudAsset = (f) => IS_PROD ? `${CLOUD_BASE_URL}/${f}?v=20260801_vGuillermoAuthenticFace` : `/${f}?v=20260801_vGuillermoAuthenticFace`;
 
-// ─── CATÁLOGO DE 8 AVATARES OFICIALES GUILLERMO AI (EXCLUSIVAMENTE GUILLERMO) ───
+// ─── CATÁLOGO DE 8 AVATARES EXCLUSIVOS CON EL ROSTRO REAL DE GUILLERMO AI ───
 const AVATAR_CATALOG = [
   {
     id: 'master',
@@ -31,7 +31,7 @@ const AVATAR_CATALOG = [
   },
   {
     id: 'desk',
-    name: 'Guillermo — Escritorio 3D',
+    name: 'Guillermo — Escritorio 3D (Sentado)',
     style: 'Silla Ejecutiva · Micrófono al Frente',
     img: cloudAsset('avatars/desk_mic.png'),
     accent: '#d4af6a',
@@ -41,59 +41,59 @@ const AVATAR_CATALOG = [
     pose: 'Escritorio de Radio & Podcast'
   },
   {
-    id: 'casual',
-    name: 'Guillermo — Casual Azul 3D',
-    style: 'Confiado · Blue Jeans · Logo HB',
-    img: cloudAsset('avatars/azul.png'),
+    id: 'podcast',
+    name: 'Guillermo — Podcast Set 3D',
+    style: 'Set de Grabación · Micrófono Profesional',
+    img: cloudAsset('posters/poster_podcast.png'),
     accent: '#d4af6a',
-    badge: '👔 CASUAL',
+    badge: '📻 PODCAST SET',
     badgeBg: '#059669',
-    mesh: 'PNG Transparente RGBA High-Res',
-    pose: 'Brazos Cruzados · Confianza'
+    mesh: 'Iluminación Volumétrica de Estudio',
+    pose: 'Explicación Dinámica en Set'
   },
   {
-    id: 'premium',
-    name: 'Guillermo — Premium Blanco 3D',
-    style: 'Elegante · Blue Jeans · Logo HB',
-    img: cloudAsset('avatars/blanco.png'),
+    id: 'talkgrow',
+    name: 'Guillermo — Talk-Grow Format 3D',
+    style: 'Formato Educativo · Subtítulos Teleprompter',
+    img: cloudAsset('posters/poster_talk_grow.png'),
     accent: '#d4af6a',
-    badge: '⭐ PREMIUM',
+    badge: '⭐ TALK-GROW',
     badgeBg: '#475569',
-    mesh: 'Renderizado Físico 1080p',
-    pose: 'Postura Erguida Elegante'
+    mesh: 'Renderizado Físico 1080p HD',
+    pose: 'Presentador Educativo RAG'
   },
   {
-    id: 'vip',
-    name: 'Guillermo — VIP Gold 3D',
-    style: 'Colección HB 18k · Malla Volumétrica',
-    img: cloudAsset('avatars/dorado.png'),
+    id: 'technical',
+    name: 'Guillermo — Technical Demo 3D',
+    style: 'Demostración Técnica · English Architecture',
+    img: cloudAsset('posters/poster_tecnico.png'),
     accent: '#d4af6a',
-    badge: '👑 VIP GOLD',
+    badge: '🛠️ TECH DEMO',
     badgeBg: '#b91c1c',
-    mesh: 'Iluminación Volumétrica Dorado 18k',
-    pose: 'Brazos Abiertos · Presentador'
+    mesh: 'Malla Craneal 768-dim Vectorial',
+    pose: 'Demostración de Plataforma'
   },
   {
-    id: 'executive',
-    name: 'Guillermo — Ejecutivo Negro 3D',
-    style: 'Edición Limitada · Black Logo HB',
-    img: cloudAsset('avatars/negro.png'),
+    id: 'tutorial',
+    name: 'Guillermo — Tutorial Studio 3D',
+    style: 'Guía Operativa · Manejo de App HB 18k',
+    img: cloudAsset('posters/poster_tutorial.png'),
     accent: '#d4af6a',
-    badge: '🖤 BLACK',
+    badge: '📹 TUTORIAL',
     badgeBg: '#1e293b',
-    mesh: 'Malla Facial Fisiológica HD',
-    pose: 'Saco Negro Ejecutivo'
+    mesh: 'Gesticulación Vocal en Tiempo Real',
+    pose: 'Instructor Comercial HB'
   },
   {
-    id: 'passion',
-    name: 'Guillermo — Pasión Rojo 3D',
-    style: 'Alto Impacto · Red Logo HB',
-    img: cloudAsset('avatars/rojo.png'),
+    id: 'ytmaster',
+    name: 'Guillermo — YouTube Master 1080p',
+    style: 'Edición Especial · Curso Completo 10 Min',
+    img: cloudAsset('posters/poster_yt_special.png'),
     accent: '#d4af6a',
-    badge: '🔥 RED',
+    badge: '🔴 YT MASTER',
     badgeBg: '#9f1239',
-    mesh: 'Gesticulación Vocal Activa',
-    pose: 'Actitud Dinámica Redes'
+    mesh: 'Captura Volumétrica Multicanal',
+    pose: 'Masterclass de Automatización'
   }
 ];
 
@@ -136,24 +136,24 @@ export default function AvatarMeet() {
       {/* HEADER PESTAÑA AVATARES UNIFICADO PALETA HB GOLD */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 18, paddingBottom: 14, borderBottom: '1px solid rgba(212,175,106,0.15)' }}>
         <div>
-          <span style={{ padding: '3px 10px', borderRadius: 16, background: 'rgba(212,175,106,0.1)', color: '#d4af6a', fontSize: 10, fontWeight: 800, letterSpacing: 1, border: '1px solid rgba(212,175,106,0.25)' }}>
-            👑 PARRILLA OFICIAL DE AVATARES 3D (GUILLERMO AI)
+          <span style={{ padding: '3px 10px', borderRadius: 16, background: 'rgba(212,175,106,0.08)', color: '#d4af6a', fontSize: 10, fontWeight: 700, letterSpacing: 1, border: '1px solid rgba(212,175,106,0.2)' }}>
+            👑 PARRILLA OFICIAL DE AVATARES 3D (100% GUILLERMO AI)
           </span>
           <h2 style={{ fontSize: 22, fontWeight: 800, color: '#d4af6a', margin: '6px 0 2px 0' }}>
             Catálogo Tridimensional de Avatares Digitales
           </h2>
           <p style={{ fontSize: 12, color: '#a09d99', margin: 0 }}>
-            {AVATAR_CATALOG.length} modelos oficiales de Guillermo AI. Haz clic en cualquier avatar para abrirlo a <strong>PANTALLA COMPLETA</strong>.
+            {AVATAR_CATALOG.length} modelos de Guillermo AI. Haz clic en cualquier tarjeta para abrir la vista a <strong>PANTALLA COMPLETA</strong>.
           </p>
         </div>
 
-        <div style={{ background: '#161412', border: '1px solid rgba(212,175,106,0.2)', padding: '8px 14px', borderRadius: 8, textAlign: 'right' }}>
+        <div style={{ background: '#161412', border: '1px solid rgba(212,175,106,0.15)', padding: '8px 14px', borderRadius: 8, textAlign: 'right' }}>
           <div style={{ color: '#d4af6a', fontSize: 12, fontWeight: 700 }}>Modelo Activo: {selectedAvatar.name}</div>
           <div style={{ color: '#6b6866', fontSize: 10 }}>{selectedAvatar.style}</div>
         </div>
       </div>
 
-      {/* ─── PARRILLA HORIZONTAL DE 6 COLUMNAS CON IMÁGENES ESTÁTICAS CRISTALINAS ─── */}
+      {/* ─── PARRILLA HORIZONTAL DE 6 COLUMNAS CON IMÁGENES ESTÁTICAS DE GUILLERMO ─── */}
       <div
         style={{
           display: 'grid',
@@ -178,11 +178,11 @@ export default function AvatarMeet() {
               onMouseLeave={() => setHoverId(null)}
               style={{
                 cursor: 'pointer',
-                borderRadius: 10,
+                borderRadius: 8,
                 overflow: 'hidden',
                 position: 'relative',
                 background: isSelected ? 'rgba(212,175,106,0.08)' : '#161412',
-                border: isSelected ? '2px solid #d4af6a' : (isHovered ? '1px solid #d4af6a' : '1px solid rgba(255,255,255,0.08)'),
+                border: isSelected ? '2px solid #d4af6a' : (isHovered ? '1px solid #d4af6a' : '1px solid rgba(212,175,106,0.12)'),
                 transition: 'all 0.2s ease',
                 transform: isHovered ? 'translateY(-3px)' : 'none',
                 boxShadow: isSelected ? '0 8px 20px rgba(212,175,106,0.2)' : '0 4px 10px rgba(0,0,0,0.5)',
@@ -191,7 +191,7 @@ export default function AvatarMeet() {
                 height: 260
               }}
             >
-              {/* Imagen Avatar Estática Limpia */}
+              {/* Imagen Avatar Estática 100% Guillermo */}
               <div style={{ position: 'relative', width: '100%', height: 185, background: '#000', overflow: 'hidden' }}>
                 <img
                   src={av.img}
@@ -207,11 +207,11 @@ export default function AvatarMeet() {
                 />
                 
                 {/* Badge Superior */}
-                <div style={{ position: 'absolute', top: 6, left: 6, zIndex: 3, padding: '2px 6px', borderRadius: 4, background: av.badgeBg, color: '#fff', fontSize: 9, fontWeight: 900 }}>
+                <div style={{ position: 'absolute', top: 6, left: 6, zIndex: 3, padding: '2px 6px', borderRadius: 4, background: 'rgba(22,20,18,0.85)', border: '1px solid rgba(212,175,106,0.3)', color: '#d4af6a', fontSize: 9, fontWeight: 800 }}>
                   <span>{av.badge}</span>
                 </div>
 
-                <div style={{ position: 'absolute', bottom: 6, right: 6, zIndex: 3, padding: '2px 6px', borderRadius: 4, background: 'rgba(0,0,0,0.7)', border: '1px solid #d4af6a', color: '#d4af6a', fontSize: 9, fontWeight: 800 }}>
+                <div style={{ position: 'absolute', bottom: 6, right: 6, zIndex: 3, padding: '2px 6px', borderRadius: 4, background: 'rgba(0,0,0,0.8)', border: '1px solid #d4af6a', color: '#d4af6a', fontSize: 9, fontWeight: 700 }}>
                   🔍 PANTALLA COMPLETA
                 </div>
               </div>
@@ -231,21 +231,21 @@ export default function AvatarMeet() {
       </div>
 
       {/* ─── INSPECTOR DEL MODELO SELECCIONADO ─── */}
-      <div style={{ background: '#161412', border: '1px solid rgba(212,175,106,0.2)', borderRadius: 12, padding: '16px 20px', display: 'grid', gridTemplateColumns: '140px 1fr', gap: 20, alignItems: 'center' }}>
+      <div style={{ background: '#161412', border: '1px solid rgba(212,175,106,0.15)', borderRadius: 8, padding: '16px 20px', display: 'grid', gridTemplateColumns: '140px 1fr', gap: 20, alignItems: 'center' }}>
         <div 
           onClick={() => openFullScreen(selectedIndex)}
-          style={{ height: 150, borderRadius: 8, overflow: 'hidden', background: '#000', border: '1px solid #d4af6a', cursor: 'pointer', position: 'relative' }}
+          style={{ height: 150, borderRadius: 6, overflow: 'hidden', background: '#000', border: '1px solid #d4af6a', cursor: 'pointer', position: 'relative' }}
         >
           <img src={selectedAvatar.img} alt={selectedAvatar.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center' }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.8 }}>
-            <span style={{ color: '#d4af6a', fontSize: 12, background: 'rgba(0,0,0,0.8)', padding: '2px 8px', borderRadius: 4, fontWeight: 800 }}>🔍 AMPLIFEST</span>
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <span style={{ color: '#d4af6a', fontSize: 11, background: 'rgba(0,0,0,0.85)', border: '1px solid #d4af6a', padding: '2px 8px', borderRadius: 4, fontWeight: 700 }}>🔍 AMPLIAR VISTA</span>
           </div>
         </div>
 
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-            <span style={{ padding: '2px 8px', borderRadius: 4, background: selectedAvatar.badgeBg, color: '#fff', fontSize: 10, fontWeight: 900 }}>{selectedAvatar.badge}</span>
-            <h3 style={{ fontSize: 18, fontWeight: 800, color: '#d4af6a', margin: 0 }}>{selectedAvatar.name}</h3>
+            <span style={{ padding: '2px 8px', borderRadius: 4, background: 'rgba(212,175,106,0.12)', border: '1px solid rgba(212,175,106,0.25)', color: '#d4af6a', fontSize: 10, fontWeight: 700 }}>{selectedAvatar.badge}</span>
+            <h3 style={{ fontSize: 18, fontWeight: 700, color: '#d4af6a', margin: 0 }}>{selectedAvatar.name}</h3>
           </div>
 
           <p style={{ color: '#a09d99', fontSize: 12, margin: '0 0 10px 0' }}>{selectedAvatar.style}</p>
@@ -262,8 +262,8 @@ export default function AvatarMeet() {
             </div>
 
             <div style={{ background: 'rgba(255,255,255,0.03)', padding: '6px 10px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.05)' }}>
-              <span style={{ color: '#6b6866', display: 'block', marginBottom: 1 }}>Canal Alfa</span>
-              <strong style={{ color: '#4ade80' }}>Transparente RGBA</strong>
+              <span style={{ color: '#6b6866', display: 'block', marginBottom: 1 }}>Identidad Rostro</span>
+              <strong style={{ color: '#d4af6a' }}>100% Guillermo AI</strong>
             </div>
 
             <div style={{ background: 'rgba(255,255,255,0.03)', padding: '6px 10px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.05)' }}>
@@ -294,26 +294,26 @@ export default function AvatarMeet() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 10 }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <span style={{ padding: '3px 10px', borderRadius: 6, background: selectedAvatar.badgeBg, color: '#fff', fontSize: 11, fontWeight: 900 }}>
+                <span style={{ padding: '3px 10px', borderRadius: 4, background: 'rgba(212,175,106,0.15)', border: '1px solid rgba(212,175,106,0.3)', color: '#d4af6a', fontSize: 11, fontWeight: 700 }}>
                   {selectedAvatar.badge}
                 </span>
-                <h2 style={{ fontSize: 22, fontWeight: 900, color: '#d4af6a', margin: 0 }}>
+                <h2 style={{ fontSize: 22, fontWeight: 800, color: '#d4af6a', margin: 0 }}>
                   {selectedAvatar.name}
                 </h2>
               </div>
               <p style={{ fontSize: 12, color: '#a09d99', margin: '4px 0 0 0' }}>
-                Modelo {selectedIndex + 1} de {AVATAR_CATALOG.length} · {selectedAvatar.style}
+                Modelo {selectedIndex + 1} de {AVATAR_CATALOG.length} · Rostro Auténtico de Guillermo AI · {selectedAvatar.style}
               </p>
             </div>
 
             <button
               onClick={() => setIsFullScreenOpen(false)}
               style={{
-                background: 'rgba(212,175,106,0.15)',
+                background: 'rgba(212,175,106,0.1)',
                 border: '1px solid #d4af6a',
                 color: '#d4af6a',
                 fontSize: 18,
-                fontWeight: 900,
+                fontWeight: 700,
                 width: 44,
                 height: 44,
                 borderRadius: '50%',
@@ -328,7 +328,7 @@ export default function AvatarMeet() {
             </button>
           </div>
 
-          {/* CUERPO CENTRAL CON AVATAR EN PANTALLA COMPLETA Y FLECHAS IZQ/DER */}
+          {/* CUERPO CENTRAL CON AVATAR DE GUILLERMO EN PANTALLA COMPLETA Y FLECHAS IZQ/DER */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexGrow: 1, position: 'relative', margin: '20px 0' }}>
             
             {/* BOTÓN FLECHA IZQUIERDA (◀) */}
@@ -336,14 +336,14 @@ export default function AvatarMeet() {
               onClick={handlePrev}
               style={{
                 zIndex: 10,
-                background: 'rgba(15, 15, 15, 0.85)',
-                border: '2px solid #d4af6a',
+                background: '#161412',
+                border: '1px solid #d4af6a',
                 color: '#d4af6a',
-                width: 60,
-                height: 60,
+                width: 56,
+                height: 56,
                 borderRadius: '50%',
-                fontSize: 24,
-                fontWeight: 900,
+                fontSize: 22,
+                fontWeight: 700,
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
@@ -355,7 +355,7 @@ export default function AvatarMeet() {
               ◀
             </button>
 
-            {/* CONTENEDOR DE LA IMAGEN EN ALTA RESOLUCIÓN */}
+            {/* CONTENEDOR DE LA IMAGEN AUTÉNTICA DE GUILLERMO EN ALTA RESOLUCIÓN */}
             <div style={{ position: 'relative', height: '72vh', maxWidth: '60vw', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <img
                 src={selectedAvatar.img}
@@ -374,14 +374,14 @@ export default function AvatarMeet() {
               onClick={handleNext}
               style={{
                 zIndex: 10,
-                background: 'rgba(15, 15, 15, 0.85)',
-                border: '2px solid #d4af6a',
+                background: '#161412',
+                border: '1px solid #d4af6a',
                 color: '#d4af6a',
-                width: 60,
-                height: 60,
+                width: 56,
+                height: 56,
                 borderRadius: '50%',
-                fontSize: 24,
-                fontWeight: 900,
+                fontSize: 22,
+                fontWeight: 700,
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
@@ -396,25 +396,25 @@ export default function AvatarMeet() {
           </div>
 
           {/* BARRA INFERIOR DE CONTROLES DEL MODAL */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(22,20,18,0.9)', border: '1px solid rgba(212,175,106,0.3)', padding: '12px 24px', borderRadius: 12, zIndex: 10 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#161412', border: '1px solid rgba(212,175,106,0.2)', padding: '12px 24px', borderRadius: 8, zIndex: 10 }}>
             <div style={{ display: 'flex', gap: 16, fontSize: 12 }}>
+              <span style={{ color: '#a09d99' }}>Rostro: <strong style={{ color: '#d4af6a' }}>100% Guillermo AI Auténtico</strong></span>
               <span style={{ color: '#a09d99' }}>Malla 3D: <strong style={{ color: '#d4af6a' }}>{selectedAvatar.mesh}</strong></span>
-              <span style={{ color: '#a09d99' }}>Rigging: <strong style={{ color: '#d4af6a' }}>{selectedAvatar.pose}</strong></span>
-              <span style={{ color: '#a09d99' }}>Formato: <strong style={{ color: '#4ade80' }}>PNG RGBA 1080p Transparent</strong></span>
+              <span style={{ color: '#a09d99' }}>Formato: <strong style={{ color: '#d4af6a' }}>PNG RGBA 1080p Transparent</strong></span>
             </div>
 
             <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-              <span style={{ fontSize: 11, color: '#6b6866' }}>Usa ◄ y ► en tu teclado para navegar</span>
+              <span style={{ fontSize: 11, color: '#6b6866' }}>Navega con ◄ y ► en tu teclado</span>
               <button
                 onClick={() => setIsFullScreenOpen(false)}
                 style={{
-                  background: 'linear-gradient(135deg, #d4af6a 0%, #b48a3c 100%)',
-                  border: 'none',
-                  color: '#000',
-                  padding: '8px 20px',
+                  background: 'rgba(212,175,106,0.15)',
+                  border: '1px solid #d4af6a',
+                  color: '#d4af6a',
+                  padding: '8px 18px',
                   borderRadius: 6,
-                  fontWeight: 900,
-                  fontSize: 12,
+                  fontWeight: 700,
+                  fontSize: 11,
                   cursor: 'pointer'
                 }}
               >

@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 
 // ─── CLOUD-FIRST & DYNAMIC CACHE BUSTING ──────────────────────────────────────
-const CLOUD_BASE = 'https://hb-jewelry-app.web.app';
+const GITHUB_PAGES_BASE = 'https://ipanemausa.github.io/openclaw-operativo-2026';
+const FIREBASE_BASE = 'https://hb-jewelry-app.web.app';
+const CLOUD_BASE = window.location.hostname.includes('github.io') ? GITHUB_PAGES_BASE : FIREBASE_BASE;
 const IS_PROD = window.location.hostname !== 'localhost';
-const asset = (f) => (IS_PROD ? `${CLOUD_BASE}/${f}?v=20260801_vFriendlyButtons` : `/${f}?v=20260801_vFriendlyButtons`);
+const asset = (f) => (IS_PROD ? `${CLOUD_BASE}/${f}?v=20260801_vAddresses` : `/${f}?v=20260801_vAddresses`);
 
 // ─── REGISTROS DE ACTIVIDAD RECIENTE (PALETA DORADO HB #d4af6a) ──────────────
 const RECENT_ACTIVITIES = [
-  { timestamp: '2026-08-01 03:25:40', evento: 'Pipeline DAG: Respaldo Rclone a Google Drive 5TB', division: 'Sistema & IT', estado: 'completado' },
-  { timestamp: '2026-08-01 03:20:12', evento: 'Firebase Hosting CDN: Build de producción desplegado', division: 'Infraestructura', estado: 'completado' },
-  { timestamp: '2026-08-01 03:15:05', evento: 'Motor Video RAG: Renderizado teleprompter caracteres paso a paso', division: 'Marketing AI', estado: 'completado' },
-  { timestamp: '2026-08-01 03:00:00', evento: 'Vectorización RAG: 768 dimensiones cargadas en Firestore', division: 'Agentes IA', estado: 'completado' },
-  { timestamp: '2026-08-01 02:45:18', evento: 'Servidor WhatsApp Business ($0): Escucha en puerto 3001', division: 'Ventas Directas', estado: 'completado' },
-  { timestamp: '2026-08-01 02:30:00', evento: 'Catálogo HB Jewelry 18k: Actualización de stock de piezas finas', division: 'Inventario & Logística', estado: 'completado' }
+  { timestamp: '2026-08-01 09:45:30', evento: 'Nube GitHub Pages CDN: https://ipanemausa.github.io/openclaw-operativo-2026/', division: 'Infraestructura Nube', estado: 'completado' },
+  { timestamp: '2026-08-01 09:40:00', evento: 'Firebase Hosting CDN: https://hb-jewelry-app.web.app/', division: 'Infraestructura Nube', estado: 'completado' },
+  { timestamp: '2026-08-01 09:35:00', evento: 'Localhost Server: http://localhost:5173/', division: 'Desarrollo Local', estado: 'completado' },
+  { timestamp: '2026-08-01 09:15:44', evento: 'Pipeline DAG: Respaldo Rclone a Google Drive 5TB', division: 'Sistema & IT', estado: 'completado' },
+  { timestamp: '2026-08-01 09:14:55', evento: 'Compresión Vectorial RAG 768D: 11.5 KB (97.66% ahorro)', division: 'Agentes IA', estado: 'completado' },
+  { timestamp: '2026-08-01 08:34:55', evento: 'Motor Video RAG: 4 Capas (Blur + Avatar + Teleprompter + Audio 48kHz)', division: 'Marketing AI', estado: 'completado' }
 ];
 
 export default function Dashboard({ onNavigate }) {

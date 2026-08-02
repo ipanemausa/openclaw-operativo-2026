@@ -29,23 +29,23 @@ OUT_YT_MASTER_PATH = os.path.join(PUBLIC_DIR, "videos", "talk_grow_format", "you
 
 os.makedirs(os.path.dirname(OUT_TALK_GROW_PATH), exist_ok=True)
 
-# Guión Comercial y Educativo de Alta Retención
+# Guión Maestro Educativo: Automatización, Inteligencia Artificial y Crecimiento Empresarial
 SCRIPT_PARAGRAPHS = [
     {
-        "es": "Hola, bienvenido a la academia HB Jewelry. Soy Guillermo, tu asistente de inteligencia artificial.",
-        "en": "Hello, welcome to HB Jewelry academy. I am Guillermo, your artificial intelligence assistant."
+        "es": "Hola, bienvenido a nuestro canal educativo de automatización e inteligencia artificial. Soy Guillermo.",
+        "en": "Hello, welcome to our educational channel on automation and artificial intelligence. I am Guillermo."
     },
     {
-        "es": "Hoy aprenderemos los 7 hacks avanzados para automatizar tu empresa con Claude 4.6.",
-        "en": "Today we will learn the 7 advanced hacks to automate your company with Claude 4.6."
+        "es": "Hoy aprenderemos cómo estructurar los 7 pilares fundamentales para escalar tu empresa con agentes autónomos.",
+        "en": "Today we will learn how to structure the 7 fundamental pillars to scale your business with autonomous agents."
     },
     {
-        "es": "Cada pedido se procesa automáticamente a través de WhatsApp Business sin costo por transacción.",
-        "en": "Every order is automatically processed through WhatsApp Business at zero transaction cost."
+        "es": "Cada proceso se diseña para eliminar tareas repetitivas, reducir la fricción operativa y multiplicar la productividad.",
+        "en": "Every process is designed to eliminate repetitive tasks, reduce operational friction, and multiply productivity."
     },
     {
-        "es": "Toda nuestra información está respaldada en tiempo real hacia Google Drive de 5 Terabytes.",
-        "en": "All our information is backed up in real time to 5 Terabyte Google Drive."
+        "es": "Nuestra meta es construir una comunidad sólida de líderes que dominen las herramientas del futuro hoy mismo.",
+        "en": "Our goal is to build a solid community of leaders who master the tools of the future right now."
     }
 ]
 

@@ -149,12 +149,12 @@ def render_master_sequence(duration_sec, out_path, is_full_youtube=False):
         avatar_y = int(HEIGHT - avatar_h + body_y + 10)
         base.paste(anim_avatar, (avatar_x, avatar_y), anim_avatar)
 
-        # Header Badge YouTube Pro
-        badge_x, badge_y = 80, 60
-        badge_w, badge_h = 380, 52
-        draw.rounded_rectangle([badge_x, badge_y, badge_x + badge_w, badge_y + badge_h], radius=26, fill=(71, 85, 105, 240), outline=(255, 255, 255, 120), width=2)
-        draw.text((badge_x + 22, badge_y + 11), "OPENCLAW YOUTUBE MASTER 🔴", font=font_badge, fill=(255, 255, 255, 255))
-        draw.text((badge_x + badge_w + 30, badge_y + 5), "OpenClaw 2026 · Renderizado de Caracteres Paso a Paso", font=font_header, fill=(132, 204, 22, 255))
+        # Header Badge YouTube Pro (Layout corregido sin overlay de texto)
+        badge_x, badge_y = 60, 45
+        badge_w, badge_h = 470, 54
+        draw.rounded_rectangle([badge_x, badge_y, badge_x + badge_w, badge_y + badge_h], radius=27, fill=(30, 41, 59, 240), outline=(255, 255, 255, 140), width=2)
+        draw.text((badge_x + 24, badge_y + 12), "OPENCLAW YOUTUBE MASTER 🔴", font=font_badge, fill=(255, 255, 255, 255))
+        draw.text((badge_x + badge_w + 35, badge_y + 7), "OpenClaw 2026 · Renderizado de Caracteres Paso a Paso", font=font_header, fill=(132, 204, 22, 255))
 
         # RENDERIZADO DE CARACTERES PASO A PASO EN 3 LÍNEAS
         words = visible_text.split()

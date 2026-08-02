@@ -84,8 +84,11 @@ const VIDEO_CATALOG = [
 const SUBTITLE_DATABASE = [
   { time: '00:01', es: 'Hola, soy Guillermo de HB Jewelry. Bienvenidos a nuestra colección.', en: 'Hello, I am Guillermo from HB Jewelry. Welcome to our collection.' },
   { time: '00:05', es: 'Hoy les mostraré los 7 hacks avanzados para dominar Claude 4.6 en su empresa.', en: 'Today I will show you the 7 advanced hacks to master Claude 4.6 in your business.' },
-  { time: '00:09', es: 'Cada pedido se procesa automáticamente a través de WhatsApp Business sin costo.', en: 'Every order is automatically processed through WhatsApp Business at zero cost.' },
-  { time: '00:12', es: 'Toda nuestra información está respaldada en tiempo real en Google Drive 5TB.', en: 'All our information is backed up in real time on Google Drive 5TB.' }
+  { time: '00:09', es: 'Hack 1: Prompting estructurado con artefactos y protocolos blindados.', en: 'Hack 1: Structured prompting with artifacts and hard-armored protocols.' },
+  { time: '00:12', es: 'Hack 2: Integración de vectores RAG de 768 dimensiones en Firestore.', en: 'Hack 2: Integration of 768-dimensional RAG vectors in Firestore.' },
+  { time: '00:15', es: 'Hack 3: Automatización de Pipeline DAG en segundo plano con Rclone.', en: 'Hack 3: Automation of background DAG Pipeline with Rclone.' },
+  { time: '00:18', es: 'Cada pedido se procesa automáticamente a través de WhatsApp Business sin costo.', en: 'Every order is automatically processed through WhatsApp Business at zero cost.' },
+  { time: '00:22', es: 'Toda nuestra información está respaldada en tiempo real en Google Drive 5TB.', en: 'All our information is backed up in real time on Google Drive 5TB.' }
 ];
 
 /* ═══════════════════════════════════════════════════════════════════════════

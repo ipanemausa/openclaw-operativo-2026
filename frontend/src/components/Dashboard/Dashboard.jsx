@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import IntentBar from '../IntentBar/IntentBar';
 
 // ─── CLOUD-FIRST & DYNAMIC CACHE BUSTING ──────────────────────────────────────
 const GITHUB_PAGES_BASE = 'https://ipanemausa.github.io/openclaw-operativo-2026';
@@ -58,6 +59,9 @@ export default function Dashboard({ onNavigate }) {
           </div>
         </div>
       </div>
+
+      {/* ─── INTENT COMMANDER — COMANDOS AUTÓNOMOS DE 1 LÍNEA ─── */}
+      <IntentBar />
 
       {/* ─── SECCIÓN 1: 2 BOTONES MAESTROS (AMPLIADOS A PANTALLA COMPLETA) ─── */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 28 }}>

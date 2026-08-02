@@ -64,4 +64,22 @@ El sistema se organiza en Skills autónomos en `.agents/skills/`:
 
 ---
 
-**Estado:** 🟢 Artefacto Maestro HB Jewelry Compilado y Listo para Ejecución Full-Stack.
+## 🎨 4. ARQUITECTURA DE 4 NODOS Y 4 CAPAS DEL AVATAR Y VOZ DE GUILLERMO AI
+
+Para garantizar un rendimiento cinematográfico que enganche a la comunidad y transmita máxima autoridad, seguridad y calidez humana, el motor de video se divide en **4 Capas Autónomas de Renderizado**:
+
+```
+ 🖼️ CAPA 1: Fondo Desenfoque Depth Blur HSL 3D (Estatus Visual & Profundidad)
+ 👤 CAPA 2: Avatar HD 3D Guillermo AI (Anatomía Fluida, Hombros & Lip-Sync Vocal)
+ ✍️ CAPA 3: Teleprompter Paso a Paso Calmado (Cadencia Pausada 12-14 char/s)
+ 🎙️ CAPA 4: Voz Real Guillermo 48kHz (Ecualización FM Broadcast & EBU R128 -14 LUFS)
+```
+
+### 🎙️ Guía de Emoción, Tono y Cadencia Vocal:
+1. **Cadencia Pausada y Amigable (Capa 3 & 4):** La velocidad de generación de caracteres y locución está ajustada a **12-14 caracteres por segundo**, permitiendo un ritmo sereno, profesional y acogedor.
+2. **Autoridad y Seguridad Dominante:** Tono firme y seguro en el dominio del tema (Joyería 18k, Agentes IA y Vectorización RAG) sin sonar apresurado ni robótico.
+3. **Conexión Emocional y Fidelización:** La ecualización FM Broadcast potencia la presencia tímbrica cálida en los **250 Hz** y la claridad en los **3.2 kHz**, transmitiendo cercanía y fidelizando a la comunidad HB Jewelry.
+
+---
+
+**Estado:** 🟢 Artefacto Maestro HB Jewelry & Arquitectura de 4 Capas Compilado y Listo para Producción.

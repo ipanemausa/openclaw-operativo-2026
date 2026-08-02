@@ -1,31 +1,38 @@
 {
   "version": "2026.7.1",
-  "total_duration": 34.26,
-  "total_broll_events": 3,
+  "source": "showcase_human_loop.mp4",
+  "total_duration": 78.45,
+  "voice": "Guillermo Real Voice — FM Broadcast 48kHz EBU R128",
   "events": [
     {
       "type": "broll_overlay",
-      "start_time": 1.58,
-      "end_time": 6.33,
-      "duration": 4.75,
-      "label": "Infografía Educativa de IA y Automatización",
-      "keyword_trigger": "hola, bienvenido a nuestro can..."
+      "start_time": 3.14,
+      "end_time": 11.77,
+      "label": "💡 Automatización e Inteligencia Artificial"
     },
     {
       "type": "broll_overlay",
-      "start_time": 10.67,
-      "end_time": 16.56,
-      "duration": 5.89,
-      "label": "Infografía Educativa de IA y Automatización",
-      "keyword_trigger": "hoy aprenderemos cómo estructu..."
+      "start_time": 18.83,
+      "end_time": 27.46,
+      "label": "⚡ Agentes Autónomos — OpenClaw 2026.7.1"
     },
     {
       "type": "broll_overlay",
-      "start_time": 20.91,
-      "end_time": 25.66,
-      "duration": 4.75,
-      "label": "Infografía Educativa de IA y Automatización",
-      "keyword_trigger": "cada proceso se diseña para el..."
+      "start_time": 34.52,
+      "end_time": 43.15,
+      "label": "📐 Investigación de Operaciones & Ruta Crítica (CPM)"
+    },
+    {
+      "type": "broll_overlay",
+      "start_time": 50.21,
+      "end_time": 58.84,
+      "label": "🚀 Crecimiento Empresarial Zero Fricción"
+    },
+    {
+      "type": "broll_overlay",
+      "start_time": 65.9,
+      "end_time": 74.53,
+      "label": "🌐 Firebase CDN + RAG 768D + Rclone 5TB"
     }
   ]
 }

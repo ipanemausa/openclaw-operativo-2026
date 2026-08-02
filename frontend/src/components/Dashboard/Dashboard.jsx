@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import IntentBar from '../IntentBar/IntentBar';
+import RealVoicePlayer from '../RealVoicePlayer/RealVoicePlayer';
 
 // ─── CLOUD-FIRST & DYNAMIC CACHE BUSTING ──────────────────────────────────────
 const GITHUB_PAGES_BASE = 'https://ipanemausa.github.io/openclaw-operativo-2026';
@@ -22,6 +23,7 @@ export default function Dashboard({ onNavigate }) {
   const [hoverAvatars, setHoverAvatars] = useState(false);
   const [hoverVideos, setHoverVideos] = useState(false);
   const [hoverCard, setHoverCard] = useState(null);
+  const [showPlayer, setShowPlayer] = useState(false);
 
   const handleNav = (target) => {
     if (onNavigate) {
@@ -31,6 +33,8 @@ export default function Dashboard({ onNavigate }) {
 
   return (
     <div style={{ padding: '24px 36px', width: '100%', maxWidth: '100%', boxSizing: 'border-box', color: '#f0ede8', fontFamily: 'Inter, system-ui, sans-serif' }}>
+      {/* PLAYER MODAL */}
+      {showPlayer && <RealVoicePlayer onClose={() => setShowPlayer(false)} />}
       
       {/* ─── CABECERA EJECUTIVA AMIGABLE Y ELEGANTE CON ANCHO COMPLETO ─── */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, paddingBottom: 16, borderBottom: '1px solid rgba(212,175,106,0.15)' }}>
@@ -48,7 +52,21 @@ export default function Dashboard({ onNavigate }) {
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: 12 }}>
+        <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+          <button onClick={() => setShowPlayer(true)} style={{
+            background: 'linear-gradient(135deg, rgba(132,204,22,0.15), rgba(132,204,22,0.05))',
+            border: '1px solid rgba(132,204,22,0.4)',
+            borderRadius: 10, padding: '8px 16px',
+            color: '#84cc16', fontSize: 12, fontWeight: 700,
+            cursor: 'pointer', fontFamily: 'inherit',
+            display: 'flex', alignItems: 'center', gap: 6
+          }}>
+            <span style={{ fontSize: 14 }}>▶</span>
+            <div>
+              <div>Mi Voz Real · B-Roll</div>
+              <div style={{ color: 'rgba(132,204,22,0.6)', fontSize: 9 }}>78s · FM 48kHz · EBU R128</div>
+            </div>
+          </button>
           <div style={{ background: 'rgba(22,20,18,0.8)', border: '1px solid rgba(212,175,106,0.2)', padding: '8px 16px', borderRadius: 10, textAlign: 'right', backdropFilter: 'blur(10px)' }}>
             <div style={{ color: '#d4af6a', fontSize: 12, fontWeight: 700 }}>HB Jewelry 18k</div>
             <div style={{ color: '#a09d99', fontSize: 10 }}>Firebase CDN</div>

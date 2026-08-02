@@ -1,0 +1,31 @@
+{
+  "version": "2026.7.1",
+  "total_duration": 34.26,
+  "total_broll_events": 3,
+  "events": [
+    {
+      "type": "broll_overlay",
+      "start_time": 1.58,
+      "end_time": 6.33,
+      "duration": 4.75,
+      "label": "Infografía Educativa de IA y Automatización",
+      "keyword_trigger": "hola, bienvenido a nuestro can..."
+    },
+    {
+      "type": "broll_overlay",
+      "start_time": 10.67,
+      "end_time": 16.56,
+      "duration": 5.89,
+      "label": "Infografía Educativa de IA y Automatización",
+      "keyword_trigger": "hoy aprenderemos cómo estructu..."
+    },
+    {
+      "type": "broll_overlay",
+      "start_time": 20.91,
+      "end_time": 25.66,
+      "duration": 4.75,
+      "label": "Infografía Educativa de IA y Automatización",
+      "keyword_trigger": "cada proceso se diseña para el..."
+    }
+  ]
+}

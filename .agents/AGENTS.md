@@ -29,6 +29,7 @@ a menos que el usuario diga explicitamente "autorizo cambio en [archivo]":
 4. Codigo experimental va en ramas temporales (feature/*, exp/*), NUNCA directo a main.
 5. Si aparecen archivos basura (.txt con codigo, archivos sin extension) -> eliminar y agregar a .gitignore.
 6. Si hay duda entre modificar y proteger -> SIEMPRE PROTEGER.
+7. COMUNICACIÓN DIRECTA Y PRAGMÁTICA: Cero elogios innecesarios, adjetivos inflados o rellenos verbales. Foco 100% en ingeniería, producto de alto valor B2B y mejora continua diaria.
 
 ---
 

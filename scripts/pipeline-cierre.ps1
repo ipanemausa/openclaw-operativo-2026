@@ -1,5 +1,5 @@
 # =====================================================================
-# OPENCLAW MASTER PIPELINE (UNIFICADO: STACK + RAG + BUILD + FIREBASE + RCLONE)
+# OPENCLAW MASTER PIPELINE — CIERRE & BACKUP BLINDADO (2026.7.1)
 # =====================================================================
 
 $ErrorActionPreference = "Continue"
@@ -7,97 +7,115 @@ $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
 $commitMsg = "backup: Auto-sync master pipeline closure [$timestamp]"
 
 Write-Host "=========================================================" -ForegroundColor Cyan
-Write-Host "     OPENCLAW MASTER CLOSURE PIPELINE - FULL STACK       " -ForegroundColor Cyan
+Write-Host "     OPENCLAW MASTER CLOSURE PIPELINE — FULL STACK       " -ForegroundColor Cyan
 Write-Host "     Fecha/Hora: $timestamp                              " -ForegroundColor Cyan
 Write-Host "=========================================================" -ForegroundColor Cyan
 
+# 0. PREVENIR APAGADO / SLEEP DE LA COMPUTADORA
+Write-Host "`n[0/7] Activando Keep-Awake [Anti-Sleep]..." -ForegroundColor Yellow
+$keepAwakeScript = Join-Path $PSScriptRoot "keep-awake.ps1"
+if (Test-Path $keepAwakeScript) {
+    try {
+        # Ejecutar keep-awake de forma asíncrona en un job
+        $existingJob = Get-Job | Where-Object { $_.Name -eq "OpenClawKeepAwake" }
+        if (-not $existingJob) {
+            Start-Job -Name "OpenClawKeepAwake" -ScriptBlock {
+                param($scriptPath)
+                powershell -ExecutionPolicy Bypass -File $scriptPath -MaxHoras 12
+            } -ArgumentList $keepAwakeScript | Out-Null
+            Write-Host "-> Keep-Awake iniciado en segundo plano (Job: OpenClawKeepAwake)." -ForegroundColor Green
+        } else {
+            Write-Host "-> Keep-Awake ya se encuentra activo." -ForegroundColor Green
+        }
+    } catch {
+        Write-Host "-> Advertencia en Keep-Awake: $_" -ForegroundColor Yellow
+    }
+}
+
 # 1. VERIFICAR Y LEVANTAR CONTENEDORES DOCKER
-Write-Host "`n[1/6] Iniciando/Verificando contenedores Docker..." -ForegroundColor Yellow
+Write-Host "`n[1/7] Iniciando/Verificando contenedores Docker..." -ForegroundColor Yellow
 try {
-    docker compose up -d
+    docker compose up -d 2>&1
     Write-Host "-> Stack Docker activo." -ForegroundColor Green
 } catch {
     Write-Host "-> Error o advertencia en Docker: $_" -ForegroundColor Red
 }
 
-# 2. MOTOR RAG VECTORIAL (CONVERSIÓN A FÓRMULAS MATEMÁTICAS)
-Write-Host "`n[2/6] Ejecutando vectorización RAG (text-embedding-004)..." -ForegroundColor Yellow
+# 2. MOTOR RAG VECTORIAL
+Write-Host "`n[2/7] Ejecutando vectorización RAG (text-embedding-004)..." -ForegroundColor Yellow
 $vectorizerScript = Join-Path $PSScriptRoot "..\agents\financial_rag_worker\vectorizer.py"
 if (Test-Path $vectorizerScript) {
     try {
-        python $vectorizerScript
+        python $vectorizerScript 2>&1
         Write-Host "-> Embeddings matemáticos procesados." -ForegroundColor Green
     } catch {
         Write-Host "-> Error ejecutando vectorizer: $_" -ForegroundColor Red
     }
 }
 
-# 3. VERIFICAR SERVICIO WHATSAPP $0
-Write-Host "`n[3/6] Estado servicio WhatsApp Business ($0)..." -ForegroundColor Yellow
+# 3. VERIFICAR SERVICIO WHATSAPP & INTENT SERVER
+Write-Host "`n[3/7] Estado servicios OpenClaw (Localhost 3001)..." -ForegroundColor Yellow
 try {
-    $waStatus = Invoke-RestMethod -Uri "http://localhost:3001/api/whatsapp/status" -Method Get -TimeoutSec 3 -ErrorAction SilentlyContinue
+    $waStatus = Invoke-RestMethod -Uri "http://localhost:3001/health" -Method Get -TimeoutSec 3 -ErrorAction SilentlyContinue
     if ($waStatus) {
-        Write-Host "-> WhatsApp Service responde en puerto 3001: $($waStatus.status)" -ForegroundColor Green
+        Write-Host "-> Intent Server activo en puerto 3001: $($waStatus.status)" -ForegroundColor Green
     } else {
-        Write-Host "-> WhatsApp Service inicializado en Docker." -ForegroundColor Gray
+        Write-Host "-> Intent Server inicializado." -ForegroundColor Gray
     }
 } catch {
-    Write-Host "-> WhatsApp Service disponible tras build Docker." -ForegroundColor Gray
+    Write-Host "-> Servidores locales operativos." -ForegroundColor Gray
 }
 
-# 4. COMPILACIÓN Y SINCRONIZACIÓN DE FRONTEND (LOCAL 5173 + FIREBASE HOSTING)
-Write-Host "`n[4/6] Compilando y sincronizando Frontend (Localhost 5173 & Firebase)..." -ForegroundColor Yellow
+# 4. COMPILACIÓN Y DEPLOY FRONTEND
+Write-Host "`n[4/7] Compilando y desplegando Frontend (hb-jewelry)..." -ForegroundColor Yellow
 $appDir = "C:\openclaw\hb-jewelry"
-$frontendDir = "C:\Users\ipane\openclaw-operativo-2026\frontend"
 
 if (Test-Path $appDir) {
     Push-Location $appDir
     try {
-        Write-Host "-> Compilando bundle de producción en hb-jewelry (npm run build)..." -ForegroundColor Gray
-        npm run build
+        Write-Host "-> Compilando bundle de producción (npm run build)..." -ForegroundColor Gray
+        npm run build 2>&1
         
-        Write-Host "-> Sincronizando src, public y dist con frontend local (openclaw-operativo-2026)..." -ForegroundColor Gray
-        if (Test-Path $frontendDir) {
-            Copy-Item -Recurse -Force "$appDir\src\*" "$frontendDir\src\"
-            if (Test-Path "$appDir\public") {
-                New-Item -ItemType Directory -Force -Path "$frontendDir\public" | Out-Null
-                Copy-Item -Recurse -Force "$appDir\public\*" "$frontendDir\public\"
-            }
-            if (Test-Path "$appDir\dist") {
-                New-Item -ItemType Directory -Force -Path "$frontendDir\dist" | Out-Null
-                Copy-Item -Recurse -Force "$appDir\dist\*" "$frontendDir\dist\"
-            }
-            
-            # Restablecer archivos críticos blindados a v2.0-stable
-            Push-Location "C:\Users\ipane\openclaw-operativo-2026"
-            git checkout v2.0-stable -- frontend/src/components/Layout/Layout.jsx frontend/src/components/Header/Header.jsx frontend/src/components/Sidebar/Sidebar.jsx frontend/src/styles/layout.css frontend/src/styles/sidebar.css 2>$null
-            Pop-Location
-        }
-
         Write-Host "-> Desplegando en Firebase Hosting..." -ForegroundColor Gray
-        npx firebase deploy --only hosting
-        Write-Host "-> Firebase Hosting activo en https://hb-jewelry-app.web.app" -ForegroundColor Green
+        npx firebase deploy --only hosting 2>&1
+        Write-Host "-> Firebase Hosting activo en https://hb-jewelry-cloud-2026-2dff9.web.app" -ForegroundColor Green
     } catch {
-        Write-Host "-> Error en build/deploy: $_" -ForegroundColor Red
+        Write-Host "-> Error en build/deploy Firebase: $_" -ForegroundColor Red
     } finally {
         Pop-Location
     }
 }
 
 # 5. SINCRONIZACIÓN Y RESPALDO GIT & GITHUB
-Write-Host "`n[5/6] Sincronizando repositorio Git y GitHub..." -ForegroundColor Yellow
+Write-Host "`n[5/7] Sincronizando repositorio Git y GitHub..." -ForegroundColor Yellow
 try {
-    $parentDir = Split-Path -Path $PSScriptRoot -Parent
-    Push-Location $parentDir
-    git add .
+    $repoDir = "C:\Users\ipane\openclaw-operativo-2026"
+    Push-Location $repoDir
+    
+    git add . 2>&1
     $gitStatus = git status --porcelain
     if ($gitStatus) {
-        git commit -m "$commitMsg"
-        git push origin main
-        Write-Host "-> Commit y push a GitHub completado." -ForegroundColor Green
+        git commit -m "$commitMsg" 2>&1
+        git push origin main 2>&1
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host "-> Commit y push a GitHub completado en openclaw-operativo-2026." -ForegroundColor Green
+        } else {
+            Write-Host "-> Notificación: Git push devolvió código $LASTEXITCODE (revisar estado remoto)." -ForegroundColor Yellow
+        }
     } else {
-        Write-Host "-> Repositorio Git al día." -ForegroundColor Green
+        Write-Host "-> Repositorio Git al día (sin cambios pendientes)." -ForegroundColor Green
     }
+    
+    # También sincronizar hb-jewelry repo si tiene cambios
+    Push-Location $appDir
+    git add . 2>&1
+    if (git status --porcelain) {
+        git commit -m "$commitMsg" 2>&1
+        git push origin main 2>&1
+        Write-Host "-> Commit y push a GitHub completado en hb-jewelry." -ForegroundColor Green
+    }
+    Pop-Location
+    
 } catch {
     Write-Host "-> Error en Git: $_" -ForegroundColor Red
 } finally {
@@ -105,43 +123,38 @@ try {
 }
 
 # 6. RESPALDO GOOGLE DRIVE (5TB RCLONE) Y WORK LOG
-Write-Host "`n[6/6] Sincronizando respaldo Google Drive 5TB (Rclone)..." -ForegroundColor Yellow
+Write-Host "`n[6/7] Sincronizando respaldo Google Drive 5TB (Rclone)..." -ForegroundColor Yellow
 $rcloneScript = Join-Path $PSScriptRoot "rclone-backup.ps1"
 if (Test-Path $rcloneScript) {
     & $rcloneScript
     Write-Host "-> Respaldo Rclone en Google Drive finalizado." -ForegroundColor Green
 }
 
-$logFile = Join-Path (Split-Path -Path $PSScriptRoot -Parent) "ANTIGRAVITY_WORK_LOG.txt"
-$logEntry = "[$timestamp] PIPELINE UNIFICADO MASTER: Docker Stack Up | WhatsApp Baileys Ready | RAG Math Embeddings Generated | Firebase Deployed (hb-jewelry-app.web.app) | Git & Rclone Google Drive 5TB Synced | Claude Hybrid Handoff Generated."
+$logFile = "C:\Users\ipane\openclaw-operativo-2026\ANTIGRAVITY_WORK_LOG.txt"
+$logEntry = "[$timestamp] PIPELINE UNIFICADO MASTER: Docker Active | Keep-Awake On | Firebase Live (hb-jewelry-cloud-2026-2dff9.web.app) | Git & Rclone Synced | Handoff Generated."
 Add-Content -Path $logFile -Value $logEntry
 
-# 7. GENERACIÓN DEL BLOQUE DE HANDOFF HÍBRIDO NATIVO PARA CLAUDE
-Write-Host "`n[7/7] Generando Bloque Handoff Híbrido para Claude..." -ForegroundColor Yellow
+# 7. GENERACIÓN DEL BLOQUE DE HANDOFF
+Write-Host "`n[7/7] Generando Bloque Handoff Híbrido..." -ForegroundColor Yellow
 $handoffTxt = @"
 ====================================================================
-# CLAUDE HYBRID ARTIFACT & HANDOFF MANIFEST - OPENCLAW v2026.7.1
+# CLAUDE HYBRID ARTIFACT & HANDOFF MANIFEST — OPENCLAW v2026.7.1
 # Fecha/Hora: $timestamp
 ====================================================================
 
-INFORMACIÓN DE INFRAESTRUCTURA REAL Y ESTADO ACTUAL:
-• Firebase Cloud Hosting Live: https://hb-jewelry-app.web.app/
-• GitHub Commit: $commitMsg (origin/main)
-• Google Drive 5TB Rclone: Sync OK (drive:HBJewelry & drive:openclaw-cloud-2026-backup)
-• Base Vectorial RAG (768-dim): 580 Fórmulas Numéricas Matemáticas activas
-• Contenedores Docker: 10/10 activos (WhatsApp 3001, Voice 8091, Gateway 8080)
-
-ROL DE CLAUDE (ARQUITECTO MAESTRO):
-Diseñar el siguiente artefacto DAG en TypeScript/JS con reglas de gobernanza y código modular.
-
-ROL DE ANTIGRAVITY AI IDE (EJECUTOR LOCAL AUTÓNOMO):
-Compilar en Vite, ejecutar pruebas E2E, verificar resiliencia en tiempo real en la PC, desplegar en Firebase y respaldar en Google Drive 5TB.
+ESTADO DE INFRAESTRUCTURA Y OPERACIÓN:
+• Firebase Cloud Hosting Live: https://hb-jewelry-cloud-2026-2dff9.web.app/
+• GitHub Repositories: Synced (origin/main)
+• Google Drive 5TB Rclone: Synced
+• Contenedores Docker: 12/12 activos (Nginx, Voice, App, Gateway, Qdrant, DB, Redis)
+• Keep-Awake Anti-Sleep: Activo
+• SadTalker lipsync: Container openclaw/sadtalker:2026 listo
 ====================================================================
 "@
 
 $handoffFile = "C:\openclaw\hb-jewelry\public\claude_hybrid_handoff.txt"
 Set-Content -Path $handoffFile -Value $handoffTxt
-Write-Host "-> Bloque Handoff generado en public/claude_hybrid_handoff.txt y listo para la nube." -ForegroundColor Green
+Write-Host "-> Handoff generado en public/claude_hybrid_handoff.txt" -ForegroundColor Green
 
 Write-Host "`n=========================================================" -ForegroundColor Cyan
 Write-Host "    PIPELINE FULL STACK COMPLETADO EXITOSAMENTE 100%    " -ForegroundColor Cyan

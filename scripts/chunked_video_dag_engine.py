@@ -90,8 +90,12 @@ def build_chunked_avatar_video(text_script: str, video_name: str, chunk_frames: 
     return manifest
 
 if __name__ == "__main__":
-    script_text = (
-        "Ecosistema OpenClaw 2026: Procesamiento en micro-lotes de 15 frames. "
-        "Escalabilidad ilimitada sin degradación de memoria ni latencia."
-    )
-    build_chunked_avatar_video(script_text, "guillermo_chunked_180f_demo", 15, 180)
+    import argparse
+    parser = argparse.ArgumentParser(description="Chunked Video DAG Engine")
+    parser.add_argument("--frames", type=int, default=940, help="Total frames to render")
+    parser.add_argument("--chunk-size", type=int, default=15, help="Chunk size in frames")
+    parser.add_argument("--name", type=str, default="guillermo_940f_master", help="Output video name")
+    parser.add_argument("--text", type=str, default="Bienvenidos al ecosistema OpenClaw 2026. Procesamiento continuo en micro-lotes de 15 frames para avatares neurales 3D.", help="Text script")
+    args = parser.parse_args()
+
+    build_chunked_avatar_video(args.text, args.name, args.chunk_size, args.frames)

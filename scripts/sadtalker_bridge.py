@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""
+r"""
 ================================================================
  SadTalker Bridge — OpenClaw 2026.7.1
  Pipeline: audio + foto → lipsync animado → Firebase public
  $0 costo | 100% local | Sin límites de API
 ================================================================
  Rutas ajustadas al sistema real:
-   SadTalker: C:\Users\ipane\openclaw-operativo-2026\agents\video_agent\SadTalker
-   Output:    C:\openclaw\output\lipsync
-   Firebase:  C:\openclaw\hb-jewelry\public\videos
+   SadTalker: C:/Users/ipane/openclaw-operativo-2026/agents/video_agent/SadTalker
+   Output:    C:/openclaw/output/lipsync
+   Firebase:  C:/openclaw/hb-jewelry/public/videos
 ================================================================
 """
 import subprocess
@@ -40,7 +40,7 @@ def check_ready() -> dict:
     status = {}
     status["sadtalker_repo"]  = Path(SADTALKER_DIR).exists()
     status["inference_py"]    = Path(SADTALKER_DIR, "inference.py").exists()
-    status["checkpoints"]     = list(Path(CHECKPOINTS).glob("*.safetensors")) if Path(CHECKPOINTS).exists() else []
+    status["checkpoints"]     = list(Path(CHECKPOINTS).glob("*.*")) if Path(CHECKPOINTS).exists() else []
     status["gfpgan"]          = list(Path(GFPGAN_WEIGHTS).glob("*.pth")) if Path(GFPGAN_WEIGHTS).exists() else []
     status["portrait"]        = Path(DEFAULT_PORTRAIT).exists()
     status["edge_tts"]        = shutil.which("edge-tts") is not None
@@ -116,7 +116,7 @@ def generate_audio(text: str, output_path: str,
 
 # ─── SadTalker lipsync ────────────────────────────────────────────────────────
 def run_sadtalker(audio_path: str, portrait_path: str, output_name: str,
-                  size: int = 256, use_enhancer: bool = True) -> str | None:
+                  size: int = 256, use_enhancer: bool = False) -> str | None:
     """
     Ejecuta SadTalker para animar el portrait sincronizado con el audio.
 
@@ -160,7 +160,7 @@ def run_sadtalker(audio_path: str, portrait_path: str, output_name: str,
             timeout=600
         )
         if result.returncode == 0:
-            videos = sorted(out_dir.glob("*.mp4"), key=lambda x: x.stat().st_mtime)
+            videos = sorted(out_dir.rglob("*.mp4"), key=lambda x: x.stat().st_mtime)
             if videos:
                 final = out_dir / f"{output_name}.mp4"
                 shutil.move(str(videos[-1]), str(final))

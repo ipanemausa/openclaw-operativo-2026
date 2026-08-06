@@ -45,11 +45,12 @@ with open(ASS_SUBTITLE_FILE, "w", encoding="utf-8") as f:
 print(f"✅ Archivo de Subtítulos Karaoke ASS generado: {ASS_SUBTITLE_FILE}")
 
 # 2. Generar el Video Completo 1080p con FFmpeg quemando TODAS las capas en el MP4 final
-# Capa 1: Fondo espacial cinemático animado (testsrc2 / canvas galáctico)
-# Capa 2: Avatar PIP circular en la esquina inferior izquierda (x=80, y=680)
-# Capa 3: Subtítulos Karaoke ASS quemados en el video (Dorado neón activo)
-# Capa 4: Audio mezclado (Voz 48kHz + Música Ambiental -20dB)
+# Capa 1: Fondo espacial cinemático HD (cosmic_space_bg.png)
+# Capa 2: Avatar PIP circular en la esquina inferior izquierda (x=80, y=640)
+# Capa 3: Subtítulos Karaoke ASS quemados en el video (Dorado neón activo #FFD700)
+# Capa 4: Audio vocal 48kHz
 
+cosmic_bg = PUBLIC_DIR / "cosmic_space_bg.png"
 avatar_video = PUBLIC_DIR / "videos" / "guillermo_940f_master.mp4"
 if not avatar_video.exists():
     avatar_video = PUBLIC_DIR / "showcase_human_loop.mp4"
@@ -58,11 +59,11 @@ ass_path_clean = str(ASS_SUBTITLE_FILE).replace("\\", "/").replace(":", "\\:")
 
 cmd = [
     "ffmpeg", "-y",
-    "-f", "lavfi", "-i", "testsrc2=size=1920x1080:rate=30", # Canvas 1080p
+    "-loop", "1", "-i", str(cosmic_bg), # Canvas 1080p Espacial Cósmico HD
     "-i", str(avatar_video), # Avatar
     "-filter_complex",
-    f"[1:v]scale=360:360,format=argb,geq=r='r(X,Y)':g='g(X,Y)':b='b(X,Y)':a='if(gt(pow(X-180,2)+pow(Y-180,2),pow(175,2)),0,255)'[pip];"
-    f"[0:v][pip]overlay=80:640[base];"
+    f"[1:v]scale=380:380,format=argb,geq=r='r(X,Y)':g='g(X,Y)':b='b(X,Y)':a='if(gt(pow(X-190,2)+pow(Y-190,2),pow(185,2)),0,255)'[pip];"
+    f"[0:v][pip]overlay=80:620[base];"
     f"[base]subtitles='{ass_path_clean}'[outv]",
     "-map", "[outv]",
     "-map", "1:a?",

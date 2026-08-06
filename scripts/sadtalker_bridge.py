@@ -116,7 +116,7 @@ def generate_audio(text: str, output_path: str,
 
 # ─── SadTalker lipsync ────────────────────────────────────────────────────────
 def run_sadtalker(audio_path: str, portrait_path: str, output_name: str,
-                  size: int = 256, use_enhancer: bool = False) -> str | None:
+                  size: int = 512, use_enhancer: bool = True) -> str | None:
     """
     Ejecuta SadTalker para animar el portrait sincronizado con el audio.
 
@@ -124,8 +124,8 @@ def run_sadtalker(audio_path: str, portrait_path: str, output_name: str,
         audio_path:    WAV 48kHz
         portrait_path: JPG/PNG 512x512 del presentador
         output_name:   Nombre sin extensión del video final
-        size:          256 (rápido, CPU) | 512 (calidad, GPU)
-        use_enhancer:  True = aplica GFPGAN para mejorar resolución facial
+        size:          512 (Alta Definición HD, GPU/CPU)
+        use_enhancer:  True = aplica GFPGAN v1.4 para restauración hiperrealista de dentadura y labios
 
     Returns:
         Ruta al .mp4 generado o None si falló
@@ -139,11 +139,11 @@ def run_sadtalker(audio_path: str, portrait_path: str, output_name: str,
         "--source_image",  portrait_path,
         "--result_dir",    str(out_dir),
         "--size",          str(size),
-        "--expression_scale", "1.2",   # expresividad facial
+        "--expression_scale", "1.3",   # Expresividad natural de mandíbula y dientes
         "--preprocess",    "crop",
-        "--still",                     # evita movimiento de cabeza excesivo
+        "--still",                     # Evita rigidez y desalineación de cabeza
     ]
-    if use_enhancer and Path(GFPGAN_WEIGHTS, "GFPGANv1.4.pth").exists():
+    if use_enhancer:
         cmd.extend(["--enhancer", "gfpgan"])
 
     print(f"\n[SadTalker] Iniciando animación facial...")

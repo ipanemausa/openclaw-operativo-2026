@@ -3,152 +3,200 @@ import sys
 import json
 import asyncio
 import subprocess
+import shutil
 from pathlib import Path
 
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8')
 
 print("====================================================================")
-print(" 🎬 MASTERCLASS B2B 30 MINUTOS — MOTOR DE PRODUCCIÓN YOUTUBE (54,000F)")
+print(" 🎬 MOTOR AUTOMÁTICO REELS/YOUTUBE: SUBTÍTULOS FRASE POR FRASE (KARAOKE 48kHz)")
 print("====================================================================")
 
 PUBLIC_DIR = Path(r"C:\openclaw\hb-jewelry\public")
 OUT_DIR = PUBLIC_DIR / "videos" / "youtube_masterclass"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-# ─── NARRATIVA CONTINUA B2B BILINGÜE C1/C2 (6 MÓDULOS CON EXPLICACIÓN TÉCNICA CLARA) ──
 MASTERCLASS_TOPICS = [
     {
-        "topic_id": 1,
-        "topic_es": "Módulo 1: Diagnóstico y Revolución de la IA Empresarial",
-        "topic_en": "Module 1: Enterprise AI Diagnosis & Strategic Revolution",
-        "dur_target_sec": 300, # 5 min
-        "broll_type": "pip_software",
-        "script_es": "Bienvenidos a este análisis estratégico de infraestructura en Inteligencia Artificial B2B. Hoy examinaremos cómo las organizaciones líderes están sustituyendo el software SaaS tradicional por agentes autónomos locales. Reducimos la fricción operativa a cero y escalamos la capacidad de respuesta sin depender de licencias de pago por uso.",
-        "script_en": "Welcome to this executive briefing on B2B Artificial Intelligence Infrastructure. Today, we evaluate how industry-leading enterprises are replacing legacy SaaS subscriptions with autonomous on-premise agents. By eliminating per-user licensing friction, organizations can scale operational throughput while retaining total sovereignty over their data assets.",
-        "tech_clarification_es": "Aclaración Técnica: SaaS significa Software como Servicio (pagos mensuales por suscripción). Con Agentes Autónomos Locales, la infraestructura corre en tu propio hardware a coste marginal cero.",
-        "tech_clarification_en": "Technical Clarification: SaaS stands for Software as a Service (recurring subscription model). On-Premise Autonomous Agents execute directly on your infrastructure at zero incremental marginal cost."
+        "id": 1,
+        "title_es": "Módulo 1: Revolución IA Empresarial",
+        "title_en": "Module 1: Enterprise AI Revolution",
+        "phrases_es": [
+            "Bienvenidos a este análisis estratégico.",
+            "Examinaremos la infraestructura de IA B2B.",
+            "Sustituimos licencias de pago mensual",
+            "por agentes autónomos en tu servidor.",
+            "Cero fricción operativa y máximo control."
+        ],
+        "phrases_en": [
+            "Welcome to this executive briefing.",
+            "We analyze B2B AI Infrastructure.",
+            "Replacing legacy SaaS subscriptions",
+            "with on-premise autonomous agents.",
+            "Zero operational friction and total sovereignty."
+        ]
     },
     {
-        "topic_id": 2,
-        "topic_es": "Módulo 2: El Patrón de las 4 Áreas Universales en la Empresa",
-        "topic_en": "Module 2: The 4 Universal Enterprise Pillars Framework",
-        "dur_target_sec": 300, # 5 min
-        "broll_type": "avatar_studio",
-        "script_es": "Toda arquitectura empresarial sólida se sustenta en cuatro pilares: Atracción en Marketing, Conversión en Ventas, Operaciones Logísticas y Finanzas de Negocio. Al conectar un motor RAG vectorial de 768 dimensiones a estos pilares, la empresa opera con precisión matemática y respuestas instantáneas.",
-        "script_en": "Every resilient enterprise operates on four foundational pillars: Marketing Attraction, Sales Conversion, Operational Logistics, and Financial Intelligence. By deploying a 768-dimensional RAG vector engine across these domains, organizations achieve mathematical precision and zero-latency decision making.",
-        "tech_clarification_es": "Aclaración Técnica: RAG (Generación Aumentada por Recuperación) convierte tus catálogos y finanzas en fórmulas vectoriales de 768 dimensiones para que la IA responda con datos exactos sin inventar información.",
-        "tech_clarification_en": "Technical Clarification: RAG (Retrieval-Augmented Generation) converts internal business documentation into 768-dimensional numerical vectors, ensuring the AI provides factual responses without hallucination."
+        "id": 2,
+        "title_es": "Módulo 2: Los 4 Pilares de la Empresa",
+        "title_en": "Module 2: 4 Universal Enterprise Pillars",
+        "phrases_es": [
+            "Toda empresa sólida tiene 4 pilares:",
+            "Marketing, Ventas, Logística y Finanzas.",
+            "Conectamos un motor RAG de 768 dimensiones",
+            "para responder con datos exactos",
+            "sin inventar información."
+        ],
+        "phrases_en": [
+            "Every enterprise rests on 4 pillars:",
+            "Marketing, Sales, Logistics, and Finance.",
+            "Connecting a 768-dimensional RAG vector engine",
+            "for exact data retrieval",
+            "without AI hallucinations."
+        ]
     },
     {
-        "topic_id": 3,
-        "topic_es": "Módulo 3: Demostración en Vivo: WhatsApp Business y Privacidad BSUID de Meta",
-        "topic_en": "Module 3: Live Demo: $0 WhatsApp Business & Meta BSUID Privacy Standard",
-        "dur_target_sec": 300, # 5 min
-        "broll_type": "full_screen_demo",
-        "script_es": "Observemos la integración en tiempo real. Gracias a la actualización de Meta, tus clientes interactúan mediante tu Alias comercial en lugar de revelar números privados. Nuestro sistema procesa de forma transparente el identificador BSUID de Meta, garantizando la privacidad del usuario sin perder la continuidad en el CRM.",
-        "script_en": "Consider this real-time execution. Levering Meta's newest username architecture, clients connect seamlessly via your business handle (@YourCompany) while keeping their personal numbers private. Our system natively ingests Meta's BSUID payload, safeguarding customer privacy while maintaining uninterrupted CRM tracking.",
-        "tech_clarification_es": "Aclaración Técnica: BSUID (Business-Scoped User ID) es la clave encriptada de Meta que permite a la empresa identificar al cliente que regresa sin necesidad de exponer su número de teléfono privado.",
-        "tech_clarification_en": "Technical Clarification: BSUID (Business-Scoped User ID) is Meta's encrypted identifier token, allowing businesses to retain complete customer relationship context while fully honoring consumer privacy."
+        "id": 3,
+        "title_es": "Módulo 3: Privacidad Meta y WhatsApp $0",
+        "title_en": "Module 3: Meta Privacy & $0 WhatsApp",
+        "phrases_es": [
+            "Con la actualización reciente de Meta,",
+            "tus clientes usan tu Alias empresarial.",
+            "Protegemos el número telefónico privado",
+            "mediante el token encriptado BSUID.",
+            "Respuestas automáticas 24/7 sin costo por mensaje."
+        ],
+        "phrases_en": [
+            "Leveraging Meta's newest update,",
+            "clients connect via your business handle.",
+            "We safeguard private phone numbers",
+            "using encrypted BSUID tokens.",
+            "24/7 automated responses at zero cost."
+        ]
     },
     {
-        "topic_id": 4,
-        "topic_es": "Módulo 4: Fábrica Audiovisual Local (Micro-Lotes 15F y GFPGAN)",
-        "topic_en": "Module 4: On-Premise AI Video Factory (15-Frame Micro-Batches & GFPGAN)",
-        "dur_target_sec": 300, # 5 min
-        "broll_type": "pip_software",
-        "script_es": "La sostenibilidad de la producción audiovisual reside en la resiliencia técnica. Procesamos el video mediante micro-lotes de 15 fotogramas asistidos por restauración facial GFPGAN, produciendo avatars en alta definición 1080p con voz broadcast 48kHz sin depender de APIs de nube ni pagar costos por minuto.",
-        "script_en": "Sustainable video generation demands architectural resilience. By segmenting neural synthesis into 15-frame micro-batches coupled with GFPGAN facial restoration, we produce pristine 1080p digital presenters with 48kHz broadcast audio natively on local GPUs—bypassing cloud API fees entirely.",
-        "tech_clarification_es": "Aclaración Técnica: GFPGAN es un modelo de red neuronal que restaura y nitidiza rostros humanos en cada fotograma, garantizando calidad de estudio de televisión sin grano ni distorsión.",
-        "tech_clarification_en": "Technical Clarification: GFPGAN is a specialized neural restoration framework that polishes facial landmarks frame-by-frame, delivering broadcast-grade 1080p clarity."
+        "id": 4,
+        "title_es": "Módulo 4: Fábrica Audiovisual Local 1080p",
+        "title_en": "Module 4: Local 1080p AI Video Factory",
+        "phrases_es": [
+            "Procesamos video en micro-lotes de 15 frames",
+            "asistidos por restauración facial GFPGAN.",
+            "Generamos avatares HD con voz 48kHz",
+            "sin pagar APIs en la nube",
+            "ni costos por minuto de render."
+        ],
+        "phrases_en": [
+            "Processing video in 15-frame micro-batches",
+            "enhanced by GFPGAN facial restoration.",
+            "Generating 1080p avatars with 48kHz audio",
+            "bypassing cloud API fees",
+            "and zero per-minute rendering costs."
+        ]
     },
     {
-        "topic_id": 5,
-        "topic_es": "Módulo 5: Arquitectura Autónoma & Docker MCP Toolkit",
-        "topic_en": "Module 5: Autonomous Architecture & Docker MCP Toolkit Integration",
-        "dur_target_sec": 300, # 5 min
-        "broll_type": "diagram_infographic",
-        "script_es": "Mediante el estándar Model Context Protocol de Anthropic y Docker Desktop MCP Toolkit, nuestros agentes se conectan directamente a bases de datos PostgreSQL y repositorios de GitHub. La información fluye de manera segura en contenedores aislados con cero fugas de datos.",
-        "script_en": "Utilizing Anthropic's Model Context Protocol (MCP) alongside the Docker Desktop MCP Toolkit, our agents interface directly with enterprise PostgreSQL databases and GitHub repositories. Data flows seamlessly within isolated container environments, guaranteeing enterprise-grade security.",
-        "tech_clarification_es": "Aclaración Técnica: MCP (Model Context Protocol) es el estándar que permite a los agentes de IA leer bases de datos y ejecutar código de forma segura dentro de contenedores Docker aislados.",
-        "tech_clarification_en": "Technical Clarification: MCP (Model Context Protocol) provides an open specification for AI agents to securely query enterprise databases and invoke containerized system tools."
+        "id": 5,
+        "title_es": "Módulo 5: Arquitectura MCP & Docker Toolkit",
+        "title_en": "Module 5: MCP & Docker Toolkit Standard",
+        "phrases_es": [
+            "Con el estándar Model Context Protocol",
+            "y Docker Desktop MCP Toolkit,",
+            "nuestros agentes leen bases PostgreSQL",
+            "y repositorios GitHub de forma segura",
+            "dentro de contenedores aislados."
+        ],
+        "phrases_en": [
+            "Using Model Context Protocol",
+            "and Docker Desktop MCP Toolkit,",
+            "agents query PostgreSQL databases",
+            "and GitHub repositories securely",
+            "within isolated container environments."
+        ]
     },
     {
-        "topic_id": 6,
-        "topic_es": "Módulo 6: Plan de Acción e Implementación Inmediata",
-        "topic_en": "Module 6: Strategic Roadmap & Turnkey Enterprise Deployment",
-        "dur_target_sec": 300, # 5 min
-        "broll_type": "avatar_studio",
-        "script_es": "El futuro de las empresas competitivas radica en desplegar ecosistemas agénticos propietarios. Toda esta infraestructura está probada, blindada en el tag v2.0-stable y lista para ser clonada e implementada de forma inmediata en tu organización.",
-        "script_en": "The competitive edge of modern enterprise lies in deploying proprietary agentic ecosystems. This complete architecture is verified, locked under tag v2.0-stable, and fully prepared for immediate turn-key implementation across your organization.",
-        "tech_clarification_es": "Aclaración Técnica: El tag v2.0-stable garantiza que el código está respaldado en GitHub y Google Drive 5TB, asegurando cero pérdidas de información y despliegue en un clic.",
-        "tech_clarification_en": "Technical Clarification: The v2.0-stable release tag denotes fully verified production builds backed up across GitHub and 5TB cloud storage for instant, zero-risk deployment."
+        "id": 6,
+        "title_es": "Módulo 6: Plan de Acción v2.0-stable",
+        "title_en": "Module 6: v2.0-stable Turnkey Roadmap",
+        "phrases_es": [
+            "El futuro es desplegar tu propio ecosistema.",
+            "Toda la infraestructura está blindada",
+            "bajo la versión v2.0-stable,",
+            "respaldada en GitHub y Google Drive 5TB,",
+            "lista para despliegue inmediato."
+        ],
+        "phrases_en": [
+            "The future lies in proprietary AI ecosystems.",
+            "Our complete architecture is locked",
+            "under release tag v2.0-stable,",
+            "backed up to GitHub and 5TB Google Drive,",
+            "ready for turnkey enterprise deployment."
+        ]
     }
 ]
 
-manifest_file = OUT_DIR / "youtube_30min_continuous_masterclass_plan.json"
-with open(manifest_file, "w", encoding="utf-8") as f:
-    json.dump(MASTERCLASS_TOPICS, f, indent=2, ensure_ascii=False)
-
-print(f"✅ Plan Maestro de Producción Continua YouTube Bilingüe C1/C2 guardado en: {manifest_file}")
-print(f"📊 Total Módulos: {len(MASTERCLASS_TOPICS)} | Duración Total: 30 Minutos (1800s / 54,000 Frames en 1 Solo Stream)")
-
-# ─── MOTOR DE SÍNTESIS DE VOZ Y RENDERIZADO MAESTRO 30 MIN (54,000 FRAMES) ───
-FINAL_30MIN_MP4 = OUT_DIR / "youtube_30min_masterclass_full_1080p.mp4"
-ASS_SUBTITLE_30MIN = OUT_DIR / "masterclass_30min_subtitles.ass"
-AUDIO_LIST_TXT = OUT_DIR / "audio_concat_list.txt"
-FULL_AUDIO_MP3 = OUT_DIR / "full_masterclass_30min_voice.mp3"
-
 import edge_tts
 
-async def synthesize_all_modules():
-    print("🎙️ Sintetizando audio de Voz Real 48kHz para los 6 Módulos de la Masterclass...")
+async def build_subtitle_and_audio(lang="es"):
+    print(f"\n🎙️ Generando Audios y Subtítulos Frase por Frase ({lang.upper()})...")
     audio_files = []
+    ass_events = []
     
-    for idx, topic in enumerate(MASTERCLASS_TOPICS):
-        mod_audio = OUT_DIR / f"module_{idx+1}_voice.mp3"
-        # Combinar script principal + aclaración técnica
-        full_text = f"{topic['script_es']} {topic['tech_clarification_es']}"
-        communicate = edge_tts.Communicate(full_text, "es-MX-JorgeNeural", rate="-4%", pitch="+0Hz")
-        await communicate.save(str(mod_audio))
-        audio_files.append(mod_audio)
-        print(f"  └─ Módulo {idx+1} Sintetizado: {mod_audio.name}")
+    current_time_sec = 0.8
+    
+    for mod_idx, topic in enumerate(MASTERCLASS_TOPICS):
+        phrases = topic["phrases_es"] if lang == "es" else topic["phrases_en"]
+        voice_id = "es-MX-JorgeNeural" if lang == "es" else "en-US-GuyNeural"
         
-    # Crear archivo concat de FFmpeg
-    with open(AUDIO_LIST_TXT, "w", encoding="utf-8") as f:
+        for p_idx, phrase in enumerate(phrases):
+            aud_path = OUT_DIR / f"phrase_{lang}_{mod_idx+1}_{p_idx+1}.mp3"
+            
+            # Generar audio corto para la frase exacta
+            comm = edge_tts.Communicate(phrase, voice_id, rate="-2%", pitch="+0Hz")
+            await comm.save(str(aud_path))
+            audio_files.append(aud_path)
+            
+            # Medir duración real con ffprobe
+            probe = subprocess.run([
+                "ffprobe", "-v", "error", "-show_entries", "format=duration",
+                "-of", "default=noprintwrappers=1:nokey=1", str(aud_path)
+            ], capture_output=True, text=True)
+            try:
+                dur_sec = float(probe.stdout.strip())
+            except Exception:
+                dur_sec = 2.5
+                
+            end_time_sec = current_time_sec + dur_sec
+            
+            # Formatear tiempos ASS hh:mm:ss.ms
+            m_start = f"{int(current_time_sec//3600)}:{int((current_time_sec%3600)//60):02d}:{current_time_sec%60:05.2f}"
+            m_end = f"{int(end_time_sec//3600)}:{int((end_time_sec%3600)//60):02d}:{end_time_sec%60:05.2f}"
+            
+            # Formatear palabras con resaltado de Karaoke ASS (\k)
+            words = phrase.split()
+            word_dur_ms = int((dur_sec * 1000) / max(len(words), 1) / 10)
+            karaoke_text = "".join([f"{{\\k{word_dur_ms}}}{w} " for w in words])
+            
+            ass_events.append(f"Dialogue: 0,{m_start},{m_end},ShortPhraseStyle,,0,0,0,,{karaoke_text.strip()}")
+            current_time_sec = end_time_sec + 0.3 # Pausa entre frases
+
+    # Concatenar todos los audios de frases
+    concat_list = OUT_DIR / f"concat_{lang}_list.txt"
+    with open(concat_list, "w", encoding="utf-8") as f:
         for a_file in audio_files:
             f.write(f"file '{str(a_file).replace('\\', '/')}'\n")
-            # Agregar pausa respiratoria de 1.2s entre módulos
-            pause_file = PUBLIC_DIR / "pause_08s.mp3"
-            if pause_file.exists():
-                f.write(f"file '{str(pause_file).replace('\\', '/')}'\n")
-                
-    # Concatenar audios con FFmpeg
-    concat_cmd = [
+            
+    full_audio = OUT_DIR / f"full_masterclass_{lang}_voice.mp3"
+    subprocess.run([
         "ffmpeg", "-y", "-f", "concat", "-safe", "0",
-        "-i", str(AUDIO_LIST_TXT),
+        "-i", str(concat_list),
         "-c:a", "libmp3lame", "-b:a", "256k",
-        str(FULL_AUDIO_MP3)
-    ]
-    subprocess.run(concat_cmd, capture_output=True, text=True)
-    print(f"✅ Audio Maestro Continuo 48kHz Ensamblado: {FULL_AUDIO_MP3}")
-
-# Ejecutar síntesis asíncrona de voz
-asyncio.run(synthesize_all_modules())
-
-# 2. Avatar Frontal HD
-avatar_img = PUBLIC_DIR / "avatar_transparent.png"
-is_transparent = True
-
-if not avatar_img.exists():
-    avatar_img = PUBLIC_DIR / "avatars" / "dorado.png"
-    is_transparent = False
-
-print(f"👤 Usando Avatar Virtual 3D HD (Transparente={is_transparent}): {avatar_img}")
-
-# 3. Subtítulos Karaoke ASS Bilingües C1/C2 para los 6 Módulos
-ass_header = """[Script Info]
-Title: OpenClaw 30-Min Masterclass Subtitles
+        str(full_audio)
+    ], capture_output=True, text=True)
+    
+    # Escribir archivo .ass
+    ass_file = OUT_DIR / f"masterclass_{lang}_short_phrases.ass"
+    ass_header = f"""[Script Info]
+Title: Short Phrase Karaoke Subtitles ({lang})
 ScriptType: v4.00+
 WrapStyle: 0
 ScaledBorderAndShadow: yes
@@ -158,174 +206,65 @@ PlayResY: 1080
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: MasterclassStyle,Montserrat,64,&H00FFFFFF,&H0000D7FF,&H00000000,&H80000000,-1,0,0,0,100,100,2,0,1,4,3,6,720,80,160,1
+Style: ShortPhraseStyle,Montserrat,46,&H00FFFFFF,&H0000D7FF,&H00000000,&H90000000,-1,0,0,0,100,100,2,0,1,3,2,2,100,100,110,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
-
-events = []
-start_sec = 1.0
-k30 = "{\\k30}"
-k40 = "{\\k40}"
-slash_n = "\\N"
-for idx, topic in enumerate(MASTERCLASS_TOPICS):
-    dur = 25.0 # Duración estimada por módulo
-    end_sec = start_sec + dur
-    m_start = f"{int(start_sec//3600)}:{int((start_sec%3600)//60):02d}:{start_sec%60:05.2f}"
-    m_end = f"{int(end_sec//3600)}:{int((end_sec%3600)//60):02d}:{end_sec%60:05.2f}"
-    top_title = topic['topic_es']
-    script_body = topic['script_es']
-    txt = f"{k30}{top_title} {slash_n} {k40}{script_body}"
-    events.append(f"Dialogue: 0,{m_start},{m_end},MasterclassStyle,,0,0,0,,{txt}")
-    start_sec = end_sec + 2.0
-
-with open(ASS_SUBTITLE_30MIN, "w", encoding="utf-8") as f:
-    f.write(ass_header + "\n".join(events))
-
-print(f"📝 Subtítulos Karaoke ASS generados: {ASS_SUBTITLE_30MIN}")
-
-cosmic_bg = PUBLIC_DIR / "cosmic_space_bg.png"
-ass_path_clean = str(ASS_SUBTITLE_30MIN).replace("\\", "/").replace(":", "\\:")
-
-if is_transparent:
-    filter_graph = (
-        f"[0:v]zoompan=z='min(zoom+0.0006,1.15)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1920x1080:fps=30[bg_zoom];"
-        f"[1:v]scale=720:980:flags=lanczos,unsharp=5:5:1.2:5:5:1.2[avatar_left];"
-        f"[bg_zoom][avatar_left]overlay=60:60[base];"
-        f"[base]subtitles='{ass_path_clean}'[outv]"
-    )
-else:
-    filter_graph = (
-        f"[1:v]scale=1920:1080:flags=lanczos,unsharp=5:5:1.2:5:5:1.2,"
-        f"zoompan=z='min(zoom+0.0006,1.15)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1920x1080:fps=30[base];"
-        f"[base]subtitles='{ass_path_clean}'[outv]"
-    )
-
-cmd = [
-    "ffmpeg", "-y",
-    "-loop", "1", "-i", str(cosmic_bg),
-    "-loop", "1", "-i", str(avatar_img),
-    "-i", str(FULL_AUDIO_MP3),
-    "-filter_complex", filter_graph,
-    "-map", "[outv]",
-    "-map", "2:a",
-    "-af", "loudnorm=I=-16:TP=-1.5:LRA=11",
-    "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-pix_fmt", "yuv420p", "-shortest",
-    "-c:a", "aac", "-b:a", "256k",
-    str(FINAL_30MIN_MP4)
-]
-
-print("⚙️ Lanzando compilación continua de Masterclass (6 Módulos con Voz Real + Subtítulos ASS + EBU R128)...")
-res = subprocess.run(cmd, capture_output=True, text=True)
-
-if res.returncode == 0:
-    size_mb = FINAL_30MIN_MP4.stat().st_size / (1024 * 1024)
-    # Copiar a raíz pública para disponibilidad 100% en la nube
-    root_mp4 = PUBLIC_DIR / "youtube_30min_masterclass_full_1080p.mp4"
-    import shutil
-    shutil.copy(FINAL_30MIN_MP4, root_mp4)
-    print(f"=========================================================")
-    print(f" ✅ MASTERCLASS B2B ESPAÑOL GENERADA EXITOSAMENTE: {FINAL_30MIN_MP4} ({size_mb:.2f} MB)")
-    print(f" ✅ COPIA EN RAÍZ PÚBLICA LISTA: {root_mp4}")
-    print(f"=========================================================")
-else:
-    print(f"❌ Error en renderizado de Masterclass:\n{res.stderr[-600:]}")
-
-# ─── 4. SÍNTESIS Y COMPOSICIÓN DE MASTERCLASS EN INGLÉS (ENGLISH 4-LAYER MASTER) ───
-FINAL_30MIN_EN_MP4 = OUT_DIR / "youtube_30min_masterclass_en_1080p.mp4"
-ASS_SUBTITLE_EN = OUT_DIR / "masterclass_30min_subtitles_en.ass"
-AUDIO_LIST_EN_TXT = OUT_DIR / "audio_concat_list_en.txt"
-FULL_AUDIO_EN_MP3 = OUT_DIR / "full_masterclass_30min_voice_en.mp3"
-
-async def synthesize_english_modules():
-    print("🎙️ Sintetizando audio de Voz Real 48kHz en Inglés (en-US-GuyNeural)...")
-    audio_files_en = []
-    
-    for idx, topic in enumerate(MASTERCLASS_TOPICS):
-        mod_audio = OUT_DIR / f"module_{idx+1}_voice_en.mp3"
-        full_text = f"{topic['script_en']} {topic['tech_clarification_en']}"
-        communicate = edge_tts.Communicate(full_text, "en-US-GuyNeural", rate="-3%", pitch="+0Hz")
-        await communicate.save(str(mod_audio))
-        audio_files_en.append(mod_audio)
+    with open(ass_file, "w", encoding="utf-8") as f:
+        f.write(ass_header + "\n".join(ass_events))
         
-    with open(AUDIO_LIST_EN_TXT, "w", encoding="utf-8") as f:
-        for a_file in audio_files_en:
-            f.write(f"file '{str(a_file).replace('\\', '/')}'\n")
-            pause_file = PUBLIC_DIR / "pause_08s.mp3"
-            if pause_file.exists():
-                f.write(f"file '{str(pause_file).replace('\\', '/')}'\n")
-                
-    concat_cmd = [
-        "ffmpeg", "-y", "-f", "concat", "-safe", "0",
-        "-i", str(AUDIO_LIST_EN_TXT),
-        "-c:a", "libmp3lame", "-b:a", "256k",
-        str(FULL_AUDIO_EN_MP3)
-    ]
-    subprocess.run(concat_cmd, capture_output=True, text=True)
-    print(f"✅ Audio Maestro Continuo Inglés 48kHz Ensamblado: {FULL_AUDIO_EN_MP3}")
+    print(f"✅ Audio Continuo Ensamblado: {full_audio}")
+    print(f"📝 Subtítulos Frase por Frase (.ass): {ass_file}")
+    
+    return full_audio, ass_file
 
-asyncio.run(synthesize_english_modules())
+# Renderizar videos maestrantes 4 capas para ES y EN
+async def render_all_masters():
+    cosmic_bg = PUBLIC_DIR / "cosmic_space_bg.png"
+    avatar_img = PUBLIC_DIR / "avatar_transparent.png"
+    if not avatar_img.exists():
+        avatar_img = PUBLIC_DIR / "avatars" / "dorado.png"
 
-# Subtítulos Karaoke ASS en Inglés
-events_en = []
-start_sec = 1.0
-for idx, topic in enumerate(MASTERCLASS_TOPICS):
-    dur = 25.0
-    end_sec = start_sec + dur
-    m_start = f"{int(start_sec//3600)}:{int((start_sec%3600)//60):02d}:{start_sec%60:05.2f}"
-    m_end = f"{int(end_sec//3600)}:{int((end_sec%3600)//60):02d}:{end_sec%60:05.2f}"
-    top_title = topic['topic_en']
-    script_body = topic['script_en']
-    txt = f"{k30}{top_title} {slash_n} {k40}{script_body}"
-    events_en.append(f"Dialogue: 0,{m_start},{m_end},MasterclassStyle,,0,0,0,,{txt}")
-    start_sec = end_sec + 2.0
+    for lang in ["es", "en"]:
+        full_audio, ass_file = await build_subtitle_and_audio(lang)
+        
+        out_mp4 = OUT_DIR / f"youtube_30min_masterclass_{'full' if lang=='es' else 'en'}_1080p.mp4"
+        root_mp4 = PUBLIC_DIR / f"youtube_30min_masterclass_{'full' if lang=='es' else 'en'}_1080p.mp4"
+        
+        ass_clean = str(ass_file).replace("\\", "/").replace(":", "\\:")
+        
+        filter_graph = (
+            f"[0:v]zoompan=z='min(zoom+0.0006,1.15)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1920x1080:fps=30[bg_zoom];"
+            f"[1:v]scale=720:980:flags=lanczos,unsharp=5:5:1.2:5:5:1.2[avatar_left];"
+            f"[bg_zoom][avatar_left]overlay=60:60[base];"
+            f"[base]subtitles='{ass_clean}'[outv]"
+        )
+        
+        cmd = [
+            "ffmpeg", "-y",
+            "-loop", "1", "-i", str(cosmic_bg),
+            "-loop", "1", "-i", str(avatar_img),
+            "-i", str(full_audio),
+            "-filter_complex", filter_graph,
+            "-map", "[outv]",
+            "-map", "2:a",
+            "-af", "loudnorm=I=-16:TP=-1.5:LRA=11",
+            "-c:v", "libx264", "-preset", "medium", "-crf", "19", "-pix_fmt", "yuv420p", "-shortest",
+            "-c:a", "aac", "-b:a", "256k",
+            str(out_mp4)
+        ]
+        
+        print(f"⚙️ Compilando Video Maestro 4 Capas con Subtítulos Frase por Frase ({lang.upper()})...")
+        res = subprocess.run(cmd, capture_output=True, text=True)
+        
+        if res.returncode == 0:
+            shutil.copy(out_mp4, root_mp4)
+            size_mb = out_mp4.stat().st_size / (1024 * 1024)
+            print(f" ✅ VIDEO MAESTRO GENERADO EXITOSAMENTE ({lang.upper()}): {out_mp4} ({size_mb:.2f} MB)")
+            print(f" ✅ COPIA EN RAÍZ PÚBLICA: {root_mp4}")
+        else:
+            print(f"❌ Error compilando video ({lang.upper()}):\n{res.stderr[-600:]}")
 
-with open(ASS_SUBTITLE_EN, "w", encoding="utf-8") as f:
-    f.write(ass_header + "\n".join(events_en))
-
-ass_path_en_clean = str(ASS_SUBTITLE_EN).replace("\\", "/").replace(":", "\\:")
-
-if is_transparent:
-    filter_graph_en = (
-        f"[0:v]zoompan=z='min(zoom+0.0006,1.15)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1920x1080:fps=30[bg_zoom];"
-        f"[1:v]scale=720:980:flags=lanczos,unsharp=5:5:1.2:5:5:1.2[avatar_left];"
-        f"[bg_zoom][avatar_left]overlay=60:60[base];"
-        f"[base]subtitles='{ass_path_en_clean}'[outv]"
-    )
-else:
-    filter_graph_en = (
-        f"[1:v]scale=1920:1080:flags=lanczos,unsharp=5:5:1.2:5:5:1.2,"
-        f"zoompan=z='min(zoom+0.0006,1.15)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1920x1080:fps=30[base];"
-        f"[base]subtitles='{ass_path_en_clean}'[outv]"
-    )
-
-cmd_en = [
-    "ffmpeg", "-y",
-    "-loop", "1", "-i", str(cosmic_bg),
-    "-loop", "1", "-i", str(avatar_img),
-    "-i", str(FULL_AUDIO_EN_MP3),
-    "-filter_complex", filter_graph_en,
-    "-map", "[outv]",
-    "-map", "2:a",
-    "-af", "loudnorm=I=-16:TP=-1.5:LRA=11",
-    "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-pix_fmt", "yuv420p", "-shortest",
-    "-c:a", "aac", "-b:a", "256k",
-    str(FINAL_30MIN_EN_MP4)
-]
-
-print("⚙️ Lanzando compilación continua de Masterclass en Inglés (4 Capas con Voz Guy 48kHz)...")
-res_en = subprocess.run(cmd_en, capture_output=True, text=True)
-
-if res_en.returncode == 0:
-    size_mb = FINAL_30MIN_EN_MP4.stat().st_size / (1024 * 1024)
-    root_en_mp4 = PUBLIC_DIR / "youtube_30min_masterclass_en_1080p.mp4"
-    shutil.copy(FINAL_30MIN_EN_MP4, root_en_mp4)
-    print(f"=========================================================")
-    print(f" ✅ MASTERCLASS B2B INGLÉS GENERADA EXITOSAMENTE: {FINAL_30MIN_EN_MP4} ({size_mb:.2f} MB)")
-    print(f" ✅ COPIA EN RAÍZ PÚBLICA LISTA: {root_en_mp4}")
-    print(f"=========================================================")
-
-
-
-
+asyncio.run(render_all_masters())
+print("\n🎬 ¡PROCESO AUTOMÁTICO DE VIDEO COMPLETO CON SUBTÍTULOS CORREOS FRASE POR FRASE FINALIZADO!")

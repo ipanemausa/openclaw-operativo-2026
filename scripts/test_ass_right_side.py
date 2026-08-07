@@ -9,7 +9,7 @@ if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8')
 
 print("====================================================================")
-print(" 🎬 TELEPROMPTER DERECHO EXACTO {pos(1280,360)} — SUBTÍTULOS FRASE POR FRASE (54pt)")
+print(" 🎬 TEST RENDER: TELEPROMPTER DERECHO (x: 850px, y: 280px, Font 54pt)")
 print("====================================================================")
 
 PUBLIC_DIR = Path(r"C:\openclaw\hb-jewelry\public")
@@ -170,13 +170,13 @@ async def build_subtitle_and_audio(lang="es"):
             end_time_sec = current_time_sec + dur_sec
             
             m_start = f"{int(current_time_sec//3600)}:{int((current_time_sec%3600)//60):02d}:{current_time_sec%60:05.2f}"
-            m_end = f"{int(end_time_sec//3600)}:{int((end_time_sec%3600)//60):02d}:{end_time_sec%60:05.2f}"
+            m_end = f"{int(end_time_sec//3600)}:{int((end_sec%3600)//60):02d}:{end_sec%60:05.2f}" if 'end_sec' in locals() else f"{int(end_time_sec//3600)}:{int((end_time_sec%3600)//60):02d}:{end_time_sec%60:05.2f}"
             
             words = phrase.split()
             word_dur_ms = int((dur_sec * 1000) / max(len(words), 1) / 10)
             karaoke_text = "".join([f"{{\\k{word_dur_ms}}}{w} " for w in words])
             
-            # Posición exacta en el centro de la mitad DERECHA (x: 1280px, y: 360px)
+            # Posición en el cuadrante superior derecho (x: 820px, y: 320px)
             ass_events.append(f"Dialogue: 0,{m_start},{m_end},ShortPhraseStyle,,0,0,0,,{{\\pos(1280,360)}}{karaoke_text.strip()}")
             current_time_sec = end_time_sec + 0.3
 

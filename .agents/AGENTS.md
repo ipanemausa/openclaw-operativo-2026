@@ -83,3 +83,18 @@ Siempre que el usuario solicite un cierre, respaldo, o diga frases como "hacer b
    - Sincronización en la nube vía `rclone` hacia Google Drive (`drive:HBJewelry` y `drive:openclaw-cloud-2026-backup`).
    - Registro de estado en `ANTIGRAVITY_WORK_LOG.txt`.
 3. Confirmar la ejecución al usuario con un resumen conciso de lo respaldado.
+
+---
+
+## Protocolo Permanente de Producción Audiovisual Resiliente (Pipeline Video 2026)
+
+Para producción autónoma diaria de video sin intervención ni ajustes manuales de configuración:
+
+1. **Sub-Pipeline de Video Resiliente:** `powershell -ExecutionPolicy Bypass -File .\scripts\pipeline-video.ps1 -Topic "Tema"`
+2. **Normas de Calidad & Paridad Inmutables:**
+   - **Avatar:** Soul Cast de Guillermo HD con GFPGAN y logo HB Jewelry en lado izquierdo (`x: 60px`).
+   - **Fondo:** Luna 3D Realista + Círculo Morado Estético + Aura Dorada Suave (`GaussianBlur(30)`).
+   - **Teleprompter:** Mitad derecha (`\pos(1280,380)`), fuente Montserrat 52pt, resalte dorado Karaoke por palabra.
+   - **Audio:** Voz estéreo 48kHz (`es-MX-JorgeNeural` / `en-US-GuyNeural`), normalizado a -16 LUFS EBU R128.
+   - **Streaming:** FastStart MP4 (`-movflags +faststart`) activado para 0 buffer en navegadores.
+   - **Paridad Bilingüe:** 100% paridad 1 a 1 de duración exacta entre Español e Inglés.

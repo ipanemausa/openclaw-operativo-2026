@@ -93,21 +93,60 @@ with open(manifest_file, "w", encoding="utf-8") as f:
 print(f"✅ Plan Maestro de Producción Continua YouTube Bilingüe C1/C2 guardado en: {manifest_file}")
 print(f"📊 Total Módulos: {len(MASTERCLASS_TOPICS)} | Duración Total: 30 Minutos (1800s / 54,000 Frames en 1 Solo Stream)")
 
-# ─── MOTOR DE RENDERIZADO AUDIOVISUAL MAESTRO 30 MIN (54,000 FRAMES) ───
+# ─── MOTOR DE SÍNTESIS DE VOZ Y RENDERIZADO MAESTRO 30 MIN (54,000 FRAMES) ───
 FINAL_30MIN_MP4 = OUT_DIR / "youtube_30min_masterclass_full_1080p.mp4"
 ASS_SUBTITLE_30MIN = OUT_DIR / "masterclass_30min_subtitles.ass"
+AUDIO_LIST_TXT = OUT_DIR / "audio_concat_list.txt"
+FULL_AUDIO_MP3 = OUT_DIR / "full_masterclass_30min_voice.mp3"
 
-# 1. Voz Real de Guillermo 48kHz
-real_voice_wav = PUBLIC_DIR / "videos" / "real_voice_master" / "guillermo_voice_fm_48k.wav"
-if not real_voice_wav.exists():
-    real_voice_wav = PUBLIC_DIR / "real_guillermo_voice.mp3"
+import edge_tts
 
-# 2. Avatar Frontal Mirando al Público
-avatar_img = PUBLIC_DIR / "avatars" / "dorado.png"
+async def synthesize_all_modules():
+    print("🎙️ Sintetizando audio de Voz Real 48kHz para los 6 Módulos de la Masterclass...")
+    audio_files = []
+    
+    for idx, topic in enumerate(MASTERCLASS_TOPICS):
+        mod_audio = OUT_DIR / f"module_{idx+1}_voice.mp3"
+        # Combinar script principal + aclaración técnica
+        full_text = f"{topic['script_es']} {topic['tech_clarification_es']}"
+        communicate = edge_tts.Communicate(full_text, "es-MX-JorgeNeural", rate="-4%", pitch="+0Hz")
+        await communicate.save(str(mod_audio))
+        audio_files.append(mod_audio)
+        print(f"  └─ Módulo {idx+1} Sintetizado: {mod_audio.name}")
+        
+    # Crear archivo concat de FFmpeg
+    with open(AUDIO_LIST_TXT, "w", encoding="utf-8") as f:
+        for a_file in audio_files:
+            f.write(f"file '{str(a_file).replace('\\', '/')}'\n")
+            # Agregar pausa respiratoria de 1.2s entre módulos
+            pause_file = PUBLIC_DIR / "pause_08s.mp3"
+            if pause_file.exists():
+                f.write(f"file '{str(pause_file).replace('\\', '/')}'\n")
+                
+    # Concatenar audios con FFmpeg
+    concat_cmd = [
+        "ffmpeg", "-y", "-f", "concat", "-safe", "0",
+        "-i", str(AUDIO_LIST_TXT),
+        "-c:a", "libmp3lame", "-b:a", "256k",
+        str(FULL_AUDIO_MP3)
+    ]
+    subprocess.run(concat_cmd, capture_output=True, text=True)
+    print(f"✅ Audio Maestro Continuo 48kHz Ensamblado: {FULL_AUDIO_MP3}")
+
+# Ejecutar síntesis asíncrona de voz
+asyncio.run(synthesize_all_modules())
+
+# 2. Avatar Frontal HD
+avatar_img = PUBLIC_DIR / "avatar_transparent.png"
+is_transparent = True
+
 if not avatar_img.exists():
-    avatar_img = PUBLIC_DIR / "avatar_pro.png"
+    avatar_img = PUBLIC_DIR / "avatars" / "dorado.png"
+    is_transparent = False
 
-# 3. Subtítulos Karaoke ASS Bilingües C1/C2
+print(f"👤 Usando Avatar Virtual 3D HD (Transparente={is_transparent}): {avatar_img}")
+
+# 3. Subtítulos Karaoke ASS Bilingües C1/C2 para los 6 Módulos
 ass_header = """[Script Info]
 Title: OpenClaw 30-Min Masterclass Subtitles
 ScriptType: v4.00+
@@ -119,22 +158,27 @@ PlayResY: 1080
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: MasterclassStyle,Montserrat,68,&H00FFFFFF,&H0000D7FF,&H00000000,&H80000000,-1,0,0,0,100,100,2,0,1,4,3,6,720,80,160,1
+Style: MasterclassStyle,Montserrat,64,&H00FFFFFF,&H0000D7FF,&H00000000,&H80000000,-1,0,0,0,100,100,2,0,1,4,3,6,720,80,160,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
 
 events = []
-start_sec = 0.5
-for topic in MASTERCLASS_TOPICS:
-    dur = 30 # Render preview chunk per module for continuous stream
+start_sec = 1.0
+k30 = "{\\k30}"
+k40 = "{\\k40}"
+slash_n = "\\N"
+for idx, topic in enumerate(MASTERCLASS_TOPICS):
+    dur = 25.0 # Duración estimada por módulo
     end_sec = start_sec + dur
     m_start = f"{int(start_sec//3600)}:{int((start_sec%3600)//60):02d}:{start_sec%60:05.2f}"
     m_end = f"{int(end_sec//3600)}:{int((end_sec%3600)//60):02d}:{end_sec%60:05.2f}"
-    txt = topic["script_es"]
+    top_title = topic['topic_es']
+    script_body = topic['script_es']
+    txt = f"{k30}{top_title} {slash_n} {k40}{script_body}"
     events.append(f"Dialogue: 0,{m_start},{m_end},MasterclassStyle,,0,0,0,,{txt}")
-    start_sec = end_sec + 0.5
+    start_sec = end_sec + 2.0
 
 with open(ASS_SUBTITLE_30MIN, "w", encoding="utf-8") as f:
     f.write(ass_header + "\n".join(events))
@@ -144,16 +188,26 @@ print(f"📝 Subtítulos Karaoke ASS generados: {ASS_SUBTITLE_30MIN}")
 cosmic_bg = PUBLIC_DIR / "cosmic_space_bg.png"
 ass_path_clean = str(ASS_SUBTITLE_30MIN).replace("\\", "/").replace(":", "\\:")
 
+if is_transparent:
+    filter_graph = (
+        f"[0:v]zoompan=z='min(zoom+0.0006,1.15)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1920x1080:fps=30[bg_zoom];"
+        f"[1:v]scale=720:980:flags=lanczos,unsharp=5:5:1.2:5:5:1.2[avatar_left];"
+        f"[bg_zoom][avatar_left]overlay=60:60[base];"
+        f"[base]subtitles='{ass_path_clean}'[outv]"
+    )
+else:
+    filter_graph = (
+        f"[1:v]scale=1920:1080:flags=lanczos,unsharp=5:5:1.2:5:5:1.2,"
+        f"zoompan=z='min(zoom+0.0006,1.15)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1920x1080:fps=30[base];"
+        f"[base]subtitles='{ass_path_clean}'[outv]"
+    )
+
 cmd = [
     "ffmpeg", "-y",
     "-loop", "1", "-i", str(cosmic_bg),
     "-loop", "1", "-i", str(avatar_img),
-    "-i", str(real_voice_wav),
-    "-filter_complex",
-    f"[0:v]zoompan=z='min(zoom+0.0006,1.15)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1920x1080:fps=30[bg_zoom];"
-    f"[1:v]scale=680:920:flags=lanczos,unsharp=5:5:1.2:5:5:1.2[avatar_left];"
-    f"[bg_zoom][avatar_left]overlay=80:100[base];"
-    f"[base]subtitles='{ass_path_clean}'[outv]",
+    "-i", str(FULL_AUDIO_MP3),
+    "-filter_complex", filter_graph,
     "-map", "[outv]",
     "-map", "2:a",
     "-af", "loudnorm=I=-16:TP=-1.5:LRA=11",
@@ -162,15 +216,16 @@ cmd = [
     str(FINAL_30MIN_MP4)
 ]
 
-print("⚙️ Lanzando compilador continuo FFmpeg (Avatar Frontal HD + Normalización -16 LUFS)...")
+print("⚙️ Lanzando compilación continua de Masterclass (6 Módulos con Voz Real + Subtítulos ASS + EBU R128)...")
 res = subprocess.run(cmd, capture_output=True, text=True)
 
 if res.returncode == 0:
     size_mb = FINAL_30MIN_MP4.stat().st_size / (1024 * 1024)
     print(f"=========================================================")
-    print(f" ✅ MASTERCLASS YOUTUBE GENERADA EXITOSAMENTE: {FINAL_30MIN_MP4} ({size_mb:.2f} MB)")
+    print(f" ✅ MASTERCLASS B2B GENERADA EXITOSAMENTE: {FINAL_30MIN_MP4} ({size_mb:.2f} MB)")
     print(f"=========================================================")
 else:
     print(f"❌ Error en renderizado de Masterclass:\n{res.stderr[-600:]}")
+
 
 

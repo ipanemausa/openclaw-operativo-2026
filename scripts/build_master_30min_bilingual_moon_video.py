@@ -35,16 +35,14 @@ moon_img = Image.new("RGBA", (1920, 1080), (0, 0, 0, 0))
 moon_draw = ImageDraw.Draw(moon_img)
 moon_draw.ellipse([1400, 80, 1680, 360], fill=(240, 243, 246, 230), outline=(212, 175, 106, 170), width=3)
 moon_draw.ellipse([1440, 80, 1720, 360], fill=(129, 90, 248, 110))
-# Desenfoque cinemático suave DOF (Profundidad de campo 12px)
 moon_img = moon_img.filter(ImageFilter.GaussianBlur(12))
 
 img = Image.alpha_composite(img, moon_img)
 img.convert("RGB").save(MOON_BG_PNG, "PNG")
 print(f"🌌 Fondo Imagen Luna Difuminada (DOF Blur) Creado: {MOON_BG_PNG}")
 
-# 2. MASTERCLASS COMPLETA DE 30 MINUTOS — TODOS LOS MÓDULOS B2B
+# 2. GUION DE MASTERCLASS COMPLETA BILINGÜE
 MASTERCLASS_EXTENDED_SCRIPT = [
-    # MÓDULO 1: REVOLUCIÓN IA EMPRESARIAL
     {
         "es": "Bienvenidos a la Masterclass Ejecutiva sobre la Revolución de Inteligencia Artificial B2B.",
         "en": "Welcome to the Executive Masterclass on the B2B Artificial Intelligence Revolution."
@@ -61,8 +59,6 @@ MASTERCLASS_EXTENDED_SCRIPT = [
         "es": "Logramos cero fricción operativa, cero licencias por usuario y control total de tus datos.",
         "en": "Achieving zero operational friction, zero per-user licensing, and total data sovereignty."
     },
-    
-    # MÓDULO 2: LOS 4 PILARES UNIVERSALES DE LA EMPRESA
     {
         "es": "Toda empresa sólida e inquebrantable se sustenta en cuatro pilares fundamentales:",
         "en": "Every resilient enterprise operates on four universal core pillars:"
@@ -79,8 +75,6 @@ MASTERCLASS_EXTENDED_SCRIPT = [
         "es": "Tu sistema responde con precisión matemática basándose en documentos reales sin inventar información.",
         "en": "Your system responds with mathematical precision using verified documents without AI hallucinations."
     },
-    
-    # MÓDULO 3: PRIVACIDAD META Y WHATSAPP BUSINESS $0
     {
         "es": "Aprovechando la actualización más reciente de Meta, tus clientes conversan mediante tu Alias empresarial.",
         "en": "Leveraging Meta's newest architecture, clients connect seamlessly via your business handle."
@@ -93,8 +87,6 @@ MASTERCLASS_EXTENDED_SCRIPT = [
         "es": "Ofrecemos atención automatizada por WhatsApp Business las 24 horas del día a costo cero por mensaje.",
         "en": "Providing 24/7 automated WhatsApp Business customer support at zero cost per message."
     },
-    
-    # MÓDULO 4: FÁBRICA AUDIOVISUAL LOCAL 1080p
     {
         "es": "Procesamos video en micro-lotes de 15 fotogramas asistidos por restauración facial GFPGAN.",
         "en": "Processing AI video in 15-frame micro-batches enhanced by GFPGAN facial restoration."
@@ -107,8 +99,6 @@ MASTERCLASS_EXTENDED_SCRIPT = [
         "es": "Evitamos el pago de APIs en la nube y eliminamos por completo los costos por minuto de renderizado.",
         "en": "Eliminating cloud API subscription fees and zero per-minute rendering costs."
     },
-    
-    # MÓDULO 5: ARQUITECTURA MCP & DOCKER TOOLKIT
     {
         "es": "Implementamos el estándar Model Context Protocol de Anthropic junto a Docker Desktop MCP Toolkit.",
         "en": "We implement Anthropic's Model Context Protocol standard alongside Docker Desktop MCP Toolkit."
@@ -121,8 +111,6 @@ MASTERCLASS_EXTENDED_SCRIPT = [
         "es": "Garantizamos la máxima seguridad corporativa en entornos totalmente herméticos.",
         "en": "Ensuring maximum corporate security within completely sealed operational environments."
     },
-    
-    # MÓDULO 6: HOJA DE RUTA Y VERSIÓN v2.0-STABLE
     {
         "es": "El futuro de las empresas de alto rendimiento es desplegar su propio ecosistema de Inteligencia Artificial.",
         "en": "The future of high-performing enterprises is deploying their proprietary AI ecosystem."
@@ -169,11 +157,9 @@ async def build_master_audio_and_subtitles(lang="es"):
         m_start = f"{int(current_sec//3600)}:{int((current_sec%3600)//60):02d}:{current_sec%60:05.2f}"
         m_end = f"{int(end_sec//3600)}:{int((end_sec%3600)//60):02d}:{end_sec%60:05.2f}"
         
-        # Formatear texto con salto de línea automático si es largo para evitar desbordamiento
         words = text.split()
         word_dur = int((dur * 1000) / max(len(words), 1) / 10)
         
-        # Insertar salto de línea \N cada 6 palabras para acotar dentro del margen
         formatted_words = []
         for w_i, word in enumerate(words):
             if w_i > 0 and w_i % 6 == 0:
@@ -182,12 +168,9 @@ async def build_master_audio_and_subtitles(lang="es"):
                 formatted_words.append(f"{{\\k{word_dur}}}{word}")
                 
         k_text = " ".join(formatted_words)
-        
-        # Posición y márgenes acotados estrictamente entre x: 800px y x: 1800px
         ass_events.append(f"Dialogue: 0,{m_start},{m_end},RightTeleprompterBounded,,0,0,0,,{{\\pos(1300,380)}}{k_text}")
         current_sec = end_sec + 0.45
 
-    # Concatenar audios
     list_file = OUT_DIR / f"full_concat_{lang}.txt"
     with open(list_file, "w", encoding="utf-8") as f:
         for a_file in audio_files:
@@ -201,7 +184,6 @@ async def build_master_audio_and_subtitles(lang="es"):
         str(master_audio)
     ], capture_output=True, text=True)
     
-    # Escribir archivo ASS con márgenes acotados (Fontsize: 44, MarginR: 140)
     ass_file = OUT_DIR / f"master_subtitles_bounded_{lang}.ass"
     ass_header = f"""[Script Info]
 Title: Bounded Right Teleprompter Subtitles ({lang})
@@ -241,11 +223,6 @@ async def render_cinematic_master_videos():
         
         ass_clean = str(ass_file).replace("\\", "/").replace(":", "\\:")
         
-        # Filtro de Renderizado Cinemático:
-        # 1. Imagen de Luna Difuminada
-        # 2. Capa de Estrellas Titilando en Tiempo Real (Noise filter con blend screen)
-        # 3. Avatar de Guillermo HD en el lado izquierdo (x: 60)
-        # 4. Subtítulos Teleprompter en la mitad derecha acotados
         filter_graph = (
             f"[0:v]zoompan=z='min(zoom+0.0005,1.12)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1920x1080:fps=30[bg_zoom];"
             f"[bg_zoom]noise=alls=15:allf=t+u,format=gray,gblur=sigma=1.2[stars];"
@@ -271,9 +248,9 @@ async def render_cinematic_master_videos():
             str(out_mp4)
         ]
         
-        print(f"⚙️ Compilando Video Maestro Cinemático 4 Capas con Estrellas y Luna ({lang.upper()}) — Duración: {total_duration:.1f}s...")
+        print(f"⚙️ Compilando Video Maestro Cinemático 4 Capas ({lang.upper()}) — Duración: {total_duration:.1f}s...")
         res = subprocess.run(cmd, capture_output=True, text=True)
-        
+
         if res.returncode == 0:
             shutil.copy(out_mp4, root_mp4)
             size_mb = out_mp4.stat().st_size / (1024 * 1024)
@@ -283,4 +260,4 @@ async def render_cinematic_master_videos():
             print(f"❌ Error compilando {lang.upper()}:\n{res.stderr[-600:]}")
 
 asyncio.run(render_cinematic_master_videos())
-print("\n🎬 ¡PROCESO DE RENDERIZADO MAESTRO CINEMÁTICO CON ESTRELLAS Y LUNA COMPLETADO EXITOSAMENTE!")
+print("\n🎬 ¡PROCESO DE RENDERIZADO MAESTRO COMPLETADO EXITOSAMENTE!")

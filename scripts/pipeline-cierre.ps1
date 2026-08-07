@@ -134,8 +134,31 @@ $logFile = "C:\Users\ipane\openclaw-operativo-2026\ANTIGRAVITY_WORK_LOG.txt"
 $logEntry = "[$timestamp] PIPELINE UNIFICADO MASTER: Docker Active | Keep-Awake On | Firebase Live (hb-jewelry-cloud-2026-2dff9.web.app) | Git & Rclone Synced | Handoff Generated."
 Add-Content -Path $logFile -Value $logEntry
 
-# 7. GENERACIÓN DEL BLOQUE DE HANDOFF
-Write-Host "`n[7/7] Generando Bloque Handoff Híbrido..." -ForegroundColor Yellow
+# 7. GENERACIÓN AUTOMÁTICA DE ARTEFACTOS E INTEGRAL HANDOFF
+Write-Host "`n[7/7] Sincronizando Artefactos Integrales & Generando Bloque Handoff..." -ForegroundColor Yellow
+
+$masterHandoffFile = "C:\Users\ipane\openclaw-operativo-2026\MASTER_HANDOFF_APERTURA_MANANA.md"
+$masterHandoffContent = @"
+# 📑 INFORME MAESTRO DE HANDOFF Y ARTEFACTOS INTEGRALES (OPENCLAW 2026)
+
+**Fecha/Hora:** $timestamp
+**Estado de la Plataforma:** v2.0-stable | **Vite Build:** OK | **Cloud Live:** https://hb-jewelry-cloud-2026-2dff9.web.app
+
+---
+
+## 🏆 1. Artefactos e Infraestructura Sincronizada
+- **Tríada Maestra:** DAG (Orquestación por Grafos) + RAG (Vectorial 768-dim) + ESM Virtual (Enterprise Service Management).
+- **Jack Ma Style Engine:** Voz Real de Guillermo 48kHz + Avatar Izquierda HD Lanczos + Fondo Espacial + Subtítulos Karaoke Dorados.
+- **Flickering Fix:** Clave estática STABLE_CACHE_KEY (0 parpadeos, 0 errores en consola).
+
+## 🚀 2. Prioridades de Apertura
+1. Activación nativa de Docker Desktop MCP Toolkit + Gemini CLI para 98 herramientas en contenedores ($0 costo).
+2. Renderizado de Masterclass YouTube de 30 Minutos (54,000 Frames Flujo Continuo).
+3. Clonación de Agentes de Asesoría Empresarial B2B (Estilo Juan Pe Navarro).
+"@
+Set-Content -Path $masterHandoffFile -Value $masterHandoffContent -Encoding UTF8
+Write-Host "-> Artefacto Maestro generado en MASTER_HANDOFF_APERTURA_MANANA.md" -ForegroundColor Green
+
 $handoffTxt = @"
 ====================================================================
 # CLAUDE HYBRID ARTIFACT & HANDOFF MANIFEST — OPENCLAW v2026.7.1
@@ -149,11 +172,12 @@ ESTADO DE INFRAESTRUCTURA Y OPERACIÓN:
 • Contenedores Docker: 12/12 activos (Nginx, Voice, App, Gateway, Qdrant, DB, Redis)
 • Keep-Awake Anti-Sleep: Activo
 • SadTalker lipsync: Container openclaw/sadtalker:2026 listo
+• Tríada B2B: DAG + RAG 768-dim + ESM Virtual
 ====================================================================
 "@
 
 $handoffFile = "C:\openclaw\hb-jewelry\public\claude_hybrid_handoff.txt"
-Set-Content -Path $handoffFile -Value $handoffTxt
+Set-Content -Path $handoffFile -Value $handoffTxt -Encoding UTF8
 Write-Host "-> Handoff generado en public/claude_hybrid_handoff.txt" -ForegroundColor Green
 
 Write-Host "`n=========================================================" -ForegroundColor Cyan

@@ -16,8 +16,9 @@ Esta Skill sintetiza el motor de producción audiovisual y avatares digitales de
 * **Iluminación Dinámica:** Bokeh 3D HSL con profundidad focal en resolución 1080p (1920x1080 para YouTube / 1080x1920 para TikTok/Reels).
 * **Entorno de Marca:** Identidad corporativa HB Jewelry con badge flotante sin sobreposición de títulos.
 
-### 👤 CAPA 2: Avatar Humano Real en Estudio (Postura, Manos y Escritorio)
-* **Presencia Corporal Completa:** Utiliza video maestro en estudio 1080p (`showcase_human_loop.mp4`) con encuadre de torso completo, brazos, manos, escritorio y micrófono de estudio.
+### 👤 CAPA 2: Avatar Humano Real / PNG Transparente (Composición Cero-Bordes)
+* **PNG Transparente (`avatar_transparent.png`):** Se fusiona directamente sobre el fondo espacial HSL con escalado Lanczos y sombra paralela de profundidad, garantizando **cero bordes de tarjeta ni cortes de imagen pegada**.
+* **Avatar Completo con Fondo (`avatars/dorado.png`):** Se renderiza automáticamente a **100% Pantalla Completa (1920x1080 Cover Aspect Ratio)** con movimiento `zoompan` continuo, eliminando cualquier corte o franja lateral.
 * **Fisiología Humana:** Parpadeo natural, respiración orgánica y postura real, eliminando totalmente el efecto de foto 2D flotante.
 * **Inferencia Neural Complementaria:** Integración con **SadTalker 3DMM** / **DaVinci Resolve Scripting** para sincronización labial exacta cuando se requiere animación desde foto base.
 

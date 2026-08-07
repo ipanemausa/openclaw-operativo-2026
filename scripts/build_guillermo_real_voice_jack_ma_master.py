@@ -25,14 +25,15 @@ if not real_voice_wav.exists():
 
 print(f"🔊 Usando archivo de Voz Real de Guillermo: {real_voice_wav}")
 
-# 2. AVATAR VIRTUAL 3D HD — MIRANDO DE FRENTE AL PÚBLICO (Forward-Facing Frontal Pose)
-avatar_img = PUBLIC_DIR / "avatars" / "dorado.png"
-if not avatar_img.exists():
-    avatar_img = PUBLIC_DIR / "avatars" / "desk_mic.png"
-if not avatar_img.exists():
-    avatar_img = PUBLIC_DIR / "avatar_pro.png"
+# 2. AVATAR VIRTUAL 3D HD — DETECCIÓN INTELIGENTE DE CAPAS Y PROPORCIÓN 100% SIN BORDES
+avatar_img = PUBLIC_DIR / "avatar_transparent.png"
+is_transparent = True
 
-print(f"👤 Usando Avatar Virtual 3D HD de Frente al Público: {avatar_img}")
+if not avatar_img.exists():
+    avatar_img = PUBLIC_DIR / "avatars" / "dorado.png"
+    is_transparent = False
+
+print(f"👤 Usando Avatar Virtual 3D HD (Transparente={is_transparent}): {avatar_img}")
 
 # 3. GUIÓN PROFESIONAL NIVEL CONSULTORÍA EMPRESARIAL B2B (Sin exageraciones)
 # Subtítulos Karaoke ASS con resaltado en Dorado Neón (&H0000D7FF&) y fuente de 84px
@@ -61,25 +62,31 @@ with open(ASS_SUBTITLE_FILE, "w", encoding="utf-8") as f:
 
 print(f"📝 Guión B2B Ejecutivo y Subtítulos Karaoke ASS generados: {ASS_SUBTITLE_FILE}")
 
-# 4. Compilación FFmpeg:
-# Fondo Espacial Cósmico HD 1080p (cosmic_space_bg.png)
-# Avatar Virtual 3D HD escalado a la izquierda (x=80, y=100)
-# Subtítulos Karaoke ASS ejecutivos a la derecha (72px)
-# Voz Real de Guillermo 48kHz
-
 cosmic_bg = PUBLIC_DIR / "cosmic_space_bg.png"
 ass_path_clean = str(ASS_SUBTITLE_FILE).replace("\\", "/").replace(":", "\\:")
 
+if is_transparent:
+    # SI ES PNG TRANSPARENTE: Se fusiona sobre el fondo espacial sin bordes cuadrados
+    filter_graph = (
+        f"[0:v]zoompan=z='min(zoom+0.0006,1.12)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1920x1080:fps=30[bg_zoom];"
+        f"[1:v]scale=720:980:flags=lanczos,unsharp=5:5:1.2:5:5:1.2[avatar_left];"
+        f"[bg_zoom][avatar_left]overlay=60:60[base];"
+        f"[base]subtitles='{ass_path_clean}'[outv]"
+    )
+else:
+    # SI TIENE SU PROPIO FONDO DE ESTUDIO: Se escala a 100% PANTALLA COMPLETA COVER ASPECT RATIO (Sin cortes)
+    filter_graph = (
+        f"[1:v]scale=1920:1080:flags=lanczos,unsharp=5:5:1.2:5:5:1.2,"
+        f"zoompan=z='min(zoom+0.0006,1.12)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1920x1080:fps=30[base];"
+        f"[base]subtitles='{ass_path_clean}'[outv]"
+    )
+
 cmd = [
     "ffmpeg", "-y",
-    "-loop", "1", "-i", str(cosmic_bg), # Fondo Cósmico 1080p
-    "-loop", "1", "-i", str(avatar_img), # Avatar Virtual 3D HD
-    "-i", str(real_voice_wav), # Voz Real de Guillermo
-    "-filter_complex",
-    f"[0:v]zoompan=z='min(zoom+0.0006,1.12)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1920x1080:fps=30[bg_zoom];"
-    f"[1:v]scale=680:920:flags=lanczos,unsharp=5:5:1.2:5:5:1.2[avatar_left];"
-    f"[bg_zoom][avatar_left]overlay=80:100[base];"
-    f"[base]subtitles='{ass_path_clean}'[outv]",
+    "-loop", "1", "-i", str(cosmic_bg),
+    "-loop", "1", "-i", str(avatar_img),
+    "-i", str(real_voice_wav),
+    "-filter_complex", filter_graph,
     "-map", "[outv]",
     "-map", "2:a",
     "-af", "loudnorm=I=-16:TP=-1.5:LRA=11",

@@ -150,9 +150,16 @@ async def build_subtitle_and_audio(lang="es"):
         for p_idx, phrase in enumerate(phrases):
             aud_path = OUT_DIR / f"phrase_{lang}_{mod_idx+1}_{p_idx+1}.mp3"
             
-            # Generar audio corto para la frase exacta
-            comm = edge_tts.Communicate(phrase, voice_id, rate="-2%", pitch="+0Hz")
-            await comm.save(str(aud_path))
+            if not aud_path.exists():
+                try:
+                    comm = edge_tts.Communicate(phrase, voice_id, rate="-2%", pitch="+0Hz")
+                    await comm.save(str(aud_path))
+                except Exception as e:
+                    print(f"  ⚠️ Re-intentando frase {p_idx+1}...")
+                    await asyncio.sleep(1)
+                    comm = edge_tts.Communicate(phrase, voice_id)
+                    await comm.save(str(aud_path))
+                    
             audio_files.append(aud_path)
             
             # Medir duración real con ffprobe
@@ -193,10 +200,10 @@ async def build_subtitle_and_audio(lang="es"):
         str(full_audio)
     ], capture_output=True, text=True)
     
-    # Escribir archivo .ass
+    # Escribir archivo .ass con texto posicionado en la MITAD DERECHA (x: 740+)
     ass_file = OUT_DIR / f"masterclass_{lang}_short_phrases.ass"
     ass_header = f"""[Script Info]
-Title: Short Phrase Karaoke Subtitles ({lang})
+Title: Short Phrase Teleprompter Text ({lang})
 ScriptType: v4.00+
 WrapStyle: 0
 ScaledBorderAndShadow: yes
@@ -206,7 +213,7 @@ PlayResY: 1080
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: ShortPhraseStyle,Montserrat,46,&H00FFFFFF,&H0000D7FF,&H00000000,&H90000000,-1,0,0,0,100,100,2,0,1,3,2,2,100,100,110,1
+Style: ShortPhraseStyle,Montserrat,54,&H00FFFFFF,&H0000D7FF,&H00000000,&H90000000,-1,0,0,0,100,100,2,0,1,3,2,7,740,80,320,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text

@@ -221,11 +221,111 @@ res = subprocess.run(cmd, capture_output=True, text=True)
 
 if res.returncode == 0:
     size_mb = FINAL_30MIN_MP4.stat().st_size / (1024 * 1024)
+    # Copiar a raíz pública para disponibilidad 100% en la nube
+    root_mp4 = PUBLIC_DIR / "youtube_30min_masterclass_full_1080p.mp4"
+    import shutil
+    shutil.copy(FINAL_30MIN_MP4, root_mp4)
     print(f"=========================================================")
-    print(f" ✅ MASTERCLASS B2B GENERADA EXITOSAMENTE: {FINAL_30MIN_MP4} ({size_mb:.2f} MB)")
+    print(f" ✅ MASTERCLASS B2B ESPAÑOL GENERADA EXITOSAMENTE: {FINAL_30MIN_MP4} ({size_mb:.2f} MB)")
+    print(f" ✅ COPIA EN RAÍZ PÚBLICA LISTA: {root_mp4}")
     print(f"=========================================================")
 else:
     print(f"❌ Error en renderizado de Masterclass:\n{res.stderr[-600:]}")
+
+# ─── 4. SÍNTESIS Y COMPOSICIÓN DE MASTERCLASS EN INGLÉS (ENGLISH 4-LAYER MASTER) ───
+FINAL_30MIN_EN_MP4 = OUT_DIR / "youtube_30min_masterclass_en_1080p.mp4"
+ASS_SUBTITLE_EN = OUT_DIR / "masterclass_30min_subtitles_en.ass"
+AUDIO_LIST_EN_TXT = OUT_DIR / "audio_concat_list_en.txt"
+FULL_AUDIO_EN_MP3 = OUT_DIR / "full_masterclass_30min_voice_en.mp3"
+
+async def synthesize_english_modules():
+    print("🎙️ Sintetizando audio de Voz Real 48kHz en Inglés (en-US-GuyNeural)...")
+    audio_files_en = []
+    
+    for idx, topic in enumerate(MASTERCLASS_TOPICS):
+        mod_audio = OUT_DIR / f"module_{idx+1}_voice_en.mp3"
+        full_text = f"{topic['script_en']} {topic['tech_clarification_en']}"
+        communicate = edge_tts.Communicate(full_text, "en-US-GuyNeural", rate="-3%", pitch="+0Hz")
+        await communicate.save(str(mod_audio))
+        audio_files_en.append(mod_audio)
+        
+    with open(AUDIO_LIST_EN_TXT, "w", encoding="utf-8") as f:
+        for a_file in audio_files_en:
+            f.write(f"file '{str(a_file).replace('\\', '/')}'\n")
+            pause_file = PUBLIC_DIR / "pause_08s.mp3"
+            if pause_file.exists():
+                f.write(f"file '{str(pause_file).replace('\\', '/')}'\n")
+                
+    concat_cmd = [
+        "ffmpeg", "-y", "-f", "concat", "-safe", "0",
+        "-i", str(AUDIO_LIST_EN_TXT),
+        "-c:a", "libmp3lame", "-b:a", "256k",
+        str(FULL_AUDIO_EN_MP3)
+    ]
+    subprocess.run(concat_cmd, capture_output=True, text=True)
+    print(f"✅ Audio Maestro Continuo Inglés 48kHz Ensamblado: {FULL_AUDIO_EN_MP3}")
+
+asyncio.run(synthesize_english_modules())
+
+# Subtítulos Karaoke ASS en Inglés
+events_en = []
+start_sec = 1.0
+for idx, topic in enumerate(MASTERCLASS_TOPICS):
+    dur = 25.0
+    end_sec = start_sec + dur
+    m_start = f"{int(start_sec//3600)}:{int((start_sec%3600)//60):02d}:{start_sec%60:05.2f}"
+    m_end = f"{int(end_sec//3600)}:{int((end_sec%3600)//60):02d}:{end_sec%60:05.2f}"
+    top_title = topic['topic_en']
+    script_body = topic['script_en']
+    txt = f"{k30}{top_title} {slash_n} {k40}{script_body}"
+    events_en.append(f"Dialogue: 0,{m_start},{m_end},MasterclassStyle,,0,0,0,,{txt}")
+    start_sec = end_sec + 2.0
+
+with open(ASS_SUBTITLE_EN, "w", encoding="utf-8") as f:
+    f.write(ass_header + "\n".join(events_en))
+
+ass_path_en_clean = str(ASS_SUBTITLE_EN).replace("\\", "/").replace(":", "\\:")
+
+if is_transparent:
+    filter_graph_en = (
+        f"[0:v]zoompan=z='min(zoom+0.0006,1.15)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1920x1080:fps=30[bg_zoom];"
+        f"[1:v]scale=720:980:flags=lanczos,unsharp=5:5:1.2:5:5:1.2[avatar_left];"
+        f"[bg_zoom][avatar_left]overlay=60:60[base];"
+        f"[base]subtitles='{ass_path_en_clean}'[outv]"
+    )
+else:
+    filter_graph_en = (
+        f"[1:v]scale=1920:1080:flags=lanczos,unsharp=5:5:1.2:5:5:1.2,"
+        f"zoompan=z='min(zoom+0.0006,1.15)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1920x1080:fps=30[base];"
+        f"[base]subtitles='{ass_path_en_clean}'[outv]"
+    )
+
+cmd_en = [
+    "ffmpeg", "-y",
+    "-loop", "1", "-i", str(cosmic_bg),
+    "-loop", "1", "-i", str(avatar_img),
+    "-i", str(FULL_AUDIO_EN_MP3),
+    "-filter_complex", filter_graph_en,
+    "-map", "[outv]",
+    "-map", "2:a",
+    "-af", "loudnorm=I=-16:TP=-1.5:LRA=11",
+    "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-pix_fmt", "yuv420p", "-shortest",
+    "-c:a", "aac", "-b:a", "256k",
+    str(FINAL_30MIN_EN_MP4)
+]
+
+print("⚙️ Lanzando compilación continua de Masterclass en Inglés (4 Capas con Voz Guy 48kHz)...")
+res_en = subprocess.run(cmd_en, capture_output=True, text=True)
+
+if res_en.returncode == 0:
+    size_mb = FINAL_30MIN_EN_MP4.stat().st_size / (1024 * 1024)
+    root_en_mp4 = PUBLIC_DIR / "youtube_30min_masterclass_en_1080p.mp4"
+    shutil.copy(FINAL_30MIN_EN_MP4, root_en_mp4)
+    print(f"=========================================================")
+    print(f" ✅ MASTERCLASS B2B INGLÉS GENERADA EXITOSAMENTE: {FINAL_30MIN_EN_MP4} ({size_mb:.2f} MB)")
+    print(f" ✅ COPIA EN RAÍZ PÚBLICA LISTA: {root_en_mp4}")
+    print(f"=========================================================")
+
 
 
 

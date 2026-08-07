@@ -249,7 +249,8 @@ async def render_all_masters():
             "-map", "[outv]",
             "-map", "2:a",
             "-af", "loudnorm=I=-16:TP=-1.5:LRA=11",
-            "-c:v", "libx264", "-preset", "fast", "-crf", "20", "-pix_fmt", "yuv420p", "-shortest",
+            "-c:v", "libx264", "-preset", "fast", "-crf", "20", "-pix_fmt", "yuv420p",
+            "-movflags", "+faststart", "-shortest",
             "-c:a", "aac", "-b:a", "256k",
             str(out_mp4)
         ]

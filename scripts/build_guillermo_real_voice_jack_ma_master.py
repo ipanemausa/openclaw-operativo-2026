@@ -25,12 +25,14 @@ if not real_voice_wav.exists():
 
 print(f"🔊 Usando archivo de Voz Real de Guillermo: {real_voice_wav}")
 
-# 2. AVATAR VIRTUAL 3D HD (Transparente / Estudio de Alta Definición)
-avatar_img = PUBLIC_DIR / "avatar_transparent.png"
+# 2. AVATAR VIRTUAL 3D HD — MIRANDO DE FRENTE AL PÚBLICO (Forward-Facing Frontal Pose)
+avatar_img = PUBLIC_DIR / "avatars" / "dorado.png"
 if not avatar_img.exists():
-    avatar_img = PUBLIC_DIR / "avatars" / "dorado.png"
+    avatar_img = PUBLIC_DIR / "avatars" / "desk_mic.png"
+if not avatar_img.exists():
+    avatar_img = PUBLIC_DIR / "avatar_pro.png"
 
-print(f"👤 Usando Avatar Virtual 3D HD: {avatar_img}")
+print(f"👤 Usando Avatar Virtual 3D HD de Frente al Público: {avatar_img}")
 
 # 3. GUIÓN PROFESIONAL NIVEL CONSULTORÍA EMPRESARIAL B2B (Sin exageraciones)
 # Subtítulos Karaoke ASS con resaltado en Dorado Neón (&H0000D7FF&) y fuente de 84px
@@ -74,11 +76,13 @@ cmd = [
     "-loop", "1", "-i", str(avatar_img), # Avatar Virtual 3D HD
     "-i", str(real_voice_wav), # Voz Real de Guillermo
     "-filter_complex",
+    f"[0:v]zoompan=z='min(zoom+0.0006,1.12)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1920x1080:fps=30[bg_zoom];"
     f"[1:v]scale=680:920:flags=lanczos,unsharp=5:5:1.2:5:5:1.2[avatar_left];"
-    f"[0:v][avatar_left]overlay=80:100[base];"
+    f"[bg_zoom][avatar_left]overlay=80:100[base];"
     f"[base]subtitles='{ass_path_clean}'[outv]",
     "-map", "[outv]",
     "-map", "2:a",
+    "-af", "loudnorm=I=-16:TP=-1.5:LRA=11",
     "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-pix_fmt", "yuv420p", "-shortest",
     "-c:a", "aac", "-b:a", "256k",
     str(FINAL_MP4)

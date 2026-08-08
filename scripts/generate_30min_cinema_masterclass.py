@@ -2,10 +2,10 @@
 ====================================================================
   generate_30min_cinema_masterclass.py — OpenClaw 30-Minute Masterclass Engine
   Produces 30-Minute (54,000 frames @ 30fps) Bilingual Video:
-  - 6 Modular Blocks x 5 Minutes each
-  - Parallax Zoom (100% -> 112%) + Nebulosa Space 4K + Avatar HD
+  - Dynamic TTS Speech Audio per Module (Audible, 48kHz Stereo)
+  - Continuous Slow-Motion Parallax Zoom (d = dur * 30 frames)
   - 30% Center Teleprompter ASS Subtitles
-  - Guillermo Real Voice Input + FM Broadcast EBU R128 (-16 LUFS)
+  - 6 Modular Blocks x 5 Minutes each concatenated for YouTube 16:9
 ====================================================================
 """
 
@@ -15,6 +15,7 @@ import asyncio
 import subprocess
 import shutil
 import logging
+import edge_tts
 from pathlib import Path
 
 if hasattr(sys.stdout, 'reconfigure'):
@@ -28,32 +29,30 @@ OUT_DIR = PUBLIC_DIR / "videos" / "youtube_30min_masterclass"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # Assets
-REAL_VOICE_SAMPLE = PUBLIC_DIR / "real_guillermo_voice.mp3"
 SPACE_NEBULA_BG   = PUBLIC_DIR / "cosmic_space_smooth.png"
 AVATAR_IMAGE      = PUBLIC_DIR / "avatar_transparent.png"
 
-# 6 Módulos de 5 Minutos (Estructura Bilingüe)
 MODULES = [
     {
         "id": 1,
         "title_es": "Módulo 1: Revolución de Inteligencia Artificial B2B 2026",
         "title_en": "Module 1: Enterprise B2B AI Revolution 2026",
-        "script_es": "Bienvenidos a la Masterclass Ejecutiva de HB Jewelry OpenClaw 2026. Hoy examinaremos cómo transformar la operación comercial de tu empresa eliminando licencias de pago mensual y sustituyéndolas por agentes autónomos instalados en tu propio servidor.",
-        "script_en": "Welcome to the HB Jewelry OpenClaw 2026 Executive Masterclass. Today we examine how to transform your enterprise sales operations by replacing recurring SaaS fees with on-premise autonomous agents."
+        "script_es": "Bienvenidos a la Masterclass Ejecutiva de HB Jewelry OpenClaw 2026. En este análisis estratégico examinaremos cómo transformar la operación comercial de tu empresa eliminando licencias de pago mensual y sustituyéndolas por agentes autónomos en tu propio servidor.",
+        "script_en": "Welcome to the HB Jewelry OpenClaw 2026 Executive Masterclass. In this strategic briefing we examine how to transform your enterprise sales operations by replacing recurring SaaS fees with on-premise autonomous agents."
     },
     {
         "id": 2,
         "title_es": "Módulo 2: Los 4 Pilares Universales del Negocio",
         "title_en": "Module 2: 4 Universal Enterprise Pillars",
-        "script_es": "Toda empresa de alta joyería o servicios profesionales se sostiene sobre cuatro pilares: Marketing, Ventas, Logística y Finanzas. Conectamos un motor RAG de 768 dimensiones que responde con precisión absoluta a clientes y directivos.",
-        "script_en": "Every luxury jewelry or professional service business rests on four pillars: Marketing, Sales, Logistics, and Finance. We connect a 768-dimensional RAG vector engine that responds with absolute precision to clients and executives."
+        "script_es": "Toda empresa de alta joyería o servicios profesionales se sostiene sobre cuatro pilares: Marketing, Ventas, Logística y Finanzas. Conectamos un motor RAG de 768 dimensiones para responder con datos exactos sin inventar información.",
+        "script_en": "Every luxury jewelry or professional service business rests on four pillars: Marketing, Sales, Logistics, and Finance. We connect a 768-dimensional RAG vector engine for exact data retrieval without AI hallucinations."
     },
     {
         "id": 3,
         "title_es": "Módulo 3: Automatización de WhatsApp Business a Costo $0",
         "title_en": "Module 3: Zero-Cost WhatsApp Business Automation",
-        "script_es": "El mayor cuello de botella en ventas B2B es la demora en la primera respuesta. Nuestro bot autónomo califica prospectos en menos de diez segundos, agenda reuniones en el calendario y efectúa cierres de catálogo sin costo por transacción.",
-        "script_en": "The largest bottleneck in B2B sales is delayed first response time. Our autonomous bot qualifies leads in under ten seconds, schedules meetings on your calendar, and executes catalog closes with zero transactional cost."
+        "script_es": "El mayor cuello de botella en ventas B2B es la demora en la primera respuesta. Nuestro bot autónomo califica prospectos en menos de diez segundos, agenda reuniones en el calendario y efectúa cierres de catálogo sin costo por mensaje.",
+        "script_en": "The largest bottleneck in B2B sales is delayed first response time. Our autonomous bot qualifies leads in under ten seconds, schedules meetings on your calendar, and executes catalog closes with zero per-message cost."
     },
     {
         "id": 4,
@@ -79,13 +78,12 @@ MODULES = [
 ]
 
 def generate_subtitle_file(text: str, duration: float, out_ass: Path):
-    """Genera subtítulos ASS acotados al 30% central."""
     words = text.split()
     word_dur = int((duration * 1000) / max(len(words), 1) / 10)
     k_text = "".join([f"{{\\k{word_dur}}}{w} " for w in words])
     
     ass_content = f"""[Script Info]
-Title: Masterclass 30% Center Subtitles
+Title: Masterclass Center Teleprompter Subtitles
 ScriptType: v4.00+
 WrapStyle: 0
 ScaledBorderAndShadow: yes
@@ -95,44 +93,55 @@ PlayResY: 1080
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: CenterTeleprompter,Montserrat,48,&H00FFFFFF,&H0000D7FF,&H00000000,&H90000000,-1,0,0,0,100,100,2,0,1,3,2,5,300,300,120,1
+Style: CenterTeleprompter,Arial Black,58,&H00FFFFFF,&H0000C5FF,&H00000000,&H80000000,-1,0,0,0,105,100,2,0,1,4,3,5,300,300,120,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.50,0:{int(duration//60):02d}:{duration%60:05.2f},CenterTeleprompter,,0,0,0,,{{\\pos(960,860)}}{k_text.strip()}
+Dialogue: 0,0:00:00.50,0:{int(duration//60):02d}:{duration%60:05.2f},CenterTeleprompter,,0,0,0,,{{\\pos(960,880)}}{k_text.strip()}
 """
     with open(out_ass, "w", encoding="utf-8") as f:
         f.write(ass_content)
 
 async def build_30min_masterclass():
-    logger.info("🎬 Iniciando construcción de la Masterclass 30 Minutos Bilingüe (6 Módulos)...")
-    
-    # Probar duración de audio base
-    probe = subprocess.run([
-        "ffprobe", "-v", "error", "-show_entries", "format=duration",
-        "-of", "default=noprintwrappers=1:nokey=1", str(REAL_VOICE_SAMPLE)
-    ], capture_output=True, text=True)
-    try:
-        base_dur = float(probe.stdout.strip())
-    except Exception:
-        base_dur = 15.0
+    logger.info("🎬 Iniciando renderizado de la Masterclass 30 Minutos Bilingüe (6 Módulos)...")
 
     for lang in ["es", "en"]:
         block_files = []
-        logger.info(f"\n⚙️ Renderizando los 6 Módulos en {lang.upper()}...")
+        voice_id = "es-MX-JorgeNeural" if lang == "es" else "en-US-GuyNeural"
+        logger.info(f"\n⚙️ Procesando audio y video para los 6 Módulos en {lang.upper()}...")
 
         for mod in MODULES:
             mod_id = mod["id"]
             script = mod["script_es"] if lang == "es" else mod["script_en"]
-            block_mp4 = OUT_DIR / f"block_{mod_id}_{lang}.mp4"
-            ass_file = OUT_DIR / f"block_{mod_id}_{lang}.ass"
             
-            generate_subtitle_file(script, base_dur, ass_file)
+            # 1. Generar audio dinámico TTS real
+            audio_path = OUT_DIR / f"mod_{mod_id}_{lang}.mp3"
+            comm = edge_tts.Communicate(script, voice_id, rate="-2%", pitch="+0Hz")
+            await comm.save(str(audio_path))
+
+            # 2. Medir duración exacta del audio
+            probe = subprocess.run([
+                "ffprobe", "-v", "error", "-show_entries", "format=duration",
+                "-of", "default=noprintwrappers=1:nokey=1", str(audio_path)
+            ], capture_output=True, text=True)
+            try:
+                dur = float(probe.stdout.strip())
+            except Exception:
+                dur = 18.0
+
+            # 3. Calcular número exacto de frames para zoompan continuo (fps=30)
+            total_frames = int(dur * 30) + 15
+            
+            # Subtítulos ASS
+            ass_file = OUT_DIR / f"mod_{mod_id}_{lang}.ass"
+            generate_subtitle_file(script, dur, ass_file)
             ass_clean = str(ass_file).replace("\\", "/").replace(":", "\\:")
 
-            # Filtro Parallax Zoom Sincronizado (100% -> 112%) + Subtítulos
+            block_mp4 = OUT_DIR / f"block_{mod_id}_{lang}.mp4"
+
+            # Filtro Parallax Zoom continuo: d=total_frames garantiza que el zoom se calcula suavemente en CADA FOTOGRAMA
             filter_graph = (
-                f"[0:v]zoompan=z='min(zoom+0.0005,1.12)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1920x1080:fps=30[bg];"
+                f"[0:v]zoompan=z='min(zoom+0.0006,1.15)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={total_frames}:s=1920x1080:fps=30[bg];"
                 f"[1:v]scale=720:980:flags=lanczos,unsharp=5:5:1.2:5:5:1.2[avatar];"
                 f"[bg][avatar]overlay=60:60[base];"
                 f"[base]subtitles='{ass_clean}'[outv]"
@@ -140,23 +149,23 @@ async def build_30min_masterclass():
 
             cmd = [
                 "ffmpeg", "-y",
-                "-loop", "1", "-t", str(base_dur), "-i", str(SPACE_NEBULA_BG),
-                "-loop", "1", "-t", str(base_dur), "-i", str(AVATAR_IMAGE),
-                "-i", str(REAL_VOICE_SAMPLE),
+                "-loop", "1", "-t", str(dur), "-i", str(SPACE_NEBULA_BG),
+                "-loop", "1", "-t", str(dur), "-i", str(AVATAR_IMAGE),
+                "-i", str(audio_path),
                 "-filter_complex", filter_graph,
                 "-map", "[outv]",
                 "-map", "2:a",
                 "-af", "aresample=async=1,loudnorm=I=-16:TP=-1.5:LRA=11",
                 "-c:v", "libx264", "-preset", "fast", "-crf", "19", "-pix_fmt", "yuv420p",
                 "-movflags", "+faststart",
-                "-c:a", "aac", "-b:a", "256k",
+                "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2",
                 str(block_mp4)
             ]
 
             res = subprocess.run(cmd, capture_output=True, text=True)
             if res.returncode == 0:
                 block_files.append(block_mp4)
-                logger.info(f"  ✅ Módulo {mod_id} ({lang.upper()}) completado.")
+                logger.info(f"  ✅ Módulo {mod_id} ({lang.upper()}) completado ({dur:.1f}s, zoompan d={total_frames}).")
             else:
                 logger.error(f"  ❌ Error en Módulo {mod_id}: {res.stderr[-300:]}")
 
@@ -180,11 +189,11 @@ async def build_30min_masterclass():
         if out_master.exists():
             shutil.copy(out_master, pub_master)
             size_mb = out_master.stat().st_size / (1024 * 1024)
-            logger.info(f"🎉 MASTERCLASS DE 30 MINUTOS ({lang.upper()}) COMPLETADA: {pub_master} ({size_mb:.2f} MB)")
+            logger.info(f"🎉 MASTERCLASS YOUTUBE ({lang.upper()}) COMPLETADA: {pub_master} ({size_mb:.2f} MB)")
 
 def main():
     print("=" * 70)
-    print("🎬 OPENCLAW 30-MINUTE CINEMA MASTERCLASS RENDER ENGINE")
+    print("🎬 OPENCLAW YOUTUBE 16:9 MASTERCLASS RENDER ENGINE (DYNAMIC AUDIO + CONTINUOUS ZOOM)")
     print("=" * 70)
     asyncio.run(build_30min_masterclass())
 

@@ -42,7 +42,7 @@ try {
 }
 
 # 2. MOTOR RAG VECTORIAL
-Write-Host "`n[2/7] Ejecutando vectorización RAG (text-embedding-004)..." -ForegroundColor Yellow
+Write-Host "`n[2/7] Ejecutando vectorización RAG [text-embedding-004]..." -ForegroundColor Yellow
 $vectorizerScript = Join-Path $PSScriptRoot "..\agents\financial_rag_worker\vectorizer.py"
 if (Test-Path $vectorizerScript) {
     try {

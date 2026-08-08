@@ -18,7 +18,7 @@ $excludeList = @(
     "--exclude", "dist/**",
     "--exclude", ".cache/**",
     "--exclude", ".npm/**",
-    "--exclude", "agents/video_agent/SadTalker/checkpoints/**", # checkpoints se respaldan por separado si es necesario
+    "--exclude", "agents/video_agent/SadTalker/checkpoints/**",
     "--exclude", "*.tmp",
     "--fast-list",
     "--transfers", "4"

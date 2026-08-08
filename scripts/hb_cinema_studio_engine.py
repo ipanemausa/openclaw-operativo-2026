@@ -98,15 +98,15 @@ class HBCinemaStudioEngine:
 
             cmd = [
                 "ffmpeg", "-y",
-                "-loop", "1", "-i", str(SPACE_NEBULA_BG),
-                "-loop", "1", "-i", str(AVATAR_IMAGE),
+                "-loop", "1", "-t", str(audio_duration), "-i", str(SPACE_NEBULA_BG),
+                "-loop", "1", "-t", str(audio_duration), "-i", str(AVATAR_IMAGE),
                 "-i", str(REAL_VOICE_SAMPLE),
                 "-filter_complex", filter_graph,
                 "-map", "[outv]",
                 "-map", "2:a",
-                "-af", "apad,aresample=async=1,loudnorm=I=-16:TP=-1.5:LRA=11",
+                "-af", "aresample=async=1,loudnorm=I=-16:TP=-1.5:LRA=11",
                 "-c:v", "libx264", "-preset", "fast", "-crf", "19", "-pix_fmt", "yuv420p",
-                "-movflags", "+faststart", "-shortest",
+                "-movflags", "+faststart",
                 "-c:a", "aac", "-b:a", "256k",
                 str(out_path)
             ]

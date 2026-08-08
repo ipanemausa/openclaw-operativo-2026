@@ -54,7 +54,7 @@ if (Test-Path $vectorizerScript) {
 }
 
 # 3. VERIFICAR SERVICIO WHATSAPP & INTENT SERVER
-Write-Host "`n[3/7] Estado servicios OpenClaw (Localhost 3001)..." -ForegroundColor Yellow
+Write-Host "`n[3/7] Estado servicios OpenClaw [Localhost 3001]..." -ForegroundColor Yellow
 try {
     $waStatus = Invoke-RestMethod -Uri "http://localhost:3001/health" -Method Get -TimeoutSec 3 -ErrorAction SilentlyContinue
     if ($waStatus) {

@@ -59,7 +59,7 @@ class HBCinemaStudioEngine:
         if aspect_ratio == "9:16":
             # Formato Vertical (Shorts/Reels 1080x1920)
             return (
-                "f[0:v]zoompan=z='min(zoom+0.0005,1.12)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1080x1920:fps=30[bg];"
+                "[0:v]zoompan=z='min(zoom+0.0005,1.12)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1080x1920:fps=30[bg];"
                 "[1:v]scale=900:1300:flags=lanczos[avatar];"
                 "[bg][avatar]overlay=(main_w-overlay_w)/2:main_h-overlay_h-100[outv]"
             )
@@ -78,17 +78,24 @@ class HBCinemaStudioEngine:
         self.verify_assets()
         logger.info(f"🎬 Iniciando renderizado para tema: {topic_title} [{aspect_ratio}]")
 
+        # Obtener duración del audio
+        probe = subprocess.run([
+            "ffprobe", "-v", "error", "-show_entries", "format=duration",
+            "-of", "default=noprintwrappers=1:nokey=1", str(REAL_VOICE_SAMPLE)
+        ], capture_output=True, text=True)
+        try:
+            audio_duration = float(probe.stdout.strip())
+        except Exception:
+            audio_duration = 15.0
+
         results = {}
         for lang in ["es", "en"]:
-            text = script_es if lang == "es" else script_en
             out_filename = f"hb_cinema_{aspect_ratio.replace(':', 'x')}_{lang}.mp4"
             out_path = OUT_DIR / out_filename
             root_path = PUBLIC_DIR / out_filename
 
-            # Filtro Parallax Zoom
             filter_graph = self.build_parallax_filter(aspect_ratio)
 
-            # Comando FFmpeg con Normalización EBU R128 + FastStart MP4
             cmd = [
                 "ffmpeg", "-y",
                 "-loop", "1", "-i", str(SPACE_NEBULA_BG),
@@ -97,7 +104,7 @@ class HBCinemaStudioEngine:
                 "-filter_complex", filter_graph,
                 "-map", "[outv]",
                 "-map", "2:a",
-                "-af", f"loudnorm=I={self.target_lufs}:TP=-1.5:LRA=11",
+                "-af", "apad,aresample=async=1,loudnorm=I=-16:TP=-1.5:LRA=11",
                 "-c:v", "libx264", "-preset", "fast", "-crf", "19", "-pix_fmt", "yuv420p",
                 "-movflags", "+faststart", "-shortest",
                 "-c:a", "aac", "-b:a", "256k",

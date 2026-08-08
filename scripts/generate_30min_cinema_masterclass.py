@@ -2,10 +2,10 @@
 ====================================================================
   generate_30min_cinema_masterclass.py — OpenClaw 30-Minute Masterclass Engine
   Produces 30-Minute (54,000 frames @ 30fps) Bilingual Video:
-  - Dynamic TTS Speech Audio per Module (Audible, 48kHz Stereo)
-  - Continuous Slow-Motion Parallax Zoom (d = dur * 30 frames)
-  - 30% Center Teleprompter ASS Subtitles
-  - 6 Modular Blocks x 5 Minutes each concatenated for YouTube 16:9
+  - Avatar shifted to extreme left (overlay=10:120)
+  - Full-Bleed 1080p Universe Space Background + Parallax Zoom
+  - 30% Center Teleprompter ASS Subtitles (Arial Black 58pt Ultra-Bold + Gold Karaoke)
+  - Full Script Database (Spanish & English Parallel Columns)
 ====================================================================
 """
 
@@ -32,6 +32,7 @@ OUT_DIR.mkdir(parents=True, exist_ok=True)
 SPACE_NEBULA_BG   = PUBLIC_DIR / "cosmic_space_smooth.png"
 AVATAR_IMAGE      = PUBLIC_DIR / "avatar_transparent.png"
 
+# Base de Datos Completa de 6 Módulos (Español vs Inglés)
 MODULES = [
     {
         "id": 1,
@@ -103,7 +104,7 @@ Dialogue: 0,0:00:00.50,0:{int(duration//60):02d}:{duration%60:05.2f},CenterTelep
         f.write(ass_content)
 
 async def build_30min_masterclass():
-    logger.info("🎬 Iniciando renderizado de la Masterclass 30 Minutos Bilingüe (6 Módulos)...")
+    logger.info("🎬 Iniciando renderizado de la Masterclass 30 Minutos Bilingüe con Avatar a la Izquierda Extrema (overlay=10:120)...")
 
     for lang in ["es", "en"]:
         block_files = []
@@ -129,7 +130,6 @@ async def build_30min_masterclass():
             except Exception:
                 dur = 18.0
 
-            # 3. Calcular número exacto de frames para zoompan continuo (fps=30)
             total_frames = int(dur * 30) + 15
             
             # Subtítulos ASS
@@ -139,11 +139,14 @@ async def build_30min_masterclass():
 
             block_mp4 = OUT_DIR / f"block_{mod_id}_{lang}.mp4"
 
-            # Filtro Parallax Zoom continuo: d=total_frames garantiza que el zoom se calcula suavemente en CADA FOTOGRAMA
+            # Filtro:
+            # 1. Background Full Bleed 1920x1080 + Zoom Parallax continuo
+            # 2. Avatar escalado a 680x960 y ubicado en overlay=10:120 (Extrema Izquierda)
             filter_graph = (
-                f"[0:v]zoompan=z='min(zoom+0.0006,1.15)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={total_frames}:s=1920x1080:fps=30[bg];"
-                f"[1:v]scale=720:980:flags=lanczos,unsharp=5:5:1.2:5:5:1.2[avatar];"
-                f"[bg][avatar]overlay=60:60[base];"
+                f"[0:v]scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080,"
+                f"zoompan=z='min(zoom+0.0006,1.15)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={total_frames}:s=1920x1080:fps=30[bg];"
+                f"[1:v]scale=680:960:flags=lanczos,unsharp=5:5:1.2:5:5:1.2[avatar];"
+                f"[bg][avatar]overlay=10:120[base];"
                 f"[base]subtitles='{ass_clean}'[outv]"
             )
 
@@ -165,7 +168,7 @@ async def build_30min_masterclass():
             res = subprocess.run(cmd, capture_output=True, text=True)
             if res.returncode == 0:
                 block_files.append(block_mp4)
-                logger.info(f"  ✅ Módulo {mod_id} ({lang.upper()}) completado ({dur:.1f}s, zoompan d={total_frames}).")
+                logger.info(f"  ✅ Módulo {mod_id} ({lang.upper()}) completado ({dur:.1f}s, overlay=10:120).")
             else:
                 logger.error(f"  ❌ Error en Módulo {mod_id}: {res.stderr[-300:]}")
 
@@ -193,7 +196,7 @@ async def build_30min_masterclass():
 
 def main():
     print("=" * 70)
-    print("🎬 OPENCLAW YOUTUBE 16:9 MASTERCLASS RENDER ENGINE (DYNAMIC AUDIO + CONTINUOUS ZOOM)")
+    print("🎬 OPENCLAW YOUTUBE 16:9 MASTERCLASS RENDER ENGINE (EXTREME LEFT AVATAR + FULL BLEED UNIVERSE)")
     print("=" * 70)
     asyncio.run(build_30min_masterclass())
 

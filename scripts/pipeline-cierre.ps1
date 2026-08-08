@@ -23,7 +23,7 @@ if (Test-Path $keepAwakeScript) {
                 param($scriptPath)
                 powershell -ExecutionPolicy Bypass -File $scriptPath -MaxHoras 12
             } -ArgumentList $keepAwakeScript | Out-Null
-            Write-Host "-> Keep-Awake iniciado en segundo plano (Job: OpenClawKeepAwake)." -ForegroundColor Green
+            Write-Host "-> Keep-Awake iniciado en segundo plano [Job: OpenClawKeepAwake]." -ForegroundColor Green
         } else {
             Write-Host "-> Keep-Awake ya se encuentra activo." -ForegroundColor Green
         }

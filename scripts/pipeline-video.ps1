@@ -18,8 +18,8 @@ Write-Host "====================================================================
 Write-Host "-> Tema de Producción: $Topic" -ForegroundColor Yellow
 
 # Step 1: Verificar y Compilar Mini-Lote Bilingüe con Paridad 1:1
-Write-Host "`n[1/4] Ejecutando Motor Bilingüe Cinema Studio 2.5 (ES / EN)..." -ForegroundColor Green
-python "$ROOT_DIR\scripts\build_master_30min_bilingual_moon_video.py" 2>&1 | Write-Host
+Write-Host "`n[1/4] Ejecutando Motor Bilingüe Cinema Studio 2.5 (Voz Real TikTok Input)..." -ForegroundColor Green
+python "$ROOT_DIR\scripts\hb_cinema_studio_engine.py" 2>&1 | Write-Host
 
 # Step 2: Verificación de Integridad y Resiliencia de Salida
 Write-Host "`n[2/4] Verificando Integridad Físicas de Archivos MP4..." -ForegroundColor Green

@@ -1,0 +1,30 @@
+﻿a55e691 chore: ignore embedded SadTalker repo in gitignore for fast git status
+e6aef87 fix(pipeline): escape string brackets in pipeline-cierre.ps1
+fe6ffc1 feat(kimi-k3): integrate Moonshot AI Kimi K3 open weights background engine and notebook
+375717e feat(masterclass): update notebook script database and shift avatar to extreme left overlay=10:120
+1004ccd style(teleprompter): update teleprompter font to ultra-bold Arial Black 58pt with gold karaoke highlight
+879075b backup: Auto-sync master pipeline closure [2026-08-08 09:11:09]
+33e60f2 feat(cinema): approve and sync 5 cinema engine masterclass files
+734954a backup: Auto-sync master pipeline closure [2026-08-08 08:57:21]
+4535523 fix(scripts): clean PowerShell string parsing and rclone backup script formatting
+1515099 fix(pipeline): escape powershell variable scope and update work logs
+bc38c55 backup: Auto-sync master pipeline closure [2026-08-08 06:27:53]
+0694384 backup: Auto-sync master pipeline closure [2026-08-07 15:26:39]
+28946a1 backup: Auto-sync master pipeline closure [2026-08-07 15:15:26]
+5043677 backup: Auto-sync master pipeline closure [2026-08-07 12:29:45]
+05d8f62 backup: Auto-sync master pipeline closure [2026-08-07 11:59:07]
+a1c6045 backup: Auto-sync master pipeline closure [2026-08-07 11:48:32]
+7181948 backup: Auto-sync master pipeline closure [2026-08-07 11:36:45]
+1a83c4a backup: Auto-sync master pipeline closure [2026-08-07 11:18:05]
+4005a6b backup: Auto-sync master pipeline closure [2026-08-07 10:28:12]
+572cdf9 backup: Auto-sync master pipeline closure [2026-08-07 09:58:01]
+d471885 backup: Auto-sync master pipeline closure [2026-08-07 06:18:02]
+cdf92c2 backup: Auto-sync master pipeline closure [2026-08-07 06:08:11]
+a2195f7 backup: Auto-sync master pipeline closure [2026-08-07 05:59:51]
+aaa9d6a backup: Auto-sync master pipeline closure [2026-08-07 05:47:25]
+4bed3cf backup: Auto-sync master pipeline closure [2026-08-07 05:30:22]
+3c8d6cd backup: Auto-sync master pipeline closure [2026-08-07 05:27:02]
+e886d04 backup: Auto-sync master pipeline closure [2026-08-07 05:17:59]
+e027353 backup: Auto-sync master pipeline closure [2026-08-07 05:13:01]
+162dd38 backup: Auto-sync master pipeline closure [2026-08-07 05:01:40]
+57a119c backup: Auto-sync master pipeline closure [2026-08-07 04:44:04]

@@ -58,6 +58,17 @@ export async function runFullDAGPipeline() {
       console.log(` -> Checkpoint RAG OK: ${qaData.total_formulas || 580} Fórmulas Numéricas Espaciales.`);
     }
 
+    // 1B. Kimi K3 Open Weights Reasoning Engine Node
+    console.log("[Node 1B] Verificando Motor de Razonamiento Kimi K3 (Moonshot AI MoE 2.8T)...");
+    const kimiManifestPath = path.join(process.cwd(), "models", "kimi_k3", "kimi_k3_manifest.json");
+    if (fs.existsSync(kimiManifestPath)) {
+      const kimiData = JSON.parse(fs.readFileSync(kimiManifestPath, "utf-8"));
+      console.log(` -> Checkpoint Kimi K3 OK: Model ${kimiData.model_name} (${kimiData.architecture}) Activo.`);
+    } else {
+      console.log(" -> Ejecutando preparación de Kimi K3 Open Weights...");
+      execSync("python scripts/download_kimi_k3_model.py", { stdio: "inherit" });
+    }
+
     // 2. Multi-Agent & Avatar Checkpoint
     console.log("[Node 2] Verificando Motor de Avatar Guillermo AI y Multi-Agentes...");
     const avatarVideoPath = path.join(process.cwd(), "public", "output_avatar_english_7qa.mp4");

@@ -7,10 +7,11 @@
  */
 
 import * as admin from "firebase-admin";
-import * as fs from "fs";
-import * as path from "path";
-import { execSync, exec } from "child_process";
-import { promisify } from "util";
+import * as fs from "node:fs";
+import * as path from "node:path";
+import { execSync, exec } from "node:child_process";
+import { promisify } from "node:util";
+import process from "node:process";
 
 const execAsync = promisify(exec);
 
@@ -81,6 +82,9 @@ export async function runFullDAGPipeline() {
   }
 }
 
-if (require.main === module) {
+declare const require: any;
+declare const module: any;
+
+if (typeof require !== "undefined" && typeof module !== "undefined" && require.main === module) {
   runFullDAGPipeline();
 }

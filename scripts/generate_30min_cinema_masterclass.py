@@ -142,6 +142,7 @@ async def build_30min_masterclass():
             # Subtítulos ASS
             ass_file = OUT_DIR / f"mod_{mod_id}_{lang}.ass"
             generate_subtitle_file(script, dur, ass_file)
+            # CRITICAL: Windows paths must use forward slashes + escape colon for FFmpeg subtitles filter
             ass_clean = str(ass_file).replace("\\", "/").replace(":", "\\:")
 
             block_mp4 = OUT_DIR / f"block_{mod_id}_{lang}.mp4"
@@ -149,9 +150,10 @@ async def build_30min_masterclass():
             # Filtro:
             # 1. Background Full Bleed 1920x1080 + Zoom Parallax continuo
             # 2. Avatar escalado a 680x960 y ubicado en overlay=10:120 (Extrema Izquierda)
+            # NOTE: zoompan commas must be escaped as \, inside filter_complex strings
             filter_graph = (
                 f"[0:v]scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080,"
-                f"zoompan=z='min(zoom+0.0006,1.15)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={total_frames}:s=1920x1080:fps=30[bg];"
+                f"zoompan=z='min(zoom+0.0006\\,1.15)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={total_frames}:s=1920x1080:fps=30[bg];"
                 f"[1:v]scale=680:960:flags=lanczos,unsharp=5:5:1.2:5:5:1.2[avatar];"
                 f"[bg][avatar]overlay=10:120[base];"
                 f"[base]subtitles='{ass_clean}'[outv]"

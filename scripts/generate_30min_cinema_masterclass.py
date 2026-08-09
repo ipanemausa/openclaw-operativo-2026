@@ -116,14 +116,21 @@ async def build_30min_masterclass():
             script = mod["script_es"] if lang == "es" else mod["script_en"]
             
             # 1. Generar audio dinámico TTS real
-            audio_path = OUT_DIR / f"mod_{mod_id}_{lang}.mp3"
+            audio_mp3_path = OUT_DIR / f"mod_{mod_id}_{lang}.mp3"
+            audio_wav_path = OUT_DIR / f"mod_{mod_id}_{lang}.wav"
             comm = edge_tts.Communicate(script, voice_id, rate="-2%", pitch="+0Hz")
-            await comm.save(str(audio_path))
+            await comm.save(str(audio_mp3_path))
+
+            # Pre-procesar a PCM WAV 48kHz Stereo para prevenir fallos en loudnorm
+            subprocess.run([
+                "ffmpeg", "-y", "-i", str(audio_mp3_path),
+                "-ar", "48000", "-ac", "2", str(audio_wav_path)
+            ], capture_output=True, text=True)
 
             # 2. Medir duración exacta del audio
             probe = subprocess.run([
                 "ffprobe", "-v", "error", "-show_entries", "format=duration",
-                "-of", "default=noprintwrappers=1:nokey=1", str(audio_path)
+                "-of", "default=noprintwrappers=1:nokey=1", str(audio_wav_path)
             ], capture_output=True, text=True)
             try:
                 dur = float(probe.stdout.strip())
@@ -152,13 +159,13 @@ async def build_30min_masterclass():
 
             cmd = [
                 "ffmpeg", "-y",
-                "-loop", "1", "-t", str(dur), "-i", str(SPACE_NEBULA_BG),
-                "-loop", "1", "-t", str(dur), "-i", str(AVATAR_IMAGE),
-                "-i", str(audio_path),
+                "-loop", "1", "-t", f"{dur:.2f}", "-i", str(SPACE_NEBULA_BG),
+                "-loop", "1", "-t", f"{dur:.2f}", "-i", str(AVATAR_IMAGE),
+                "-i", str(audio_wav_path),
                 "-filter_complex", filter_graph,
                 "-map", "[outv]",
                 "-map", "2:a",
-                "-af", "aresample=async=1,loudnorm=I=-16:TP=-1.5:LRA=11",
+                "-af", "loudnorm=I=-16:TP=-1.5:LRA=11",
                 "-c:v", "libx264", "-preset", "fast", "-crf", "19", "-pix_fmt", "yuv420p",
                 "-movflags", "+faststart",
                 "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2",

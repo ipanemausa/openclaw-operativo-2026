@@ -30,6 +30,7 @@ OUT_DIR.mkdir(parents=True, exist_ok=True)
 REAL_VOICE_SAMPLE = PUBLIC_DIR / "real_guillermo_voice.mp3"
 SPACE_NEBULA_BG   = PUBLIC_DIR / "cosmic_space_smooth.png"
 AVATAR_IMAGE      = PUBLIC_DIR / "avatar_transparent.png"
+TEMP_CLEAN_WAV    = PUBLIC_DIR / "temp_clean_voice.wav"
 
 class HBCinemaStudioEngine:
     def __init__(self):
@@ -50,6 +51,19 @@ class HBCinemaStudioEngine:
             logger.warning(f"Faltan assets base: {missing}")
             return False
         return True
+
+    def preprocess_audio(self) -> Path:
+        """
+        Pre-procesa la muestra MP3 a formato PCM WAV 48kHz Stereo
+        para evitar muestras corruptas/NaN en el filtro loudnorm.
+        """
+        logger.info("🎙️ Pre-procesando audio a PCM WAV 48kHz Stereo...")
+        cmd_wav = [
+            "ffmpeg", "-y", "-i", str(REAL_VOICE_SAMPLE),
+            "-ar", "48000", "-ac", "2", str(TEMP_CLEAN_WAV)
+        ]
+        subprocess.run(cmd_wav, capture_output=True, text=True)
+        return TEMP_CLEAN_WAV
 
     def build_parallax_filter(self, aspect_ratio="16:9") -> str:
         """
@@ -76,12 +90,13 @@ class HBCinemaStudioEngine:
         Renderiza el video máster bilingüe utilizando la muestra de voz real y ecualización FM Broadcast.
         """
         self.verify_assets()
+        clean_audio = self.preprocess_audio()
         logger.info(f"🎬 Iniciando renderizado para tema: {topic_title} [{aspect_ratio}]")
 
         # Obtener duración del audio
         probe = subprocess.run([
             "ffprobe", "-v", "error", "-show_entries", "format=duration",
-            "-of", "default=noprintwrappers=1:nokey=1", str(REAL_VOICE_SAMPLE)
+            "-of", "default=noprintwrappers=1:nokey=1", str(clean_audio)
         ], capture_output=True, text=True)
         try:
             audio_duration = float(probe.stdout.strip())
@@ -98,13 +113,13 @@ class HBCinemaStudioEngine:
 
             cmd = [
                 "ffmpeg", "-y",
-                "-loop", "1", "-t", str(audio_duration), "-i", str(SPACE_NEBULA_BG),
-                "-loop", "1", "-t", str(audio_duration), "-i", str(AVATAR_IMAGE),
-                "-i", str(REAL_VOICE_SAMPLE),
+                "-loop", "1", "-t", f"{audio_duration:.2f}", "-i", str(SPACE_NEBULA_BG),
+                "-loop", "1", "-t", f"{audio_duration:.2f}", "-i", str(AVATAR_IMAGE),
+                "-i", str(clean_audio),
                 "-filter_complex", filter_graph,
                 "-map", "[outv]",
                 "-map", "2:a",
-                "-af", "aresample=async=1,loudnorm=I=-16:TP=-1.5:LRA=11",
+                "-af", "loudnorm=I=-16:TP=-1.5:LRA=11",
                 "-c:v", "libx264", "-preset", "fast", "-crf", "19", "-pix_fmt", "yuv420p",
                 "-movflags", "+faststart",
                 "-c:a", "aac", "-b:a", "256k",

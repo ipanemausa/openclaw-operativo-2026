@@ -76,7 +76,7 @@ Thumbs.db
 # Backups
 *.backup
 *.bak
-agents/video_agent/SadTalker/
+agents/video_agent/SadTalker
 *.tmp
 
 # Generated Media, Videos & Temporary Renders

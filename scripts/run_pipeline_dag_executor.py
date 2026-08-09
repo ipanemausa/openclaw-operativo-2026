@@ -60,6 +60,13 @@ def run_dag_node(node_name, phase, checkpoint_desc, command_str):
     return success
 
 # FASE 1: MULTI-MODELO, AVATAR & VENTAS
+ok1_kimi = run_dag_node(
+    "NODO-1-KIMI-K3-REASONING-ENGINE", 
+    1, 
+    "Moonshot AI Kimi K3 MoE 2.8T Open Weights active reasoning engine verified", 
+    "python C:\\Users\\ipane\\openclaw-operativo-2026\\scripts\\download_kimi_k3_model.py"
+)
+
 ok1 = run_dag_node(
     "NODO-1-MULTI-MODELO", 
     1, 

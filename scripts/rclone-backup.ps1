@@ -29,6 +29,9 @@ $rcloneArgs = @(
     "--exclude", "agents/video_agent/SadTalker/checkpoints/**",
     "--exclude", "public/temp_*/**",
     "--exclude", "public/temp_yt_frames/**",
+    "--exclude", "public/videos/**",
+    "--exclude", "frontend/public/videos/**",
+    "--exclude", "**/temp_*/**",
     "--exclude", "*.tmp"
 )
 

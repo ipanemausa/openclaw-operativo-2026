@@ -78,6 +78,9 @@ Thumbs.db
 *.bak
 agents/video_agent/SadTalker
 *.tmp
+scratch/
+scratch_*
+
 
 # Generated Media, Videos & Temporary Renders
 *.mp4

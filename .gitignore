@@ -78,6 +78,16 @@ Thumbs.db
 *.bak
 agents/video_agent/SadTalker/
 *.tmp
+
+# Generated Media, Videos & Temporary Renders
+*.mp4
+*.mp3
+*.wav
+*.ass
+public/temp_*
+public/videos/**/*.mp4
+public/videos/**/*.mp3
+
 # SSL (store only examples)
 nginx/ssl/openclaw.*
 !nginx/ssl/README.md

@@ -32,15 +32,16 @@ logger = logging.getLogger("vectorizer")
 
 # ── Config ─────────────────────────────────────────────────────────────────
 GOOGLE_API_KEY = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
-QDRANT_HOST    = os.getenv("QDRANT_HOST", "localhost")
-QDRANT_PORT    = int(os.getenv("QDRANT_PORT", "6333"))
-COLLECTION     = "masterclass_30min_2026"
-EMBEDDING_DIM  = 768
+QDRANT_HOST = os.getenv("QDRANT_HOST", "localhost")
+QDRANT_PORT = int(os.getenv("QDRANT_PORT", "6333"))
+COLLECTION = "masterclass_30min_2026"
+EMBEDDING_DIM = 768
 EMBEDDING_MODEL = "models/text-embedding-004"
 
 OUT_DIR = Path(r"C:\openclaw\hb-jewelry\public\videos\youtube_30min_masterclass")
 
 # ── Helpers ─────────────────────────────────────────────────────────────────
+
 
 def extract_text_from_ass(ass_path: Path) -> str:
     """Strip ASS formatting tags and return clean dialogue text."""

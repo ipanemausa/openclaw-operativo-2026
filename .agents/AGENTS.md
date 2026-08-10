@@ -98,3 +98,29 @@ Para producción autónoma diaria de video sin intervención ni ajustes manuales
    - **Audio:** Voz estéreo 48kHz (`es-MX-JorgeNeural` / `en-US-GuyNeural`), normalizado a -16 LUFS EBU R128.
    - **Streaming:** FastStart MP4 (`-movflags +faststart`) activado para 0 buffer en navegadores.
    - **Paridad Bilingüe:** 100% paridad 1 a 1 de duración exacta entre Español e Inglés.
+
+---
+
+## Regla de Orden de Deploy — OBLIGATORIO PARA TODO PIPELINE
+
+TODO pipeline, script o tarea que implique deploy DEBE respetar este orden sin excepcion:
+
+  1. BUILD local (npm run build / vite build)
+  2. FIREBASE HOSTING deploy (npx firebase deploy --only hosting)
+  3. GIT commit + push a GitHub (origin/main)
+  4. RCLONE backup a Google Drive 5TB
+
+Firebase SIEMPRE antes que rclone. Si Firebase falla, NO se ejecuta rclone.
+Si el agente invierte este orden -> corregir inmediatamente.
+
+---
+
+## Protocolo de API Keys — Fuente Unica de Verdad
+
+- Archivo maestro: C:\Users\ipane\.openclaw-master.env  (FUERA de todo repo git)
+- Para actualizar una key: editar SOLO el archivo maestro.
+- Para propagar a todos los proyectos: ejecutar el script de sync:
+    powershell -ExecutionPolicy Bypass -File .\scripts\sync-master-env.ps1
+- Despues del sync: docker compose up -d --force-recreate (para que los contenedores tomen los cambios)
+- NUNCA hardcodear API keys en codigo ni en archivos commiteados.
+- NUNCA duplicar keys en distintos .env de proyectos — siempre vienen del master via sync.

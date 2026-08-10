@@ -1,80 +1,80 @@
-# ═══════════════════════════════════════════════════════════════
+﻿# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 # OpenClaw Cloud 2026 - ENTREGA FINAL
-# ═══════════════════════════════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
-## ✅ COMPLETADO: OpenClaw 2026 Cloud - Proyecto Listo para Producción
+## âœ… COMPLETADO: OpenClaw 2026 Cloud - Proyecto Listo para ProducciÃ³n
 
-Guillermo, aquí está tu OpenClaw **100% COMPLETO** para desplegar en la nube.
+Guillermo, aquÃ­ estÃ¡ tu OpenClaw **100% COMPLETO** para desplegar en la nube.
 
 ---
 
-## 📦 QUÉ INCLUYE
+## ðŸ“¦ QUÃ‰ INCLUYE
 
 ### 1. Infraestructura Docker (docker-compose.yml)
-✅ PostgreSQL 15 (base de datos con inicialización)
-✅ Redis 7 (cache y message broker)
-✅ Qdrant (vector database para RAG)
-✅ Flask App + Gunicorn (motor principal)
-✅ API Gateway (enrutamiento y validación)
-✅ 4 Agentes especializados:
+âœ… PostgreSQL 15 (base de datos con inicializaciÃ³n)
+âœ… Redis 7 (cache y message broker)
+âœ… Qdrant (vector database para RAG)
+âœ… Flask App + Gunicorn (motor principal)
+âœ… API Gateway (enrutamiento y validaciÃ³n)
+âœ… 4 Agentes especializados:
    - video_agent (procesamiento de videos)
-   - marketing_generator (generación de copy + RAG)
-   - shopify_integration (sincronización e-commerce)
+   - marketing_generator (generaciÃ³n de copy + RAG)
+   - shopify_integration (sincronizaciÃ³n e-commerce)
    - slack_bot (ChatOps)
-✅ Nginx (reverse proxy, SSL/TLS, UI PRO)
+âœ… Nginx (reverse proxy, SSL/TLS, UI PRO)
 
 ### 2. Dockerfiles Optimizados
-✅ Dockerfile.app - Multi-stage, lightweight
-✅ Dockerfile.gateway - API router con rate limiting
-✅ Dockerfile.slackbot - Bot de Slack aislado
-✅ Agent Dockerfiles - Cada agente en su contenedor
+âœ… Dockerfile.app - Multi-stage, lightweight
+âœ… Dockerfile.gateway - API router con rate limiting
+âœ… Dockerfile.slackbot - Bot de Slack aislado
+âœ… Agent Dockerfiles - Cada agente en su contenedor
 
-### 3. Configuración de LLM
-✅ Pickaxe como proveedor principal (config/pickaxe_provider.py)
-✅ Fallback automático si Pickaxe falla
-✅ Soporte para Gemini como secundario
-✅ Streaming support
-✅ Token counting
-✅ Health checks
+### 3. ConfiguraciÃ³n de LLM
+âœ… Pickaxe como proveedor principal (config/pickaxe_provider.py)
+âœ… Fallback automÃ¡tico si Pickaxe falla
+âœ… Soporte para Gemini como secundario
+âœ… Streaming support
+âœ… Token counting
+âœ… Health checks
 
 ### 4. Gateway & Routing
-✅ gateway.py - Router con autenticación
-✅ mcp_gateway.py - Enrutador de mensajes
-✅ Rate limiting (10 req/s API, 5 req/s chat)
-✅ WebSocket support
-✅ CORS configurado
+âœ… gateway.py - Router con autenticaciÃ³n
+âœ… mcp_gateway.py - Enrutador de mensajes
+âœ… Rate limiting (10 req/s API, 5 req/s chat)
+âœ… WebSocket support
+âœ… CORS configurado
 
 ### 5. Base de Datos
-✅ db/init.sql - Inicialización completa
-✅ Tablas: sessions, messages, agents, workflows, audit_logs
-✅ Índices para performance
-✅ Datos de agentes por defecto
+âœ… db/init.sql - InicializaciÃ³n completa
+âœ… Tablas: sessions, messages, agents, workflows, audit_logs
+âœ… Ãndices para performance
+âœ… Datos de agentes por defecto
 
 ### 6. Nginx & UI PRO
-✅ nginx/nginx.conf - Reverse proxy con SSL/TLS
-✅ Gzip compression
-✅ Security headers
-✅ SPA routing para React
-✅ Rate limiting en endpoints críticos
+âœ… nginx/nginx.conf - Reverse proxy con SSL/TLS
+âœ… Gzip compression
+âœ… Security headers
+âœ… SPA routing para React
+âœ… Rate limiting en endpoints crÃ­ticos
 
 ### 7. Scripts de Despliegue
-✅ scripts/deploy-cloud.sh - Linux/macOS (bash)
-✅ scripts/deploy-cloud.ps1 - Windows (PowerShell)
-✅ Health checks automáticos
-✅ Prerequisitos validation
+âœ… scripts/deploy-cloud.sh - Linux/macOS (bash)
+âœ… scripts/deploy-cloud.ps1 - Windows (PowerShell)
+âœ… Health checks automÃ¡ticos
+âœ… Prerequisitos validation
 
-### 8. Documentación Completa
-✅ README.md - Documentación principal
-✅ DEPLOYMENT_GUIDE.md - Guías cloud provider específicas
-✅ QUICK_REFERENCE.md - Referencia rápida
-✅ .env - Variables de entorno documentadas
-✅ .gitignore - Manejo de secretos
+### 8. DocumentaciÃ³n Completa
+âœ… README.md - DocumentaciÃ³n principal
+âœ… DEPLOYMENT_GUIDE.md - GuÃ­as cloud provider especÃ­ficas
+âœ… QUICK_REFERENCE.md - Referencia rÃ¡pida
+âœ… .env - Variables de entorno documentadas
+âœ… .gitignore - Manejo de secretos
 
 ---
 
-## 🚀 CÓMO DESPLEGAR
+## ðŸš€ CÃ“MO DESPLEGAR
 
-### OPCIÓN 1: Despliegue Local (Testing - 5 min)
+### OPCIÃ“N 1: Despliegue Local (Testing - 5 min)
 
 ```bash
 # 1. Clona o copia el proyecto
@@ -82,7 +82,7 @@ cd openclaw-cloud-2026
 
 # 2. Configura secretos
 nano .env
-# Cambia: PICKAXE_API_KEY=pk-your-key
+# Cambia: PICKAXE_API_KEY=DEPRECATED_MIGRADO_A_GEMINI
 
 # 3. Despliega
 docker-compose up -d --build
@@ -100,7 +100,7 @@ curl -X POST http://localhost:8080/api/mcp/message \
   -d '{"agent":"main","message":"Hola OpenClaw"}'
 ```
 
-### OPCIÓN 2: Despliegue en VPS (AWS EC2, DigitalOcean, Linode - 10 min)
+### OPCIÃ“N 2: Despliegue en VPS (AWS EC2, DigitalOcean, Linode - 10 min)
 
 ```bash
 # 1. SSH a tu VPS
@@ -115,7 +115,7 @@ cd /opt/openclaw
 
 # 4. Configura secretos
 nano .env
-# PICKAXE_API_KEY=pk-...
+# PICKAXE_API_KEY=DEPRECATED_MIGRADO_A_GEMINI
 # DB_PASSWORD=...
 # SECRET_KEY=...
 
@@ -133,7 +133,7 @@ docker-compose restart nginx
 https://your-domain.com
 ```
 
-### OPCIÓN 3: Despliegue en Google Cloud Run (Serverless - 15 min)
+### OPCIÃ“N 3: Despliegue en Google Cloud Run (Serverless - 15 min)
 
 ```bash
 # 1. Configura gcloud
@@ -148,22 +148,22 @@ gcloud run deploy openclaw \
   --image gcr.io/PROJECT_ID/openclaw \
   --platform managed \
   --region us-central1 \
-  --set-env-vars PICKAXE_API_KEY=pk-your-key
+  --set-env-vars PICKAXE_API_KEY=DEPRECATED_MIGRADO_A_GEMINI
 
 # 4. Accede a la URL que aparece
 ```
 
-### OPCIÓN 4: Despliegue en AWS ECS (Container Service - 20 min)
+### OPCIÃ“N 4: Despliegue en AWS ECS (Container Service - 20 min)
 
-Ver DEPLOYMENT_GUIDE.md sección "AWS ECS"
+Ver DEPLOYMENT_GUIDE.md secciÃ³n "AWS ECS"
 
 ---
 
-## 🔑 SECRETS CRÍTICOS (ACTUALIZA EN .env)
+## ðŸ”‘ SECRETS CRÃTICOS (ACTUALIZA EN .env)
 
 ```bash
-# Obtén Pickaxe API key (GRATIS en pickaxe.ai)
-PICKAXE_API_KEY=pk-xxxxx
+# ObtÃ©n Pickaxe API key (GRATIS en pickaxe.ai)
+PICKAXE_API_KEY=DEPRECATED_MIGRADO_A_GEMINI
 
 # Genera passwords seguras
 DB_PASSWORD=$(openssl rand -base64 32)
@@ -175,9 +175,9 @@ SECRET_KEY=$(python -c "import secrets; print(secrets.token_urlsafe(32))")
 
 ---
 
-## 🎯 ACCESO INMEDIATO
+## ðŸŽ¯ ACCESO INMEDIATO
 
-Después del despliegue:
+DespuÃ©s del despliegue:
 
 - **UI PRO:** http://localhost (o tu dominio)
 - **Gateway:** http://localhost:8080/api
@@ -186,7 +186,7 @@ Después del despliegue:
 
 ---
 
-## 🧪 TEST RÁPIDO
+## ðŸ§ª TEST RÃPIDO
 
 ```bash
 # 1. Verifica servicios
@@ -195,10 +195,10 @@ docker-compose ps
 # 2. Verifica salud
 curl http://localhost:8080/health
 
-# 3. Obtén estado MCP
+# 3. ObtÃ©n estado MCP
 curl http://localhost:8080/api/mcp/status
 
-# 4. Envía mensaje
+# 4. EnvÃ­a mensaje
 curl -X POST http://localhost:8080/api/mcp/message \
   -H "Content-Type: application/json" \
   -d '{"agent":"main","message":"Test message"}'
@@ -206,52 +206,52 @@ curl -X POST http://localhost:8080/api/mcp/message \
 
 ---
 
-## 📂 ESTRUCTURA DEL PROYECTO
+## ðŸ“‚ ESTRUCTURA DEL PROYECTO
 
 ```
 openclaw-cloud-2026/
-├── docker-compose.yml          ← MAIN: Orquestación completa
-├── .env                        ← ACTUALIZAR: Secrets y config
-├── .gitignore                  ← Protección de secretos
-│
-├── Dockerfile.app              ← Backend principal
-├── Dockerfile.gateway          ← API Gateway
-├── Dockerfile.slackbot         ← Slack Bot
-│
-├── app/                        ← Flask app
-├── gateway.py                  ← Router API
-├── config/
-│   └── pickaxe_provider.py     ← Integración con Pickaxe LLM
-│
-├── agents/                     ← Agentes especializados
-│   ├── video_agent/
-│   ├── marketing_generator/
-│   └── shopify_integration/
-│
-├── nginx/
-│   └── nginx.conf              ← Reverse proxy + SSL
-│
-├── db/
-│   └── init.sql                ← Inicialización DB
-│
-├── scripts/
-│   ├── deploy-cloud.sh         ← Deploy Linux/macOS
-│   └── deploy-cloud.ps1        ← Deploy Windows
-│
-├── README.md                   ← Documentación
-├── DEPLOYMENT_GUIDE.md         ← Guías cloud providers
-├── QUICK_REFERENCE.md          ← Referencia rápida
-└── .env                        ← CONFIGURAR AQUÍ
+â”œâ”€â”€ docker-compose.yml          â† MAIN: OrquestaciÃ³n completa
+â”œâ”€â”€ .env                        â† ACTUALIZAR: Secrets y config
+â”œâ”€â”€ .gitignore                  â† ProtecciÃ³n de secretos
+â”‚
+â”œâ”€â”€ Dockerfile.app              â† Backend principal
+â”œâ”€â”€ Dockerfile.gateway          â† API Gateway
+â”œâ”€â”€ Dockerfile.slackbot         â† Slack Bot
+â”‚
+â”œâ”€â”€ app/                        â† Flask app
+â”œâ”€â”€ gateway.py                  â† Router API
+â”œâ”€â”€ config/
+â”‚   â””â”€â”€ pickaxe_provider.py     â† IntegraciÃ³n con Pickaxe LLM
+â”‚
+â”œâ”€â”€ agents/                     â† Agentes especializados
+â”‚   â”œâ”€â”€ video_agent/
+â”‚   â”œâ”€â”€ marketing_generator/
+â”‚   â””â”€â”€ shopify_integration/
+â”‚
+â”œâ”€â”€ nginx/
+â”‚   â””â”€â”€ nginx.conf              â† Reverse proxy + SSL
+â”‚
+â”œâ”€â”€ db/
+â”‚   â””â”€â”€ init.sql                â† InicializaciÃ³n DB
+â”‚
+â”œâ”€â”€ scripts/
+â”‚   â”œâ”€â”€ deploy-cloud.sh         â† Deploy Linux/macOS
+â”‚   â””â”€â”€ deploy-cloud.ps1        â† Deploy Windows
+â”‚
+â”œâ”€â”€ README.md                   â† DocumentaciÃ³n
+â”œâ”€â”€ DEPLOYMENT_GUIDE.md         â† GuÃ­as cloud providers
+â”œâ”€â”€ QUICK_REFERENCE.md          â† Referencia rÃ¡pida
+â””â”€â”€ .env                        â† CONFIGURAR AQUÃ
 ```
 
 ---
 
-## ✅ CHECKLIST PRE-DESPLIEGUE
+## âœ… CHECKLIST PRE-DESPLIEGUE
 
 - [ ] Obtuve Pickaxe API key de https://pickaxe.ai
-- [ ] Copié el proyecto a mi servidor/laptop
-- [ ] Actualicé .env con:
-  - [ ] PICKAXE_API_KEY=pk-...
+- [ ] CopiÃ© el proyecto a mi servidor/laptop
+- [ ] ActualicÃ© .env con:
+  - [ ] PICKAXE_API_KEY=DEPRECATED_MIGRADO_A_GEMINI
   - [ ] DB_PASSWORD=...
   - [ ] REDIS_PASSWORD=...
   - [ ] SECRET_KEY=...
@@ -263,33 +263,33 @@ openclaw-cloud-2026/
 
 ---
 
-## 🎓 DOCUMENTACIÓN
+## ðŸŽ“ DOCUMENTACIÃ“N
 
 Dentro del proyecto:
 
-1. **README.md** - Documentación completa del proyecto
-2. **DEPLOYMENT_GUIDE.md** - Guías específicas por cloud provider
-3. **QUICK_REFERENCE.md** - Comandos y tests rápidos
+1. **README.md** - DocumentaciÃ³n completa del proyecto
+2. **DEPLOYMENT_GUIDE.md** - GuÃ­as especÃ­ficas por cloud provider
+3. **QUICK_REFERENCE.md** - Comandos y tests rÃ¡pidos
 4. **docs/openclaw-governance.md** - Gobernanza del sistema
 5. **.env** - Todas las variables documentadas
 
 ---
 
-## 🔒 SEGURIDAD EN PRODUCCIÓN
+## ðŸ”’ SEGURIDAD EN PRODUCCIÃ“N
 
-Después del despliegue:
+DespuÃ©s del despliegue:
 
-1. Cambiar todas las contraseñas en .env
-2. Configurar SSL/TLS (nginx ya está configurado)
+1. Cambiar todas las contraseÃ±as en .env
+2. Configurar SSL/TLS (nginx ya estÃ¡ configurado)
 3. Habilitar firewall (solo 80, 443, 22)
-4. Configurar backups automáticos de BD
+4. Configurar backups automÃ¡ticos de BD
 5. Habilitar monitoreo y alertas
 6. Rotar secretos regularmente
 7. Habilitar audit logging
 
 ---
 
-## 🚨 SOPORTE & TROUBLESHOOTING
+## ðŸš¨ SOPORTE & TROUBLESHOOTING
 
 ### Si algo falla:
 
@@ -308,58 +308,58 @@ docker-compose down -v
 docker-compose up -d --build
 ```
 
-Ver **DEPLOYMENT_GUIDE.md** sección "Troubleshooting" para más ayuda.
+Ver **DEPLOYMENT_GUIDE.md** secciÃ³n "Troubleshooting" para mÃ¡s ayuda.
 
 ---
 
-## 📊 ARQUITECTURA FINAL
+## ðŸ“Š ARQUITECTURA FINAL
 
 ```
 INTERNET (80/443 HTTPS)
-        ↓
+        â†“
     Nginx (Reverse Proxy)
-    ├─ SSL/TLS ✅
-    ├─ Rate Limiting ✅
-    ├─ Gzip Compression ✅
-    └─ Security Headers ✅
-        ↓
+    â”œâ”€ SSL/TLS âœ…
+    â”œâ”€ Rate Limiting âœ…
+    â”œâ”€ Gzip Compression âœ…
+    â””â”€ Security Headers âœ…
+        â†“
     Gateway (8080)
-    ├─ Request Routing ✅
-    ├─ Authentication ✅
-    ├─ Rate Limiting ✅
-    └─ Error Handling ✅
-        ↓
+    â”œâ”€ Request Routing âœ…
+    â”œâ”€ Authentication âœ…
+    â”œâ”€ Rate Limiting âœ…
+    â””â”€ Error Handling âœ…
+        â†“
     App (8084) + Agents (8085-8087)
-    ├─ Pickaxe LLM ✅
-    ├─ Fallback Support ✅
-    ├─ Session Management ✅
-    └─ Webhooks & APIs ✅
-        ↓
+    â”œâ”€ Pickaxe LLM âœ…
+    â”œâ”€ Fallback Support âœ…
+    â”œâ”€ Session Management âœ…
+    â””â”€ Webhooks & APIs âœ…
+        â†“
     Storage Tier
-    ├─ PostgreSQL ✅
-    ├─ Redis Cache ✅
-    └─ Qdrant Vectors ✅
+    â”œâ”€ PostgreSQL âœ…
+    â”œâ”€ Redis Cache âœ…
+    â””â”€ Qdrant Vectors âœ…
 ```
 
 ---
 
-## 🎉 TODO COMPLETO
+## ðŸŽ‰ TODO COMPLETO
 
-✅ Docker Compose completo y funcional
-✅ Dockerfiles optimizados (multi-stage, lightweight)
-✅ Pickaxe LLM integrado como provider principal
-✅ Gateway con rate limiting y routing
-✅ Base de datos con inicialización
-✅ Nginx reverse proxy con SSL/TLS
-✅ 4 Agentes especializados
-✅ Scripts de despliegue automáticos
-✅ Documentación completa
-✅ Ejemplos de cloud deployment
-✅ Security best practices
+âœ… Docker Compose completo y funcional
+âœ… Dockerfiles optimizados (multi-stage, lightweight)
+âœ… Pickaxe LLM integrado como provider principal
+âœ… Gateway con rate limiting y routing
+âœ… Base de datos con inicializaciÃ³n
+âœ… Nginx reverse proxy con SSL/TLS
+âœ… 4 Agentes especializados
+âœ… Scripts de despliegue automÃ¡ticos
+âœ… DocumentaciÃ³n completa
+âœ… Ejemplos de cloud deployment
+âœ… Security best practices
 
 ---
 
-## 🚀 PRÓXIMOS PASOS
+## ðŸš€ PRÃ“XIMOS PASOS
 
 1. **Clona el proyecto**
    ```bash
@@ -369,7 +369,7 @@ INTERNET (80/443 HTTPS)
 2. **Actualiza .env**
    ```bash
    nano .env
-   # Agrega: PICKAXE_API_KEY=pk-...
+   # Agrega: PICKAXE_API_KEY=DEPRECATED_MIGRADO_A_GEMINI
    ```
 
 3. **Despliega**
@@ -389,22 +389,23 @@ INTERNET (80/443 HTTPS)
 
 ---
 
-## 📞 ENTREGA
+## ðŸ“ž ENTREGA
 
-El proyecto **openclaw-cloud-2026** está completo en:
+El proyecto **openclaw-cloud-2026** estÃ¡ completo en:
 
 **Path:** `C:\Users\ipane\openclaw-cloud-2026\`
 
-Todo lo necesario está incluido. Solo necesitas:
-- Pickaxe API key (obtén de pickaxe.ai)
+Todo lo necesario estÃ¡ incluido. Solo necesitas:
+- Pickaxe API key (obtÃ©n de pickaxe.ai)
 - Actualizar .env
 - Ejecutar `docker-compose up -d --build`
 
-**¡OpenClaw está listo para la nube!** 🚀
+**Â¡OpenClaw estÃ¡ listo para la nube!** ðŸš€
 
 ---
 
 **Version:** 2026.5.27-cloud  
-**Status:** ✅ Production Ready  
+**Status:** âœ… Production Ready  
 **Last Build:** 2026-06-02  
 **Components:** 9 Docker containers + Nginx + PostgreSQL + Redis + Qdrant
+

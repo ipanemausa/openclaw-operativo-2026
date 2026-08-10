@@ -1,8 +1,8 @@
-# ═══════════════════════════════════════════════════════════════
+﻿# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 # OpenClaw Cloud 2026 - DEPLOYMENT INSTRUCTIONS
-# ═══════════════════════════════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
-## 📋 PRE-DEPLOYMENT CHECKLIST
+## ðŸ“‹ PRE-DEPLOYMENT CHECKLIST
 
 Before deploying to cloud, verify:
 
@@ -17,7 +17,7 @@ Before deploying to cloud, verify:
 
 ---
 
-## 🚀 QUICK START (5 MINUTES)
+## ðŸš€ QUICK START (5 MINUTES)
 
 ### Step 1: Get the code
 ```bash
@@ -36,7 +36,7 @@ cd /opt/openclaw
 nano .env
 
 # Required changes:
-# - PICKAXE_API_KEY=pk-your-actual-key
+# - PICKAXE_API_KEY=DEPRECATED_MIGRADO_A_GEMINI
 # - DB_PASSWORD=strong-random-password
 # - REDIS_PASSWORD=strong-random-password
 # - SECRET_KEY=very-long-random-string
@@ -71,7 +71,7 @@ curl -X POST http://localhost:8080/api/mcp/message \
 
 ---
 
-## ☁️ CLOUD PROVIDER SETUP
+## â˜ï¸ CLOUD PROVIDER SETUP
 
 ### AWS ECS (Elastic Container Service)
 
@@ -110,7 +110,7 @@ gcloud run deploy openclaw \
   --image gcr.io/PROJECT_ID/openclaw:latest \
   --platform managed \
   --region us-central1 \
-  --set-env-vars PICKAXE_API_KEY=pk-your-key
+  --set-env-vars PICKAXE_API_KEY=DEPRECATED_MIGRADO_A_GEMINI
 ```
 
 ### DigitalOcean App Platform
@@ -149,7 +149,7 @@ az container create \
   --resource-group openclaw-rg \
   --name openclaw-app \
   --image openclaw.azurecr.io/openclaw:latest \
-  --environment-variables PICKAXE_API_KEY=pk-your-key
+  --environment-variables PICKAXE_API_KEY=DEPRECATED_MIGRADO_A_GEMINI
 ```
 
 ### Heroku (Free Tier)
@@ -205,7 +205,7 @@ docker-compose restart nginx
 
 ---
 
-## 🔐 SECURITY CHECKLIST
+## ðŸ” SECURITY CHECKLIST
 
 - [ ] Change all default passwords in .env
 - [ ] Enable SSL/TLS (nginx is configured)
@@ -220,7 +220,7 @@ docker-compose restart nginx
 
 ---
 
-## 📊 MONITORING & MAINTENANCE
+## ðŸ“Š MONITORING & MAINTENANCE
 
 ### Daily Checks
 ```bash
@@ -258,7 +258,7 @@ docker-compose up -d
 
 ---
 
-## 📱 ACCESS YOUR DEPLOYMENT
+## ðŸ“± ACCESS YOUR DEPLOYMENT
 
 After successful deployment:
 
@@ -288,7 +288,7 @@ curl https://your-domain.com/health
 
 ---
 
-## 🆘 TROUBLESHOOTING COMMON ISSUES
+## ðŸ†˜ TROUBLESHOOTING COMMON ISSUES
 
 ### Issue: Services fail to start
 ```bash
@@ -346,7 +346,7 @@ docker-compose up -d
 
 ---
 
-## 📚 ADDITIONAL RESOURCES
+## ðŸ“š ADDITIONAL RESOURCES
 
 - **Documentation:** See `docs/` folder
 - **Governance:** `docs/openclaw-governance.md`
@@ -356,7 +356,7 @@ docker-compose up -d
 
 ---
 
-## 🎯 NEXT STEPS AFTER DEPLOYMENT
+## ðŸŽ¯ NEXT STEPS AFTER DEPLOYMENT
 
 1. **Create first agent session**
    ```bash
@@ -388,7 +388,7 @@ docker-compose up -d
 
 ---
 
-## ✅ DEPLOYMENT SUCCESS CRITERIA
+## âœ… DEPLOYMENT SUCCESS CRITERIA
 
 - [ ] All containers running (`docker-compose ps` shows all UP)
 - [ ] Health checks passing (curl /health returns 200)
@@ -402,7 +402,7 @@ docker-compose up -d
 
 ---
 
-## 📞 SUPPORT & CONTACT
+## ðŸ“ž SUPPORT & CONTACT
 
 - **Issues:** GitHub Issues
 - **Documentation:** docs/
@@ -414,3 +414,4 @@ docker-compose up -d
 **Version:** 2026.5.27-cloud  
 **Last Updated:** 2026-06-02  
 **Status:** Production Ready
+

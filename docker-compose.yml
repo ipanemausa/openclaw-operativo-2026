@@ -1,24 +1,6 @@
 services:
-  claw-orchestrator:
-    build: ./claw-orchestrator
-    container_name: claw-orchestrator
-    restart: always
-    ports:
-      - "8090:8090"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./claw-estado.json:/app/claw-estado.json
-      - C:\openclaw\hb-jewelry:/frontend
 
-  openclaw_app:
-    build: ./app
-    container_name: openclaw_app
-    restart: always
-    ports:
-      - "3000:3000"
-    depends_on:
-      - claw-orchestrator
-
+  # ─── INFRAESTRUCTURA BASE ────────────────────────────────────────
   redis:
     image: redis:7-alpine
     container_name: openclaw_redis
@@ -26,46 +8,55 @@ services:
     ports:
       - "6379:6379"
 
-  video_veo_worker:
-    build:
-      context: ./agents/video_veo
-      dockerfile: Dockerfile.txt
-    container_name: video_veo_worker
+  db:
+    image: postgres:15
+    container_name: openclaw_db
     restart: always
     environment:
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-    depends_on:
-      - redis
+      - POSTGRES_DB=openclaw_prod
+      - POSTGRES_USER=openclaw_admin
+      - POSTGRES_PASSWORD=SecureDB2026!@#Xyz123
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
-  chat_worker:
-    build:
-      context: ./agents/chat_worker
-      dockerfile: Dockerfile
-    container_name: chat_worker
+  qdrant:
+    image: qdrant/qdrant
+    container_name: openclaw_qdrant
     restart: always
-    environment:
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
-      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
-      - REDIS_URL=redis://redis:6379
-    depends_on:
-      - redis
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrantdata:/qdrant/storage
 
+  # ─── GATEWAY PRINCIPAL (Gemini 2.0 Flash) ──────────────────────
   gateway:
     build: ./gateway
     container_name: openclaw_gateway
     restart: always
     ports:
       - "8080:8080"
+    env_file:
+      - .env
     environment:
-      - PICKAXE_API_URL=${PICKAXE_API_URL}
-      - PICKAXE_API_KEY=${PICKAXE_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GEMINI_MODEL=gemini-2.0-flash
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=openclaw_prod
+      - DB_USER=openclaw_admin
+      - DB_PASSWORD=SecureDB2026!@#Xyz123
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - db
+      - redis
 
+  # ─── NGINX REVERSE PROXY ────────────────────────────────────────
   nginx:
     image: nginx:alpine
     container_name: openclaw_nginx
-
     restart: always
     ports:
       - "80:80"
@@ -74,41 +65,8 @@ services:
       - ./frontend/dist:/usr/share/nginx/html:ro
     depends_on:
       - gateway
-      - financial_rag_worker
-      - voice_worker
 
-  qdrant:
-    image: qdrant/qdrant
-    container_name: openclaw_qdrant
-    restart: always
-    ports:
-      - "6333:6333"
-
-  financial_rag_worker:
-    build:
-      context: ./agents/financial_rag_worker
-      dockerfile: Dockerfile
-    container_name: financial_rag_worker
-    restart: always
-    environment:
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
-      - QDRANT_HOST=qdrant
-    depends_on:
-      - qdrant
-
-  voice_worker:
-    build:
-      context: ./agents/voice_worker
-      dockerfile: Dockerfile
-    container_name: voice_worker
-    restart: always
-    ports:
-      - "8091:8091"
-    env_file:
-      - .env
-    environment:
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
-
+  # ─── WHATSAPP BOT (Baileys) ─────────────────────────────────────
   whatsapp_service:
     build:
       context: ./services/whatsapp
@@ -124,3 +82,24 @@ services:
       - ./services/whatsapp/auth_info_baileys:/app/auth_info_baileys
     depends_on:
       - gateway
+
+  # ─── RAG FINANCIERO (Qdrant + Gemini Embeddings) ────────────────
+  financial_rag_worker:
+    build:
+      context: ./agents/financial_rag_worker
+      dockerfile: Dockerfile
+    container_name: financial_rag_worker
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - QDRANT_HOST=qdrant
+    ports:
+      - "8093:8093"
+    depends_on:
+      - qdrant
+
+volumes:
+  pgdata:
+  qdrantdata:

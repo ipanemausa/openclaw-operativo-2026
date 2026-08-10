@@ -1,0 +1,56 @@
+{
+  "name": "lamautonomia-governance",
+  "version": "1.0.0",
+  "description": "Sistema de gobernanza y continuidad para el proyecto LAMAUTONOMIA dentro de Antigravity. Copilot genera bloques maestros, Claude ejecuta cambios con Vibe Coding y LAMAUTONOMIA registra acciones.",
+
+  "license": {
+    "type": "Microsoft 365",
+    "status": "active",
+    "note": "El usuario posee una suscripción activa de Microsoft 365 que habilita el uso completo de Copilot sin restricciones. Copilot ha sido utilizado previamente sin problemas en este entorno y está autorizado para participar como capa de gobernanza."
+  },
+
+  "project": {
+    "root": "C:/Users/ipane/openclaw-cloud-2026",
+    "note": "Este es el único proyecto autorizado para edición automática."
+  },
+
+  "agents": {
+    "copilot": {
+      "role": "governance",
+      "description": "Genera bloques maestros, define arquitectura, valida tareas y mantiene continuidad del sistema."
+    },
+    "claude": {
+      "role": "execution",
+      "description": "Ejecuta cambios en el filesystem mediante Vibe Coding siguiendo estrictamente los bloques maestros generados por Copilot."
+    }
+  },
+
+  "governance_rules": [
+    "1. Copilot diseña, valida y estructura todas las tareas antes de ejecución.",
+    "2. Claude ejecuta únicamente bloques aprobados por Copilot.",
+    "3. Antigravity aplica los cambios mediante Vibe Coding.",
+    "4. LAMAUTONOMIA registra cada acción en el pipeline.",
+    "5. Proyecto único autorizado: C:/Users/ipane/openclaw-cloud-2026.",
+    "6. No se crean repositorios nuevos.",
+    "7. No se ejecutan comandos sin bloque maestro.",
+    "8. Toda acción debe tener trazabilidad en el pipeline.",
+    "9. Claude debe solicitar bloque maestro para tareas complejas.",
+    "10. Copilot mantiene continuidad, gobernanza y estabilidad del sistema."
+  ],
+
+  "operational_flow": [
+    "Usuario → Copilot (bloque maestro)",
+    "Copilot → Claude (plan validado)",
+    "Claude → Vibe Coding (edición automática)",
+    "Vibe Coding → Antigravity (aplicación en filesystem)",
+    "Antigravity → LAMAUTONOMIA (registro en pipeline)",
+    "LAMAUTONOMIA → Dashboard (estado del sistema)"
+  ],
+
+  "pipeline": {
+    "script": ".\\scripts\\lamautonomia-pipeline.ps1",
+    "usage": "-Servicio all -Mensaje \"<descripcion>\""
+  },
+
+  "sync": "Este manifiesto está sincronizado con todas las instrucciones previas y no rompe nada."
+}

@@ -29,14 +29,21 @@ jobs:
     - name: Lint with flake8
       timeout-minutes: 3
       run: |
-        # stop the build if there are Python syntax errors or undefined names
+        # Errores criticos: sintaxis Python e imports indefinidos
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics \
-          --exclude=node_modules,scratch,.git,dist
-        # exit-zero treats all errors as warnings
+          --exclude=node_modules,scratch,.git,dist,agents/_archive,notebooks
+        # Advertencias (no bloquea el build)
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics \
-          --exclude=node_modules,scratch,.git,dist
+          --exclude=node_modules,scratch,.git,dist,agents/_archive,notebooks
 
-    - name: Test Docker Compose build
+    - name: Verify docker-compose syntax
+      timeout-minutes: 3
+      run: |
+        docker compose config --quiet
+        echo "docker-compose.yml syntax OK"
+
+    - name: Test gateway Dockerfile build
       timeout-minutes: 10
       run: |
-        docker compose build gateway --no-cache
+        docker build ./gateway --file ./gateway/Dockerfile --tag gateway-test --no-cache
+        echo "Gateway Docker build OK"

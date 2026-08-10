@@ -149,6 +149,40 @@ async def main():
         missing = [f.name for f in es_blocks if not f.exists() or f.stat().st_size < 100_000_000]
         logger.warning(f"ES blocks not ready yet: {missing}. Run after block_6_es.mp4 completes.")
 
+    # 3b. COMPRESIÓN H.265 — Factorización matemática antes de subir (~50% tamaño)
+    print("=" * 65)
+    print("📐 COMPRIMIENDO CON H.265 (HEVC) — reducción ~50% tamaño...")
+    print("=" * 65)
+    for lang, fname in [("en", "youtube_30min_masterclass_en_1080p.mp4"),
+                        ("es", "youtube_30min_masterclass_full_1080p.mp4")]:
+        src = OUT_DIR / fname
+        dst = OUT_DIR / fname.replace(".mp4", "_h265.mp4")
+        pub = Path(r"C:\openclaw\hb-jewelry\public\videos\youtube_30min_masterclass") / dst.name
+        if not src.exists() or src.stat().st_size < 100_000_000:
+            logger.warning(f"[SKIP] {fname} no disponible para compresión.")
+            continue
+        logger.info(f"Comprimiendo {lang.upper()}: {src.stat().st_size/1024/1024:.0f}MB → H.265...")
+        r = subprocess.run([
+            "ffmpeg", "-y", "-i", str(src),
+            "-c:v", "libx265",      # H.265 HEVC codec
+            "-crf", "24",            # Calidad 24 (0=perfecto, 51=peor) — óptimo para web
+            "-preset", "fast",       # Balance velocidad/compresión
+            "-c:a", "aac",           # Audio AAC
+            "-b:a", "192k",          # Audio 192kbps
+            "-movflags", "+faststart",  # Firebase streaming optimizado
+            "-tag:v", "hvc1",        # Compatibilidad Safari/iOS
+            str(dst)
+        ], capture_output=True, text=True)
+        if r.returncode == 0 and dst.exists():
+            orig_mb = src.stat().st_size / 1024 / 1024
+            comp_mb = dst.stat().st_size / 1024 / 1024
+            saving = 100 - (comp_mb / orig_mb * 100)
+            logger.info(f"[OK] {lang.upper()} H.265: {orig_mb:.0f}MB → {comp_mb:.0f}MB ({saving:.1f}% reducción)")
+            shutil.copy(dst, pub)
+        else:
+            logger.error(f"[FAIL] Compresión H.265 {lang}: {r.stderr[-200:]}")
+
+
     # 4. VECTORIZACIÓN RAG — ANTES del deploy (fuente de verdad semántica)
     print("=" * 65)
     print("🧠 VECTORIZANDO MASTERCLASS EN QDRANT (768-dim RAG)...")

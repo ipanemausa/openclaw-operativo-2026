@@ -124,3 +124,14 @@ Si el agente invierte este orden -> corregir inmediatamente.
 - Despues del sync: docker compose up -d --force-recreate (para que los contenedores tomen los cambios)
 - NUNCA hardcodear API keys en codigo ni en archivos commiteados.
 - NUNCA duplicar keys en distintos .env de proyectos — siempre vienen del master via sync.
+
+---
+
+## Regla de Verdad Absoluta Post-Deploy (Anti-Humo)
+
+Todo despliegue (deploy) que involucre GitHub Actions CI **NO se considera exitoso** solo porque los tests locales pasen o el build local termine sin errores. 
+
+**REGLA OBLIGATORIA:** 
+Un (1) DAG después de ejecutar el pipeline de deploy, el agente DEBE:
+1. Requerir la verificación del estado remoto (consultar API de GitHub Actions o pedir confirmación al usuario de que no llegaron emails de fallo).
+2. Asumir que el resultado local es "humo" hasta que el servidor de integración continua remoto (GitHub) devuelva luz verde definitiva.

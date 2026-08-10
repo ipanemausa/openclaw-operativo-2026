@@ -1,13 +1,13 @@
 from flask import Flask, jsonify, request, send_file
 from flask_cors import CORS
 import os
-import requests
 import uuid
 import logging
 import psycopg2
 import redis
 import json
 from datetime import datetime
+import google.generativeai as genai
 
 app = Flask(__name__)
 CORS(app)
@@ -168,34 +168,40 @@ def mcp_message():
     if agent not in AGENT_PROMPTS:
         agent = "main"
 
-    history = get_history(session_id)
-    api_key = os.getenv('PICKAXE_API_KEY', '')
-    base_url = os.getenv('PICKAXE_API_URL', 'https://api.pickaxe.co/v1')
-    timeout = int(os.getenv('PICKAXE_TIMEOUT', '60'))
-
+    api_key = os.getenv('GEMINI_API_KEY', '')
     if not api_key:
-        return jsonify({"response": "Error: Pickaxe API key not configured.", "status": "error"}), 500
+        return jsonify({"response": "Error: GEMINI_API_KEY not configured.", "status": "error"}), 500
 
     try:
-        headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
-        payload = {"message": message}
-        response = requests.post(f"{base_url}/completions", json=payload, headers=headers, timeout=timeout)
-        response.raise_for_status()
-        res_data = response.json()
-        pickaxe_response = res_data.get('result', '')
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel(
+            model_name=os.getenv('GEMINI_MODEL', 'gemini-2.0-flash'),
+            system_instruction=AGENT_PROMPTS[agent]
+        )
+
+        # Construir historial para contexto
+        history = get_history(session_id)
+        chat_history = []
+        for msg in history:
+            role = "user" if msg["role"] == "user" else "model"
+            chat_history.append({"role": role, "parts": [msg["content"]]})
+
+        chat = model.start_chat(history=chat_history)
+        response = chat.send_message(message)
+        reply = response.text
+
         save_message(session_id, agent, "user", message)
-        save_message(session_id, agent, "assistant", pickaxe_response)
-        logger.info(f"Agent:{agent} Session:{session_id} OK")
+        save_message(session_id, agent, "assistant", reply)
+        logger.info(f"Gemini Agent:{agent} Session:{session_id} OK")
         return jsonify({
-            "response": pickaxe_response,
+            "response": reply,
             "session_id": session_id,
             "agent": agent,
+            "provider": "gemini",
             "status": "ok"
         }), 200
-    except requests.exceptions.Timeout:
-        return jsonify({"response": "Error: Pickaxe timeout.", "status": "error"}), 504
     except Exception as e:
-        logger.error(f"Error: {str(e)}")
+        logger.error(f"Gemini error: {str(e)}")
         return jsonify({"response": f"Error: {str(e)}", "status": "error"}), 500
 
 @app.route('/api/mcp/history', methods=['GET'])

@@ -2,7 +2,11 @@
 render_masterclass_en.py — Re-render 6 English blocks + concatenate ES & EN
 Runs after block_6_es.mp4 is complete.
 """
-import os, sys, asyncio, subprocess, shutil, logging
+import sys
+import asyncio
+import subprocess
+import shutil
+import logging
 import edge_tts
 from pathlib import Path
 
@@ -17,16 +21,17 @@ OUT_DIR = PUBLIC_DIR / "videos" / "youtube_30min_masterclass"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 SPACE_NEBULA_BG = PUBLIC_DIR / "cosmic_space_smooth.png"
-AVATAR_IMAGE    = PUBLIC_DIR / "avatar_transparent.png"
+AVATAR_IMAGE = PUBLIC_DIR / "avatar_transparent.png"
 
 MODULES = [
-    {"id":1,"script_en":"Welcome to the HB Jewelry OpenClaw 2026 Executive Masterclass. In this strategic briefing we examine how to transform your enterprise sales operations by replacing recurring SaaS fees with on-premise autonomous agents."},
-    {"id":2,"script_en":"Every luxury jewelry or professional service business rests on four pillars: Marketing, Sales, Logistics, and Finance. We connect a 768-dimensional RAG vector engine for exact data retrieval without AI hallucinations."},
-    {"id":3,"script_en":"The largest bottleneck in B2B sales is delayed first response time. Our autonomous bot qualifies leads in under ten seconds, schedules meetings on your calendar, and executes catalog closes with zero per-message cost."},
-    {"id":4,"script_en":"We guarantee complete technological sovereignty. All inventory data, client records, and financial history automatically back up in real-time via our DAG pipeline with rclone to 5 Terabyte Google Drive."},
-    {"id":5,"script_en":"Through the B2B Juan Pe Advisor agent, we calculate revenue leakage from delayed responses and budget objections. We demonstrate how to elevate close rates from 12 percent to 22 percent in 30 days."},
-    {"id":6,"script_en":"We conclude with the implementation roadmap to scale your jewelry or professional service business to an international standard without operational friction. Thank you for joining us in this OpenClaw 2026 analysis."},
+    {"id": 1, "script_en": "Welcome to the HB Jewelry OpenClaw 2026 Executive Masterclass. In this strategic briefing we examine how to transform your enterprise sales operations by replacing recurring SaaS fees with on-premise autonomous agents."},
+    {"id": 2, "script_en": "Every luxury jewelry or professional service business rests on four pillars: Marketing, Sales, Logistics, and Finance. We connect a 768-dimensional RAG vector engine for exact data retrieval without AI hallucinations."},
+    {"id": 3, "script_en": "The largest bottleneck in B2B sales is delayed first response time. Our autonomous bot qualifies leads in under ten seconds, schedules meetings on your calendar, and executes catalog closes with zero per-message cost."},
+    {"id": 4, "script_en": "We guarantee complete technological sovereignty. All inventory data, client records, and financial history automatically back up in real-time via our DAG pipeline with rclone to 5 Terabyte Google Drive."},
+    {"id": 5, "script_en": "Through the B2B Juan Pe Advisor agent, we calculate revenue leakage from delayed responses and budget objections. We demonstrate how to elevate close rates from 12 percent to 22 percent in 30 days."},
+    {"id": 6, "script_en": "We conclude with the implementation roadmap to scale your jewelry or professional service business to an international standard without operational friction. Thank you for joining us in this OpenClaw 2026 analysis."},
 ]
+
 
 def generate_ass(text, duration, out_ass):
     words = text.split()
@@ -43,10 +48,11 @@ Style: Center,Arial Black,58,&H00FFFFFF,&H0000C5FF,&H00000000,&H80000000,-1,0,0,
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.50,0:{int(duration//60):02d}:{duration%60:05.2f},Center,,0,0,0,,,{{\\pos(960,880)}}{k_text.strip()}
+Dialogue: 0,0:00:00.50,0:{int(duration // 60):02d}:{duration % 60:05.2f},Center,,0,0,0,,,{{\\pos(960,880)}}{k_text.strip()}
 """
     with open(out_ass, "w", encoding="utf-8") as f:
         f.write(content)
+
 
 async def render_en_blocks():
     logger.info("Rendering 6 EN blocks with Edge-TTS + FFmpeg...")
@@ -64,19 +70,19 @@ async def render_en_blocks():
         await comm.save(str(mp3))
 
         # MP3 -> PCM WAV
-        subprocess.run(["ffmpeg","-y","-i",str(mp3),"-ar","48000","-ac","2",str(wav)], capture_output=True)
+        subprocess.run(["ffmpeg", "-y", "-i", str(mp3), "-ar", "48000", "-ac", "2", str(wav)], capture_output=True)
 
         # Duration
-        probe = subprocess.run(["ffprobe","-v","error","-show_entries","format=duration",
-                                "-of","default=noprintwrappers=1:nokey=1",str(wav)], capture_output=True, text=True)
+        probe = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration",
+                                "-of", "default=noprintwrappers=1:nokey=1", str(wav)], capture_output=True, text=True)
         try:
             dur = float(probe.stdout.strip())
-        except:
+        except BaseException:
             dur = 18.0
 
         total_frames = int(dur * 30) + 15
         generate_ass(script, dur, ass)
-        ass_clean = str(ass).replace("\\","/").replace(":","\\:")
+        ass_clean = str(ass).replace("\\", "/").replace(":", "\\:")
 
         filter_graph = (
             f"[0:v]scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080,"
@@ -87,16 +93,16 @@ async def render_en_blocks():
         )
 
         cmd = [
-            "ffmpeg","-y",
-            "-loop","1","-t",f"{dur:.2f}","-i",str(SPACE_NEBULA_BG),
-            "-loop","1","-t",f"{dur:.2f}","-i",str(AVATAR_IMAGE),
-            "-i",str(wav),
-            "-filter_complex",filter_graph,
-            "-map","[outv]","-map","2:a",
-            "-af","loudnorm=I=-16:TP=-1.5:LRA=11",
-            "-c:v","libx264","-preset","fast","-crf","19","-pix_fmt","yuv420p",
-            "-movflags","+faststart",
-            "-c:a","aac","-b:a","256k","-ar","48000","-ac","2",
+            "ffmpeg", "-y",
+            "-loop", "1", "-t", f"{dur:.2f}", "-i", str(SPACE_NEBULA_BG),
+            "-loop", "1", "-t", f"{dur:.2f}", "-i", str(AVATAR_IMAGE),
+            "-i", str(wav),
+            "-filter_complex", filter_graph,
+            "-map", "[outv]", "-map", "2:a",
+            "-af", "loudnorm=I=-16:TP=-1.5:LRA=11",
+            "-c:v", "libx264", "-preset", "fast", "-crf", "19", "-pix_fmt", "yuv420p",
+            "-movflags", "+faststart",
+            "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2",
             str(out)
         ]
         res = subprocess.run(cmd, capture_output=True, text=True)
@@ -109,6 +115,7 @@ async def render_en_blocks():
 
     return block_files
 
+
 def concatenate(lang, block_files, out_name):
     concat_txt = OUT_DIR / f"concat_masterclass_{lang}.txt"
     with open(concat_txt, "w", encoding="utf-8") as f:
@@ -117,8 +124,8 @@ def concatenate(lang, block_files, out_name):
     out_mp4 = OUT_DIR / out_name
     pub_mp4 = PUBLIC_DIR / out_name
     r = subprocess.run([
-        "ffmpeg","-y","-f","concat","-safe","0",
-        "-i",str(concat_txt),"-c","copy",str(out_mp4)
+        "ffmpeg", "-y", "-f", "concat", "-safe", "0",
+        "-i", str(concat_txt), "-c", "copy", str(out_mp4)
     ], capture_output=True, text=True)
     if r.returncode == 0 and out_mp4.exists():
         shutil.copy(out_mp4, pub_mp4)
@@ -126,6 +133,7 @@ def concatenate(lang, block_files, out_name):
         logger.info(f"[DONE] {lang.upper()} masterclass: {pub_mp4} ({mb:.1f}MB)")
     else:
         logger.error(f"[FAIL] Concat {lang}: {r.stderr[-300:]}")
+
 
 async def main():
     print("=" * 65)
@@ -161,7 +169,7 @@ async def main():
         if not src.exists() or src.stat().st_size < 100_000_000:
             logger.warning(f"[SKIP] {fname} no disponible para compresión.")
             continue
-        logger.info(f"Comprimiendo {lang.upper()}: {src.stat().st_size/1024/1024:.0f}MB → H.265...")
+        logger.info(f"Comprimiendo {lang.upper()}: {src.stat().st_size / 1024 / 1024:.0f}MB → H.265...")
         r = subprocess.run([
             "ffmpeg", "-y", "-i", str(src),
             "-c:v", "libx265",      # H.265 HEVC codec
@@ -182,7 +190,6 @@ async def main():
         else:
             logger.error(f"[FAIL] Compresión H.265 {lang}: {r.stderr[-200:]}")
 
-
     # 4. VECTORIZACIÓN RAG — ANTES del deploy (fuente de verdad semántica)
     print("=" * 65)
     print("🧠 VECTORIZANDO MASTERCLASS EN QDRANT (768-dim RAG)...")
@@ -200,7 +207,8 @@ async def main():
     print("=" * 65)
     print("🚀 RENDER FINALIZADO: DISPARANDO PIPELINE DE DEPLOY (FIREBASE+RCLONE)")
     print("=" * 65)
-    subprocess.run(["powershell", "-ExecutionPolicy", "Bypass", "-File", r"C:\Users\ipane\openclaw-operativo-2026\scripts\pipeline-cierre.ps1"], check=False)
+    subprocess.run(["powershell", "-ExecutionPolicy", "Bypass", "-File",
+                   r"C:\Users\ipane\openclaw-operativo-2026\scripts\pipeline-cierre.ps1"], check=False)
 
 if __name__ == "__main__":
     asyncio.run(main())

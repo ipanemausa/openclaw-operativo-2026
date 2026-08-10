@@ -149,7 +149,20 @@ async def main():
         missing = [f.name for f in es_blocks if not f.exists() or f.stat().st_size < 100_000_000]
         logger.warning(f"ES blocks not ready yet: {missing}. Run after block_6_es.mp4 completes.")
 
-    # 4. DISPARO AUTOMÁTICO AL PIPELINE MAESTRO (Firebase -> Git -> Rclone)
+    # 4. VECTORIZACIÓN RAG — ANTES del deploy (fuente de verdad semántica)
+    print("=" * 65)
+    print("🧠 VECTORIZANDO MASTERCLASS EN QDRANT (768-dim RAG)...")
+    print("=" * 65)
+    vec_result = subprocess.run(
+        ["python", r"C:\Users\ipane\openclaw-operativo-2026\scripts\vectorize_masterclass.py"],
+        capture_output=True, text=True
+    )
+    if vec_result.returncode == 0:
+        logger.info("[OK] Vectorización completada exitosamente.")
+    else:
+        logger.warning(f"[WARN] Vectorización con errores (no bloquea deploy): {vec_result.stderr[-200:]}")
+
+    # 5. DISPARO AUTOMÁTICO AL PIPELINE MAESTRO (Firebase -> Git -> Rclone)
     print("=" * 65)
     print("🚀 RENDER FINALIZADO: DISPARANDO PIPELINE DE DEPLOY (FIREBASE+RCLONE)")
     print("=" * 65)

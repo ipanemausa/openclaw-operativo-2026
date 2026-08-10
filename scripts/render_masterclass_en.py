@@ -149,5 +149,11 @@ async def main():
         missing = [f.name for f in es_blocks if not f.exists() or f.stat().st_size < 100_000_000]
         logger.warning(f"ES blocks not ready yet: {missing}. Run after block_6_es.mp4 completes.")
 
+    # 4. DISPARO AUTOMÁTICO AL PIPELINE MAESTRO (Firebase -> Git -> Rclone)
+    print("=" * 65)
+    print("🚀 RENDER FINALIZADO: DISPARANDO PIPELINE DE DEPLOY (FIREBASE+RCLONE)")
+    print("=" * 65)
+    subprocess.run(["powershell", "-ExecutionPolicy", "Bypass", "-File", r"C:\Users\ipane\openclaw-operativo-2026\scripts\pipeline-cierre.ps1"], check=False)
+
 if __name__ == "__main__":
     asyncio.run(main())

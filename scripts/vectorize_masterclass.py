@@ -48,8 +48,8 @@ GOOGLE_API_KEY = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
 QDRANT_HOST = os.getenv("QDRANT_HOST", "localhost")
 QDRANT_PORT = int(os.getenv("QDRANT_PORT", "6333"))
 COLLECTION = "masterclass_30min_2026"
-EMBEDDING_DIM = 768
-EMBEDDING_MODEL = "models/text-embedding-004"
+EMBEDDING_DIM = 3072
+EMBEDDING_MODEL = "models/gemini-embedding-2"
 
 OUT_DIR = Path(r"C:\openclaw\hb-jewelry\public\videos\youtube_30min_masterclass")
 
@@ -99,15 +99,15 @@ def get_embedding(text: str) -> list[float]:
 
 def ensure_collection(client: QdrantClient):
     existing = [c.name for c in client.get_collections().collections]
-    if COLLECTION not in existing:
-        client.create_collection(
-            collection_name=COLLECTION,
-            vectors_config=VectorParams(size=EMBEDDING_DIM, distance=Distance.COSINE)
-        )
-        logger.info(f"Collection '{COLLECTION}' created in Qdrant.")
-    else:
-        logger.info(f"Collection '{COLLECTION}' already exists — upserting.")
-
+    if COLLECTION in existing:
+        client.delete_collection(COLLECTION)
+        logger.info(f"Deleted existing collection '{COLLECTION}' to recreate with new dimensions.")
+    
+    client.create_collection(
+        collection_name=COLLECTION,
+        vectors_config=VectorParams(size=EMBEDDING_DIM, distance=Distance.COSINE)
+    )
+    logger.info(f"Collection '{COLLECTION}' created in Qdrant with dim {EMBEDDING_DIM}.")
 
 def main():
     print("=" * 65)

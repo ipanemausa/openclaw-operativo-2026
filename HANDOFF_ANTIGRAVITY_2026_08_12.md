@@ -2,7 +2,7 @@
 
 ## 1. ESTADO DE LOS PIPELINES (CIERRE DE SESIÓN)
 - **Frontend (hb-jewelry)**: Build de Vite completado exitosamente sin errores. Listo para deploy a Firebase.
-- **RAG Vectorizer**: Dependencias instaladas (`qdrant-client`, `google-generativeai`). Ejecución detenida por error de autenticación (Error 401: API_KEY_INVALID / ACCESS_TOKEN_TYPE_UNSUPPORTED). Se determinó que las llaves actuales incrustadas en el entorno (`AIzaSy...` y `AQ.Ab8RN6...`) no están autorizadas por el servidor de Google para generar embeddings.
+- **RAG Vectorizer**: Dependencias instaladas y ejecución completada con éxito. Se generó una nueva API Key de Gemini en Google Cloud (formato AQ., modelo `gemini-embedding-2`, dim 3072) y se indexaron 12 chunks semánticos en Qdrant (colección `masterclass_30min_2026`).
 - **Renderización de Video (H.265)**: Se encapsuló la ejecución en `render_masterclass_en.py` con `timeout=3600` para prevenir bloqueos reportados por Gordon.
 
 ## 2. PENDIENTES CRÍTICOS PARA LA PRÓXIMA SESIÓN

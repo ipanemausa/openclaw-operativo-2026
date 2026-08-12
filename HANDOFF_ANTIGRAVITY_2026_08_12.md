@@ -6,7 +6,8 @@
 - **Renderización de Video (H.265)**: Se encapsuló la ejecución en `render_masterclass_en.py` con `timeout=3600` para prevenir bloqueos reportados por Gordon.
 
 ## 2. PENDIENTES CRÍTICOS PARA LA PRÓXIMA SESIÓN
-- **Reconexión Rclone (OAuth Google Drive)**: El client_id está configurado pero falta generar el token de autorización. El desarrollador/ingeniero a cargo debe correr `rclone config reconnect drive:` interactivamente en la terminal para obtener el token que falta en `%APPDATA%\rclone\rclone.conf`.
+- [ ] **Autenticación Rclone (Google Drive)**: Agregar el correo del usuario a la sección "Test users" de la "OAuth consent screen" en Google Cloud, y luego correr `rclone config reconnect drive:` para finalizar el respaldo de videos H.265.
+- [ ] Validar flujos de redirección del Nginx con la IP final y certificados SSL.do pero falta generar el token de autorización. El desarrollador/ingeniero a cargo debe correr `rclone config reconnect drive:` interactivamente en la terminal para obtener el token que falta en `%APPDATA%\rclone\rclone.conf`.
 - **Rotación de API Key de Gemini**: Obtener una API Key funcional desde Google AI Studio (o inyectar credenciales de GCP correctas) para permitir la vectorización RAG de los 6 módulos de video.
 - **Pipeline de Cierre (`pipeline-cierre.ps1`)**: Se ejecutó en segundo plano, pero la vectorización volverá a fallar hasta no rotar la llave. Verificar status al iniciar mañana.
 

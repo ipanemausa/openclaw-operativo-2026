@@ -31,6 +31,19 @@ logging.basicConfig(
 logger = logging.getLogger("vectorizer")
 
 # ── Config ─────────────────────────────────────────────────────────────────
+def load_env_file(path_str):
+    p = Path(path_str)
+    if p.exists():
+        with open(p, encoding="utf-8", errors="ignore") as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    k, v = line.split("=", 1)
+                    os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
+
+load_env_file(r"C:\Users\ipane\.openclaw-master.env")
+load_env_file(r"C:\Users\ipane\openclaw-operativo-2026\.env")
+
 GOOGLE_API_KEY = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
 QDRANT_HOST = os.getenv("QDRANT_HOST", "localhost")
 QDRANT_PORT = int(os.getenv("QDRANT_PORT", "6333"))

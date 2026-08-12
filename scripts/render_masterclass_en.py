@@ -170,25 +170,28 @@ async def main():
             logger.warning(f"[SKIP] {fname} no disponible para compresión.")
             continue
         logger.info(f"Comprimiendo {lang.upper()}: {src.stat().st_size / 1024 / 1024:.0f}MB → H.265...")
-        r = subprocess.run([
-            "ffmpeg", "-y", "-i", str(src),
-            "-c:v", "libx265",      # H.265 HEVC codec
-            "-crf", "24",            # Calidad 24 (0=perfecto, 51=peor) — óptimo para web
-            "-preset", "fast",       # Balance velocidad/compresión
-            "-c:a", "aac",           # Audio AAC
-            "-b:a", "192k",          # Audio 192kbps
-            "-movflags", "+faststart",  # Firebase streaming optimizado
-            "-tag:v", "hvc1",        # Compatibilidad Safari/iOS
-            str(dst)
-        ], capture_output=True, text=True)
-        if r.returncode == 0 and dst.exists():
-            orig_mb = src.stat().st_size / 1024 / 1024
-            comp_mb = dst.stat().st_size / 1024 / 1024
-            saving = 100 - (comp_mb / orig_mb * 100)
-            logger.info(f"[OK] {lang.upper()} H.265: {orig_mb:.0f}MB → {comp_mb:.0f}MB ({saving:.1f}% reducción)")
-            shutil.copy(dst, pub)
-        else:
-            logger.error(f"[FAIL] Compresión H.265 {lang}: {r.stderr[-200:]}")
+        try:
+            r = subprocess.run([
+                "ffmpeg", "-y", "-i", str(src),
+                "-c:v", "libx265",      # H.265 HEVC codec
+                "-crf", "24",            # Calidad 24
+                "-preset", "fast",       # Balance velocidad/compresión
+                "-c:a", "aac",           # Audio AAC
+                "-b:a", "192k",          # Audio 192kbps
+                "-movflags", "+faststart",  # Streaming optimizado
+                "-tag:v", "hvc1",        # Compatibilidad Safari/iOS
+                str(dst)
+            ], capture_output=True, text=True, timeout=3600)
+            if r.returncode == 0 and dst.exists():
+                orig_mb = src.stat().st_size / 1024 / 1024
+                comp_mb = dst.stat().st_size / 1024 / 1024
+                saving = 100 - (comp_mb / orig_mb * 100)
+                logger.info(f"[OK] {lang.upper()} H.265: {orig_mb:.0f}MB → {comp_mb:.0f}MB ({saving:.1f}% reducción)")
+                shutil.copy(dst, pub)
+            else:
+                logger.error(f"[FAIL] Compresión H.265 {lang}: {r.stderr[-200:] if r.stderr else 'Error'}")
+        except subprocess.TimeoutExpired:
+            logger.error(f"[TIMEOUT] Compresión H.265 {lang} superó los 3600 segundos (1 hora). Proceso abortado para evitar colapso.")
 
     # 4. VECTORIZACIÓN RAG — ANTES del deploy (fuente de verdad semántica)
     print("=" * 65)

@@ -43,11 +43,11 @@ try {
 
 # 2. MOTOR RAG VECTORIAL
 Write-Host "`n[2/7] Ejecutando vectorización RAG [text-embedding-004]..." -ForegroundColor Yellow
-$vectorizerScript = Join-Path $PSScriptRoot "..\agents\financial_rag_worker\vectorizer.py"
+$vectorizerScript = Join-Path $PSScriptRoot "vectorize_masterclass.py"
 if (Test-Path $vectorizerScript) {
     try {
         python $vectorizerScript 2>&1
-        Write-Host "-> Embeddings matemáticos procesados." -ForegroundColor Green
+        Write-Host "-> Embeddings matemáticos procesados en Qdrant (masterclass_30min_2026)." -ForegroundColor Green
     } catch {
         Write-Host "-> Error ejecutando vectorizer: $_" -ForegroundColor Red
     }

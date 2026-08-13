@@ -1,4 +1,10 @@
 {
+  "name": "openclaw-operativo-2026",
+  "version": "2026.7.1",
+  "scripts": {
+    "start": "python app.py",
+    "build": "echo 'No node build step required'"
+  },
   "devDependencies": {
     "@types/node": "^26.2.0",
     "firebase-admin": "^14.2.0",

@@ -6,3 +6,4 @@ redis
 gunicorn
 Flask-SQLAlchemy
 Flask-Migrate
+google-generativeai

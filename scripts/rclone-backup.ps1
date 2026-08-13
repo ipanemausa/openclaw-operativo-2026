@@ -15,6 +15,8 @@ Write-Host "=========================================================" -Foregrou
 $rcloneArgs = @(
     "sync",
     "--update",
+    "--inplace",
+    "--ignore-size",
     "--fast-list",
     "--transfers", "8",
     "--checkers", "16",

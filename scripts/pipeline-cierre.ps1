@@ -47,7 +47,7 @@ $vectorizerScript = Join-Path $PSScriptRoot "vectorize_masterclass.py"
 if (Test-Path $vectorizerScript) {
     try {
         python $vectorizerScript 2>&1
-        Write-Host "-> Embeddings matemáticos procesados en Qdrant (masterclass_30min_2026)." -ForegroundColor Green
+        Write-Host "-> Embeddings matematicos procesados en Qdrant (coleccion masterclass_30min_2026)." -ForegroundColor Green
     } catch {
         Write-Host "-> Error ejecutando vectorizer: $_" -ForegroundColor Red
     }

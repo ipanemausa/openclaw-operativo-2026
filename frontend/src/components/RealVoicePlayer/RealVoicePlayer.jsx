@@ -3,7 +3,7 @@ import BRollOverlay from '../BRollOverlay/BRollOverlay'
 
 const VIDEO_SRC = '/videos/real_voice_master/guillermo_real_voice_master.mp4'
 
-export default function RealVoicePlayer({ onClose }) {
+export default function RealVoicePlayer({ onClose, youtubeId = null }) {
   const videoRef = useRef(null)
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
@@ -95,17 +95,29 @@ export default function RealVoicePlayer({ onClose }) {
 
       {/* ─── VIDEO CONTAINER ─── */}
       <div style={{ position: 'relative', width: '100%', maxWidth: '960px', aspectRatio: '16/9' }}
-           onClick={togglePlay}>
-        <video
-          ref={videoRef}
-          src={VIDEO_SRC}
-          style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: 12 }}
-          onTimeUpdate={onTimeUpdate}
-          onLoadedMetadata={() => setDuration(videoRef.current?.duration || 0)}
-          onEnded={() => setPlaying(false)}
-          onPlay={() => setPlaying(true)}
-          onPause={() => setPlaying(false)}
-        />
+           onClick={youtubeId ? undefined : togglePlay}>
+        {youtubeId ? (
+          <iframe
+            src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&enablejsapi=1`}
+            title="YouTube Cloud Video Player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            style={{ width: '100%', height: '100%', border: 'none', borderRadius: 12 }}
+          />
+        ) : (
+          <video
+            ref={videoRef}
+            src={VIDEO_SRC}
+            playsInline
+            controls
+            style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: 12 }}
+            onTimeUpdate={onTimeUpdate}
+            onLoadedMetadata={() => setDuration(videoRef.current?.duration || 0)}
+            onEnded={() => setPlaying(false)}
+            onPlay={() => setPlaying(true)}
+            onPause={() => setPlaying(false)}
+          />
+        )}
 
         {/* B-Roll Overlay */}
         {activeEvent && (

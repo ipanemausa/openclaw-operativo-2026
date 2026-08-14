@@ -153,7 +153,7 @@ $Remotes = @("drive:HBJewelry", "drive:openclaw-operativo-2026-backup", "drive:o
 
 foreach ($rem in $Remotes) {
     if (-not $DryRun) {
-        Start-Process rclone -ArgumentList "sync `"$RootDir`" `"$rem`" --fast-list --transfers 4 --checkers 8" -NoNewWindow
+        Start-Process rclone -ArgumentList "sync `"$RootDir`" `"$rem`" --fast-list --update --inplace --ignore-size --transfers 4 --checkers 8 --exclude `"node_modules/**`" --exclude `".git/**`"" -NoNewWindow
         Write-Host "  [OK] Proceso asincrono lanzado hacia remoto: $rem" -ForegroundColor Green
     } else {
         Write-Host "  [DRY-RUN] Simulacion de sincronizacion hacia: $rem" -ForegroundColor Cyan

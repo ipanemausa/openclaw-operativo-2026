@@ -4,7 +4,8 @@
 # ====================================================================
 param (
     [string]$Topic = "Revolucion IA Empresarial",
-    [switch]$ForceRebuild = $false
+    [switch]$ForceRebuild = $false,
+    [switch]$PublishYouTube = $false
 )
 
 $ErrorActionPreference = "Stop"
@@ -45,6 +46,14 @@ if ((Test-Path $en_mp4) -and (Get-Item $en_mp4).Length -gt 1MB) {
 Write-Host "`n[3/4] Generando Miniaturas de Alto Impacto 1080p..." -ForegroundColor Green
 if (Test-Path "$ROOT_DIR\scripts\generate_youtube_style_thumbnails.py") {
     python "$ROOT_DIR\scripts\generate_youtube_style_thumbnails.py" 2>&1 | Write-Host
+}
+
+# Step 3.5: Publicación Autónoma en YouTube Cloud (R^768 Governed)
+if ($PublishYouTube) {
+    Write-Host "`n[3.5/4] Publicando Video Maestro en YouTube Cloud via API (R^768 Vector Governed)..." -ForegroundColor Yellow
+    if (Test-Path "$ROOT_DIR\scripts\youtube_auto_publisher.py") {
+        python "$ROOT_DIR\scripts\youtube_auto_publisher.py" --file "$es_mp4" --title "$Topic - Masterclass HB Jewelry 2026" --privacy "unlisted" 2>&1 | Write-Host
+    }
 }
 
 # Step 4: Despliegue Inmediato en Firebase Hosting

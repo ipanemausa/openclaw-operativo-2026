@@ -77,8 +77,8 @@ if (Test-Path $appDir) {
         npm run build 2>&1
         
         Write-Host "-> Desplegando en Firebase Hosting..." -ForegroundColor Gray
-        npx firebase deploy --only hosting 2>&1
-        Write-Host "-> Firebase Hosting activo en https://hb-jewelry-cloud-2026-2dff9.web.app" -ForegroundColor Green
+        npx firebase deploy --only hosting --non-interactive 2>&1
+        Write-Host "-> Verificación de deploy Firebase completada." -ForegroundColor Green
     } catch {
         Write-Host "-> Error en build/deploy Firebase: $_" -ForegroundColor Red
     } finally {

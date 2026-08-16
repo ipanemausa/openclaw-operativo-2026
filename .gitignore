@@ -103,3 +103,5 @@ htmlcov/
 # Custom backups and temp files
 docker-backups/
 import React*.txt
+runtime/
+output/

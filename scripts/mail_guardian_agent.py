@@ -34,7 +34,11 @@ MAIL_SMTP_SERVER = os.getenv("MAIL_SMTP_SERVER", "smtp.gmail.com")
 MAIL_SMTP_PORT = int(os.getenv("MAIL_SMTP_PORT", "465"))
 MAIL_USER = os.getenv("MAIL_USER")
 MAIL_PASS = os.getenv("MAIL_PASS")
-ALERT_SENDER = os.getenv("MAIL_ALERT_FROM", "notifications@github.com")
+ALERT_SENDERS = [
+    "notifications@github.com",
+    "no-reply@render.com",
+    "bot@render.com"
+]
 
 def connect_imap():
     if not MAIL_USER or not MAIL_PASS:
@@ -55,7 +59,7 @@ def check_post_deploy_truth(auto_purge=True) -> bool:
     2. Si detecta fallos, extrae detalles y alerta.
     3. Si auto_purge=True, elimina los correos de alertas procesados para mantener la bandeja en cero.
     """
-    print(f"\n[EMAIL GUARDIAN] [*] Verificando bandeja de entrada contra '{ALERT_SENDER}'...")
+    print(f"\n[EMAIL GUARDIAN] [*] Verificando bandeja de entrada contra {ALERT_SENDERS}...")
     mail = connect_imap()
     if not mail:
         print("[EMAIL GUARDIAN] [OK] Modo silencioso: credenciales pendientes de configurar.")
@@ -63,36 +67,33 @@ def check_post_deploy_truth(auto_purge=True) -> bool:
 
     try:
         mail.select("INBOX")
-        status, messages = mail.search(None, f'(FROM "{ALERT_SENDER}")')
-        if status != "OK" or not messages[0]:
-            print("[EMAIL GUARDIAN] [OK] 0 alertas de error detectadas. Despliegue verificado como VERDAD ABSOLUTA.")
-            mail.logout()
-            return True
-
-        email_ids = messages[0].split()
-        recent_ids = email_ids[-10:]
-        
         has_failure = False
         failure_subjects = []
         processed_ids = []
 
-        for e_id in recent_ids:
-            res, msg_data = mail.fetch(e_id, "(RFC822)")
-            for response_part in msg_data:
-                if isinstance(response_part, tuple):
-                    msg = email.message_from_bytes(response_part[1])
-                    raw_subject = msg.get("Subject", "")
-                    decoded = decode_header(raw_subject)[0]
-                    subject = decoded[0]
-                    if isinstance(subject, bytes):
-                        subject = subject.decode(decoded[1] if decoded[1] else "utf-8", errors="ignore")
-                    
-                    critical_keywords = ["failed", "failure", "workflow run failed", "error", "action failed", "build failed"]
-                    if any(kw in subject.lower() for kw in critical_keywords):
-                        has_failure = True
-                        failure_subjects.append(subject)
-                    
-                    processed_ids.append(e_id)
+        for sender in ALERT_SENDERS:
+            status, messages = mail.search(None, f'(FROM "{sender}")')
+            if status == "OK" and messages[0]:
+                email_ids = messages[0].split()
+                recent_ids = email_ids[-10:]
+
+                for e_id in recent_ids:
+                    res, msg_data = mail.fetch(e_id, "(RFC822)")
+                    for response_part in msg_data:
+                        if isinstance(response_part, tuple):
+                            msg = email.message_from_bytes(response_part[1])
+                            raw_subject = msg.get("Subject", "")
+                            decoded = decode_header(raw_subject)[0]
+                            subject = decoded[0]
+                            if isinstance(subject, bytes):
+                                subject = subject.decode(decoded[1] if decoded[1] else "utf-8", errors="ignore")
+                            
+                            critical_keywords = ["failed", "failure", "workflow run failed", "error", "action failed", "build failed", "didn’t complete"]
+                            if any(kw in subject.lower() for kw in critical_keywords):
+                                has_failure = True
+                                failure_subjects.append(f"[{sender}] {subject}")
+                            
+                            processed_ids.append(e_id)
 
         # Auto-Purge: Eliminar notificaciones de GitHub procesadas para mantener inbox limpio
         if auto_purge and processed_ids:

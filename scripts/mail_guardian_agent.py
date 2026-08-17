@@ -48,9 +48,12 @@ def connect_imap():
         print(f"[EMAIL GUARDIAN] [ERROR IMAP] No se pudo conectar a IMAP: {ex}")
         return None
 
-def check_post_deploy_truth() -> bool:
+def check_post_deploy_truth(auto_purge=True) -> bool:
     """
-    Auditoría Anti-Humo: Inspecciona correos de GitHub recibidos recientemente.
+    Auditoría Anti-Humo:
+    1. Inspecciona correos de GitHub recientes.
+    2. Si detecta fallos, extrae detalles y alerta.
+    3. Si auto_purge=True, elimina los correos de alertas procesados para mantener la bandeja en cero.
     """
     print(f"\n[EMAIL GUARDIAN] [*] Verificando bandeja de entrada contra '{ALERT_SENDER}'...")
     mail = connect_imap()
@@ -67,17 +70,18 @@ def check_post_deploy_truth() -> bool:
             return True
 
         email_ids = messages[0].split()
-        recent_ids = email_ids[-5:]
+        recent_ids = email_ids[-10:]
         
         has_failure = False
         failure_subjects = []
+        processed_ids = []
 
         for e_id in recent_ids:
             res, msg_data = mail.fetch(e_id, "(RFC822)")
             for response_part in msg_data:
                 if isinstance(response_part, tuple):
                     msg = email.message_from_bytes(response_part[1])
-                    raw_subject = msg["Subject"]
+                    raw_subject = msg.get("Subject", "")
                     decoded = decode_header(raw_subject)[0]
                     subject = decoded[0]
                     if isinstance(subject, bytes):
@@ -87,6 +91,16 @@ def check_post_deploy_truth() -> bool:
                     if any(kw in subject.lower() for kw in critical_keywords):
                         has_failure = True
                         failure_subjects.append(subject)
+                    
+                    processed_ids.append(e_id)
+
+        # Auto-Purge: Eliminar notificaciones de GitHub procesadas para mantener inbox limpio
+        if auto_purge and processed_ids:
+            print(f"[EMAIL GUARDIAN] [PURGE] Limpiando {len(processed_ids)} notificaciones de GitHub del inbox...")
+            for e_id in processed_ids:
+                mail.store(e_id, '+FLAGS', '\\Deleted')
+            mail.expunge()
+            print("[EMAIL GUARDIAN] [PURGE] Bandeja purgada y lista para el próximo ciclo.")
 
         mail.logout()
 
@@ -102,6 +116,28 @@ def check_post_deploy_truth() -> bool:
     except Exception as ex:
         print(f"[EMAIL GUARDIAN] [AVISO] No se pudo verificar IMAP: {ex}")
         return True
+
+def purge_github_notifications():
+    """Elimina específicamente todas las notificaciones de GitHub para resetear el buzón."""
+    print(f"\n[EMAIL GUARDIAN] [PURGE] Buscando todas las notificaciones de '{ALERT_SENDER}'...")
+    mail = connect_imap()
+    if not mail:
+        return
+    try:
+        mail.select("INBOX")
+        status, messages = mail.search(None, f'(FROM "{ALERT_SENDER}")')
+        if status == "OK" and messages[0]:
+            ids = messages[0].split()
+            print(f"[EMAIL GUARDIAN] Eliminando {len(ids)} correos de notificaciones de GitHub...")
+            for num in ids:
+                mail.store(num, '+FLAGS', '\\Deleted')
+            mail.expunge()
+            print("[EMAIL GUARDIAN] [OK] Todas las notificaciones de GitHub eliminadas. Inbox 100% limpio.")
+        else:
+            print("[EMAIL GUARDIAN] [OK] No hay notificaciones de GitHub en la bandeja.")
+        mail.logout()
+    except Exception as ex:
+        print(f"[EMAIL GUARDIAN] Error purgando correos: {ex}")
 
 def send_notification_email(subject: str, body_text: str):
     """Envía un email formal de confirmación de estado."""
@@ -136,7 +172,7 @@ RESUMEN DE AUDITORIA:
 1. Build Local (Vite / React): EXITOSO (Codigo 0)
 2. Firebase Hosting Deploy: PRODUCCION ACTUALIZADA
 3. Git Headless Sync (origin/main): SINCRONIZADO
-4. Email Guardian Anti-Humo: CERO ERRORES EN REPOSITORIO
+4. Email Guardian Anti-Humo: CERO ERRORES (Inbox purgado y limpio)
 5. Respaldo Rclone (Google Drive 5TB): DRIVE:HBJewelry + OPENCLAW SINCRONIZADOS
 
 Fecha y Hora de Certificacion: {timestamp}
@@ -184,7 +220,8 @@ def process_unread_daily():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Email Guardian Agent")
-    parser.add_argument("--post-deploy-check", action="store_true", help="Verifica fallos en notificaciones de GitHub")
+    parser.add_argument("--post-deploy-check", action="store_true", help="Verifica fallos en notificaciones de GitHub y auto-purga")
+    parser.add_argument("--purge-github-notifications", action="store_true", help="Elimina todas las notificaciones de GitHub del inbox")
     parser.add_argument("--send-success-report", action="store_true", help="Envia correo de confirmacion de exito")
     parser.add_argument("--send-failure-report", type=str, help="Envia correo de alerta de fallo")
     parser.add_argument("--unread", action="store_true", help="Resume correos diarios no leidos")
@@ -192,8 +229,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     if args.post_deploy_check:
-        passed = check_post_deploy_truth()
+        passed = check_post_deploy_truth(auto_purge=True)
         sys.exit(0 if passed else 1)
+    elif args.purge_github_notifications:
+        purge_github_notifications()
     elif args.send_success_report:
         send_success_report()
     elif args.send_failure_report:

@@ -21,10 +21,15 @@ jobs:
       with:
         python-version: "3.11"
 
-    - name: Instalar Dependencias y Lint
+    - name: Preparar Entorno Seguro
       run: |
+        touch .env
+        echo "GEMINI_API_KEY=dummy_ci_key" >> .env
         python -m pip install --upgrade pip
         pip install flake8
+
+    - name: Lint y Sintaxis Python
+      run: |
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude=node_modules,scratch,.git,dist,agents/_archive,notebooks
 
     - name: Validar Sintaxis de Docker Compose

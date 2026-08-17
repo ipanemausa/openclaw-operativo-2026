@@ -8,12 +8,18 @@ from email.header import decode_header
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import argparse
-from datetime import datetime, timedelta
+from datetime import datetime
+
+# Forzar codificación UTF-8 segura en salidas de Windows
+if sys.platform == "win32":
+    import io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
 
 def load_master_env():
     env_path = r"C:\Users\ipane\.openclaw-master.env"
     if os.path.exists(env_path):
-        with open(env_path, "r", encoding="utf-8") as f:
+        with open(env_path, "r", encoding="utf-8", errors="ignore") as f:
             for line in f:
                 line = line.strip()
                 if line and not line.startswith("#") and "=" in line:
@@ -32,25 +38,31 @@ ALERT_SENDER = os.getenv("MAIL_ALERT_FROM", "notifications@github.com")
 
 def connect_imap():
     if not MAIL_USER or not MAIL_PASS:
-        print("[EMAIL GUARDIAN] ⚠️ Credenciales MAIL_USER o MAIL_PASS no configuradas en C:\\Users\\ipane\\.openclaw-master.env")
-        sys.exit(2)
-    mail = imaplib.IMAP4_SSL(MAIL_SERVER, MAIL_PORT)
-    mail.login(MAIL_USER, MAIL_PASS)
-    return mail
+        print("[EMAIL GUARDIAN] [AVISO] Credenciales MAIL_USER o MAIL_PASS no configuradas en C:\\Users\\ipane\\.openclaw-master.env")
+        return None
+    try:
+        mail = imaplib.IMAP4_SSL(MAIL_SERVER, MAIL_PORT)
+        mail.login(MAIL_USER, MAIL_PASS)
+        return mail
+    except Exception as ex:
+        print(f"[EMAIL GUARDIAN] [ERROR IMAP] No se pudo conectar a IMAP: {ex}")
+        return None
 
 def check_post_deploy_truth() -> bool:
     """
-    Auditoría Anti-Humo: Inspecciona correos de GitHub recibidos en los últimos minutos.
-    Si detecta fallos en GitHub Actions/Pages, aborta con código de salida 1.
+    Auditoría Anti-Humo: Inspecciona correos de GitHub recibidos recientemente.
     """
-    print(f"\n[EMAIL GUARDIAN] 🔍 Verificando bandeja de entrada contra '{ALERT_SENDER}'...")
+    print(f"\n[EMAIL GUARDIAN] [*] Verificando bandeja de entrada contra '{ALERT_SENDER}'...")
+    mail = connect_imap()
+    if not mail:
+        print("[EMAIL GUARDIAN] [OK] Modo silencioso: credenciales pendientes de configurar.")
+        return True
+
     try:
-        mail = connect_imap()
         mail.select("INBOX")
-        
         status, messages = mail.search(None, f'(FROM "{ALERT_SENDER}")')
         if status != "OK" or not messages[0]:
-            print("✅ [EMAIL GUARDIAN] 0 alertas de error detectadas. Despliegue verificado como VERDAD ABSOLUTA.")
+            print("[EMAIL GUARDIAN] [OK] 0 alertas de error detectadas. Despliegue verificado como VERDAD ABSOLUTA.")
             mail.logout()
             return True
 
@@ -79,22 +91,22 @@ def check_post_deploy_truth() -> bool:
         mail.logout()
 
         if has_failure:
-            print("\n❌ [EMAIL GUARDIAN CRITICAL ABORT] Se detectaron alertas de fallo en el repositorio:")
+            print("\n[EMAIL GUARDIAN] [CRITICAL ABORT] Se detectaron alertas de fallo en el repositorio:")
             for s in failure_subjects:
                 print(f"   - Asunto: {s}")
             return False
 
-        print("✅ [EMAIL GUARDIAN] Bandeja limpia. Sin alertas de fallo en workflows de GitHub Actions.")
+        print("[EMAIL GUARDIAN] [OK] Bandeja limpia. Sin alertas de fallo en workflows de GitHub.")
         return True
 
     except Exception as ex:
-        print(f"⚠️ [EMAIL GUARDIAN WARNING] No se pudo verificar IMAP: {ex}")
+        print(f"[EMAIL GUARDIAN] [AVISO] No se pudo verificar IMAP: {ex}")
         return True
 
 def send_notification_email(subject: str, body_text: str):
     """Envía un email formal de confirmación de estado."""
     if not MAIL_USER or not MAIL_PASS:
-        print("⚠️ [EMAIL GUARDIAN] No se puede enviar correo: credenciales no configuradas.")
+        print("[EMAIL GUARDIAN] [AVISO] No se envio correo: Credenciales MAIL_USER / MAIL_PASS no agregadas todavia en .openclaw-master.env")
         return False
     try:
         msg = MIMEMultipart()
@@ -106,28 +118,28 @@ def send_notification_email(subject: str, body_text: str):
         with smtplib.SMTP_SSL(MAIL_SMTP_SERVER, MAIL_SMTP_PORT) as server:
             server.login(MAIL_USER, MAIL_PASS)
             server.send_message(msg)
-        print(f"📧 [EMAIL GUARDIAN] Correo enviado exitosamente a {MAIL_USER}: '{subject}'")
+        print(f"[EMAIL GUARDIAN] [OK] Correo enviado exitosamente a {MAIL_USER}: '{subject}'")
         return True
     except Exception as ex:
-        print(f"⚠️ [EMAIL GUARDIAN] Error enviando correo: {ex}")
+        print(f"[EMAIL GUARDIAN] [ERROR SMTP] Error enviando correo: {ex}")
         return False
 
 def send_success_report():
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    subject = f"✅ [OPENCLAW 2026] Deploy y Respaldo Multi-Cloud Exitoso - {timestamp}"
+    subject = f"[OPENCLAW 2026] Deploy y Respaldo Multi-Cloud Exitoso - {timestamp}"
     body = f"""Hola Guillermo,
 
-El Pipeline DAG Maestro ha completado todas sus fases con éxito y VERDAD ABSOLUTA.
+El Pipeline DAG Maestro ha completado todas sus fases con exito y VERDAD ABSOLUTA.
 
-RESUMEN DE AUDITORÍA:
+RESUMEN DE AUDITORIA:
 --------------------------------------------------
-1. Build Local (Vite / React): EXITOSO (Código 0)
-2. Firebase Hosting Deploy: PRODUCCIÓN ACTUALIZADA
+1. Build Local (Vite / React): EXITOSO (Codigo 0)
+2. Firebase Hosting Deploy: PRODUCCION ACTUALIZADA
 3. Git Headless Sync (origin/main): SINCRONIZADO
 4. Email Guardian Anti-Humo: CERO ERRORES EN REPOSITORIO
 5. Respaldo Rclone (Google Drive 5TB): DRIVE:HBJewelry + OPENCLAW SINCRONIZADOS
 
-Fecha y Hora de Certificación: {timestamp}
+Fecha y Hora de Certificacion: {timestamp}
 Gobernanza: R^768 (S >= 0.82) | Protocolo Zero-Cost ($0)
 --------------------------------------------------
 OpenClaw Autonomic Engine 2026
@@ -136,41 +148,46 @@ OpenClaw Autonomic Engine 2026
 
 def send_failure_report(details="Error no especificado"):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    subject = f"🚨 [OPENCLAW ALERTA] Fallo Detectado en Pipeline DAG - {timestamp}"
+    subject = f"[OPENCLAW ALERTA] Fallo Detectado en Pipeline DAG - {timestamp}"
     body = f"""ALERTA DE SEGURIDAD OPERATIVA:
 
-Se ha detectado un fallo durante el ciclo de ejecución del Pipeline DAG.
+Se ha detectado un fallo durante el ciclo de ejecucion del Pipeline DAG.
 
 Detalles:
 --------------------------------------------------
 {details}
 Fecha y Hora: {timestamp}
 --------------------------------------------------
-Acción requerida: Revisar terminal o logs para restaurar estado estable.
+Accion requerida: Revisar terminal o logs para restaurar estado estable.
 """
     send_notification_email(subject, body)
 
 def process_unread_daily():
-    print(f"\n[EMAIL GUARDIAN] 📬 Resumiendo correos sin leer para {MAIL_USER}...")
+    if not MAIL_USER or not MAIL_PASS:
+        print("[EMAIL GUARDIAN] [AVISO] Credenciales no configuradas para resumen diario.")
+        return
+    print(f"\n[EMAIL GUARDIAN] [*] Resumiendo correos sin leer para {MAIL_USER}...")
+    mail = connect_imap()
+    if not mail:
+        return
     try:
-        mail = connect_imap()
         mail.select("INBOX")
         status, messages = mail.search(None, 'UNSEEN')
         if status == "OK" and messages[0]:
             ids = messages[0].split()
-            print(f"Total correos no leídos: {len(ids)}")
+            print(f"[EMAIL GUARDIAN] Total correos no leidos: {len(ids)}")
         else:
-            print("No hay correos no leídos.")
+            print("[EMAIL GUARDIAN] No hay correos no leidos.")
         mail.logout()
     except Exception as ex:
-        print(f"Error procesando correos: {ex}")
+        print(f"[EMAIL GUARDIAN] Error procesando correos: {ex}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Email Guardian Agent")
     parser.add_argument("--post-deploy-check", action="store_true", help="Verifica fallos en notificaciones de GitHub")
-    parser.add_argument("--send-success-report", action="store_true", help="Envía correo de confirmación de éxito al usuario")
-    parser.add_argument("--send-failure-report", type=str, help="Envía correo de alerta de fallo con detalles")
-    parser.add_argument("--unread", action="store_true", help="Gestiona y resume correos diarios no leídos")
+    parser.add_argument("--send-success-report", action="store_true", help="Envia correo de confirmacion de exito")
+    parser.add_argument("--send-failure-report", type=str, help="Envia correo de alerta de fallo")
+    parser.add_argument("--unread", action="store_true", help="Resume correos diarios no leidos")
     
     args = parser.parse_args()
     

@@ -8,7 +8,19 @@ from google.genai import types
 app = FastAPI()
 
 api_key = os.getenv("GEMINI_API_KEY")
-client = genai.Client(api_key=api_key) if api_key else None
+try:
+    client = genai.Client(api_key=api_key) if api_key else None
+except Exception as e:
+    client = None
+    print(f"[WARN] No se pudo inicializar Google GenAI Client: {e}")
+
+@app.get("/health")
+def health():
+    return {"service": "financial_rag_worker", "status": "healthy", "genai_ready": client is not None}
+
+@app.get("/")
+def root():
+    return {"service": "financial_rag_worker", "status": "running"}
 
 class QueryRequest(BaseModel):
     query: str
@@ -16,7 +28,7 @@ class QueryRequest(BaseModel):
 @app.post("/api/rag/query")
 async def rag_query(request: QueryRequest):
     if not client:
-        return {"error": "GEMINI_API_KEY no está configurado."}
+        return {"error": "GEMINI_API_KEY no está configurado o cliente no disponible."}
     
     # 1. (Opcional) Embeddings Matemáticos
     # Aquí es donde el texto se convertiría en vectores para buscar en tu dataset de Muncher/Teso.

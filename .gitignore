@@ -105,3 +105,7 @@ docker-backups/
 import React*.txt
 runtime/
 output/
+
+temp_lostfound/
+
+config/client_secrets.json

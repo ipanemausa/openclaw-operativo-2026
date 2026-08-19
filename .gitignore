@@ -102,3 +102,18 @@ handoff_*.txt
 camin-*.cjs
 COMPENDIO.md
 financial_rag_worker.py
+
+# Frontend viejo de cloud-2026 (arquitectura obsoleta -- activo en openclaw-operativo-2026)
+frontend/index.html
+frontend/package.json
+frontend/src/containers/
+frontend/src/pages/Chat.jsx
+frontend/src/styles/index.css
+frontend/vite.config.js
+frontend/node_modules/
+
+# Backend stubs vacios (1 linea cada uno -- sin valor)
+backend/
+
+# Script migrado a operativo-2026
+scripts/lamautonomia1.ps1

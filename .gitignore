@@ -117,3 +117,5 @@ backend/
 
 # Script migrado a operativo-2026
 scripts/lamautonomia1.ps1
+
+frontend/public/

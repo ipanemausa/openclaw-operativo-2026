@@ -135,3 +135,20 @@ Todo despliegue (deploy) que involucre GitHub Actions CI **NO se considera exito
 Un (1) DAG después de ejecutar el pipeline de deploy, el agente DEBE:
 1. Requerir la verificación del estado remoto (consultar API de GitHub Actions o pedir confirmación al usuario de que no llegaron emails de fallo).
 2. Asumir que el resultado local es "humo" hasta que el servidor de integración continua remoto (GitHub) devuelva luz verde definitiva.
+
+---
+
+## Protocolo de Activación Rápida: [OPENCLAW-CORE-MATRIX]
+
+Cuando el usuario inicie una sesión con el comando:
+`"Carga la matriz técnica completa bajo el estándar [OPENCLAW-CORE-MATRIX] y pasemos a trabajar en: [tarea]"`
+
+El agente debe:
+1. Validar e instanciar las 5 fases de [OPENCLAW_CORE_MATRIX_2026.md](file:///c:/Users/ipane/openclaw-operativo-2026/OPENCLAW_CORE_MATRIX_2026.md):
+   - **Fase 1 (Sovereign AI):** Modelos Open-Weight, $0 licencias, independencia de APIs cerradas.
+   - **Fase 2 (Gobernanza Vectorial):** Espacio $\mathbb{R}^{768}$, embeddings `BAAI/bge-m3`, filtro $S \ge 0.82$, esquemas JSON deterministas.
+   - **Fase 3 (Orquestación DAG):** Grafos CPM, colas asíncronas, persistencia Git + Rclone 5TB.
+   - **Fase 4 (Sandboxes & Harnesses):** Docker 7/7 microservicios, aislamiento y ejecución de tools controlada.
+   - **Fase 5 (Multimodalidad & Video):** 1080p FastStart, Edge-TTS 48kHz (-16 LUFS EBU R128), YouTube/Firebase CDN.
+2. Ejecutar inmediatamente la tarea solicitada bajo este marco sin requerir preámbulos teóricos adicionales.
+

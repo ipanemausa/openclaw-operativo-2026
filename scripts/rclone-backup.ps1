@@ -11,20 +11,21 @@ Write-Host "=========================================================" -Foregrou
 Write-Host "      STARTING GOOGLE DRIVE BACKUP (RCLONE 2026)" -ForegroundColor Cyan
 Write-Host "=========================================================" -ForegroundColor Cyan
 
-# Exclusiones optimizadas y banderas de aceleración incremental
+# Exclusiones optimizadas y banderas de aceleración incremental para G:\My Drive
 $rcloneArgs = @(
-    "sync",
+    "copy",
     "--update",
     "--inplace",
     "--ignore-size",
-    "--fast-list",
-    "--transfers", "8",
-    "--checkers", "16",
+    "--no-check-dest",
+    "--transfers", "4",
+    "--checkers", "4",
     "--exclude", "node_modules/**",
     "--exclude", ".git/**",
     "--exclude", "dist/**",
     "--exclude", ".cache/**",
     "--exclude", ".npm/**",
+    "--exclude", ".firebase/**",
     "--exclude", "__pycache__/**",
     "--exclude", "*.pyc",
     "--exclude", ".ipynb_checkpoints/**",

@@ -227,7 +227,7 @@ def render_trilingual_masterclass(lang: str, whisper_model):
                 break
                 
         # Renderizar fondo cósmico dinámico
-        frame = render_cosmic_universe_frame(WIDTH, HEIGHT, f_idx, FPS)
+        frame = render_cosmic_universe_frame(t_sec)
         
         # Micro-movimiento suave de respiración en el avatar
         breath_y = int(math.sin(t_sec * 1.5) * 4)

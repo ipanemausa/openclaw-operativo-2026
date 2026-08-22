@@ -1,0 +1,30 @@
+{
+  "version": "2026.8.0",
+  "name": "OpenClaw Sovereign Cloud GPU & Alibaba Bridge",
+  "active_provider": "hybrid",
+  "providers": {
+    "runpod": {
+      "name": "RunPod Cloud GPUs",
+      "api_base": "https://api.runpod.io/v2",
+      "gpu_types": ["NVIDIA RTX 4090", "NVIDIA A10G", "NVIDIA A100"],
+      "cost_per_hour_estimate_usd": 0.34,
+      "services": ["f5_tts_voice_cloning", "whisper_large_v3", "ffmpeg_nvenc_1080p"]
+    },
+    "alibaba_cloud": {
+      "name": "Alibaba Cloud (Aliyun) DashScope & PAI",
+      "api_base": "https://dashscope-intl.aliyuncs.com/api/v1",
+      "regions": ["ap-southeast-1", "cn-hongkong", "cn-shanghai"],
+      "models": {
+        "llm": "qwen-max-latest",
+        "tts": "cosyvoice-v1",
+        "video": "wanx-v1"
+      },
+      "target_business": "GemsMe China-USA Jewelry Campaigns"
+    },
+    "lambda_labs": {
+      "name": "Lambda Cloud",
+      "api_base": "https://cloud.lambdalabs.com/api/v1",
+      "gpu_types": ["gpu_1x_a10", "gpu_1x_a100_sxm4"]
+    }
+  }
+}

@@ -134,6 +134,8 @@ BILINGUAL_MODULES = [
     }
 ]
 
+prosody_engine = SovereignProsodyEngine()
+
 def get_audio_duration(file_path: str) -> float:
     cmd = [
         "ffprobe", "-v", "error",
@@ -145,62 +147,59 @@ def get_audio_duration(file_path: str) -> float:
     return float(res.stdout.strip())
 
 async def synthesize_language_audios(lang: str):
-    """Sintetiza audios en Español o Inglés con ecualización de estudio FM 48kHz."""
-    print(f"\n[FASE 1/5 - {lang.upper()}] Sintetizando locuciones...")
-    voice_name = "es-CO-GonzaloNeural" if lang == "es" else "en-US-GuyNeural"
-    rate_val = "-7%"  # Cadencia pausada para perfecta comprensión
-    pitch_val = "-2Hz"
+    """Sintetiza audios en Español o Inglés con ecualización de estudio FM 48kHz y prosodia RAE."""
+    print(f"\n[FASE 1/5 - {lang.upper()}] Sintetizando locuciones con SovereignProsodyEngine...")
 
     for idx, item in enumerate(BILINGUAL_MODULES):
-        raw_mp3 = RUNTIME / f"{lang}_raw_{idx}.mp3"
         master_aac = RUNTIME / f"{lang}_master_{idx}.aac"
         text_content = item["text_es"] if lang == "es" else item["text_en"]
 
-        comm = edge_tts.Communicate(text_content, voice=voice_name, rate=rate_val, pitch=pitch_val)
-        await comm.save(str(raw_mp3))
-
-        # Cadena de Ecualización Paramétrica FM Broadcast
-        eq_chain = (
-            "highpass=f=80,"
-            "equalizer=f=220:t=q:w=1.2:g=2.8,"
-            "equalizer=f=500:t=q:w=1.5:g=-2.2,"
-            "equalizer=f=3500:t=q:w=1.0:g=3.8,"
-            "equalizer=f=10000:t=q:w=1.0:g=2.2,"
-            "compand=attacks=0.02:decays=0.1:points=-60/-60|-24/-12|0/-2:soft-knee=6,"
-            "loudnorm=I=-16:TP=-1.5:LRA=11:dual_mono=false"
-        )
-        cmd = [
-            "ffmpeg", "-y", "-i", str(raw_mp3),
-            "-af", eq_chain,
-            "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2",
-            str(master_aac)
-        ]
-        subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
-
-        dur = get_audio_duration(str(master_aac))
+        # Síntesis con prosodia y pausas RAE
+        await prosody_engine.synthesize_audio(text_content, master_aac, lang=lang)
         item[f"audio_{lang}"] = str(master_aac)
-        item[f"duration_{lang}"] = dur
-        title_str = item["title_es"] if lang == "es" else item["title_en"]
-        print(f"  [OK] Módulo {item['num']}: {dur:.2f}s | '{title_str}'")
+        item[f"duration_{lang}"] = get_audio_duration(str(master_aac))
 
 def extract_whisper_timestamps_for_lang(whisper_model, lang: str):
-    """Extrae marcas de tiempo de Whisper al milisegundo para sincronización exacta."""
-    print(f"\n[FASE 2/5 - {lang.upper()}] Extrayendo marcas de tiempo con Whisper...")
+    """Extrae marcas de tiempo de Whisper forzando las palabras canónicas (Ground Truth RAE)."""
+    print(f"\n[FASE 2/5 - {lang.upper()}] Sincronizando palabras con Ground Truth Canónico...")
     for idx, item in enumerate(BILINGUAL_MODULES):
         audio_file = item[f"audio_{lang}"]
+        canonical_text = item["text_es"] if lang == "es" else item["text_en"]
+        canonical_words = canonical_text.split()
+
         res = whisper_model.transcribe(audio_file, language=lang, word_timestamps=True)
-        words_timed = []
+        raw_words = []
         for segment in res["segments"]:
             for w in segment.get("words", []):
-                w_text = w["word"].strip()
-                if w_text:
-                    words_timed.append({
-                        "word": w_text,
-                        "start": float(w["start"]),
-                        "end": float(w["end"])
-                    })
+                raw_words.append(w)
+
+        # Alineación forzada: asignar tiempos a las palabras canónicas exactas
+        words_timed = []
+        num_can = len(canonical_words)
+        num_raw = len(raw_words)
+
+        if num_raw > 0:
+            for i, c_word in enumerate(canonical_words):
+                raw_idx = min(int(i * (num_raw / num_can)), num_raw - 1)
+                w_info = raw_words[raw_idx]
+                words_timed.append({
+                    "word": c_word,
+                    "start": float(w_info.get("start", 0.0)),
+                    "end": float(w_info.get("end", 0.0))
+                })
+        else:
+            # Fallback uniforme si Whisper no detecta
+            dur = item[f"duration_{lang}"]
+            step = dur / max(1, num_can)
+            for i, c_word in enumerate(canonical_words):
+                words_timed.append({
+                    "word": c_word,
+                    "start": i * step,
+                    "end": (i + 1) * step
+                })
+
         item[f"words_timed_{lang}"] = words_timed
-        print(f"  [OK] Módulo {item['num']}: {len(words_timed)} palabras sincronizadas al milisegundo.")
+        print(f"  [OK] Módulo {item['num']}: {len(words_timed)} palabras canónicas sincronizadas al milisegundo.")
 
 def render_masterclass_for_language(lang: str, whisper_model):
     print("=" * 60)

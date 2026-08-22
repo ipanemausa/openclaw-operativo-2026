@@ -1,13 +1,34 @@
 {
-  "matrix_version": "2026.8.1",
-  "engine_name": "OpenClaw Sovereign Entity & Phonetic Lexicon Matrix",
+  "matrix_version": "2026.8.2",
+  "engine_name": "OpenClaw Sovereign Entity, Grammar & Phonetic Lexicon Matrix",
   "standards": [
     "W3C SSML 1.1 (Speech Synthesis Markup Language)",
     "International Phonetic Alphabet (IPA)",
-    "RAE (Real Academia Española)",
+    "RAE (Real Academia Española) — Sintaxis, Puntuación y Acentuación",
     "Oxford English / Chicago Manual of Style",
     "EBU R128 Broadcast Audio (-16 LUFS, 48kHz Stereo)"
   ],
+  "syntax_and_punctuation_rules": {
+    "comma_pause_ms": 240,
+    "semicolon_pause_ms": 450,
+    "colon_pause_ms": 400,
+    "period_pause_ms": 600,
+    "paragraph_pause_ms": 1000,
+    "discursive_connector_pause_ms": 300
+  },
+  "article_governance": {
+    "corporate_models_no_article": ["OpenAI", "Anthropic", "Google DeepMind", "Meta", "xAI", "Cohere", "DeepSeek", "Alibaba Qwen"],
+    "institutional_official_regime": {
+      "MinTIC": "el Ministerio de las TIC (MinTIC)",
+      "Ruta N": "la Corporación Ruta N",
+      "Universidad EAFIT": "la Universidad EAFIT"
+    }
+  },
+  "geographic_orthography": {
+    "suramerica": "Suramérica",
+    "puerta_a_suramerica": "entrada a Suramérica",
+    "prohibited_spellings": ["azureamerica", "sur america", "sur-america"]
+  },
   "audience_cadence_profiles": {
     "executive_academic_b2b": {
       "description": "Dirigido a rectores, decanos, directores de entidades gubernamentales, inversionistas y empresarios C-Suite.",
@@ -16,10 +37,12 @@
         "pitch": "-5Hz",
         "voice": "es-ES-AlvaroNeural",
         "pauses_ms": {
-          "comma": 260,
-          "colon": 380,
-          "period": 520,
-          "paragraph": 880
+          "comma": 240,
+          "colon": 400,
+          "semicolon": 450,
+          "period": 600,
+          "paragraph": 1000,
+          "connector": 300
         }
       },
       "english": {
@@ -28,9 +51,11 @@
         "voice": "en-US-AndrewMultilingualNeural",
         "pauses_ms": {
           "comma": 240,
-          "colon": 350,
-          "period": 500,
-          "paragraph": 850
+          "colon": 380,
+          "semicolon": 420,
+          "period": 550,
+          "paragraph": 900,
+          "connector": 280
         }
       }
     }

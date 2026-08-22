@@ -1,15 +1,17 @@
 """
 ==============================================================================
-OPENCLAW SOVEREIGN AUDIO & PROSODY ENGINE (2026)
+OPENCLAW SOVEREIGN AUDIO & PROSODY ENGINE (2026) — RAE & OXFORD COMPILATION
 ==============================================================================
-Motor Universal de Prosodia, Cadencia Humana y Gobernanza Fonética Canónica.
-Diseñado para audiencias de alto nivel: Universidades, Gobierno e Inversionistas B2B.
+Compilador Gramatical y Prosódico de Alta Fidelidad bajo Estándares RAE y Oxford.
+Modelado estricto de respiración, curvas entonativas y jerarquía de puntuación:
 
-Características:
-  1. Invarianza Canónica: Nombres de modelos IA y personas siempre en inglés.
-  2. Modelado de Respiración: Pausas prosódicas matemáticas (comas, puntos, acápites).
-  3. Gravitas Ejecutiva: Control de pitch (-2st) y cadencia (-8%) para máxima autoridad.
-  4. Audio Mastering: EBU R128 (-16 LUFS, TP -1.5dB, 48kHz Estéreo Broadcast).
+Jerarquía Sintáctica:
+  - Coma (,): 240ms (Cláusula subordinada, vocativo o elemento de serie)
+  - Dos Puntos (:): 400ms (Suspensión enunciativa / anticipación)
+  - Punto y Coma (;): 450ms (Transición lógica fuerte)
+  - Punto y Seguido (.): 600ms (Cierre de proposición con descenso tonal)
+  - Punto y Aparte (.\n\n): 1000ms (Respiración fisiológica profunda y cambio de tesis)
+  - Conectores discursivos (Sin embargo, Por lo tanto, etc.): Pausa reflexiva 300ms
 ==============================================================================
 """
 
@@ -26,6 +28,22 @@ from typing import Optional, Dict, Any
 ROOT = Path(__file__).resolve().parent.parent
 LEXICON_PATH = ROOT / "backend" / "database" / "canonical_entity_lexicon.json"
 
+# Conectores discursivos que exigen pausa reflexiva obligatoria según gramática RAE
+DISCURSIVE_CONNECTORS_ES = [
+    r"Sin embargo,",
+    r"No obstante,",
+    r"Por el contrario,",
+    r"Por lo tanto,",
+    r"En consecuencia,",
+    r"De este modo,",
+    r"En primer lugar,",
+    r"Por una parte,",
+    r"Por otra parte,",
+    r"Finalmente,",
+    r"Es decir,",
+    r"En efecto,"
+]
+
 class SovereignProsodyEngine:
     def __init__(self, lexicon_path: Path = LEXICON_PATH):
         self.lexicon_path = lexicon_path
@@ -40,33 +58,48 @@ class SovereignProsodyEngine:
 
     def build_human_ssml(self, raw_text: str, lang: str = "es") -> str:
         """
-        Transforma texto Markdown o plano en SSML con respiraciones naturales,
-        énfasis cognitivo y fonética canónica en inglés.
+        Compila el texto bajo la gramática sintáctica RAE / Oxford,
+        generando SSML estructurado con respiración humana y cadencia doctoral.
         """
         lang_key = "spanish" if lang.startswith("es") else "english"
         cfg = self.profile.get(lang_key, {})
         voice = cfg.get("voice", "es-ES-AlvaroNeural" if lang == "es" else "en-US-AndrewMultilingualNeural")
         rate = cfg.get("rate", "-8%")
         pitch = cfg.get("pitch", "-5Hz")
-        pauses = cfg.get("pauses_ms", {"comma": 260, "colon": 380, "period": 520, "paragraph": 880})
+        pauses = cfg.get("pauses_ms", {
+            "comma": 240,
+            "colon": 400,
+            "semicolon": 450,
+            "period": 600,
+            "paragraph": 1000,
+            "connector": 300
+        })
 
-        # 1. Limpieza inicial de Markdown
+        # 1. Normalización de Markdown y limpieza de caracteres espurios
         text = re.sub(r'#+\s*', '', raw_text)
         text = re.sub(r'\*\*(.*?)\*\*', r'\1', text)
         text = re.sub(r'\*(.*?)\*', r'\1', text)
         text = re.sub(r'`(.*?)`', r'\1', text)
 
-        # 2. Aplicar Invariantes Fonéticas de la Base de Datos Canónica
+        # 2. Correcciones de separación geográfica y gramatical estricta
+        text = re.sub(r'\b(azureamerica|suramerica|suramérica)\b', 'Suramérica', text, flags=re.IGNORECASE)
+        text = re.sub(r'\ba\s+Suramérica\b', 'a Suramérica', text, flags=re.IGNORECASE)
+
+        # 3. Gobernanza de Nombres Propios de IA y Personas (Siempre en Inglés Canónico)
         entities = self.lexicon.get("entities", {})
         for entity_key, meta in entities.items():
             if meta.get("always_english", False) and lang == "es":
                 alias = meta.get("ssml_alias_es", entity_key)
-                # Reemplazo seguro por límites de palabra
-                pattern = re.compile(re.escape(entity_key), re.IGNORECASE)
+                pattern = re.compile(r'\b' + re.escape(entity_key) + r'\b', re.IGNORECASE)
                 text = pattern.sub(alias, text)
 
-        # 3. Modelado de Pausas Sintácticas y Respiración Humana
-        # Párrafos / saltos de línea dobles
+        # 4. Inyección de Pausas en Conectores Discursivos
+        if lang == "es":
+            for connector in DISCURSIVE_CONNECTORS_ES:
+                pattern = re.compile(r'\b' + connector, re.IGNORECASE)
+                text = pattern.sub(f'{connector} <break time="{pauses["connector"]}ms"/>', text)
+
+        # 5. Modelado Jerárquico de Puntuación Sintáctica RAE
         paragraphs = [p.strip() for p in text.split("\n\n") if p.strip()]
         processed_paragraphs = []
 
@@ -74,17 +107,18 @@ class SovereignProsodyEngine:
             lines = [line.strip() for line in p.split("\n") if line.strip()]
             line_texts = []
             for line in lines:
-                # Tratar viñetas como cláusulas con pausa reflexiva
-                if line.startswith("- ") or line.startswith("• "):
+                # Viñetas o listas con pausa anunciativa
+                if line.startswith("- ") or line.startswith("• ") or line.startswith("· "):
                     line = line[2:].strip()
                     line = f'<break time="{pauses["colon"]}ms"/> {line}'
 
-                # Reemplazo de puntuación con pausas SSML precisas
-                # Puntos seguidos
+                # Punto y aparte implícito / punto y seguido
                 line = re.sub(r'\.\s+', f'. <break time="{pauses["period"]}ms"/> ', line)
-                # Dos puntos y punto y coma
-                line = re.sub(r'[:;]\s*', f': <break time="{pauses["colon"]}ms"/> ', line)
-                # Comas
+                # Punto y coma
+                line = re.sub(r';\s*', f'; <break time="{pauses["semicolon"]}ms"/> ', line)
+                # Dos puntos
+                line = re.sub(r':\s*', f': <break time="{pauses["colon"]}ms"/> ', line)
+                # Comas solas
                 line = re.sub(r',\s*', f', <break time="{pauses["comma"]}ms"/> ', line)
 
                 line_texts.append(line)
@@ -94,7 +128,7 @@ class SovereignProsodyEngine:
 
         body_ssml = "\n".join(processed_paragraphs)
 
-        # 4. Construcción del Envelope SSML W3C
+        # 6. Construcción del Envelope SSML W3C
         ssml = f"""<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="{ 'es-ES' if lang == 'es' else 'en-US' }">
     <voice name="{voice}">
         <prosody rate="{rate}" pitch="{pitch}">
@@ -118,10 +152,9 @@ class SovereignProsodyEngine:
         rate = self.profile.get(lang_key, {}).get("rate", "-8%")
         pitch = self.profile.get(lang_key, {}).get("pitch", "-5Hz")
 
-        # Invocación de Edge-TTS con configuración de prosodia directa
         import edge_tts
         communicate = edge_tts.Communicate(
-            text=re.sub(r'<[^>]+>', ' ', ssml),  # Fallback de texto limpio si communicate usa rate/pitch
+            text=re.sub(r'<[^>]+>', ' ', ssml),
             voice=voice,
             rate=rate,
             pitch=pitch

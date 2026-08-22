@@ -29,9 +29,10 @@ RUNTIME.mkdir(parents=True, exist_ok=True)
 WIDTH, HEIGHT = 1920, 1080
 FPS = 25
 
-# Importar motor cósmico
+# Importar motor cósmico y de prosodia
 sys.path.insert(0, str(ROOT / "scripts"))
 from cosmic_universe_engine import render_cosmic_universe_frame
+from sovereign_audio_prosody_engine import SovereignProsodyEngine
 
 # ─── CONTENIDO DE LOS MÓDULOS EN ESPAÑOL E INGLÉS ────────────────────────────
 

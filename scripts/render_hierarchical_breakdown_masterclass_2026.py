@@ -72,7 +72,7 @@ HIERARCHICAL_MODULES = [
         "badge": "MODELOS AMERICANOS",
         "title": "Catálogo Exhaustivo: Ecosistema de Estados Unidos",
         "concept": "Orquestación Multi-Proveedor de Motores Americanos",
-        "speech_text": "Nuestra plataforma se conecta de forma nativa con los principales modelos de Estados Unidos. En OpenAI: GPT-4o, GPT-4o mini, o1, o3-mini, DALL·E 3, Sora y Whisper. En Google DeepMind: Gemini 2.0 Flash, Gemini 1.5 Pro, Imagen 3 y Gemma 2. En Anthropic: Claude 3.5 Sonnet, Claude 3.5 Haiku y Claude 3 Opus. En Meta: Llama 3.1, 3.2 y 3.3. En xAI: Grok-2 y Grok-3. Y motores empresariales como Command R+ de Cohere y Amazon Nova.",
+        "speech_text": "Nuestra plataforma se conecta de forma nativa con los principales modelos de Estados Unidos. En OpenAI: GPT-4o, GPT-4o mini, O-One, O-Three-mini, DALL·E 3, Sora y Whisper. En Google DeepMind: Gemini 2.0 Flash, Gemini 1.5 Pro, Imagen 3 y Gemma 2. En Anthropic: Claude 3.5 Sonnet, Claude 3.5 Haiku y Claude 3 Opus. En Meta: Llama 3.1, Llama 3.2 y Llama 3.3. En xAI: Grok-2 y Grok-3. Y motores empresariales como Command R-Plus de Cohere y Amazon Nova.",
         "display_lines": [
             ("TITLE", "AMERICAN ARTIFICIAL INTELLIGENCE MATRIX"),
             ("HEADER", "• OpenAI:"),
@@ -93,7 +93,7 @@ HIERARCHICAL_MODULES = [
         "badge": "MODELOS CHINOS",
         "title": "Catálogo Exhaustivo: Ecosistema Abierto de Oriente",
         "concept": "Modelos Abiertos de Asia con Fonética Original en Inglés",
-        "speech_text": "Asimismo, integramos los motores más potentes de Oriente. En DeepSeek: DeepSeek-V3, DeepSeek-R1, DeepSeek-Coder y DeepSeek-VL. En Alibaba Cloud: Qwen 2.5, Qwen-VL y Qwen-Max. En Baidu: Ernie Bot y Ernie 4.0 Turbo. En Zhipu AI: ChatGLM, GLM-4 y GLM-4-Voice. En Tencent: Hunyuan Video y Hunyuan Large. En Moonshot AI: Kimi. En 01.AI: Yi-Lightning, Yi-1.5 y Yi-Large de Kai-Fu Lee. En SenseTime: SenseNova. Y en MiniMax: abab 6.5 y Hailuo AI.",
+        "speech_text": "Asimismo, integramos los motores más potentes de Oriente. En Deep-Seek: Deep-Seek V3, Deep-Seek R-One, Deep-Seek Coder y Deep-Seek V-L. En Alibaba Cloud: Qwen 2.5, Qwen V-L y Qwen Max. En Baidu: Ernie Bot y Ernie 4.0 Turbo. En Zhipu AI: Chat-GLM, G-L-M 4 y G-L-M 4 Voice. En Tencent: Hunyuan Video y Hunyuan Large. En Moonshot AI: Kimi. En Zero-One AI: Yi-Lightning, Yi 1.5 y Yi Large de Kai-Fu Lee. En SenseTime: Sense-Nova. Y en Mini-Max: abab 6.5 y Hailuo AI.",
         "display_lines": [
             ("TITLE", "CHINESE OPEN-WEIGHT AI MATRIX"),
             ("HEADER", "• DeepSeek:"),

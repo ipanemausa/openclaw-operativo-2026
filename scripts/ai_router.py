@@ -188,7 +188,14 @@ class AIRouter:
             )
             resp.raise_for_status()
             data = resp.json()
-            content = data["choices"][0]["message"]["content"]
+            if "choices" in data and len(data["choices"]) > 0:
+                content = data["choices"][0]["message"]["content"]
+            elif "error" in data:
+                err_msg = data["error"].get("message", str(data["error"]))
+                raise ValueError(f"Provider Error: {err_msg}")
+            else:
+                raise ValueError(f"Invalid API response structure: {str(data)[:200]}")
+
             tokens = data.get("usage", {}).get("total_tokens", 0)
             latency = int((time.time() - t0) * 1000)
 
@@ -200,15 +207,12 @@ class AIRouter:
                 "success": True,
             }
 
-        except requests.exceptions.HTTPError as e:
-            return {
-                "model": cfg["id"],
-                "response": f"HTTP ERROR {e.response.status_code}: {e.response.text[:300]}",
-                "tokens": 0,
-                "latency_ms": int((time.time() - t0) * 1000),
-                "success": False,
-            }
         except Exception as e:
+            # Auto-fallback to DeepSeek if primary model failed
+            if model_key != "deepseek" and os.getenv("DEEPSEEK_API_KEY"):
+                print(f"[ROUTER FALLBACK] {cfg['id']} fallo ({e}). Reintentando con DeepSeek...")
+                return self.call(prompt, task_type, system, model_override="deepseek")
+
             return {
                 "model": cfg["id"],
                 "response": f"ERROR: {str(e)}",

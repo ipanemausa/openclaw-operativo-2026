@@ -86,16 +86,18 @@ Siempre que el usuario solicite un cierre, respaldo, o diga frases como "hacer b
 
 ---
 
-## Protocolo Permanente de Producción Audiovisual Resiliente (Pipeline Video 2026)
+## Protocolo Permanente de Producción Audiovisual Resiliente & Gobernanza Lingüística RAE / Oxford
 
 Para producción autónoma diaria de video sin intervención ni ajustes manuales de configuración:
 
-1. **Sub-Pipeline de Video Resiliente:** `powershell -ExecutionPolicy Bypass -File .\scripts\pipeline-video.ps1 -Topic "Tema"`
+1. **Gobernanza Lingüística & Ortográfica Inmutable:**
+   - **Español (Estándar RAE):** Acentuación gráfica estricta, acápites claros, puntuación prosódica y preservación de nombres institucionales (`MinTIC`, `Ruta N`, `Universidad EAFIT`).
+   - **Inglés (Oxford / Chicago Manual):** Nombres de modelos y personas en inglés nativo exacto (`Jensen Huang`, `Dario Amodei`, `GPT-4o`, `Claude 3.5 Sonnet`, `DeepSeek-R1`, `Qwen 2.5`, `GLM-4`, `Hunyuan`, `Kimi`, `Yi-Lightning`, `SenseNova`, `Hailuo AI`).
+   - **Estructura Visual:** Formato **Breakdown Jerárquico con Sangría** de 24px para sub-modelos. PROHIBIDO párrafos apelmazados con listas separadas por comas.
 2. **Normas de Calidad & Paridad Inmutables:**
-   - **Avatar:** Soul Cast de Guillermo HD con GFPGAN y logo HB Jewelry en lado izquierdo (`x: 60px`).
-   - **Fondo:** Luna 3D Realista + Círculo Morado Estético + Aura Dorada Suave (`GaussianBlur(30)`).
-   - **Teleprompter:** Mitad derecha (`\pos(1280,380)`), fuente Montserrat 52pt, resalte dorado Karaoke por palabra.
-   - **Audio:** Voz estéreo 48kHz (`es-MX-JorgeNeural` / `en-US-GuyNeural`), normalizado a -16 LUFS EBU R128.
+   - **Avatar:** Silueta de Guillermo HD en PNG transparente con logotipo oficial `HB.OS (SOVEREIGN AI)` estampado directamente en los píxeles de la tela (cero cajas ni capas flotantes desfasadas).
+   - **Fondo:** Cinemática cósmica continua con 180 partículas de paralaje suave y barra superior flotante minimalista.
+   - **Audio:** Voz estéreo 48kHz (-16 LUFS EBU R128), cadencia pausada (-10% rate) con respiración natural (250ms a 500ms entre acápites).
    - **Streaming:** FastStart MP4 (`-movflags +faststart`) activado para 0 buffer en navegadores.
    - **Paridad Bilingüe:** 100% paridad 1 a 1 de duración exacta entre Español e Inglés.
 

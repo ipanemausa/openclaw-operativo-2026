@@ -1,0 +1,67 @@
+{
+  "matrix_version": "2026.8.0",
+  "name": "OpenClaw Linguistic, Orthographic & Phonetic Master Matrix",
+  "governance_standards": ["RAE (Real Academia Española)", "Oxford English Dictionary / Chicago Manual of Style", "EBU R128 Audio Broadcast"],
+  
+  "spanish_rae_rules": {
+    "accentuation_invariants": {
+      "soberania": "soberanía",
+      "inteligencia_artificial": "inteligencia artificial (sin mayúsculas injustificadas)",
+      "caracteristicas": "características",
+      "alianza": "alianza",
+      "poblacion": "población",
+      "ubicacion": "ubicación",
+      "bioceanica": "bioceánica",
+      "maximo": "máximo",
+      "estandar": "estándar",
+      "matematica": "matemática",
+      "pais": "país",
+      "paises": "países"
+    },
+    "institutional_proper_nouns": {
+      "MinTIC": "Ministerio de Tecnologías de la Información y las Comunicaciones (MinTIC)",
+      "Ruta_N": "Corporación Ruta N Medellín",
+      "EAFIT": "Universidad EAFIT",
+      "NVIDIA": "NVIDIA Corporation",
+      "Anthropic": "Anthropic PBC",
+      "OpenAI": "OpenAI",
+      "Google_DeepMind": "Google DeepMind"
+    },
+    "technical_foreign_terms_policy": "Los extranjerismos crudos y nombres propios tecnológicos (Guardrails, Zero-Licensing, Open-Weight, Framework, Pipeline) deben mantener su grafía original en inglés sin deformaciones ortográficas ni fonéticas espurias."
+  },
+
+  "phonetic_pronunciation_lexicon": {
+    "american_entities": {
+      "Jensen Huang": {"ipa": "ˈdʒɛnsən hwɑːŋ", "phonetic_hint": "Yen-sen Juang"},
+      "Dario Amodei": {"ipa": "ˈdɑːrioʊ ˌæmoʊˈdeɪ", "phonetic_hint": "Dario A-mo-dey"},
+      "GPT-4o": {"ipa": "dʒiː piː tiː fɔːr oʊ", "phonetic_hint": "Yipiti Four-Ou"},
+      "Claude 3.5 Sonnet": {"ipa": "klɔːd θriː pɔɪnt faɪv ˈsɒnɪt", "phonetic_hint": "Clod Three Point Five Sonet"},
+      "Gemini 2.0 Flash": {"ipa": "ˈdʒɛmɪnaɪ tuː pɔɪnt oʊ flæʃ", "phonetic_hint": "Yéminai Two Point Ou Flash"},
+      "Llama 3.3": {"ipa": "ˈlɑːmə θriː pɔɪnt θriː", "phonetic_hint": "Lama Three Point Three"},
+      "Grok-3": {"ipa": "ɡrɒk θriː", "phonetic_hint": "Grok Three"},
+      "Command R+": {"ipa": "kəˈmænd ɑːr plʌs", "phonetic_hint": "Comand Ar Plas"}
+    },
+    "chinese_entities": {
+      "DeepSeek": {"ipa": "diːp siːk", "phonetic_hint": "Dip-Seek"},
+      "DeepSeek-R1": {"ipa": "diːp siːk ɑːr wʌn", "phonetic_hint": "Dip-Seek Ar-One"},
+      "Qwen": {"ipa": "kwɛn", "phonetic_hint": "Kwen"},
+      "Qwen 2.5": {"ipa": "kwɛn tuː pɔɪnt faɪv", "phonetic_hint": "Kwen Two Point Five"},
+      "Ernie Bot": {"ipa": "ˈɜːrni bɒt", "phonetic_hint": "Er-ni Bot"},
+      "ChatGLM / GLM-4": {"ipa": "dʒiː ɛl ɛm fɔːr", "phonetic_hint": "Yi-El-Em Four"},
+      "Hunyuan": {"ipa": "hʊn jwæn", "phonetic_hint": "Hun-yuan"},
+      "Kimi": {"ipa": "ˈkiːmi", "phonetic_hint": "Ki-mi"},
+      "Yi-Lightning": {"ipa": "jiː ˈlaɪtnɪŋ", "phonetic_hint": "Yi-Laitning"},
+      "SenseNova": {"ipa": "sɛns ˈnoʊvə", "phonetic_hint": "Sens-Nova"},
+      "Hailuo AI": {"ipa": "haɪ lwoʊ eɪ aɪ", "phonetic_hint": "Jai-luo Ei-Ai"}
+    }
+  },
+
+  "breakdown_display_architecture": {
+    "rules": [
+      "PROHIBIDO párrafos densos con listas separadas por comas.",
+      "OBLIGATORIO estructura jerárquica con sangría de 24px para submodelos.",
+      "Cada entidad tecnológica debe tener su línea de encabezado destacada en color oro #FFD700.",
+      "Cada sub-modelo debe mostrar viñetas sutiles (·) con contraste visual AA (ratio > 4.5:1)."
+    ]
+  }
+}

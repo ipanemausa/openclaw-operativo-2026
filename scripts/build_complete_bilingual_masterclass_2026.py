@@ -69,9 +69,9 @@ BILINGUAL_MODULES = [
         "title_en": "Leading American Artificial Intelligence Models",
         "concept_es": "OpenAI, Google DeepMind, Anthropic, Meta, xAI, Cohere y Amazon",
         "concept_en": "OpenAI, Google DeepMind, Anthropic, Meta, xAI, Cohere & Amazon",
-        "text_es": "Nuestra plataforma se conecta con los principales modelos de Estados Unidos: OpenAI con GPT-4o, o1, o3-mini, Sora y Whisper. Google DeepMind con Gemini 2.0 Flash, Gemini 1.5 Pro y Gemma 2. Anthropic con Claude 3.5 Sonnet y Opus. Meta con Llama 3.1 y 3.3. xAI con Grok-2 y Grok-3. Y modelos empresariales como Command R+ de Cohere y Amazon Nova.",
-        "text_en": "Our platform connects directly to leading American AI models: OpenAI with GPT-4o, o1, o3-mini, Sora and Whisper. Google DeepMind with Gemini 2.0 Flash, Gemini 1.5 Pro and Gemma 2. Anthropic with Claude 3.5 Sonnet and Opus. Meta with Llama 3.1 and 3.3. xAI with Grok-2 and Grok-3. And enterprise engines like Cohere Command R+ and Amazon Nova.",
-        "sub_en": "Full orchestration of American AI: OpenAI, Gemini 2.0, Claude 3.5 Sonnet, Llama 3.3, Grok-3 and Cohere."
+        "text_es": "Nuestra plataforma se conecta de forma nativa con los principales modelos de Estados Unidos. En OpenAI: GPT-4o, o1, o3-mini, Sora y Whisper. En Google DeepMind: Gemini 2.0 Flash, Gemini 1.5 Pro y Gemma 2. En Anthropic: Claude Sonnet 4.6 y Claude 3.5 Sonnet, que utilizamos en Antigravity para razonamiento de alto nivel y generación de artefactos, antes de ejecutar el Handoff automático a modelos de código abierto. En Meta: Llama 3.1, Llama 3.2 y Llama 3.3. En xAI: Grok-2 y Grok-3. Y modelos empresariales como Command R+ de Cohere y Amazon Nova.",
+        "text_en": "Our platform connects directly to leading American AI models: OpenAI with GPT-4o, o1, o3-mini, Sora and Whisper. Google DeepMind with Gemini 2.0 Flash, Gemini 1.5 Pro and Gemma 2. Anthropic with Claude Sonnet 4.6 and Claude 3.5 Sonnet, which we leverage in Antigravity for frontier reasoning and artifact generation before executing automated Handoff to open-source models. Meta with Llama 3.1 and 3.3. xAI with Grok-2 and Grok-3. And enterprise engines like Cohere Command R+ and Amazon Nova.",
+        "sub_en": "Orchestrating Claude Sonnet 4.6 in Antigravity with automated Handoff to open-source models at zero licensing fees."
     },
     {
         "num": "04",
@@ -81,7 +81,7 @@ BILINGUAL_MODULES = [
         "title_en": "Leading Chinese & Asian Open-Weight AI Models",
         "concept_es": "DeepSeek, Alibaba Qwen, Baidu Ernie, Zhipu GLM, Tencent y Kimi",
         "concept_en": "DeepSeek, Alibaba Qwen, Baidu Ernie, Zhipu GLM, Tencent & Kimi",
-        "text_es": "Asimismo, integramos los motores más avanzados de Oriente: DeepSeek con DeepSeek-V3, R1 y Coder. Alibaba Cloud con Qwen 2.5 y Qwen-Max. Baidu con Ernie 4.0 Turbo. Zhipu AI con GLM-4. Tencent con Hunyuan Large y Hunyuan Video. Moonshot AI con Kimi. 01.AI con Yi-Lightning de Kai-Fu Lee. SenseTime con SenseNova y MiniMax con Hailuo AI.",
+        "text_es": "Asimismo, integramos los motores más avanzados de Oriente. En DeepSeek: DeepSeek-V3, DeepSeek-R1 y DeepSeek Coder. En Alibaba Cloud: Qwen 2.5 y Qwen-Max. En Baidu: Ernie 4.0 Turbo. En Zhipu AI: GLM-4. En Tencent: Hunyuan Large y Hunyuan Video. En Moonshot AI: Kimi. En 01.AI: Yi-Lightning de Kai-Fu Lee. Y en visión y video: SenseNova de SenseTime y Hailuo AI de MiniMax.",
         "text_en": "Likewise, we integrate top open-weight engines from Asia: DeepSeek with DeepSeek-V3, R1 and Coder. Alibaba Cloud with Qwen 2.5 and Qwen-Max. Baidu with Ernie 4.0 Turbo. Zhipu AI with GLM-4. Tencent with Hunyuan Large and Video. Moonshot AI with Kimi. 01.AI with Yi-Lightning. SenseTime with SenseNova and MiniMax with Hailuo AI.",
         "sub_en": "Full orchestration of Chinese AI: DeepSeek-R1, Qwen 2.5, GLM-4, Hunyuan, Kimi and Yi-Lightning."
     },

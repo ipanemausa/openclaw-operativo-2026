@@ -1,20 +1,23 @@
 {
-  "matrix_version": "2026.8.2",
-  "engine_name": "OpenClaw Sovereign Entity, Grammar & Phonetic Lexicon Matrix",
+  "matrix_version": "2026.8.3",
+  "engine_name": "OpenClaw Sovereign Entity, Colombian Prosody & Phonetic Lexicon Matrix",
   "standards": [
     "W3C SSML 1.1 (Speech Synthesis Markup Language)",
     "International Phonetic Alphabet (IPA)",
-    "RAE (Real Academia Española) — Sintaxis, Puntuación y Acentuación",
-    "Oxford English / Chicago Manual of Style",
+    "RAE (Real Academia Española) — Sintaxis y Puntuación",
+    "Oxford English / Chicago Manual of Style — Nombres de Modelos SIEMPRE en Inglés Canónico",
+    "Acento Colombiano Paisa (Medellín) — Calidez, Cercanía y Autoridad Reflexiva",
     "EBU R128 Broadcast Audio (-16 LUFS, 48kHz Stereo)"
   ],
   "syntax_and_punctuation_rules": {
+    "model_item_pause_ms": 450,
+    "company_group_pause_ms": 900,
     "comma_pause_ms": 240,
-    "semicolon_pause_ms": 450,
-    "colon_pause_ms": 400,
-    "period_pause_ms": 600,
-    "paragraph_pause_ms": 1000,
-    "discursive_connector_pause_ms": 300
+    "semicolon_pause_ms": 480,
+    "colon_pause_ms": 420,
+    "period_pause_ms": 650,
+    "paragraph_pause_ms": 1100,
+    "discursive_connector_pause_ms": 320
   },
   "article_governance": {
     "corporate_models_no_article": ["OpenAI", "Anthropic", "Google DeepMind", "Meta", "xAI", "Cohere", "DeepSeek", "Alibaba Qwen"],
@@ -31,18 +34,20 @@
   },
   "audience_cadence_profiles": {
     "executive_academic_b2b": {
-      "description": "Dirigido a rectores, decanos, directores de entidades gubernamentales, inversionistas y empresarios C-Suite.",
+      "description": "Acento Colombiano Paisa Auténtico (Guillermo / Medellín) con pronunciación de tecnología 100% en Inglés Canónico.",
       "spanish": {
         "rate": "-8%",
-        "pitch": "-5Hz",
-        "voice": "es-ES-AlvaroNeural",
+        "pitch": "-4Hz",
+        "voice": "es-CO-GonzaloNeural",
         "pauses_ms": {
+          "model_item": 450,
+          "company_group": 900,
           "comma": 240,
-          "colon": 400,
-          "semicolon": 450,
-          "period": 600,
-          "paragraph": 1000,
-          "connector": 300
+          "colon": 420,
+          "semicolon": 480,
+          "period": 650,
+          "paragraph": 1100,
+          "connector": 320
         }
       },
       "english": {
@@ -50,85 +55,204 @@
         "pitch": "-3Hz",
         "voice": "en-US-AndrewMultilingualNeural",
         "pauses_ms": {
+          "model_item": 400,
+          "company_group": 850,
           "comma": 240,
           "colon": 380,
-          "semicolon": 420,
-          "period": 550,
-          "paragraph": 900,
+          "semicolon": 450,
+          "period": 600,
+          "paragraph": 950,
           "connector": 280
         }
       }
     }
   },
   "entities": {
+    "GPT-4o mini": {
+      "canonical_name": "GPT-4o mini",
+      "category": "ai_model",
+      "ssml_alias_es": "GPT Four-O Mini",
+      "ssml_alias_en": "GPT-4o mini",
+      "always_english": true
+    },
+    "GPT-4o": {
+      "canonical_name": "GPT-4o",
+      "category": "ai_model",
+      "ssml_alias_es": "GPT Four-O",
+      "ssml_alias_en": "GPT-4o",
+      "always_english": true
+    },
+    "o3-mini": {
+      "canonical_name": "o3-mini",
+      "category": "ai_model",
+      "ssml_alias_es": "O Three Mini",
+      "ssml_alias_en": "o3-mini",
+      "always_english": true
+    },
+    "o1": {
+      "canonical_name": "o1",
+      "category": "ai_model",
+      "ssml_alias_es": "O-One",
+      "ssml_alias_en": "o1",
+      "always_english": true
+    },
+    "Claude Sonnet 4.6": {
+      "canonical_name": "Claude Sonnet 4.6",
+      "category": "ai_model",
+      "ssml_alias_es": "Claude Sonnet Four Point Six",
+      "ssml_alias_en": "Claude Sonnet 4.6",
+      "always_english": true
+    },
+    "Claude 3.5 Sonnet": {
+      "canonical_name": "Claude 3.5 Sonnet",
+      "category": "ai_model",
+      "ssml_alias_es": "Claude Three Point Five Sonnet",
+      "ssml_alias_en": "Claude 3.5 Sonnet",
+      "always_english": true
+    },
+    "Claude 3.5 Haiku": {
+      "canonical_name": "Claude 3.5 Haiku",
+      "category": "ai_model",
+      "ssml_alias_es": "Claude Three Point Five Haiku",
+      "ssml_alias_en": "Claude 3.5 Haiku",
+      "always_english": true
+    },
+    "Claude 3 Opus": {
+      "canonical_name": "Claude 3 Opus",
+      "category": "ai_model",
+      "ssml_alias_es": "Claude Three Opus",
+      "ssml_alias_en": "Claude 3 Opus",
+      "always_english": true
+    },
+    "Gemini 2.0 Flash": {
+      "canonical_name": "Gemini 2.0 Flash",
+      "category": "ai_model",
+      "ssml_alias_es": "Gemini Two Point Zero Flash",
+      "ssml_alias_en": "Gemini 2.0 Flash",
+      "always_english": true
+    },
+    "Gemini 1.5 Pro": {
+      "canonical_name": "Gemini 1.5 Pro",
+      "category": "ai_model",
+      "ssml_alias_es": "Gemini One Point Five Pro",
+      "ssml_alias_en": "Gemini 1.5 Pro",
+      "always_english": true
+    },
+    "Gemma 2": {
+      "canonical_name": "Gemma 2",
+      "category": "ai_model",
+      "ssml_alias_es": "Gemma Two",
+      "ssml_alias_en": "Gemma 2",
+      "always_english": true
+    },
+    "Llama 3.3": {
+      "canonical_name": "Llama 3.3",
+      "category": "ai_model",
+      "ssml_alias_es": "Llama Three Point Three",
+      "ssml_alias_en": "Llama 3.3",
+      "always_english": true
+    },
+    "Llama 3.2": {
+      "canonical_name": "Llama 3.2",
+      "category": "ai_model",
+      "ssml_alias_es": "Llama Three Point Two",
+      "ssml_alias_en": "Llama 3.2",
+      "always_english": true
+    },
+    "Llama 3.1": {
+      "canonical_name": "Llama 3.1",
+      "category": "ai_model",
+      "ssml_alias_es": "Llama Three Point One",
+      "ssml_alias_en": "Llama 3.1",
+      "always_english": true
+    },
+    "Grok-3": {
+      "canonical_name": "Grok-3",
+      "category": "ai_model",
+      "ssml_alias_es": "Grok Three",
+      "ssml_alias_en": "Grok-3",
+      "always_english": true
+    },
+    "Grok-2": {
+      "canonical_name": "Grok-2",
+      "category": "ai_model",
+      "ssml_alias_es": "Grok Two",
+      "ssml_alias_en": "Grok-2",
+      "always_english": true
+    },
+    "Command R+": {
+      "canonical_name": "Command R+",
+      "category": "ai_model",
+      "ssml_alias_es": "Command R-Plus",
+      "ssml_alias_en": "Command R+",
+      "always_english": true
+    },
+    "Amazon Nova": {
+      "canonical_name": "Amazon Nova",
+      "category": "ai_model",
+      "ssml_alias_es": "Amazon Nova",
+      "ssml_alias_en": "Amazon Nova",
+      "always_english": true
+    },
     "DeepSeek-R1": {
       "canonical_name": "DeepSeek-R1",
       "category": "ai_model",
-      "ipa": "diːp siːk ɑːr wʌn",
-      "ssml_alias_es": "Dip Sik Ar One",
+      "ssml_alias_es": "DeepSeek R-One",
       "ssml_alias_en": "DeepSeek R1",
       "always_english": true
     },
     "DeepSeek-V3": {
       "canonical_name": "DeepSeek-V3",
       "category": "ai_model",
-      "ipa": "diːp siːk viː θriː",
-      "ssml_alias_es": "Dip Sik Vi Three",
+      "ssml_alias_es": "DeepSeek V-Three",
       "ssml_alias_en": "DeepSeek V3",
-      "always_english": true
-    },
-    "Claude 3.5 Sonnet": {
-      "canonical_name": "Claude 3.5 Sonnet",
-      "category": "ai_model",
-      "ipa": "klɔːd θriː pɔɪnt faɪv ˈsɒnɪt",
-      "ssml_alias_es": "Clod Three Point Five Sonet",
-      "ssml_alias_en": "Claude 3.5 Sonnet",
-      "always_english": true
-    },
-    "GPT-4o": {
-      "canonical_name": "GPT-4o",
-      "category": "ai_model",
-      "ipa": "dʒiː piː tiː fɔːr oʊ",
-      "ssml_alias_es": "Yipiti Four-Ou",
-      "ssml_alias_en": "GPT-4o",
       "always_english": true
     },
     "Qwen 2.5": {
       "canonical_name": "Qwen 2.5",
       "category": "ai_model",
-      "ipa": "kwɛn tuː pɔɪnt faɪv",
-      "ssml_alias_es": "Kwen Two Point Five",
+      "ssml_alias_es": "Qwen Two Point Five",
       "ssml_alias_en": "Qwen 2.5",
       "always_english": true
     },
     "Qwen-Max": {
       "canonical_name": "Qwen-Max",
       "category": "ai_model",
-      "ipa": "kwɛn mæks",
-      "ssml_alias_es": "Kwen Max",
+      "ssml_alias_es": "Qwen Max",
       "ssml_alias_en": "Qwen Max",
+      "always_english": true
+    },
+    "Ernie 4.0 Turbo": {
+      "canonical_name": "Ernie 4.0 Turbo",
+      "category": "ai_model",
+      "ssml_alias_es": "Ernie Four Point Zero Turbo",
+      "ssml_alias_en": "Ernie 4.0 Turbo",
       "always_english": true
     },
     "GLM-4": {
       "canonical_name": "GLM-4",
       "category": "ai_model",
-      "ipa": "dʒiː ɛl ɛm fɔːr",
-      "ssml_alias_es": "Yi El Em Four",
+      "ssml_alias_es": "G L M Four",
       "ssml_alias_en": "GLM-4",
       "always_english": true
     },
-    "Hunyuan": {
-      "canonical_name": "Hunyuan",
+    "Hunyuan Large": {
+      "canonical_name": "Hunyuan Large",
       "category": "ai_model",
-      "ipa": "hʊn jwæn",
-      "ssml_alias_es": "Hun-yuan",
-      "ssml_alias_en": "Hunyuan",
+      "ssml_alias_es": "Hunyuan Large",
+      "ssml_alias_en": "Hunyuan Large",
+      "always_english": true
+    },
+    "Hunyuan Video": {
+      "canonical_name": "Hunyuan Video",
+      "category": "ai_model",
+      "ssml_alias_es": "Hunyuan Video",
+      "ssml_alias_en": "Hunyuan Video",
       "always_english": true
     },
     "Kimi": {
       "canonical_name": "Kimi",
       "category": "ai_model",
-      "ipa": "ˈkiːmi",
       "ssml_alias_es": "Kimi",
       "ssml_alias_en": "Kimi",
       "always_english": true
@@ -136,7 +260,6 @@
     "Yi-Lightning": {
       "canonical_name": "Yi-Lightning",
       "category": "ai_model",
-      "ipa": "jiː ˈlaɪtnɪŋ",
       "ssml_alias_es": "Yi Lightning",
       "ssml_alias_en": "Yi Lightning",
       "always_english": true
@@ -144,57 +267,50 @@
     "SenseNova": {
       "canonical_name": "SenseNova",
       "category": "ai_model",
-      "ipa": "sɛns ˈnoʊvə",
-      "ssml_alias_es": "Sens Nova",
+      "ssml_alias_es": "SenseNova",
       "ssml_alias_en": "SenseNova",
       "always_english": true
     },
     "Hailuo AI": {
       "canonical_name": "Hailuo AI",
       "category": "ai_model",
-      "ipa": "haɪ lwoʊ eɪ aɪ",
-      "ssml_alias_es": "Jai luo Ei Ai",
+      "ssml_alias_es": "Hailuo A I",
       "ssml_alias_en": "Hailuo AI",
       "always_english": true
     },
     "Jensen Huang": {
       "canonical_name": "Jensen Huang",
       "category": "person",
-      "ipa": "ˈdʒɛnsən hwɑːŋ",
-      "ssml_alias_es": "Yensen Juang",
+      "ssml_alias_es": "Jensen Huang",
       "ssml_alias_en": "Jensen Huang",
       "always_english": true
     },
     "Dario Amodei": {
       "canonical_name": "Dario Amodei",
       "category": "person",
-      "ipa": "ˈdɑːrioʊ ˌæmoʊˈdeɪ",
-      "ssml_alias_es": "Dario Amodey",
+      "ssml_alias_es": "Dario Amodei",
       "ssml_alias_en": "Dario Amodei",
       "always_english": true
     },
     "MinTIC": {
       "canonical_name": "MinTIC",
       "category": "institution",
-      "ipa": "min tik",
       "ssml_alias_es": "MinTIC",
-      "ssml_alias_en": "MinTIC Colombia",
+      "ssml_alias_en": "MinTIC",
       "always_english": false
     },
     "Ruta N": {
       "canonical_name": "Ruta N",
       "category": "institution",
-      "ipa": "ˈru.ta ˈen.e",
       "ssml_alias_es": "Ruta N",
-      "ssml_alias_en": "Ruta N Medellín",
+      "ssml_alias_en": "Ruta N",
       "always_english": false
     },
-    "Universidad EAFIT": {
-      "canonical_name": "Universidad EAFIT",
+    "EAFIT": {
+      "canonical_name": "EAFIT",
       "category": "institution",
-      "ipa": "u.ni.βeɾ.siˈðað eˈa.fit",
-      "ssml_alias_es": "Universidad EAFIT",
-      "ssml_alias_en": "EAFIT University",
+      "ssml_alias_es": "EAFIT",
+      "ssml_alias_en": "EAFIT",
       "always_english": false
     }
   }

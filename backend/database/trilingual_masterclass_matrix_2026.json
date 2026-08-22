@@ -1,0 +1,163 @@
+{
+  "version": "2026.8.0",
+  "project": "OpenClaw Masterclass Trilingüe (Español, English, 中文)",
+  "governance": {
+    "spanish": "RAE / Acento Colombiano Paisa (Guillermo)",
+    "english": "Oxford / Silicon Valley Executive (English Canónico)",
+    "chinese": "Mandarín Simplificado (zh-CN) / Alibaba Cloud DashScope CosyVoice"
+  },
+  "modules": [
+    {
+      "num": "01",
+      "badge": {"es": "VISIÓN SOBERANA", "en": "SOVEREIGN VISION", "zh": "主权愿景"},
+      "title": {
+        "es": "La Verdadera Soberanía en Inteligencia Artificial",
+        "en": "True Sovereignty in Artificial Intelligence",
+        "zh": "人工智能的真正主权架构"
+      },
+      "concept": {
+        "es": "Acceso Universal sin Peajes ni Licencias Millonarias",
+        "en": "Universal Access with Zero SaaS Tax and Zero Licensing Fees",
+        "zh": "零软件许可费用与全天候无限自主算力"
+      },
+      "text": {
+        "es": "Hola a todos, les habla Guillermo. Bienvenidos a OpenClaw. Durante años, a las empresas y a los estudiantes les hicieron creer que para usar inteligencia artificial debían pagar costosas licencias en dólares. Hoy demostramos que con rigor, código abierto y arquitectura soberana, podemos operar jornadas continuas de más de doce horas a costo cero de licencias, compitiendo al más alto nivel mundial.",
+        "en": "Hello everyone, this is Guillermo. Welcome to OpenClaw. For years, enterprises and students were told they needed expensive software licenses to access artificial intelligence. Today we demonstrate that with sovereign architecture and open-weight models, we can operate continuously without rate limits at zero licensing costs, competing at the highest global level.",
+        "zh": "大家好，我是吉列尔莫。欢迎来到OpenClaw。多年来，企业和学生被灌输必须支付昂贵的软件许可证才能使用人工智能。今天我们证明，依托自主主权架构与开源权重模型，我们可以全天候无间断运行，以零软件许可成本达到全球顶尖水平。"
+      }
+    },
+    {
+      "num": "02",
+      "badge": {"es": "SÍNTESIS HUANG-AMODEI", "en": "HUANG-AMODEI SYNTHESIS", "zh": "黄仁勋-阿莫代辩证综合"},
+      "title": {
+        "es": "Jensen Huang y Dario Amodei: La Fuerza Resultante",
+        "en": "Jensen Huang & Dario Amodei: The Resultant Force",
+        "zh": "黄仁勋与达里奥·阿莫代：算力与安全的合力"
+      },
+      "concept": {
+        "es": "Potencia de Cómputo de NVIDIA + Guardrails de Seguridad de Anthropic",
+        "en": "NVIDIA Massive Compute Scaling + Anthropic Rigorous Safety Guardrails",
+        "zh": "英伟达海量算力扩展与Anthropic严格安全护栏"
+      },
+      "text": {
+        "es": "En la vanguardia mundial conviven dos visiones complementarias. Jensen Huang nos enseña que el cómputo debe escalar sin límites. Dario Amodei nos exige seguridad estricta y control de riesgos. Nuestra arquitectura une ambas fuerzas: aceleramos el procesamiento con GPUs dedicadas en la nube bajo demanda, protegiendo al cien por ciento la privacidad de nuestros datos con Guardrails deterministas.",
+        "en": "At the global forefront, two visions unite. Jensen Huang teaches us to scale compute without limits. Dario Amodei demands strict safety guardrails and risk control. Our architecture combines both forces: accelerating processing with on-demand cloud GPUs while fully protecting proprietary enterprise data with deterministic Guardrails.",
+        "zh": "在全球前沿，两种愿景高度互补。英伟达黄仁勋倡导算力的无限扩展；Anthropic达里奥·阿莫代则强调严格的安全边界与风险控制。我们的架构融合了这两大力量：通过云端按需GPU加速计算，同时利用确定性安全护栏百分之百保护企业数据隐私。"
+      }
+    },
+    {
+      "num": "03",
+      "badge": {"es": "ECOSISTEMA AMERICANO", "en": "AMERICAN AI ECOSYSTEM", "zh": "美国前沿AI生态"},
+      "title": {
+        "es": "Modelos de Estados Unidos y Arbitraje de Recursos",
+        "en": "American AI Models & Resource Arbitrage",
+        "zh": "美国顶尖模型与智能资源套利"
+      },
+      "concept": {
+        "es": "Claude Sonnet 4.6 en Antigravity con Handoff Automático a Open-Source",
+        "en": "Claude Sonnet 4.6 in Antigravity with Automated Handoff to Open-Source",
+        "zh": "利用Claude Sonnet 4.6进行顶层推理并自动切换至开源模型"
+      },
+      "text": {
+        "es": "Nuestra plataforma se conecta de forma nativa con los principales modelos de Estados Unidos. En Anthropic: Claude Sonnet 4.6 y Claude Opus 4.6, que utilizamos en Antigravity para razonamiento de alto nivel y generación de artefactos, antes de ejecutar el Handoff automático a modelos de código abierto a costo cero. En OpenAI: GPT-4o, o1, o3-mini, Sora y Whisper. En Google DeepMind: Gemini 3.7 Flash, Gemini 2.0 y Gemma 2. En Meta: Llama 3.1, Llama 3.2 y Llama 3.3. En xAI: Grok-2 y Grok-3. Y modelos empresariales como Command R+ de Cohere y Amazon Nova.",
+        "en": "Our platform connects directly to leading American AI models. In Anthropic: Claude Sonnet 4.6 and Claude Opus 4.6, which we leverage in Antigravity for frontier reasoning and artifact generation before executing automated Handoff to open-source models at zero cost. In OpenAI: GPT-4o, o1, o3-mini, Sora and Whisper. In Google DeepMind: Gemini 3.7 Flash, Gemini 2.0 and Gemma 2. In Meta: Llama 3.1, 3.2 and 3.3. In xAI: Grok-2 and Grok-3. And enterprise engines like Cohere Command R+ and Amazon Nova.",
+        "zh": "我们的平台原生接入美国顶尖模型。在Anthropic方面：我们在Antigravity中利用Claude Sonnet 4.6与Opus 4.6进行顶层逻辑推理与架构设计，随后自动切换至开源模型进行零成本大规模执行。同时支持OpenAI的GPT-4o与o1、谷歌DeepMind的Gemini 3.7 Flash、Meta的Llama 3.3以及xAI的Grok-3。"
+      }
+    },
+    {
+      "num": "04",
+      "badge": {"es": "ECOSISTEMA ORIENTAL", "en": "CHINESE AI ECOSYSTEM", "zh": "中国与亚洲开源AI生态"},
+      "title": {
+        "es": "Modelos Abiertos de Oriente y Conexión Alibaba Cloud",
+        "en": "Chinese Open-Weight Models & Alibaba Cloud Bridge",
+        "zh": "东方开源模型与阿里云战略桥接"
+      },
+      "concept": {
+        "es": "DeepSeek, Alibaba Qwen 2.5, Baidu Ernie, Zhipu GLM, Tencent y Kimi",
+        "en": "DeepSeek, Alibaba Qwen 2.5, Baidu Ernie, Zhipu GLM, Tencent & Kimi",
+        "zh": "深度求索DeepSeek、阿里千问Qwen 2.5、百度文心、智谱GLM与腾讯混元"
+      },
+      "text": {
+        "es": "Asimismo, integramos los motores más avanzados de Oriente y conectamos directamente con Alibaba Cloud DashScope para el mercado chino y global. En DeepSeek: DeepSeek-V3, DeepSeek-R1 y DeepSeek Coder. En Alibaba Cloud: Qwen 2.5 y Qwen-Max. En Baidu: Ernie 4.0 Turbo. En Zhipu AI: GLM-4. En Tencent: Hunyuan Large y Hunyuan Video. En Moonshot AI: Kimi. En 01.AI: Yi-Lightning de Kai-Fu Lee. Y en visión y video: SenseNova de SenseTime y Hailuo AI de MiniMax.",
+        "en": "Likewise, we integrate top open-weight engines from Asia and connect directly to Alibaba Cloud DashScope for the Chinese and global markets. In DeepSeek: DeepSeek-V3, DeepSeek-R1 and DeepSeek Coder. In Alibaba Cloud: Qwen 2.5 and Qwen-Max. In Baidu: Ernie 4.0 Turbo. In Zhipu AI: GLM-4. In Tencent: Hunyuan Large and Video. In Moonshot AI: Kimi. In 01.AI: Yi-Lightning. And in vision and video: SenseNova and Hailuo AI.",
+        "zh": "同样，我们深度集成东方领先的开源引擎，并通过阿里云灵积平台（DashScope）直接连通中国与全球市场。包括深度求索DeepSeek-R1与V3、阿里通义千问Qwen 2.5与Qwen-Max、百度文心4.0、智谱GLM-4、腾讯混元大模型、月之暗面Kimi、零一万物Yi-Lightning以及MiniMax海螺AI。"
+      }
+    },
+    {
+      "num": "05",
+      "badge": {"es": "VENTAJA ESTRATÉGICA", "en": "STRATEGIC ADVANTAGE", "zh": "战略比较优势"},
+      "title": {
+        "es": "La Ventaja Comparativa de Colombia y Latinoamérica",
+        "en": "The Unique Comparative Advantage of Latin America",
+        "zh": "哥伦比亚与拉美的独特地缘优势"
+      },
+      "concept": {
+        "es": "Libre Acceso a Oriente y Occidente sin Bloqueos Geopolíticos",
+        "en": "Unrestricted Access to Both Eastern & Western AI Without Geopolitical Friction",
+        "zh": "无缝畅享东西方顶尖智能，免受地缘政治摩擦限制"
+      },
+      "text": {
+        "es": "Aquí radica nuestra mayor ventaja: la población en China tiene restricciones para usar modelos americanos, y en Estados Unidos hay barreras crecientes contra los modelos chinos. En Colombia y Latinoamérica tenemos la libertad de usar lo mejor de ambos mundos, combinando la estrategia de razonamiento occidental con la potencia abierta de DeepSeek y Qwen.",
+        "en": "Here lies our greatest comparative advantage: users in China face restrictions accessing American models, while the US faces barriers against Chinese engines. In Colombia and Latin America, we have full freedom to combine the best of both worlds without geopolitical friction, uniting Western reasoning with Asian open-weight power.",
+        "zh": "这正是我们最大的比较优势所在：中国大陆访问部分西方模型存在限制，而美国对东方开源生态设立了越来越多的壁垒。在哥伦比亚与拉丁美洲，我们可以自由融合东西方最顶尖的成果，将西方的逻辑推理与东方DeepSeek及通义千问的海量开源算力完美结合。"
+      }
+    },
+    {
+      "num": "06",
+      "badge": {"es": "GEOPOLÍTICA REGIONAL", "en": "REGIONAL GEOPOLITICS", "zh": "区域地缘与枢纽定位"},
+      "title": {
+        "es": "Colombia: Nodo Bioceánico y Capital del Talento",
+        "en": "Colombia: Bioceanic Hub & Talent Capital",
+        "zh": "哥伦比亚：双洋枢纽与数字人才高地"
+      },
+      "concept": {
+        "es": "Dos Océanos, Puerta a Suramérica y Alta Adopción de IA",
+        "en": "Two Oceans, Gateway to South America & Rapid AI Adoption",
+        "zh": "连接两大洋的南美门户与极速AI技术普及率"
+      },
+      "text": {
+        "es": "Colombia tiene una posición bioceánica privilegiada entre el Pacífico y el Atlántico, cercanía con Norteamérica y entrada a Suramérica. Pero lo más valioso es que nuestra gente tiene un entusiasmo y una velocidad de adopción de la inteligencia artificial superior a la de muchos países desarrollados. El momento de liderar es ahora.",
+        "en": "Colombia holds a strategic bioceanic position between the Pacific and Atlantic oceans, near North America and opening to South America. Even more importantly, our people demonstrate an AI adoption rate and enthusiasm higher than many developed nations. The time to lead is now.",
+        "zh": "哥伦比亚坐拥太平洋与大西洋的双洋战略区位，北接北美，南通南美腹地。更重要的是，我们的人民对人工智能展现出超越许多发达国家的学习热情与普及速度。引领未来的时刻就在当下。"
+      }
+    },
+    {
+      "num": "07",
+      "badge": {"es": "ALIANZA NACIONAL", "en": "NATIONAL ALLIANCE", "zh": "国家级产学研生态合作"},
+      "title": {
+        "es": "Articulación con MinTIC, Ruta N y EAFIT",
+        "en": "National Ecosystem: MinTIC, Ruta N & Top Universities",
+        "zh": "与MinTIC、Ruta N及顶级高校的深度协同"
+      },
+      "concept": {
+        "es": "Democratización para Estudiantes, PYMEs y Grandes Industrias",
+        "en": "Empowering Students, SMEs and Enterprise Industries",
+        "zh": "赋能青年学子、中小微企业与大型工业数字化转型"
+      },
+      "text": {
+        "es": "Nuestra arquitectura está lista para articularse con MinTIC, centros de innovación como Ruta N y universidades como EAFIT. No venimos a gastar presupuestos en licencias cerradas; venimos a entregar una plataforma soberana que capacita a miles de jóvenes y moderniza a nuestras empresas con bases de datos vectoriales Qdrant y Guardrails de seguridad.",
+        "en": "Our architecture is built for partnerships with MinTIC, Ruta N, and universities like EAFIT. We do not spend public budgets on foreign software licenses; we deliver a sovereign framework that trains youth and upgrades enterprises with Qdrant vector databases and security Guardrails.",
+        "zh": "我们的主权架构已全面就绪，可无缝对接哥伦比亚信息通信技术部（MinTIC）、麦德林创新中心Ruta N以及EAFIT大学等高等学府。我们无需耗费巨额财政购买封闭软件许可证，而是交付一套完全自主的主权平台，培训数以万计的青年人才，并以Qdrant向量数据库与安全护栏赋能实体产业现代化。"
+      }
+    },
+    {
+      "num": "08",
+      "badge": {"es": "LLAMADO A LA ACCIÓN", "en": "CALL TO ACTION", "zh": "行动倡议与未来展望"},
+      "title": {
+        "es": "Construyendo el Futuro con Hechos Verificables",
+        "en": "Building the Future with Verifiable Code",
+        "zh": "以实证代码共建自主数字未来"
+      },
+      "concept": {
+        "es": "Disciplina, Soberanía Tecnológica y Sistema HB.OS",
+        "en": "Discipline, Technological Sovereignty & The HB.OS System",
+        "zh": "严谨纪律、技术主权与HB.OS操作系统生态"
+      },
+      "text": {
+        "es": "La inteligencia artificial no es magia; es disciplina, práctica constante y arquitectura técnica sólida. Con el sistema HB.OS demostramos que la soberanía digital está al alcance de todos. Todo lo que ven aquí es código real y verificado. Los invito a construir el futuro con nosotros. Bienvenidos a OpenClaw dos mil veintiséis.",
+        "en": "Artificial intelligence is not magic; it is discipline, continuous practice, and solid architecture. With HB.OS, we prove that digital sovereignty is accessible to everyone. Everything you see here is real, operational code. Join us in building the future. Welcome to OpenClaw 2026.",
+        "zh": "人工智能绝非魔法；它是严谨的工程纪律、持之以恒的实战打磨与扎实的技术架构。通过HB.OS系统，我们证明数字主权触手可及。这里呈现的一切皆为经过严格验证的真实代码。诚邀各位与我们共创未来。欢迎来到OpenClaw 2026。"
+      }
+    }
+  ]
+}

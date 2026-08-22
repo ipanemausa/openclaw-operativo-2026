@@ -478,3 +478,4 @@ NOTAS:
   - API Key AIzaSy... creada en GCP (NO sirve para YouTube uploads - solo read)
   - Para uploads YouTube se requiere OAuth 2.0 Client ID (no API Key)
 ==============================================================================
+[2026-08-22 04:32:33] OPENCLAW CORE MATRIX 2026-08-22: AI Router multi-modelo REAL activado (DeepSeek OK - 511 tokens, respuesta real HB Jewelry) | 10 scripts mock archivados en archive/mocks_2026_08_22/ | Git commit b742e2f pushed a origin/main | Rclone sync iniciado | OpenRouter key pendiente para Qwen/Kimi (unica accion manual restante)

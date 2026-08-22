@@ -46,11 +46,11 @@ MODELS = {
         "max_tokens": 4096,
         "tags": ["long_context", "reasoning", "documents"],
     },
-    # Gemini — razonamiento general, multimodal, Firebase nativo
+    # Gemini — razonamiento general, multimodal
     "gemini": {
-        "id": "google/gemini-2.0-flash-001",
-        "base_url": "https://openrouter.ai/api/v1",
-        "key_env": "OPENROUTER_API_KEY",
+        "id": "gemini-2.0-flash",
+        "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+        "key_env": "GEMINI_API_KEY",
         "max_tokens": 2048,
         "tags": ["reasoning", "general", "firebase"],
     },
@@ -81,6 +81,17 @@ DISPATCH_TABLE = {
     "business":          "claude",
     "fallback":          "claude",
 }
+
+# Patrones de input bloqueados (proteccion de datos sensibles)
+BLOCKED_PATTERNS = [
+    r"sk-[a-zA-Z0-9\-]{20,}",              # API keys OpenAI/DeepSeek style
+    r"sk-or-v1-[a-zA-Z0-9]{6,}",           # OpenRouter keys (6+ chars)
+    r"sk-or-[a-zA-Z0-9\-]{6,}",            # OpenRouter alternativo
+    r"AIza[a-zA-Z0-9\-_]{20,}",            # Google API keys
+    r"\b(?:\d{4}[\s\-]?){4}\b",           # Numeros de tarjeta
+    r"password\s*[:=]\s*\S+",             # Passwords en texto plano
+    r"BEGIN (RSA|EC|OPENSSH) PRIVATE",     # Claves privadas
+]
 
 # ─── ROUTER PRINCIPAL ────────────────────────────────────────────────────────
 

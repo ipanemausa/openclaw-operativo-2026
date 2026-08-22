@@ -11,6 +11,7 @@ Genera las 3 Masterclasses Completas en 1080p FastStart:
 import os
 import sys
 import math
+import json
 import asyncio
 import subprocess
 from pathlib import Path
@@ -89,7 +90,7 @@ def build_full_audio_for_language(lang: str):
     master_files = []
     for i, raw in enumerate(raw_files):
         master_path = str(RUNTIME / f"{lang}_master_{i}.aac")
-        prosody_engine.apply_prosody_mastering(raw, master_path, lang="es" if lang=="es" else ("en" if lang=="en" else "zh"))
+        prosody_engine._master_audio(Path(raw), Path(master_path))
         master_files.append(master_path)
 
     # Crear silencio de 1.0s entre módulos

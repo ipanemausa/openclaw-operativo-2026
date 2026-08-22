@@ -25,12 +25,15 @@ from multiprocessing import Pool, cpu_count
 from PIL import Image, ImageDraw, ImageFont
 import edge_tts
 
+from sovereign_audio_prosody_engine import SovereignProsodyEngine
+
 ROOT = Path(__file__).parent.parent
-KNOWLEDGE = ROOT / "knowledge" / "linguistic_and_grammatical_matrix_rae_oxford.json"
+KNOWLEDGE = ROOT / "backend" / "database" / "canonical_entity_lexicon.json"
 
 class LanguageGuardrailEngine:
     """Validador y normalizador de texto bajo estándares RAE y Oxford English."""
     def __init__(self):
+        self.prosody_engine = SovereignProsodyEngine(lexicon_path=KNOWLEDGE)
         if KNOWLEDGE.exists():
             with open(KNOWLEDGE, "r", encoding="utf-8") as f:
                 self.data = json.load(f)
@@ -39,12 +42,7 @@ class LanguageGuardrailEngine:
 
     def sanitize_text(self, text: str, lang: str = "es") -> str:
         """Aplica correcciones ortográficas invariantes y garantiza precisión fonética."""
-        sanitized = text
-        if lang == "es" and "spanish_rae_rules" in self.data:
-            invariants = self.data["spanish_rae_rules"].get("accentuation_invariants", {})
-            for bad, good in invariants.items():
-                sanitized = sanitized.replace(f" {bad} ", f" {good} ")
-        return sanitized
+        return self.prosody_engine.build_human_ssml(text, lang=lang)
 
 class MathematicalCosmicRenderer:
     """Motor de cinemática cósmica y trazado tipográfico con curvas continuas."""

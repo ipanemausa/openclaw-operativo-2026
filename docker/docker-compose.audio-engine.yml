@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  # ==============================================================================
+  # OPENCLAW SOVEREIGN TTS GPU ENGINE (COSYVOICE 3.5 / FISH AUDIO / CHATTTS)
+  # ==============================================================================
+  sovereign-tts-gpu:
+    image: ghcr.io/fishaudio/fish-speech:latest-cu121
+    container_name: openclaw-sovereign-tts-gpu
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+      - MODEL_NAME=fish-speech-1.5
+      - PRECISION=bf16
+      - MAX_CONCURRENCY=4
+    volumes:
+      - ./models/tts:/root/.cache/huggingface
+      - ./output/audio:/app/output
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    networks:
+      - openclaw-net
+
+networks:
+  openclaw-net:
+    driver: bridge

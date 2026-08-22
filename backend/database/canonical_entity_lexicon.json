@@ -1,0 +1,176 @@
+{
+  "matrix_version": "2026.8.1",
+  "engine_name": "OpenClaw Sovereign Entity & Phonetic Lexicon Matrix",
+  "standards": [
+    "W3C SSML 1.1 (Speech Synthesis Markup Language)",
+    "International Phonetic Alphabet (IPA)",
+    "RAE (Real Academia Española)",
+    "Oxford English / Chicago Manual of Style",
+    "EBU R128 Broadcast Audio (-16 LUFS, 48kHz Stereo)"
+  ],
+  "audience_cadence_profiles": {
+    "executive_academic_b2b": {
+      "description": "Dirigido a rectores, decanos, directores de entidades gubernamentales, inversionistas y empresarios C-Suite.",
+      "spanish": {
+        "rate": "-8%",
+        "pitch": "-5Hz",
+        "voice": "es-ES-AlvaroNeural",
+        "pauses_ms": {
+          "comma": 260,
+          "colon": 380,
+          "period": 520,
+          "paragraph": 880
+        }
+      },
+      "english": {
+        "rate": "-6%",
+        "pitch": "-3Hz",
+        "voice": "en-US-AndrewMultilingualNeural",
+        "pauses_ms": {
+          "comma": 240,
+          "colon": 350,
+          "period": 500,
+          "paragraph": 850
+        }
+      }
+    }
+  },
+  "entities": {
+    "DeepSeek-R1": {
+      "canonical_name": "DeepSeek-R1",
+      "category": "ai_model",
+      "ipa": "diːp siːk ɑːr wʌn",
+      "ssml_alias_es": "Dip Sik Ar One",
+      "ssml_alias_en": "DeepSeek R1",
+      "always_english": true
+    },
+    "DeepSeek-V3": {
+      "canonical_name": "DeepSeek-V3",
+      "category": "ai_model",
+      "ipa": "diːp siːk viː θriː",
+      "ssml_alias_es": "Dip Sik Vi Three",
+      "ssml_alias_en": "DeepSeek V3",
+      "always_english": true
+    },
+    "Claude 3.5 Sonnet": {
+      "canonical_name": "Claude 3.5 Sonnet",
+      "category": "ai_model",
+      "ipa": "klɔːd θriː pɔɪnt faɪv ˈsɒnɪt",
+      "ssml_alias_es": "Clod Three Point Five Sonet",
+      "ssml_alias_en": "Claude 3.5 Sonnet",
+      "always_english": true
+    },
+    "GPT-4o": {
+      "canonical_name": "GPT-4o",
+      "category": "ai_model",
+      "ipa": "dʒiː piː tiː fɔːr oʊ",
+      "ssml_alias_es": "Yipiti Four-Ou",
+      "ssml_alias_en": "GPT-4o",
+      "always_english": true
+    },
+    "Qwen 2.5": {
+      "canonical_name": "Qwen 2.5",
+      "category": "ai_model",
+      "ipa": "kwɛn tuː pɔɪnt faɪv",
+      "ssml_alias_es": "Kwen Two Point Five",
+      "ssml_alias_en": "Qwen 2.5",
+      "always_english": true
+    },
+    "Qwen-Max": {
+      "canonical_name": "Qwen-Max",
+      "category": "ai_model",
+      "ipa": "kwɛn mæks",
+      "ssml_alias_es": "Kwen Max",
+      "ssml_alias_en": "Qwen Max",
+      "always_english": true
+    },
+    "GLM-4": {
+      "canonical_name": "GLM-4",
+      "category": "ai_model",
+      "ipa": "dʒiː ɛl ɛm fɔːr",
+      "ssml_alias_es": "Yi El Em Four",
+      "ssml_alias_en": "GLM-4",
+      "always_english": true
+    },
+    "Hunyuan": {
+      "canonical_name": "Hunyuan",
+      "category": "ai_model",
+      "ipa": "hʊn jwæn",
+      "ssml_alias_es": "Hun-yuan",
+      "ssml_alias_en": "Hunyuan",
+      "always_english": true
+    },
+    "Kimi": {
+      "canonical_name": "Kimi",
+      "category": "ai_model",
+      "ipa": "ˈkiːmi",
+      "ssml_alias_es": "Kimi",
+      "ssml_alias_en": "Kimi",
+      "always_english": true
+    },
+    "Yi-Lightning": {
+      "canonical_name": "Yi-Lightning",
+      "category": "ai_model",
+      "ipa": "jiː ˈlaɪtnɪŋ",
+      "ssml_alias_es": "Yi Lightning",
+      "ssml_alias_en": "Yi Lightning",
+      "always_english": true
+    },
+    "SenseNova": {
+      "canonical_name": "SenseNova",
+      "category": "ai_model",
+      "ipa": "sɛns ˈnoʊvə",
+      "ssml_alias_es": "Sens Nova",
+      "ssml_alias_en": "SenseNova",
+      "always_english": true
+    },
+    "Hailuo AI": {
+      "canonical_name": "Hailuo AI",
+      "category": "ai_model",
+      "ipa": "haɪ lwoʊ eɪ aɪ",
+      "ssml_alias_es": "Jai luo Ei Ai",
+      "ssml_alias_en": "Hailuo AI",
+      "always_english": true
+    },
+    "Jensen Huang": {
+      "canonical_name": "Jensen Huang",
+      "category": "person",
+      "ipa": "ˈdʒɛnsən hwɑːŋ",
+      "ssml_alias_es": "Yensen Juang",
+      "ssml_alias_en": "Jensen Huang",
+      "always_english": true
+    },
+    "Dario Amodei": {
+      "canonical_name": "Dario Amodei",
+      "category": "person",
+      "ipa": "ˈdɑːrioʊ ˌæmoʊˈdeɪ",
+      "ssml_alias_es": "Dario Amodey",
+      "ssml_alias_en": "Dario Amodei",
+      "always_english": true
+    },
+    "MinTIC": {
+      "canonical_name": "MinTIC",
+      "category": "institution",
+      "ipa": "min tik",
+      "ssml_alias_es": "MinTIC",
+      "ssml_alias_en": "MinTIC Colombia",
+      "always_english": false
+    },
+    "Ruta N": {
+      "canonical_name": "Ruta N",
+      "category": "institution",
+      "ipa": "ˈru.ta ˈen.e",
+      "ssml_alias_es": "Ruta N",
+      "ssml_alias_en": "Ruta N Medellín",
+      "always_english": false
+    },
+    "Universidad EAFIT": {
+      "canonical_name": "Universidad EAFIT",
+      "category": "institution",
+      "ipa": "u.ni.βeɾ.siˈðað eˈa.fit",
+      "ssml_alias_es": "Universidad EAFIT",
+      "ssml_alias_en": "EAFIT University",
+      "always_english": false
+    }
+  }
+}

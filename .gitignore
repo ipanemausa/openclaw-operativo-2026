@@ -119,3 +119,12 @@ backend/
 scripts/lamautonomia1.ps1
 
 frontend/public/
+
+# Runtime and generated media artifacts
+runtime/
+output/
+scratch/
+scratch_nb2.txt
+config/client_secrets.json
+temp_*/
+temp_frames_*/

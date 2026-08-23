@@ -60,6 +60,15 @@ graph TD
 
 ---
 
+## 🌐 CAPA DE INTELIGENCIA VISUAL & WORLD MODELS (FEI-FEI LI & JENSEN HUANG BLUEPRINTS)
+
+* **Ontología ImageNet (Dra. Fei-Fei Li):** 14.2 Millones de imágenes categorizadas en WordNet para clasificación visual y gemología en $\mathbb{R}^{768}$.
+* **Ecosistema NVIDIA NGC & NeMo:** Checkpoints acústicos de alta fidelidad, modelos de visión TAO y gemelos digitales en Omniverse.
+* **Mecanismos de Auto-Atención (Transformer Blueprints):** Matrices de atención contextual token a token aplicadas a transcripciones de clientes y búsqueda semántica.
+* **Matriz de Conocimiento Visual:** Registrada formalmente en `backend/database/ai_visual_knowledge_matrix_2026.json`.
+
+---
+
 ## 🛠️ ESTRUCTURA DE MÓDULOS EN `src/services/`
 
 ```

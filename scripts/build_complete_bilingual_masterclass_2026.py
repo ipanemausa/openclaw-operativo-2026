@@ -2,13 +2,10 @@
 ==============================================================================
 OPENCLAW 2026 — MASTERCLASS BILINGÜE COMPLETA (ESPAÑOL & ENGLISH)
 ==============================================================================
-- Logo HB.OS: Integrado directamente en los píxeles de la camisa del Avatar PNG
-- Ortografía & Fonética: 100% Rigor Técnico (MinTIC, Ruta N, EAFIT, Guardrails)
-- Modelos Exhaustivos: Listado completo de modelos Americanos y Chinos
-- Geopolítica Colombia: Hub bioceánico + Libre acceso a Oriente y Occidente
-- Sincronización: 100% Precisión al Milisegundo con Marcas Temporales de Whisper
-- Visual: Seamless Total (Sin cajas) + Universo Cósmico en Movimiento Continuo (180 estrellas)
-- Audio: 48kHz Stereo EBU R128 (-16 LUFS)
+- Estándar "Podcast Anchor": Dicción nítida, cadencia reflexiva y pausas calibradas
+- Estructura Visual: Breakdown Jerárquico en Balas (Bullets) + Diagramas NVIDIA/Transformer
+- Audio: 48kHz Stereo EBU R128 (-16 LUFS), Barítono Cálido (100.87 Hz)
+- Video: 1080p FastStart MP4 a 25 FPS sin cajas ni marcos
 ==============================================================================
 """
 
@@ -19,7 +16,6 @@ import asyncio
 import subprocess
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
-import edge_tts
 import whisper
 
 ROOT = Path(__file__).parent.parent
@@ -34,101 +30,181 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from cosmic_universe_engine import render_cosmic_universe_frame
 from sovereign_audio_prosody_engine import SovereignProsodyEngine
 
-# ─── CONTENIDO DE LOS MÓDULOS EN ESPAÑOL E INGLÉS ────────────────────────────
+# ─── CONTENIDO ESTRUCTURADO PODCAST ANCHOR (BALAS & EXPLICACIÓN INDIVIDUAL) ──
 
 BILINGUAL_MODULES = [
     {
         "num": "01",
-        "badge_es": "VISIÓN SOBERANA",
-        "badge_en": "SOVEREIGN VISION",
-        "title_es": "La Verdadera Soberanía en Inteligencia Artificial",
-        "title_en": "True Sovereignty in Artificial Intelligence",
-        "concept_es": "Acceso Universal sin Peajes ni Licencias Millonarias",
-        "concept_en": "Universal Access with Zero SaaS Tax and Zero Licensing Fees",
-        "text_es": "Hola a todos, les habla Guillermo. Bienvenidos a OpenClaw. Durante años, a las empresas y a los estudiantes les hicieron creer que para usar inteligencia artificial debían pagar costosas licencias en dólares. Hoy demostramos que con rigor, código abierto y arquitectura soberana, podemos competir al más alto nivel mundial a costo cero de licencias.",
-        "text_en": "Hello everyone, this is Guillermo. Welcome to OpenClaw. For years, businesses and students were told they needed expensive recurring software licenses to access artificial intelligence. Today we demonstrate that with sovereign architecture and open-weight models, we can compete at the highest global level at zero licensing costs.",
-        "sub_en": "Welcome. We demonstrate sovereign AI architecture built on open-weight models with zero licensing fees."
+        "badge_es": "VISIÓN & IDENTIDAD",
+        "badge_en": "SOVEREIGN IDENTITY",
+        "title_es": "La Autenticidad de la Voz y la Soberanía Tecnológica",
+        "title_en": "Authentic Voice & Technological Sovereignty",
+        "concept_es": "Inspiración en Jensen Huang y Fei-Fei Li: Identidad y Cero Peajes",
+        "concept_en": "Jensen Huang & Fei-Fei Li: True Identity & Zero SaaS Tax",
+        "bullets_es": [
+            "• Identidad Vocal: La voz humana como firma biométrica inconfundible del fundador.",
+            "• Soberanía Digital: Competir al más alto nivel global sin pagar rentas eternas en dólares.",
+            "• Arquitectura Soberana: Control absoluto de los datos en infraestructura propia."
+        ],
+        "bullets_en": [
+            "• Vocal Identity: Human voice as the founder's authentic biometric signature.",
+            "• Digital Sovereignty: Competing globally without recurring SaaS tax.",
+            "• Sovereign Architecture: Complete data ownership on dedicated local hardware."
+        ],
+        "text_es": "Hola a todos, les habla Guillermo. Bienvenidos a OpenClaw. Como enseñan pioneros como Jensen Huang y la doctora Fei-Fei Li, la verdadera tecnología no es depender de cajas negras; es construir identidad y soberanía. Durante años nos hicieron creer que para usar inteligencia artificial debíamos pagar licencias millonarias. Hoy demostramos que con arquitectura soberana y modelos abiertos, competimos al más alto nivel mundial a costo cero de licencias.",
+        "text_en": "Hello everyone, this is Guillermo. Welcome to OpenClaw. As pioneers like Jensen Huang and Doctor Fei-Fei Li demonstrate, true technology is about identity and sovereignty. For years we were told we had to pay expensive recurring licenses. Today we prove that with open-weight models and sovereign architecture, we compete at the highest global level at zero licensing costs.",
+        "sub_en": "True AI sovereignty built on open-weight models and authentic vocal biometric identity."
     },
     {
         "num": "02",
-        "badge_es": "SÍNTESIS HUANG-AMODEI",
-        "badge_en": "HUANG-AMODEI SYNTHESIS",
-        "title_es": "Jensen Huang y Dario Amodei: La Fuerza Resultante",
-        "title_en": "Jensen Huang & Dario Amodei: The Resultant Force",
-        "concept_es": "Potencia de Cómputo de NVIDIA + Guardrails de Seguridad de Anthropic",
-        "concept_en": "NVIDIA Massive Compute Scaling + Anthropic Rigorous Safety Guardrails",
-        "text_es": "En la vanguardia mundial conviven dos visiones complementarias. Jensen Huang nos enseña que el cómputo debe escalar sin límites. Dario Amodei nos exige seguridad estricta y control de riesgos. Nuestra arquitectura une ambas fuerzas: aceleramos el procesamiento distribuido, protegiendo al cien por ciento la privacidad de nuestros datos.",
-        "text_en": "At the global forefront, two visions unite. Jensen Huang teaches us to scale compute without limits. Dario Amodei demands strict safety guardrails and risk control. Our architecture combines both forces: scaling distributed compute while fully protecting proprietary enterprise data.",
-        "sub_en": "We combine Jensen Huang's compute scaling with Dario Amodei's safety guardrails to protect proprietary enterprise data."
+        "badge_es": "ECOSISTEMA OPENAI",
+        "badge_en": "OPENAI ECOSYSTEM",
+        "title_es": "Desglose Individual de Modelos OpenAI",
+        "title_en": "Individual Breakdown of OpenAI Models",
+        "concept_es": "GPT-4o, o1 y o3-mini: Propósito Específico y Diferencias Clave",
+        "concept_en": "GPT-4o, o1 & o3-mini: Specific Capabilities & Key Differences",
+        "bullets_es": [
+            "• GPT-4o: Modelo insignia multimodal para texto, visión y audio en tiempo real.",
+            "• o1: Razonamiento profundo paso a paso (Chain-of-Thought) para ciencias complejas.",
+            "• o3-mini: Razonador ultra-rápido y eficiente para programación pesada."
+        ],
+        "bullets_en": [
+            "• GPT-4o: Flagship multimodal model for real-time text, vision, and audio.",
+            "• o1: Deep step-by-step reasoning (Chain-of-Thought) for complex science.",
+            "• o3-mini: High-speed lightweight reasoner optimized for intensive coding."
+        ],
+        "text_es": "Miremos primero el ecosistema de OpenAI, desglosando cada modelo por su función real. Por un lado tenemos a GPT-4o, su modelo insignia multimodal que procesa texto, visión y audio en tiempo real con alta velocidad. Para tareas de razonamiento profundo crearon la serie o1, que piensa paso a paso antes de responder. Y tienen a o3-mini, optimizado para programación pesada y matemáticas con extrema eficiencia.",
+        "text_en": "Let us examine the OpenAI ecosystem, breaking down each model by its exact purpose. First, GPT-4o is their flagship multimodal model for real-time text, vision, and audio. For deep reasoning, they built the o1 series, which thinks step-by-step before answering. And o3-mini provides high-speed, lightweight reasoning optimized for advanced coding.",
+        "sub_en": "OpenAI breakdown: GPT-4o for multimodal speed, o1 for deep reasoning, and o3-mini for coding."
     },
     {
         "num": "03",
-        "badge_es": "ECOSISTEMA AMERICANO",
-        "badge_en": "AMERICAN AI ECOSYSTEM",
-        "title_es": "Modelos de Inteligencia Artificial de Estados Unidos",
-        "title_en": "Leading American Artificial Intelligence Models",
-        "concept_es": "OpenAI, Google DeepMind, Anthropic, Meta, xAI, Cohere y Amazon",
-        "concept_en": "OpenAI, Google DeepMind, Anthropic, Meta, xAI, Cohere & Amazon",
-        "text_es": "Nuestra plataforma se conecta de forma nativa con los principales modelos de Estados Unidos. En OpenAI: GPT-4o, o1, o3-mini, Sora y Whisper. En Google DeepMind: Gemini 2.0 Flash, Gemini 1.5 Pro y Gemma 2. En Anthropic: Claude Sonnet 4.6 y Claude 3.5 Sonnet, que utilizamos en Antigravity para razonamiento de alto nivel y generación de artefactos, antes de ejecutar el Handoff automático a modelos de código abierto. En Meta: Llama 3.1, Llama 3.2 y Llama 3.3. En xAI: Grok-2 y Grok-3. Y modelos empresariales como Command R+ de Cohere y Amazon Nova.",
-        "text_en": "Our platform connects directly to leading American AI models: OpenAI with GPT-4o, o1, o3-mini, Sora and Whisper. Google DeepMind with Gemini 2.0 Flash, Gemini 1.5 Pro and Gemma 2. Anthropic with Claude Sonnet 4.6 and Claude 3.5 Sonnet, which we leverage in Antigravity for frontier reasoning and artifact generation before executing automated Handoff to open-source models. Meta with Llama 3.1 and 3.3. xAI with Grok-2 and Grok-3. And enterprise engines like Cohere Command R+ and Amazon Nova.",
-        "sub_en": "Orchestrating Claude Sonnet 4.6 in Antigravity with automated Handoff to open-source models at zero licensing fees."
+        "badge_es": "ECOSISTEMA ANTHROPIC",
+        "badge_en": "ANTHROPIC ECOSYSTEM",
+        "title_es": "La Familia Claude: Seguridad y Código de Precisión",
+        "title_en": "The Claude Family: Constitutional Safety & Precision Code",
+        "concept_es": "Claude 3.5 Sonnet, Claude 3.5 Haiku y Claude Opus 4.6",
+        "concept_en": "Claude 3.5 Sonnet, Claude 3.5 Haiku & Claude Opus 4.6",
+        "bullets_es": [
+            "• Claude 3.5 Sonnet: El estándar de oro en generación de software y análisis técnico.",
+            "• Claude 3.5 Haiku: Máxima velocidad y bajo coste para flujos masivos de datos.",
+            "• Claude Opus 4.6: Capacidad analítica superior para documentos corporativos extensos."
+        ],
+        "bullets_en": [
+            "• Claude 3.5 Sonnet: The gold standard for software engineering and technical design.",
+            "• Claude 3.5 Haiku: Blazing speed and low latency for high-volume pipelines.",
+            "• Claude Opus 4.6: Superior analytical reasoning for massive enterprise context."
+        ],
+        "text_es": "Ahora pasemos a Anthropic y su familia Claude, reconocida por su rigor en código y seguridad constitucional. Su estrella es Claude 3.5 Sonnet, el modelo más preciso del mundo para arquitectura de software y generación de código limpio. Si necesitas rapidez extrema para miles de consultas diarias, está Claude 3.5 Haiku. Y en la cima analítica se encuentra Claude Opus, diseñado para procesar contextos gigantescos sin perder el rigor conceptual.",
+        "text_en": "Now let us examine Anthropic and the Claude family, recognized for precision code and constitutional safety. Claude 3.5 Sonnet is the global benchmark for clean software engineering and architecture. Claude 3.5 Haiku delivers high-throughput speed for daily queries. And Claude Opus handles massive analytical contexts with flawless continuity.",
+        "sub_en": "Anthropic breakdown: Claude 3.5 Sonnet for code mastery, Haiku for speed, and Opus for deep analysis."
     },
     {
         "num": "04",
-        "badge_es": "ECOSISTEMA ORIENTAL",
-        "badge_en": "CHINESE AI ECOSYSTEM",
-        "title_es": "Modelos Abiertos de Oriente y Asia",
-        "title_en": "Leading Chinese & Asian Open-Weight AI Models",
-        "concept_es": "DeepSeek, Alibaba Qwen, Baidu Ernie, Zhipu GLM, Tencent y Kimi",
-        "concept_en": "DeepSeek, Alibaba Qwen, Baidu Ernie, Zhipu GLM, Tencent & Kimi",
-        "text_es": "Asimismo, integramos los motores más avanzados de Oriente. En DeepSeek: DeepSeek-V3, DeepSeek-R1 y DeepSeek Coder. En Alibaba Cloud: Qwen 2.5 y Qwen-Max. En Baidu: Ernie 4.0 Turbo. En Zhipu AI: GLM-4. En Tencent: Hunyuan Large y Hunyuan Video. En Moonshot AI: Kimi. En 01.AI: Yi-Lightning de Kai-Fu Lee. Y en visión y video: SenseNova de SenseTime y Hailuo AI de MiniMax.",
-        "text_en": "Likewise, we integrate top open-weight engines from Asia: DeepSeek with DeepSeek-V3, R1 and Coder. Alibaba Cloud with Qwen 2.5 and Qwen-Max. Baidu with Ernie 4.0 Turbo. Zhipu AI with GLM-4. Tencent with Hunyuan Large and Video. Moonshot AI with Kimi. 01.AI with Yi-Lightning. SenseTime with SenseNova and MiniMax with Hailuo AI.",
-        "sub_en": "Full orchestration of Chinese AI: DeepSeek-R1, Qwen 2.5, GLM-4, Hunyuan, Kimi and Yi-Lightning."
+        "badge_es": "SOBERANÍA OPENCLAW",
+        "badge_en": "OPENCLAW SOVEREIGNTY",
+        "title_es": "Modelos Open-Weight: DeepSeek, Qwen y Soberanía Local",
+        "title_en": "Open-Weight Frontier: DeepSeek, Qwen & Local Sovereignty",
+        "concept_es": "DeepSeek-R1 y Qwen 2.5: Inferencia Local con Cero Dependencia Externa",
+        "concept_en": "DeepSeek-R1 & Qwen 2.5: Local Inference with Zero External Lock-in",
+        "bullets_es": [
+            "• DeepSeek-R1: Razonamiento matemático abierto de nivel o1 a costo de licencia cero.",
+            "• Alibaba Qwen 2.5: Excelencia multilingüe, código y orquestación B2B.",
+            "• Memoria Vectorial R^768: Gobernanza de datos privada con BAAI/bge-m3 y Qdrant."
+        ],
+        "bullets_en": [
+            "• DeepSeek-R1: Open reasoning matching frontier proprietary models at zero licensing cost.",
+            "• Alibaba Qwen 2.5: Multilingual mastery, coding, and enterprise B2B orchestration.",
+            "• R^768 Vector Memory: Private enterprise data governance using BAAI/bge-m3 and Qdrant."
+        ],
+        "text_es": "Frente a las APIs cerradas, en OpenClaw construimos sobre modelos de pesos abiertos de primer nivel mundial. Integramos DeepSeek-R1 para razonamiento lógico avanzado y Alibaba Qwen 2.5 para orquestación empresarial. Al operar estos modelos en infraestructura propia con bases de datos vectoriales en espacio R 768, protegemos la privacidad de tu negocio y eliminamos las facturas en dólares.",
+        "text_en": "In contrast to closed APIs, OpenClaw builds directly on world-class open-weight models. We integrate DeepSeek-R1 for open frontier reasoning and Alibaba Qwen 2.5 for enterprise orchestration. By deploying these models on sovereign infrastructure with 768-dimensional vector memory, we protect data privacy and eliminate recurring software tax.",
+        "sub_en": "OpenClaw sovereign stack: DeepSeek-R1, Qwen 2.5, and private R^768 vector memory at zero license fee."
     },
     {
         "num": "05",
-        "badge_es": "VENTAJA ESTRATÉGICA",
-        "badge_en": "STRATEGIC ADVANTAGE",
-        "title_es": "La Gran Oportunidad: Exportar a las 120 Megaciudades de China",
-        "title_en": "The Strategic Shift: Exporting to China's 120 Planned Megacities",
-        "concept_es": "China como Mayor Importador Global + Colombia como Exportador Estratégico",
-        "concept_en": "China's Transition to Top Global Importer + Colombia Sovereign Exporter",
-        "text_es": "Como señaló Jack Ma, China vive una transformación histórica: pasa de ser fábrica del mundo a convertirse en el mayor importador global, impulsada por más de ciento veinte ciudades planificadas de uno a diez millones de habitantes. Esto abre una oportunidad colosal para que los exportadores colombianos de café especial, cacao, esmeraldas y minería sostenible lleguen directamente a ese mercado de alto consumo con nuestra tecnología de inteligencia artificial y video en Mandarín.",
-        "text_en": "As Jack Ma highlighted, China is undergoing a historic transformation: shifting from the world's factory to the world's largest importer, driven by over 120 planned megacities with populations between 1 and 10 million. This creates an extraordinary opportunity for Colombian exporters of specialty coffee, cacao, emeralds, and ethical minerals to connect directly with this massive consumer market using our AI and Mandarin video infrastructure.",
-        "sub_en": "Empowering Colombian agriculture and mining exporters to reach China's 120 planned megacities via AI."
+        "badge_es": "HARDWARE & WORLD MODELS",
+        "badge_en": "HARDWARE & WORLD MODELS",
+        "title_es": "NVIDIA Omniverse, Chips Multimodales y Modelos de Mundo",
+        "title_en": "NVIDIA Omniverse, Multimodal Chips & World Models",
+        "concept_es": "Mecanismo de Atención, Reconstrucción 4K y Simulación Espacial 3D",
+        "concept_en": "Attention Mechanisms, Neural 4K DLSS & 3D Spatial Simulation",
+        "bullets_es": [
+            "• Mecanismo de Atención: Relaciones semánticas palabra por palabra en espacio latente.",
+            "• Especialización de Chips: Visión, audio y lenguaje acelerados por Tensor Cores.",
+            "• World Models (Omniverse): Simulación de física real y gemelos digitales de joyería."
+        ],
+        "bullets_en": [
+            "• Attention Mechanism: Semantic word-to-word relationships in latent mathematical space.",
+            "• Chip Acceleration: Specialized Tensor Cores for vision, speech, and language.",
+            "• World Models (Omniverse): Physical simulation and 3D digital twins for high jewelry."
+        ],
+        "text_es": "Como explica Jensen Huang, el hardware de NVIDIA no solo procesa datos; simula la física del mundo real. El mecanismo de atención permite a los Transformers entender la relación profunda entre cada palabra. Con NVIDIA Omniverse y los modelos espaciales de la doctora Fei-Fei Li, creamos gemelos digitales de piezas de joyería con física de luz real y renderizado neuronal en tiempo real.",
+        "text_en": "As Jensen Huang highlights, NVIDIA hardware does not simply process data; it simulates real-world physics. The attention mechanism enables Transformers to calculate semantic relationships across every word. Pairing NVIDIA Omniverse with Doctor Fei-Fei Li's spatial models allows us to render 3D jewelry digital twins with accurate physical lighting in real time.",
+        "sub_en": "Harnessing NVIDIA attention mechanisms, Omniverse simulation, and spatial 3D world models."
     },
     {
         "num": "06",
-        "badge_es": "GEOPOLÍTICA REGIONAL",
-        "badge_en": "REGIONAL GEOPOLITICS",
-        "title_es": "Colombia: Nodo Bioceánico y Puente Comercial Bilateral",
-        "title_en": "Colombia: Bioceanic Hub & Bilateral Trade Bridge",
-        "concept_es": "Dos Océanos, Entrada a Suramérica y Enlace Directo con Alibaba Cloud",
-        "concept_en": "Two Oceans, South American Gateway & Direct Alibaba Cloud Bridge",
-        "text_es": "Colombia tiene una posición bioceánica privilegiada entre el Pacífico y el Atlántico, cercanía con Norteamérica y entrada a Suramérica. Al unir nuestra ubicación estratégica con la plataforma HB.OS y Alibaba Cloud, eliminamos intermediarios y barreras de idioma, permitiendo a nuestras empresas cerrar acuerdos comerciales bilaterales con Oriente y Occidente con total soberanía.",
-        "text_en": "Colombia holds a unique bioceanic position between the Pacific and Atlantic oceans, adjacent to North America and the gateway to South America. By pairing our geographical hub with HB.OS and Alibaba Cloud, we remove middlemen and language barriers, empowering businesses to execute direct trade with both East and West under full digital sovereignty.",
-        "sub_en": "Colombia's bioceanic hub paired with HB.OS and Alibaba Cloud enables direct bilateral trade with East and West."
+        "badge_es": "COMERCIO GLOBAL",
+        "badge_en": "GLOBAL TRADE",
+        "title_es": "De Guangzhou y Miami a las 120 Megaciudades de China",
+        "title_en": "From Guangzhou & Miami to China's 120 Planned Megacities",
+        "concept_es": "45 Años de Experiencia en Importaciones y Arbitraje B2B Global",
+        "concept_en": "45 Years of Field Mastery in Global B2B Import & Export Operations",
+        "bullets_es": [
+            "• Experiencia Real: 20 años en Downtown Miami importando de Guangzhou, Tailandia y Brasil.",
+            "• Factorías de Precisión: Trabajo directo con Xuping, Gemsme y manufactura de Liwan.",
+            "• Exportación Inteligente: Conectar café, cacao y joyería colombiana con China usando IA."
+        ],
+        "bullets_en": [
+            "• Proven Field Mastery: 20 years in Downtown Miami importing from Guangzhou, Thailand, and Brazil.",
+            "• Factory Partnerships: Direct supply chains with Xuping, Gemsme, and Liwan manufacturing hubs.",
+            "• Smart Trade: Connecting Colombian emeralds, coffee, and jewelry to China via AI video."
+        ],
+        "text_es": "Esta arquitectura nace de cuarenta y cinco años de experiencia en comercio exterior. Durante veinte años en el Downtown de Miami importé directamente desde factorías en Guangzhou como Xuping y Gemsme, así como de Tailandia, Brasil e India. Hoy aplicamos esa misma lógica de arbitraje global para que los exportadores colombianos de joyería, café y minerales lleguen directamente a las ciento veinte megaciudades de China con agentes inteligentes.",
+        "text_en": "This architecture is built on 45 years of practical global trade experience. For 20 years in Downtown Miami, I imported directly from precision factories in Guangzhou like Xuping and Gemsme, as well as Thailand, Brazil, and India. Today we apply that same global trade logic so Colombian exporters can reach China's 120 planned megacities using sovereign AI agents.",
+        "sub_en": "Applying 45 years of global trade mastery to export Colombian value to China's 120 megacities."
     },
     {
         "num": "07",
         "badge_es": "ALIANZA NACIONAL",
         "badge_en": "NATIONAL ALLIANCE",
-        "title_es": "Articulación con MinTIC, Ruta N y EAFIT",
-        "title_en": "National Ecosystem: MinTIC, Ruta N & Top Universities",
-        "concept_es": "Democratización para Estudiantes, PYMEs y Grandes Industrias",
-        "concept_en": "Empowering Students, SMEs and Enterprise Industries",
-        "text_es": "Nuestra arquitectura está lista para articularse con MinTIC, centros de innovación como Ruta N y universidades como EAFIT. No venimos a gastar presupuestos en licencias cerradas; venimos a entregar una plataforma soberana que capacita a miles de jóvenes y moderniza a nuestras empresas con bases de datos vectoriales Qdrant y Guardrails de seguridad.",
-        "text_en": "Our architecture is built for partnerships with MinTIC, Ruta N, and universities like EAFIT. We do not spend public budgets on foreign software licenses; we deliver a sovereign framework that trains youth and upgrades enterprises with Qdrant vector databases and security Guardrails.",
-        "sub_en": "Partnering with MinTIC, Ruta N and EAFIT to train youth and upgrade industry with Qdrant and Guardrails."
+        "title_es": "Alianza Estratégica con MinTIC, Ruta N y EAFIT",
+        "title_en": "Strategic Alliance with MinTIC, Ruta N & Top Universities",
+        "concept_es": "Capacitación Soberana para Jóvenes, PYMEs y Gremios Exportadores",
+        "concept_en": "Empowering Students, SMEs & Exporters with Open Sovereign AI",
+        "bullets_es": [
+            "• Democratización Real: Enseñar arquitectura de IA aplicada sin costo de licencias.",
+            "• Modernización Industrial: Integración de bases vectoriales para empresas locales.",
+            "• Neuroplasticidad & Lógica: Formación enfocada en razonamiento y modelos de negocio."
+        ],
+        "bullets_en": [
+            "• True Democratization: Teaching applied AI architecture at zero licensing software cost.",
+            "• Industrial Modernization: Deploying local vector stores for Colombian businesses.",
+            "• Applied Neuroplasticity: Education centered on logic, reasoning, and real enterprise value."
+        ],
+        "text_es": "Nuestra plataforma está diseñada para articularse con MinTIC, centros de innovación como Ruta N y universidades como EAFIT. No venimos a gastar presupuestos públicos en licencias extranjeras; venimos a entregar un marco soberano que capacita a miles de jóvenes y moderniza a nuestras empresas con bases vectoriales, neuroplasticidad y disciplina operativa.",
+        "text_en": "Our platform is built to partner with MinTIC, innovation hubs like Ruta N, and top universities like EAFIT. We do not consume public budgets on foreign software licenses; we deliver a sovereign framework that trains youth and upgrades enterprises with vector memory and operational discipline.",
+        "sub_en": "Partnering with MinTIC, Ruta N and EAFIT to train talent and upgrade industry via sovereign AI."
     },
     {
         "num": "08",
         "badge_es": "LLAMADO A LA ACCIÓN",
         "badge_en": "CALL TO ACTION",
-        "title_es": "Construyendo el Futuro con Hechos Verificables",
-        "title_en": "Building the Future with Verifiable Code",
-        "concept_es": "Disciplina, Soberanía Tecnológica y Sistema HB.OS",
-        "concept_en": "Discipline, Technological Sovereignty & The HB.OS System",
+        "title_es": "Construyendo Soberanía con Hechos Verificables",
+        "title_en": "Building Sovereignty with Verifiable Code",
+        "concept_es": "Disciplina, Arquitectura y el Ecosistema OpenClaw 2026",
+        "concept_en": "Discipline, Architecture & The OpenClaw 2026 Ecosystem",
+        "bullets_es": [
+            "• Código Verificable: Arquitectura 100% real operando en producción.",
+            "• Ecosistema HB.OS: La unión de inteligencia artificial, comercio y marca personal.",
+            "• Bienvenidos al Futuro: Construyamos soberanía digital juntos."
+        ],
+        "bullets_en": [
+            "• Verifiable Code: 100% production-ready architecture operational today.",
+            "• HB.OS Ecosystem: Uniting artificial intelligence, global trade, and authentic voice.",
+            "• Welcome to the Future: Join us in building digital sovereignty."
+        ],
         "text_es": "La inteligencia artificial no es magia; es disciplina, práctica constante y arquitectura técnica sólida. Con el sistema HB.OS demostramos que la soberanía digital está al alcance de todos. Todo lo que ven aquí es código real y verificado. Los invito a construir el futuro con nosotros. Bienvenidos a OpenClaw dos mil veintiséis.",
         "text_en": "Artificial intelligence is not magic; it is discipline, continuous practice, and solid architecture. With HB.OS, we prove that digital sovereignty is accessible to everyone. Everything you see here is real, operational code. Join us in building the future. Welcome to OpenClaw 2026.",
         "sub_en": "AI is mastered through disciplined practice. Join us in building sovereign technology. Welcome to OpenClaw 2026."
@@ -148,21 +224,18 @@ def get_audio_duration(file_path: str) -> float:
     return float(res.stdout.strip())
 
 async def synthesize_language_audios(lang: str):
-    """Sintetiza audios en Español o Inglés con ecualización de estudio FM 48kHz y prosodia RAE."""
+    """Sintetiza audios en Español o Inglés con ecualización FM 48kHz y prosodia calibrada."""
     print(f"\n[FASE 1/5 - {lang.upper()}] Sintetizando locuciones con SovereignProsodyEngine...")
-
     for idx, item in enumerate(BILINGUAL_MODULES):
         master_aac = RUNTIME / f"{lang}_master_{idx}.aac"
         text_content = item["text_es"] if lang == "es" else item["text_en"]
-
-        # Síntesis con prosodia y pausas RAE
         await prosody_engine.synthesize_audio(text_content, master_aac, lang=lang)
         item[f"audio_{lang}"] = str(master_aac)
         item[f"duration_{lang}"] = get_audio_duration(str(master_aac))
 
 def extract_whisper_timestamps_for_lang(whisper_model, lang: str):
-    """Extrae marcas de tiempo de Whisper forzando las palabras canónicas (Ground Truth RAE)."""
-    print(f"\n[FASE 2/5 - {lang.upper()}] Sincronizando palabras con Ground Truth Canónico...")
+    """Extrae marcas de tiempo de Whisper forzando las palabras canónicas exactas."""
+    print(f"\n[FASE 2/5 - {lang.upper()}] Sincronizando palabras con Whisper...")
     for idx, item in enumerate(BILINGUAL_MODULES):
         audio_file = item[f"audio_{lang}"]
         canonical_text = item["text_es"] if lang == "es" else item["text_en"]
@@ -170,11 +243,10 @@ def extract_whisper_timestamps_for_lang(whisper_model, lang: str):
 
         res = whisper_model.transcribe(audio_file, language=lang, word_timestamps=True)
         raw_words = []
-        for segment in res["segments"]:
+        for segment in res.get("segments", []):
             for w in segment.get("words", []):
                 raw_words.append(w)
 
-        # Alineación forzada: asignar tiempos a las palabras canónicas exactas
         words_timed = []
         num_can = len(canonical_words)
         num_raw = len(raw_words)
@@ -189,7 +261,6 @@ def extract_whisper_timestamps_for_lang(whisper_model, lang: str):
                     "end": float(w_info.get("end", 0.0))
                 })
         else:
-            # Fallback uniforme si Whisper no detecta
             dur = item[f"duration_{lang}"]
             step = dur / max(1, num_can)
             for i, c_word in enumerate(canonical_words):
@@ -200,7 +271,7 @@ def extract_whisper_timestamps_for_lang(whisper_model, lang: str):
                 })
 
         item[f"words_timed_{lang}"] = words_timed
-        print(f"  [OK] Módulo {item['num']}: {len(words_timed)} palabras canónicas sincronizadas al milisegundo.")
+        print(f"  [OK] Módulo {item['num']}: {len(words_timed)} palabras sincronizadas.")
 
 def render_masterclass_for_language(lang: str, whisper_model):
     print("=" * 60)
@@ -213,12 +284,12 @@ def render_masterclass_for_language(lang: str, whisper_model):
     # 2. Marcas de tiempo de Whisper
     extract_whisper_timestamps_for_lang(whisper_model, lang)
 
-    # 3. Ensamblar pista de audio continua con pausas de 1.2s
-    print(f"\n[FASE 3/5 - {lang.upper()}] Ensamblando pista de audio con pausas naturales...")
-    pause_aac = RUNTIME / f"pause_12s_{lang}.aac"
+    # 3. Ensamblar pista continua con pausas calibradas de 1.0s
+    print(f"\n[FASE 3/5 - {lang.upper()}] Ensamblando pista de audio maestra...")
+    pause_aac = RUNTIME / f"pause_10s_{lang}.aac"
     cmd_pause = [
         "ffmpeg", "-y", "-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo",
-        "-t", "1.2", "-c:a", "aac", "-b:a", "256k", str(pause_aac)
+        "-t", "1.0", "-c:a", "aac", "-b:a", "256k", str(pause_aac)
     ]
     subprocess.run(cmd_pause, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
@@ -235,26 +306,27 @@ def render_masterclass_for_language(lang: str, whisper_model):
     total_duration = get_audio_duration(str(master_audio))
     print(f"  [OK] Audio Maestro ({lang.upper()}): {total_duration:.2f}s ({total_duration/60:.2f} min)")
 
-    # 4. Cargar Avatar PNG con logo HB.OS directamente en la tela (UNIFICADO)
+    # 4. Cargar Avatar PNG transparente
     avatar_src = ROOT / "assets" / "avatar_transparent.png"
     raw_av = Image.open(avatar_src).convert("RGBA")
     av_h = 880
     av_w = int(raw_av.width * (av_h / raw_av.height))
     avatar_png = raw_av.resize((av_w, av_h), Image.Resampling.LANCZOS)
-    print(f"  -> Avatar transparente con HB.OS en tela cargado: {av_w}x{av_h} px")
 
     # Fuentes
     try:
-        font_badge = ImageFont.truetype("arialbd.ttf", 24)
-        font_title = ImageFont.truetype("arialbd.ttf", 46)
-        font_concept = ImageFont.truetype("arialbd.ttf", 26)
-        font_karaoke = ImageFont.truetype("arialbd.ttf", 52)  # Letra gigante descansada
-        font_sub = ImageFont.truetype("ariali.ttf", 24)
-        font_top = ImageFont.truetype("arialbd.ttf", 22)
+        font_badge = ImageFont.truetype("arialbd.ttf", 22)
+        font_title = ImageFont.truetype("arialbd.ttf", 40)
+        font_concept = ImageFont.truetype("arialbd.ttf", 24)
+        font_bullet = ImageFont.truetype("arial.ttf", 22)
+        font_karaoke = ImageFont.truetype("arialbd.ttf", 42)
+        font_sub = ImageFont.truetype("ariali.ttf", 22)
+        font_top = ImageFont.truetype("arialbd.ttf", 20)
     except Exception:
         font_badge = ImageFont.load_default()
         font_title = ImageFont.load_default()
         font_concept = ImageFont.load_default()
+        font_bullet = ImageFont.load_default()
         font_karaoke = ImageFont.load_default()
         font_sub = ImageFont.load_default()
         font_top = ImageFont.load_default()
@@ -265,15 +337,15 @@ def render_masterclass_for_language(lang: str, whisper_model):
         t_start = curr_t
         t_end = curr_t + item[f"duration_{lang}"]
         timeline.append({"item": item, "start": t_start, "end": t_end})
-        curr_t = t_end + 1.2
+        curr_t = t_end + 1.0
 
     frames_dir = RUNTIME / f"temp_frames_{lang}"
     frames_dir.mkdir(parents=True, exist_ok=True)
 
     total_frames = int(total_duration * FPS)
-    print(f"\n[FASE 4/5 - {lang.upper()}] Renderizando {total_frames} fotogramas Full HD sin cajas...")
+    print(f"\n[FASE 4/5 - {lang.upper()}] Renderizando {total_frames} fotogramas 1080p...")
 
-    WORDS_PER_CHUNK = 8  # 8 palabras por bloque para lectura óptima
+    WORDS_PER_CHUNK = 9
 
     for f_idx in range(total_frames):
         t = f_idx / FPS
@@ -290,49 +362,54 @@ def render_masterclass_for_language(lang: str, whisper_model):
         t_rel = max(0.0, t - active_mod["start"])
         words_timed = item.get(f"words_timed_{lang}", [])
 
-        # ─── 1. FONDO CÓSMICO DEL UNIVERSO EN MOVIMIENTO FLUIDO CONTINUO ───
+        # 1. Fondo Cósmico Continuo
         frame = render_cosmic_universe_frame(t)
         draw = ImageDraw.Draw(frame)
 
-        # Barra Superior Minimalista Flotante
-        draw.line([60, 60, WIDTH - 60, 60], fill=(212, 175, 55), width=1)
-        draw.text((60, 24), "OPENCLAW CORE MATRIX 2026", font=font_top, fill=(212, 175, 55))
-        top_sub = "·   MASTERCLASS: GEOPOLÍTICA & INTELIGENCIA ARTIFICIAL SOBERANA" if lang == "es" else "·   MASTERCLASS: GEOPOLITICS & SOVEREIGN ARTIFICIAL INTELLIGENCE"
-        draw.text((430, 24), top_sub, font=font_top, fill=(190, 200, 220))
+        # Barra Superior
+        draw.line([60, 50, WIDTH - 60, 50], fill=(212, 175, 55), width=1)
+        draw.text((60, 20), "OPENCLAW CORE MATRIX 2026", font=font_top, fill=(212, 175, 55))
+        top_sub = "·   PODCAST MASTERCLASS: SOBERANÍA & COMERCIO GLOBAL" if lang == "es" else "·   PODCAST MASTERCLASS: SOVEREIGNTY & GLOBAL TRADE"
+        draw.text((430, 20), top_sub, font=font_top, fill=(190, 200, 220))
         top_std = "ESTÁNDAR R^768 · $0 LICENCIAS" if lang == "es" else "STANDARD R^768 · $0 LICENSES"
-        draw.text((1560, 24), top_std, font=font_top, fill=(100, 220, 150))
+        draw.text((1560, 20), top_std, font=font_top, fill=(100, 220, 150))
 
-        # ─── 2. LADO IZQUIERDO: AVATAR PNG TRANSPARENTE EN ESCENA COMPLETA (SIN CAJAS NI MARCOS) ───
-        av_float_y = int(math.sin(t * 1.3) * 5)
-        av_x = 40
+        # 2. Lado Izquierdo: Avatar con micro-respiración
+        av_float_y = int(math.sin(t * 1.4) * 4)
+        av_x = 30
         av_y = HEIGHT - av_h + av_float_y
         frame.paste(avatar_png, (av_x, av_y), avatar_png)
 
-        # Identificación Flotante Limpia
-        speaker_title = "GUILLERMO · OPENCLAW"
-        speaker_role = "Arquitectura Soberana HB.OS" if lang == "es" else "HB.OS Sovereign Architecture"
-        draw.text((80, 95), speaker_title, font=font_badge, fill=(255, 255, 255))
-        draw.text((80, 125), speaker_role, font=font_concept, fill=(212, 175, 55))
+        # Identificación de Guillermo
+        draw.text((70, 75), "GUILLERMO · OPENCLAW FOUNDER", font=font_badge, fill=(255, 255, 255))
+        role_label = "Arquitectura Soberana & Comercio B2B" if lang == "es" else "Sovereign Architecture & Global B2B"
+        draw.text((70, 102), role_label, font=font_concept, fill=(212, 175, 55))
 
-        # ─── 3. LADO DERECHO: TEXTO FLOTANTE DIRECTAMENTE SOBRE EL UNIVERSO (SIN CAJAS) ───
+        # 3. Lado Derecho: Contenido Jerárquico en Balas (Breakdown)
         content_x = 640
-        content_y = 100
+        content_y = 80
         content_w = 1220
 
-        # Badge del Módulo
         badge_text = f"MÓDULO {item['num']} · {item['badge_es']}" if lang == "es" else f"MODULE {item['num']} · {item['badge_en']}"
         draw.text((content_x, content_y), badge_text, font=font_badge, fill=(212, 175, 55))
 
-        # Título Grande Cinematográfico
         title_text = item["title_es"] if lang == "es" else item["title_en"]
-        draw.text((content_x, content_y + 45), title_text, font=font_title, fill=(255, 255, 255))
+        draw.text((content_x, content_y + 35), title_text, font=font_title, fill=(255, 255, 255))
 
-        # Concepto Clave
         concept_text = "⚡ " + (item["concept_es"] if lang == "es" else item["concept_en"])
-        draw.text((content_x, content_y + 115), concept_text, font=font_concept, fill=(100, 225, 185))
-        draw.line([content_x, content_y + 160, content_x + content_w, content_y + 160], fill=(45, 60, 90), width=1)
+        draw.text((content_x, content_y + 90), concept_text, font=font_concept, fill=(100, 225, 185))
+        draw.line([content_x, content_y + 130, content_x + content_w, content_y + 130], fill=(45, 60, 90), width=1)
 
-        # ─── TELEPROMPTER KARAOKE CON TIMESTAMPS DE WHISPER AL MILISEGUNDO ───
+        # Visual Bullets en Pantalla (Breakdown con Sangría de 24px)
+        bullets_list = item["bullets_es"] if lang == "es" else item["bullets_en"]
+        b_y = content_y + 145
+        for b_str in bullets_list:
+            draw.text((content_x + 20, b_y), b_str, font=font_bullet, fill=(220, 230, 245))
+            b_y += 38
+
+        draw.line([content_x, b_y + 10, content_x + content_w, b_y + 10], fill=(45, 60, 90), width=1)
+
+        # 4. Teleprompter Karaoke al Milisegundo
         active_w_idx = 0
         for w_i, w_info in enumerate(words_timed):
             if w_info["start"] <= t_rel <= w_info["end"]:
@@ -348,8 +425,8 @@ def render_masterclass_for_language(lang: str, whisper_model):
         current_chunk = words_timed[chunk_start:chunk_end]
 
         cursor_x = content_x
-        cursor_y = content_y + 240
-        line_height = 80
+        cursor_y = b_y + 35
+        line_height = 60
         max_line_w = content_w - 40
 
         for w_local_idx, w_data in enumerate(current_chunk):
@@ -362,25 +439,23 @@ def render_masterclass_for_language(lang: str, whisper_model):
                 cursor_x = content_x
                 cursor_y += line_height
 
-            # Sombra suave negra para legibilidad perfecta sobre las estrellas
-            draw.text((cursor_x + 3, cursor_y + 3), word_str, font=font_karaoke, fill=(0, 0, 0))
+            draw.text((cursor_x + 2, cursor_y + 2), word_str, font=font_karaoke, fill=(0, 0, 0))
 
-            # Color: Oro Brillante (Hablada ahora), Blanco (Ya dicha), Gris azulado (Futura)
             if global_idx == active_w_idx:
-                w_color = (255, 215, 0)   # Oro Brillante
+                w_color = (255, 215, 0)
             elif global_idx < active_w_idx:
-                w_color = (245, 248, 255) # Blanco Puro
+                w_color = (245, 248, 255)
             else:
-                w_color = (110, 125, 150) # Futuro
+                w_color = (110, 125, 150)
 
             draw.text((cursor_x, cursor_y), word_str, font=font_karaoke, fill=w_color)
             cursor_x += w_width
 
-        # Subtítulo en Base Flotante
-        draw.line([content_x, HEIGHT - 120, content_x + content_w, HEIGHT - 120], fill=(45, 60, 90), width=1)
+        # 5. Subtítulo en Base Flotante
+        draw.line([content_x, HEIGHT - 105, content_x + content_w, HEIGHT - 105], fill=(45, 60, 90), width=1)
         sub_str = "EN: " + item["sub_en"] if lang == "es" else "ES: " + item["concept_es"]
-        draw.text((content_x + 2, HEIGHT - 90 + 2), sub_str, font=font_sub, fill=(0, 0, 0))
-        draw.text((content_x, HEIGHT - 90), sub_str, font=font_sub, fill=(160, 190, 230))
+        draw.text((content_x + 1, HEIGHT - 80 + 1), sub_str, font=font_sub, fill=(0, 0, 0))
+        draw.text((content_x, HEIGHT - 80), sub_str, font=font_sub, fill=(160, 190, 230))
 
         # Barra de Progreso Inferior en Oro
         progress_pct = t / total_duration
@@ -392,7 +467,7 @@ def render_masterclass_for_language(lang: str, whisper_model):
         if f_idx % 600 == 0:
             print(f"    -> [{lang.upper()}] Fotograma {f_idx}/{total_frames} ({f_idx/total_frames*100:.1f}%)...")
 
-    # 5. Codificación Final en MP4 FastStart 1080p
+    # 6. Codificación Final en MP4 FastStart 1080p
     print(f"\n[FASE 5/5 - {lang.upper()}] Codificando Masterclass 1080p con FFmpeg FastStart...")
     output_name = "OpenClaw_Masterclass_Espanol_1080p.mp4" if lang == "es" else "OpenClaw_Masterclass_English_1080p.mp4"
     final_output = RUNTIME / output_name
@@ -430,11 +505,7 @@ def render_masterclass_for_language(lang: str, whisper_model):
 
 def render_both_masterclasses():
     whisper_model = whisper.load_model("base")
-    
-    # 1. Generar Masterclass en Español
     video_es = render_masterclass_for_language("es", whisper_model)
-    
-    # 2. Generar Masterclass en Inglés
     video_en = render_masterclass_for_language("en", whisper_model)
 
     print("\n" + "=" * 60)

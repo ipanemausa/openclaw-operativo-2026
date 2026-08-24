@@ -140,6 +140,8 @@ Un (1) DAG después de ejecutar el pipeline de deploy, el agente DEBE:
 
 ---
 
+---
+
 ## Protocolo de Activación Rápida: [OPENCLAW-CORE-MATRIX]
 
 Cuando el usuario inicie una sesión con el comando:
@@ -153,4 +155,21 @@ El agente debe:
    - **Fase 4 (Sandboxes & Harnesses):** Docker 7/7 microservicios, aislamiento y ejecución de tools controlada.
    - **Fase 5 (Multimodalidad & Video):** 1080p FastStart, Edge-TTS 48kHz (-16 LUFS EBU R128), YouTube/Firebase CDN.
 2. Ejecutar inmediatamente la tarea solicitada bajo este marco sin requerir preámbulos teóricos adicionales.
+
+---
+
+## Blindaje Permanente de Identidad Vocal & Branding Oficial HB.OS
+
+1. **PROHIBICIÓN ESTRICTA DE FALLBACK SILENCIOSO:**
+   - Queda TERMINANTEMENTE PROHIBIDO sustituir en silencio la voz real o el clon de voz de Guillermo por voces sintéticas genéricas (Microsoft, Edge-TTS genérico, etc.) sin avisar explícitamente.
+   - Si se requiere que el clon de Guillermo lea un guion nuevo y el motor de clonación neural (ElevenLabs / Cloud GPU XTTS-v2 / CosyVoice) no está enlazado, el agente DEBE detenerse y requerir la clave o acción necesaria. NUNCA reportar éxito falso.
+
+2. **BRANDING OFICIAL INMUTABLE:**
+   - En toda producción de video, masterclass, header, teleprompter y narración, el nombre oficial del sistema es:
+     `HB. OS Operation system`  (o  `HB.OS (OPERATING SYSTEM) · SOVEREIGN AI`)
+   - Queda PROHIBIDO usar "OpenClaw 2026" como marca en pantalla o locución de masterclasses.
+
+3. **CALIDAD VISUAL HD CRISTALINA:**
+   - Las capturas B-Roll y avatares transparentes deben escalarse con filtro `Lanczos` de alta definición (`1040x585` en 1080p) con marco bioluminiscente, garantizando cero pixelación ni compresión degradante.
+
 

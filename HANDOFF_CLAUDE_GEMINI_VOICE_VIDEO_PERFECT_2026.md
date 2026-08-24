@@ -1,4 +1,4 @@
-# 🛰️ [HB.OS OPERATING SYSTEM] — HANDOFF ARQUITECTÓNICO: INTEGRACIÓN DE VOZ REAL (6.36 MIN) & LAYOUT RESPONSIVE
+# 🛰️ [HB. OS OPERATION SYSTEM] — PROTOCOLO DE IDENTIDAD VOCAL Y RESILIENCIA 2026
 
 **Autoridad:** Guillermo (HB.OS Sovereign AI)  
 **Destino:** Claude 3.7 / Gemini 1.5 Pro / GPT-4o / Antigravity Core  
@@ -7,37 +7,34 @@
 
 ---
 
-## 1. Localización del Archivo Maestro de Voz Real (6.36 Minutos)
+## 1. La Fuente Única de Identidad Vocal: Muestra de Audio Maestro
 
-El archivo maestro con la **voz real de Guillermo** (sin síntesis sintética de Microsoft) está localizado y verificado en:
-
-* **Ruta Absoluta:**  
+* **Archivo de Referencia Biométrico:**  
   `C:\Users\ipane\openclaw-operativo-2026\runtime\guillermo_podcast_master\Guillermo_Podcast_Master_Edit_48k.wav`
-* **Duración Exacta:** **381.56 segundos (6.36 minutos)**
+* **Duración:** **381.56 segundos (6.36 minutos)**
 * **Frecuencia:** 48,000 Hz Estéreo (48kHz)
 * **Masterización DSP:** EBU R128 (-16 LUFS, True Peak -1.5 dB, Highpass 80Hz, EQ 220Hz/3.5kHz)
-* **Tamaño:** 109,889,478 bytes (~109.8 MB)
+* **Función:** Este archivo es el **Voice Sample Reference** del usuario para alimentar motores de clonación Zero-Shot o usarse como pista de locución directa en masterclasses personales.
 
 ---
 
-## 2. Los Dos Modos Operativos de Producción
+## 2. Los Dos Modos Operativos Claros (CERO AMBIGÜEDAD)
 
-| Modo | Fuente de Audio | Timbre / Resultado | Uso Recomendado |
-|---|---|---|---|
-| **Modo 1: Locución Real Directa (Pristine Voice)** | `Guillermo_Podcast_Master_Edit_48k.wav` | **100% Tu voz humana real grabada**, sin ninguna IA de síntesis. | Videos donde la narrativa sigue las reflexiones y masterclasses grabadas por ti. |
-| **Modo 2: Clonación Neuronal Zero-Shot (XTTS-v2 / F5-TTS)** | Texto nuevo + `speaker_wav = Guillermo_Podcast_Master_Edit_48k.wav` | Tu timbre real exacto sintetizado para textos nuevos (DeepMind, AlphaFold, etc.). | Masterclasses donde el guion se escribe primero y la IA lo lee con tu voz. |
+| Modo | Fuente de Audio | Acción | Resultado |
+| :--- | :--- | :--- | :--- |
+| **Modo 1: Locución Directa Grabada** | `Guillermo_Podcast_Master_Edit_48k.wav` | Se monta el audio grabado de 6.36 min directamente. | 100% tu voz humana con las reflexiones grabadas. |
+| **Modo 2: Clonación Neuronal de Voz para Textos Nuevos** | Texto nuevo (ej. Guion de DeepMind) + Sample de 6.36 min | Pasa por el endpoint de clonación neural (ElevenLabs / Cloud GPU XTTS-v2 / CosyVoice). | Tu timbre real clonado lee el guion técnico nuevo. |
 
 ---
 
-## 3. Correcciones de Diseño Visual Implementadas (Branding HB.OS & Responsive)
+## 3. Reglas Inmutables Anti-Regresión
 
-1. **Reemplazo de Branding:**  
-   Se eliminó toda referencia a "OpenClaw 2026" en pantalla y se reemplazó por:  
-   `HB.OS (OPERATING SYSTEM) · SOVEREIGN AI`
-2. **Corrección de Desbordamiento de Títulos (100% Responsive):**  
-   - Sistema de cálculo de texto `wrap_text_to_width` dinámico.
-   - Ancho máximo asignado a la zona de título: **820px** (evitando cualquier colisión con el avatar a la derecha).
-3. **Elevación de Zona Segura del Teleprompter:**  
-   - El teleprompter se sitúa en `y = 760` a `870` (por encima de la barra de progreso y controles de reproductores multimedia para que nunca se tape la última línea).
-4. **B-Roll Holográfico Sideral:**  
-   - Integración de las 40 capturas como **PNG transparente puro** (Luma-Keying + desvanecimiento radial 360°).
+1. **CERO FALLBACK SILENCIOSO:**
+   - Prohibido terminantemente que un agente use voces sintéticas genéricas de Microsoft para fingir que clonó la voz de Guillermo. Si no hay clave de clonación, el agente debe detenerse y pedirla.
+2. **BRANDING INMUTABLE:**
+   - Nombre oficial en pantalla y en audio: **`HB. OS Operation system`** y **`HB.OS · SOVEREIGN AI`**.
+   - Prohibido "OpenClaw 2026" como marca en pantalla o voz.
+3. **CALIDAD VISUAL HD CRISTALINA:**
+   - B-Roll y avatares escalados con filtro `Lanczos` de alta definición (`1040x585` en 1080p), con teleprompter elevado en zona segura (`y = 745` a `985`).
+4. **CIERRE Y RESPALDO:**
+   - Todo cambio se consolida con `powershell -ExecutionPolicy Bypass -File .\scripts\pipeline-cierre.ps1` hacia GitHub y Google Drive (5TB).

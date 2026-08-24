@@ -35,7 +35,7 @@ CAPTURES_DIR = ROOT / "capturas_recientes"
 WIDTH, HEIGHT = 1920, 1080
 FPS = 25
 
-# ─── GUION MAESTRO: GOOGLE DEEPMIND & DEMIS HASSABIS (HB. OS OPERATION SYSTEM) ───
+# ─── GUION MAESTRO: GOOGLE DEEPMIND & DEMIS HASSABIS (NARRACIÓN EXPRESIVA HB.OS) ───
 DEEPMIND_MODULES = [
     {
         "module_id": "MOD_01",
@@ -45,13 +45,12 @@ DEEPMIND_MODULES = [
         "capture_start": 1,
         "capture_end": 8,
         "text": (
-            "Bienvenidos a HB. OS Operation system. Para comprender hacia dónde se dirige la inteligencia "
-            "artificial general, debemos analizar los hitos fundamentales logrados por Demis Hassabis y Google "
-            "DeepMind. Todo comenzó con la resolución de espacios de búsqueda complejos. Desde la histórica "
-            "jugada número treinta y siete de AlphaGo contra Lee Sedol, hasta la maestría táctica en tiempo "
-            "real con AlphaStar en StarCraft dos, la inteligencia artificial demostró que el aprendizaje por "
-            "refuerzo profundo no solo iguala al ser humano, sino que descubre estrategias totalmente nuevas "
-            "e intuitivas."
+            "¡Bienvenidos a HB punto OS Operation system! Para comprender realmente hacia dónde se dirige la inteligencia "
+            "artificial general... debemos analizar los hitos fundamentales logrados por Demis Hassabis y Google "
+            "DeepMind. Todo comenzó con un desafío colosal: la resolución de espacios de búsqueda infinitos. Desde aquella histórica "
+            "e inolvidable jugada número treinta y siete de AlphaGo contra Lee Sedol... hasta la maestría táctica en tiempo "
+            "real con AlphaStar en StarCraft dos. La inteligencia artificial demostró que el aprendizaje por "
+            "refuerzo profundo no solo iguala al ser humano... ¡sino que descubre estrategias totalmente nuevas, intuitivas y sorprendentes!"
         )
     },
     {
@@ -62,12 +61,11 @@ DEEPMIND_MODULES = [
         "capture_start": 9,
         "capture_end": 16,
         "text": (
-            "Pero el verdadero punto de inflexión para la humanidad ocurrió cuando DeepMind llevó estos principios "
-            "a la ciencia pura. Durante cincuenta años, el problema del plegamiento de proteínas fue considerado "
-            "el mayor enigma biológico. Con AlphaFold, lograron predecir la estructura tridimensional de más de "
-            "doscientos millones de proteínas, cubriendo prácticamente todo el universo proteico conocido. Esta "
-            "base de datos global, adoptada hoy por millones de investigadores, transformó décadas de trabajo "
-            "experimental en segundos computacionales."
+            "Pero el verdadero punto de inflexión para toda la humanidad... ocurrió cuando DeepMind llevó estos principios "
+            "a la ciencia pura. ¡Durante cincuenta años!, el enigma del plegamiento de proteínas fue considerado "
+            "el mayor misterio de la biología. Con AlphaFold... lograron lo impensable: predecir la estructura tridimensional de más de "
+            "doscientos millones de proteínas, cubriendo prácticamente todo el universo biológico conocido. Esta "
+            "base de datos global, adoptada hoy por millones de científicos... ¡transformó décadas de investigación en cuestión de segundos!"
         )
     },
     {
@@ -78,11 +76,10 @@ DEEPMIND_MODULES = [
         "capture_start": 17,
         "capture_end": 22,
         "text": (
-            "El alcance de esta tecnología no se limitó a proteínas aisladas. AlphaFold permitió mapear complejos "
-            "macromoleculares gigantescos como el complejo del poro nuclear, la puerta de enlace que regula el "
-            "transporte genético en nuestras células. Lo que antes requería años de cristalografía de rayos X y "
-            "microscopía crioelectrónica, ahora puede ser modelado con precisión atómica, abriendo una ventana "
-            "sin precedentes a la maquinaria fundamental de la vida."
+            "El impacto de esta revolución no se detuvo en proteínas aisladas. AlphaFold permitió mapear complejos "
+            "macromoleculares gigantescos... como el complejo del poro nuclear: la puerta de enlace que regula el "
+            "transporte genético en nuestras células. Lo que antes exigía años interminables de cristalografía y microscopía "
+            "crioelectrónica... ahora puede ser modelado con precisión atómica. ¡Una ventana sin precedentes a la maquinaria misma de la vida!"
         )
     },
     {
@@ -93,11 +90,11 @@ DEEPMIND_MODULES = [
         "capture_start": 23,
         "capture_end": 28,
         "text": (
-            "El siguiente gran salto es el diseño de fármacos in silico y la comprensión del genoma humano. "
+            "El siguiente gran salto de frontera... es el diseño de fármacos in silico y la comprensión profunda del genoma humano. "
             "A través de iniciativas como AlphaGenome, estamos comenzando a descifrar el noventa y ocho por "
-            "ciento del ADN que anteriormente se consideraba no codificante o basura genética. Esta capacidad "
-            "permite predecir el acoplamiento químico directo de moléculas candidatas, acelerando el desarrollo "
-            "de terapias personalizadas para enfermedades complejas a una fracción del costo tradicional."
+            "ciento del ADN... que durante décadas se consideró erróneamente basura genética. Esta capacidad "
+            "permite predecir el acoplamiento químico exacto de nuevas moléculas... acelerando el desarrollo "
+            "de terapias que salvarán vidas, a una fracción del costo tradicional."
         )
     },
     {
@@ -108,11 +105,10 @@ DEEPMIND_MODULES = [
         "capture_start": 29,
         "capture_end": 34,
         "text": (
-            "Demis Hassabis enfatiza que el futuro de la inteligencia artificial radica en los Modelos de Mundo. "
-            "Para interactuar con el entorno físico a través de la robótica, los agentes no pueden depender "
-            "únicamente de patrones textuales; deben internalizar la física, el espacio tridimensional, la causa "
-            "y el efecto. Estos modelos de mundo permiten a los robots aprender tareas complejas en simulación "
-            "y ejecutarlas en el mundo real con destreza y seguridad."
+            "Demis Hassabis enfatiza con claridad: el futuro de la inteligencia artificial radica en los Modelos de Mundo. "
+            "Para interactuar con la realidad física a través de la robótica... los agentes no pueden depender "
+            "únicamente de texto; deben internalizar la física, el espacio tridimensional, la causa "
+            "y el efecto. Estos modelos de mundo permiten a los robots aprender en simulación acelerada... ¡y actuar en el mundo real con destreza y total seguridad!"
         )
     },
     {
@@ -123,12 +119,11 @@ DEEPMIND_MODULES = [
         "capture_start": 35,
         "capture_end": 40,
         "text": (
-            "En HB. OS Operation system consolidamos esta visión bajo el principio de la Soberanía Tecnológica. "
-            "La inteligencia artificial no es solo un asistente conversacional; es el instrumento científico "
-            "definitivo para acelerar el descubrimiento humano. Integrando vectores en espacio de dimensión "
-            "setecientos sesenta y ocho, orquestación determinista y modelos abiertos, construimos la "
-            "infraestructura de automatización del futuro. Gracias por acompañarnos en este recorrido por la "
-            "frontera del conocimiento."
+            "En HB punto OS Operation system consolidamos esta visión bajo el principio inquebrantable de la Soberanía Tecnológica. "
+            "La inteligencia artificial no es solo un asistente; es el instrumento científico "
+            "definitivo para acelerar el conocimiento humano. Integrando vectores en dimensión "
+            "setecientos sesenta y ocho, orquestación determinista y modelos abiertos... construimos la "
+            "infraestructura de automatización del futuro. ¡Gracias por acompañarnos en esta masterclass!"
         )
     }
 ]

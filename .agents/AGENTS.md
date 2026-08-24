@@ -172,4 +172,27 @@ El agente debe:
 3. **CALIDAD VISUAL HD CRISTALINA:**
    - Las capturas B-Roll y avatares transparentes deben escalarse con filtro `Lanczos` de alta definición (`1040x585` en 1080p) con marco bioluminiscente, garantizando cero pixelación ni compresión degradante.
 
+---
+
+## Protocolo Obligatorio de Narración Expresiva Multiformato (CERO Lectura Plana)
+
+Cualquier producción de audio o video en HB.OS DEBE aplicar automáticamente dirección de **narración viva con prosodia emocional**, diferenciando estrictamente **narrar** de leer:
+
+1. **Prohibición de Lectura Plana Monótona:**
+   - Prohibido sintetizar bloques de texto secos y continuos sin modulación.
+   - Todo guion debe ser procesado con **puntuación interpretativa**: puntos suspensivos `...` para misterio, exclamaciones `¡!` para hallazgos clave, y guiones `—` para acápites reflexivos.
+
+2. **Matriz de Modos de Narración por Formato:**
+   - **`PODCAST`**: Tono barítono íntimo y reflexivo, pausas de respiración de 400ms a 600ms, estabilidad `0.45` para variaciones humanas.
+   - **`VIDEO_YOUTUBE`**: Dinámico y magnético, aceleraciones en tensión, desaceleraciones en revelaciones técnicas.
+   - **`MASTERCLASS_CLASE`**: Autoridad pedagógica, realce de definiciones y preguntas retóricas.
+   - **`CONFERENCIA_KEYNOTE`**: Épica, pausas dramáticas de 700ms antes de cifras o hitos mayores (estilo Jensen Huang).
+   - **`ENTREVISTA`**: Cadencia orgánica y fluida de conversación natural.
+
+3. **Parámetros de Inferencia Expresiva Obligatorios:**
+   - `Stability`: **0.42 - 0.48** (permite micro-variaciones emocionales de voz humana).
+   - `Style Exaggeration`: **0.25 - 0.35** (teatralidad y energía vocal).
+   - `Similarity Boost`: **0.90 - 0.94** (fidelidad biométrica total al timbre de Guillermo).
+   - `Mastering DSP`: **48kHz Estéreo EBU R128 (-16 LUFS)** con realce en 220Hz (+2.8dB) y 3.5kHz (+3.6dB).
+
 

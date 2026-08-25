@@ -25,6 +25,8 @@ import FloatingVoiceWidget from './components/FloatingVoiceWidget/FloatingVoiceW
 import Facturacion from './components/Facturacion/Facturacion'
 import BIEjecutivo from './components/BIEjecutivo/BIEjecutivo'
 
+import SovereignVoiceLab from './components/SovereignVoiceLab/SovereignVoiceLab'
+
 export default function App() {
   const [activeSection, setActiveSection] = useState('dashboard')
 
@@ -49,7 +51,8 @@ export default function App() {
       case 'chat-historial': return <Chathistorial />
       case 'auditoria':      return <Auditoria />
       case 'avatar':         return <AvatarMeet />
-      case 'voicecall':      return <VoiceCall />
+      case 'voicecall':      return <SovereignVoiceLab />
+      case 'voice-lab':      return <SovereignVoiceLab />
       case 'integraciones':  return <Integraciones />
       case 'facturacion':    return <Facturacion />
       case 'bi-ejecutivo':   return <BIEjecutivo />

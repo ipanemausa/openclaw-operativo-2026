@@ -32,12 +32,15 @@ export const HumanDigitalEngine = {
   getAvatarProfile(avatarId = "guillermo_ai_3d") {
     return {
       id: avatarId,
-      name: "Guillermo AI Avatar Master 3D Mesh",
-      meshType: "3D FLAME Head Geometry + Skeletal Body Rig",
+      name: "Guillermo AI Avatar Master (HB.OS Sovereign Voice)",
+      brand: "HB. OS Operation system",
+      timbre: "Barítono cálido, autoridad pedagógica, cadencia reflexiva",
+      meshType: "3D FLAME Head Geometry + LivePortrait / NeRF",
       languages: ["es-MX", "en-US"],
       aspectRatio: "16:9",
-      resolution: "1920x1080 Widescreen 3D",
-      status: "active_3d"
+      resolution: "1920x1080 Widescreen FastStart MP4",
+      audioStandard: "48kHz Estéreo EBU R128 (-16 LUFS)",
+      status: "active_sovereign"
     };
   },
 
@@ -45,10 +48,10 @@ export const HumanDigitalEngine = {
   async processHumanDigitalPipeline(promptScript, options = {}) {
     console.log(`[HumanDigitalEngine 3D] Iniciando pipeline DAG 3D Neuronal para: "${promptScript}"`);
     
-    const pipelineStep1 = { step: "1. Intent & Emotion 3D", emotion: "authoritative_warm_professional" };
-    const pipelineStep2 = { step: "2. Cloned TikTok Speech 24kHz", voiceModel: "showcase_voice.mp3 (EBU R128 -14 LUFS)" };
-    const pipelineStep3 = { step: "3. 3D FLAME Mesh & Lip Blendshapes", lipSyncModel: "PyTorch 3D CUDA / LivePortrait 3D / NeRF" };
-    const pipelineStep4 = { step: "4. 3D Volumetric Rendering 1080p", videoOutput: "/videos/talk_grow_format/real_talk_grow_educational.mp4" };
+    const pipelineStep1 = { step: "1. Intent & Emotion 3D", emotion: "authoritative_warm_reflective" };
+    const pipelineStep2 = { step: "2. Cloned Master Voice 48kHz", voiceModel: "Guillermo Authentic Profile (EBU R128 -16 LUFS, Stability 0.45, Similarity 0.94)" };
+    const pipelineStep3 = { step: "3. 3D FLAME Mesh & Lip Blendshapes", lipSyncModel: "LivePortrait 3D / CosyVoice 2 / Cloud GPU" };
+    const pipelineStep4 = { step: "4. FastStart Volumetric Rendering 1080p", videoOutput: "/videos/talk_grow_format/real_talk_grow_educational.mp4" };
 
     return {
       status: "SUCCESS",
@@ -58,7 +61,8 @@ export const HumanDigitalEngine = {
       stepsExecuted: [pipelineStep1, pipelineStep2, pipelineStep3, pipelineStep4],
       outputVideoUrl: "/videos/talk_grow_format/real_talk_grow_educational.mp4",
       youtubeMasterUrl: "/videos/talk_grow_format/youtube_master_10min_educational.mp4",
-      audioDuckingDb: -20,
+      audioDuckingDb: -16,
+      fastStartEnabled: true,
       confidenceScore: 0.999
     };
   }

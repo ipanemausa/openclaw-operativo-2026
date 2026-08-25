@@ -1,0 +1,12 @@
+{
+  "channel_id": "deepseek_ai",
+  "entity": "DeepSeek AI",
+  "category": "Sovereign AI / Open Weight",
+  "priority": "CRITICAL",
+  "source_url": "https://raw.githubusercontent.com/deepseek-ai/DeepSeek-V3/main/README.md",
+  "timestamp": "2026-08-25T08:49:35.612072",
+  "content_length_chars": 20837,
+  "raw_sample": "<!-- markdownlint-disable first-line-h1 -->\n<!-- markdownlint-disable html -->\n<!-- markdownlint-disable no-duplicate-header -->\n\n<div align=\"center\">\n  <img src=\"https://github.com/deepseek-ai/DeepSeek-V2/blob/main/figures/logo.svg?raw=true\" width=\"60%\" alt=\"DeepSeek-V3\" />\n</div>\n<hr>\n<div align=\"center\" style=\"line-height: 1;\">\n  <a href=\"https://www.deepseek.com/\"><img alt=\"Homepage\"\n    src=\"https://github.com/deepseek-ai/DeepSeek-V2/blob/main/figures/badge.svg?raw=true\"/></a>\n  <a href=\"https://chat.deepseek.com/\"><img alt=\"Chat\"\n    src=\"https://img.shields.io/badge/🤖%20Chat-DeepSeek%20V3-536af5?color=536af5&logoColor=white\"/></a>\n  <a href=\"https://huggingface.co/deepseek-ai\"><img alt=\"Hugging Face\"\n    src=\"https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-DeepSeek%20AI-ffc107?color=ffc107&logoColor=white\"/></a>\n  <br>\n  <a href=\"https://discord.gg/Tc7c45Zzu5\"><img alt=\"Discord\"\n    src=\"https://img.shields.io/badge/Discord-DeepSeek%20AI-7289da?logo=discord&logoColor=white&color=7289da\"/></a>\n  <a href=\"https://github.com/deepseek-ai/DeepSeek-V2/blob/main/figures/qr.jpeg?raw=true\"><img alt=\"Wechat\"\n    src=\"https://img.shields.io/badge/WeChat-DeepSeek%20AI-brightgreen?logo=wechat&logoColor=white\"/></a>\n  <a href=\"https://twitter.com/deepseek_ai\"><img alt=\"Twitter Follow\"\n    src=\"https://img.shields.io/badge/Twitter-deepseek_ai-white?logo=x&logoColor=white\"/></a>\n  <br>\n  <a href=\"https://github.com/deepseek-ai/DeepSeek-V3/blob/main/LICENSE-CODE\"><img alt=\"Code License\"\n    src=\"https://img.shields.io/badge/Code_License-MIT-f5de53?&color=f5de53\"/></a>\n  <a href=\"https://github.com/deepseek-ai/DeepSeek-V3/blob/main/LICENSE-MODEL\"><img alt=\"Model License\"\n    src=\"https://img.shields.io/badge/Model_License-Model_Agreement-f5de53?&color=f5de53\"/></a>\n  <br>\n  <a href=\"https://arxiv.org/pdf/2412.19437\"><b>Paper Link</b>👁️</a>\n</div>\n\n## Table of Contents\n\n1. [Introduction](#1-introduction)\n2. [Model Summary](#2-model-summary)\n3. [Model Downloads](#3-mo",
+  "vector_ready": true,
+  "embedding_model": "BAAI/bge-m3 (R^768)"
+}

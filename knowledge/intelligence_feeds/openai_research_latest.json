@@ -1,0 +1,12 @@
+{
+  "channel_id": "openai_research",
+  "entity": "OpenAI",
+  "category": "Proprietary Frontier",
+  "priority": "HIGH",
+  "source_url": "https://openai.com/news/rss.xml",
+  "timestamp": "2026-08-25T08:49:33.982859",
+  "content_length_chars": 694267,
+  "raw_sample": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><rss xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:content=\"http://purl.org/rss/1.0/modules/content/\" xmlns:atom=\"http://www.w3.org/2005/Atom\" version=\"2.0\">\n    <channel>\n        <title><![CDATA[OpenAI News]]></title>\n        <description><![CDATA[The OpenAI blog]]></description>\n        <link>https://openai.com/news</link>\n        <image>\n            <url>https://openai.com/apple-icon.png</url>\n            <title>OpenAI News</title>\n            <link>https://openai.com/news</link>\n        </image>\n        <generator>OpenAI</generator>\n        <lastBuildDate>Tue, 25 Aug 2026 11:57:43 GMT</lastBuildDate>\n        <atom:link href=\"https://openai.com/news/rss.xml\" rel=\"self\" type=\"application/rss+xml\"/>\n        <item>\n            <title><![CDATA[Disrupting a new covert influence campaign from Russia]]></title>\n            <description><![CDATA[OpenAI banned Russia-origin accounts using AI to promote a fake Israel-based think tank and a “sovereignty” index praising Russia and criticizing the West.]]></description>\n            <link>https://openai.com/index/disrupting-malicious-uses-of-ai-influence-campaign-russia</link>\n            <guid isPermaLink=\"true\">https://openai.com/index/disrupting-malicious-uses-of-ai-influence-campaign-russia</guid>\n            <category><![CDATA[Global Affairs]]></category>\n            <pubDate>Tue, 25 Aug 2026 00:00:00 GMT</pubDate>\n        </item>\n        <item>\n            <title><![CDATA[Advancing price-performance for developers with GPT‑5.6 in Kiro]]></title>\n            <description><![CDATA[GPT‑5.6 is now available in Kiro, helping developers plan, build, review, and test software with better price-performance.]]></description>\n            <link>https://openai.com/index/gpt-5-6-in-kiro</link>\n            <guid isPermaLink=\"true\">https://openai.com/index/gpt-5-6-in-kiro</guid>\n            <category><![CDATA[Product]]></category>\n            <pubDate>Mon, 24 Aug 2026 12:00:00 GMT</pubDate>\n   ",
+  "vector_ready": true,
+  "embedding_model": "BAAI/bge-m3 (R^768)"
+}

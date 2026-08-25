@@ -1,0 +1,12 @@
+{
+  "channel_id": "google_deepmind",
+  "entity": "Google DeepMind",
+  "category": "Frontier Research",
+  "priority": "HIGH",
+  "source_url": "https://deepmind.google/blog/rss.xml",
+  "timestamp": "2026-08-25T08:49:37.736188",
+  "content_length_chars": 75298,
+  "raw_sample": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\" xmlns:media=\"http://search.yahoo.com/mrss/\"><channel><title>Google DeepMind News</title><link>https://deepmind.google/blog/</link><description>Read the latest articles and stories from DeepMind and find out more about our latest breakthroughs in cutting-edge AI research.</description><atom:link href=\"https://example.com/blog/rss.xml\" rel=\"self\"/><language>en</language><lastBuildDate>Fri, 21 Aug 2026 11:59:48 +0000</lastBuildDate><item><title>From Atari to EVE Online: Building on 15 Years of AI Research in Games</title><link>https://deepmind.google/blog/from-atari-to-eve-online-building-on-15-years-of-ai-research-in-games/</link><description>Google DeepMind partners with game studios to prototype breakthrough AI gameplay.</description><pubDate>Fri, 21 Aug 2026 11:59:48 +0000</pubDate><guid>https://deepmind.google/blog/from-atari-to-eve-online-building-on-15-years-of-ai-research-in-games/</guid><media:thumbnail url=\"https://lh3.googleusercontent.com/ymmK0Dgovn-_MGlnQJffYxKdTe5LAnkAZr-GNnIjiFzsGOAAmOmUDuVACbNgIy-tqrJhGBdaQ_PaElc8EKRKRWtYg4eWx8HVcaVzdYy7hg7Q_8k=w528-h297-n-nu-rw-lo\"/><media:content medium=\"image\" url=\"https://lh3.googleusercontent.com/ymmK0Dgovn-_MGlnQJffYxKdTe5LAnkAZr-GNnIjiFzsGOAAmOmUDuVACbNgIy-tqrJhGBdaQ_PaElc8EKRKRWtYg4eWx8HVcaVzdYy7hg7Q_8k=w528-h297-n-nu-rw-lo\"/></item><item><title>Introducing Gemini 3.7 Flash</title><link>https://deepmind.google/blog/introducing-gemini-3-7-flash/</link><description/><pubDate>Thu, 13 Aug 2026 17:04:18 +0000</pubDate><guid>https://deepmind.google/blog/introducing-gemini-3-7-flash/</guid></item><item><title>Putting sign language AI into users’ hands</title><link>https://deepmind.google/blog/putting-sign-language-ai-into-users-hands/</link><description>Introducing sign-language-to-text (SL2T), our breakthrough model powering new sign language features for Deaf and hard of hearing users.</description><pubDate>Wed, 12 Aug ",
+  "vector_ready": true,
+  "embedding_model": "BAAI/bge-m3 (R^768)"
+}

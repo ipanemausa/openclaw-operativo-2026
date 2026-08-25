@@ -1,0 +1,19 @@
+{
+  "speaker": "Guillermo",
+  "voice_brand": "HB.OS Sovereign Voice (Guillermo Authentic)",
+  "timbre": "Barítono cálido, autoridad pedagógica, cadencia reflexiva",
+  "sample_rate_target": "48000 Hz",
+  "mastering_standard": "EBU R128 (-16 LUFS)",
+  "prosody_parameters": {
+    "stability": 0.45,
+    "similarity_boost": 0.94,
+    "style_exaggeration": 0.28,
+    "breath_pause_ms": "350ms - 500ms"
+  },
+  "target_engines": [
+    "ElevenLabs Direct API (Professional Voice Clone)",
+    "CosyVoice 2 (Zero-Shot Neural Clone)",
+    "XTTS-v2 Cloud GPU"
+  ],
+  "training_data_status": "HIGH_FIDELITY_MULTI_TAKE_READY"
+}

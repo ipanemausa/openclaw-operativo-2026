@@ -5,21 +5,86 @@
   "voice_file": "c:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\guillermo_voice_studio_master_48k.aac",
   "voice_sample_rate": 48000,
   "voice_loudness": "-14 LUFS EBU R128",
-  "avatar_slots_total": 13,
+  "avatar_slots_total": 50,
   "avatar_catalog": [
-    { "id": "avatar_01", "name": "Guillermo HB.OS Executive Transparent", "path": "c:\\Users\\ipane\\openclaw-operativo-2026\\assets\\avatar_transparent_hbos.png", "pose": "front_executive" },
-    { "id": "avatar_02", "name": "Guillermo Studio Pro 4K", "path": "c:\\Users\\ipane\\openclaw-operativo-2026\\assets\\avatar_pro.png", "pose": "studio_full" },
-    { "id": "avatar_03", "name": "Guillermo Transparent Standard", "path": "c:\\Users\\ipane\\openclaw-operativo-2026\\assets\\avatar_transparent.png", "pose": "front_standard" },
-    { "id": "avatar_04", "name": "Guillermo HB.OS Gold Badge Frame", "path": "c:\\openclaw\\hb-jewelry\\public\\avatar_frame.png", "pose": "gold_badge" },
-    { "id": "avatar_05", "name": "Guillermo Presentation HD", "path": "c:\\openclaw\\hb-jewelry\\public\\avatars\\avatar_pro.png", "pose": "presentation_hd" },
-    { "id": "avatar_06", "name": "Guillermo Thumbnail 940f", "path": "c:\\openclaw\\hb-jewelry\\public\\thumbnails\\thumb_guillermo_940f.png", "pose": "thumbnail_portrait" },
-    { "id": "avatar_07", "name": "Flow Avatar Slot 07 — Casual Tech", "path": "runtime/avatar_bank_guillermo/flow_avatar_07.png", "pose": "casual_tech" },
-    { "id": "avatar_08", "name": "Flow Avatar Slot 08 — Keynote Stage", "path": "runtime/avatar_bank_guillermo/flow_avatar_08.png", "pose": "keynote_stage" },
-    { "id": "avatar_09", "name": "Flow Avatar Slot 09 — Full Body Stand", "path": "runtime/avatar_bank_guillermo/flow_avatar_09.png", "pose": "full_body_stand" },
-    { "id": "avatar_10", "name": "Flow Avatar Slot 10 — Side Profile 3/4", "path": "runtime/avatar_bank_guillermo/flow_avatar_10.png", "pose": "side_profile" },
-    { "id": "avatar_11", "name": "Flow Avatar Slot 11 — Software Architecture Diagram", "path": "runtime/avatar_bank_guillermo/flow_avatar_11.png", "pose": "diagram_explain" },
-    { "id": "avatar_12", "name": "Flow Avatar Slot 12 — Close Up Pedagogy", "path": "runtime/avatar_bank_guillermo/flow_avatar_12.png", "pose": "close_up_pedagogy" },
-    { "id": "avatar_13", "name": "Flow Avatar Slot 13 — Dynamic Motion B-Roll", "path": "runtime/avatar_bank_guillermo/flow_avatar_13.png", "pose": "dynamic_motion" }
+    {
+      "id": "avatar_01",
+      "name": "Guillermo HB.OS Executive Transparent",
+      "path": "c:\\Users\\ipane\\openclaw-operativo-2026\\assets\\avatar_transparent_hbos.png",
+      "pose": "front_executive"
+    },
+    {
+      "id": "avatar_02",
+      "name": "Guillermo Studio Pro 4K",
+      "path": "c:\\Users\\ipane\\openclaw-operativo-2026\\assets\\avatar_pro.png",
+      "pose": "studio_full"
+    },
+    {
+      "id": "avatar_03",
+      "name": "Guillermo Transparent Standard",
+      "path": "c:\\Users\\ipane\\openclaw-operativo-2026\\assets\\avatar_transparent.png",
+      "pose": "front_standard"
+    },
+    {
+      "id": "avatar_04",
+      "name": "Guillermo HB.OS Gold Badge Frame",
+      "path": "c:\\openclaw\\hb-jewelry\\public\\avatar_frame.png",
+      "pose": "gold_badge"
+    },
+    {
+      "id": "avatar_05",
+      "name": "Guillermo Presentation HD",
+      "path": "c:\\openclaw\\hb-jewelry\\public\\avatars\\avatar_pro.png",
+      "pose": "presentation_hd"
+    },
+    {
+      "id": "avatar_06",
+      "name": "Guillermo Thumbnail 940f",
+      "path": "c:\\openclaw\\hb-jewelry\\public\\thumbnails\\thumb_guillermo_940f.png",
+      "pose": "thumbnail_portrait"
+    },
+    {
+      "id": "avatar_07",
+      "name": "Flow Avatar Slot 07 — Casual Tech",
+      "path": "runtime/avatar_bank_guillermo/flow_avatar_07.png",
+      "pose": "casual_tech"
+    },
+    {
+      "id": "avatar_08",
+      "name": "Flow Avatar Slot 08 — Keynote Stage",
+      "path": "runtime/avatar_bank_guillermo/flow_avatar_08.png",
+      "pose": "keynote_stage"
+    },
+    {
+      "id": "avatar_09",
+      "name": "Flow Avatar Slot 09 — Full Body Stand",
+      "path": "runtime/avatar_bank_guillermo/flow_avatar_09.png",
+      "pose": "full_body_stand"
+    },
+    {
+      "id": "avatar_10",
+      "name": "Flow Avatar Slot 10 — Side Profile 3/4",
+      "path": "runtime/avatar_bank_guillermo/flow_avatar_10.png",
+      "pose": "side_profile"
+    },
+    {
+      "id": "avatar_11",
+      "name": "Flow Avatar Slot 11 — Software Architecture Diagram",
+      "path": "runtime/avatar_bank_guillermo/flow_avatar_11.png",
+      "pose": "diagram_explain"
+    },
+    {
+      "id": "avatar_12",
+      "name": "Flow Avatar Slot 12 — Close Up Pedagogy",
+      "path": "runtime/avatar_bank_guillermo/flow_avatar_12.png",
+      "pose": "close_up_pedagogy"
+    },
+    {
+      "id": "avatar_13",
+      "name": "Flow Avatar Slot 13 — Dynamic Motion B-Roll",
+      "path": "runtime/avatar_bank_guillermo/flow_avatar_13.png",
+      "pose": "dynamic_motion"
+    }
   ],
   "deepseek_indexation": {
     "provider": "DeepSeek Harness Platform Native",
@@ -27,5 +92,507 @@
     "model": "nanobanana",
     "cost_credits": 0,
     "voice_binding": "100_percent_guillermo_real_voice"
-  }
+  },
+  "50_avatar_catalog": [
+    {
+      "slot": 1,
+      "id": "avatar_01",
+      "name": "Ejecutivo Traje Oscuro en Escritorio de Cristal",
+      "outfit": "Traje formal negro",
+      "environment": "Oficina de Alta Tecnología",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_01.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 2,
+      "id": "avatar_02",
+      "name": "Ejecutivo Blazer Azul Marino en Sala de Juntas",
+      "outfit": "Blazer azul marino",
+      "environment": "Sala de Juntas Corporativa",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_02.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 3,
+      "id": "avatar_03",
+      "name": "Ejecutivo Camisa Blanca HB.OS en Primer Plano",
+      "outfit": "Camisa de vestir blanca",
+      "environment": "Estudio Minimalista",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_03.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 4,
+      "id": "avatar_04",
+      "name": "Ejecutivo Abrigo Elegante en Ventanal Metropolitano",
+      "outfit": "Abrigo ejecutivo gris",
+      "environment": "Skyline Ciudad",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_04.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 5,
+      "id": "avatar_05",
+      "name": "Ejecutivo Chaleco Formal con Gorra HB.OS",
+      "outfit": "Chaleco sastre y gorra HB.OS",
+      "environment": "Centro de Innovación",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_05.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 6,
+      "id": "avatar_06",
+      "name": "Ejecutivo de Pie de Cuerpo Entero",
+      "outfit": "Traje ejecutivo gris marengo",
+      "environment": "Hall Corporativo",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_06.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 7,
+      "id": "avatar_07",
+      "name": "Ejecutivo Cruzado de Brazos Autoridad Pedagógica",
+      "outfit": "Chaqueta formal de punto",
+      "environment": "Fondo Azul Neón",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_07.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 8,
+      "id": "avatar_08",
+      "name": "Ejecutivo en Escritorio Examinando Monitor 4K",
+      "outfit": "Camisa Oxford azul",
+      "environment": "Estación de Trabajo B2B",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_08.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 9,
+      "id": "avatar_09",
+      "name": "Ejecutivo con Gafas Modernas Señalando Pantalla",
+      "outfit": "Traje azul noche con gafas",
+      "environment": "Panel Interactivo",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_09.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 10,
+      "id": "avatar_10",
+      "name": "Ejecutivo Sentado Reflexivo en Sillón de Cuero",
+      "outfit": "Suéter de cuello alto negro",
+      "environment": "Biblioteca Ejecutiva",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_10.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 11,
+      "id": "avatar_11",
+      "name": "Tech Hoodie Negro HB.OS con Fondo Neón",
+      "outfit": "Hoodie HB.OS negro",
+      "environment": "Estudio Cyberpunk Soft",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_11.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 12,
+      "id": "avatar_12",
+      "name": "Chaqueta Bomber y Gorra HB.OS en Laboratorio",
+      "outfit": "Bomber verde oliva y gorra HB.OS",
+      "environment": "Laboratorio de Software",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_12.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 13,
+      "id": "avatar_13",
+      "name": "Camiseta Polo Negra Minimalista",
+      "outfit": "Polo negro ajustado",
+      "environment": "Fondo Gris Neutro 4K",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_13.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 14,
+      "id": "avatar_14",
+      "name": "Chaqueta Denim Moderna en Terraza Tech",
+      "outfit": "Chaqueta denim oscura",
+      "environment": "Terraza Urbana",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_14.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 15,
+      "id": "avatar_15",
+      "name": "Suéter Beis Elegante en Entorno Informal",
+      "outfit": "Suéter beis de lana",
+      "environment": "Espacio de Co-Working",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_15.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 16,
+      "id": "avatar_16",
+      "name": "Chaqueta Deportiva Negra HB.OS",
+      "outfit": "Jacket deportiva HB.OS",
+      "environment": "Estudio de Contenido",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_16.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 17,
+      "id": "avatar_17",
+      "name": "Camiseta HB.OS Sovereign AI de Cuerpo Entero",
+      "outfit": "Camiseta HB.OS Sovereign AI",
+      "environment": "Escenario de Diseño",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_17.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 18,
+      "id": "avatar_18",
+      "name": "Estilo Casual Primavera con Gafas de Sol",
+      "outfit": "Camisa de lino y gafas",
+      "environment": "Entorno Luminoso exterior",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_18.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 19,
+      "id": "avatar_19",
+      "name": "Tech Founder con Mochila Ejecutiva",
+      "outfit": "Chaqueta ligera y mochila",
+      "environment": "Campus Tecnológico",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_19.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 20,
+      "id": "avatar_20",
+      "name": "Estilo Urbano Nocturno Luces Creador",
+      "outfit": "Chaqueta de cuero sintético",
+      "environment": "Ciudad Nocturna Bokeh",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_20.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 21,
+      "id": "avatar_21",
+      "name": "Keynote Speaker en Escenario Principal",
+      "outfit": "Traje sin corbata moderno",
+      "environment": "Auditorio Keynote 1000 p",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_21.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 22,
+      "id": "avatar_22",
+      "name": "Presentador Señalando Diagrama Holográfico",
+      "outfit": "Camisa azul y micropastilla",
+      "environment": "Pantalla LED Gigante",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_22.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 23,
+      "id": "avatar_23",
+      "name": "Keynote Sosteniendo Micrófono Profesional",
+      "outfit": "Blazer negro y micro de mano",
+      "environment": "Congreso de IA",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_23.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 24,
+      "id": "avatar_24",
+      "name": "Presentador de Perfil 3/4 Explicando Concepto",
+      "outfit": "Suéter azul marino",
+      "environment": "Fondo Azul Proyecciones",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_24.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 25,
+      "id": "avatar_25",
+      "name": "Masterclass Host en Set Broadcast 4K",
+      "outfit": "Traje ejecutivo impecable",
+      "environment": "Estudio de Televisión",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_25.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 26,
+      "id": "avatar_26",
+      "name": "Presentador con Manos Abiertas Gesticulando",
+      "outfit": "Camisa blanca doblada",
+      "environment": "Set de Entrevistas B2B",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_26.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 27,
+      "id": "avatar_27",
+      "name": "Keynote Caminando en Escenario Iluminado",
+      "outfit": "Traje gris claro",
+      "environment": "Focos Luces de Escenario",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_27.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 28,
+      "id": "avatar_28",
+      "name": "Presentador Reteniendo Atención en Primer Plano",
+      "outfit": "Camisa de vestir negra",
+      "environment": "Fondo Oscuro Bioluminiscente",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_28.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 29,
+      "id": "avatar_29",
+      "name": "Host de Podcast Técnico con Auriculares Studio",
+      "outfit": "Hoodie HB.OS y headphones",
+      "environment": "Estudio de Podcast Barítono",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_29.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 30,
+      "id": "avatar_30",
+      "name": "Conferencista en Mesa Redonda Internacional",
+      "outfit": "Blazer estructurado",
+      "environment": "Cumbre de Tecnología",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_30.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 31,
+      "id": "avatar_31",
+      "name": "Arquitecto de Software Frente a Servidores",
+      "outfit": "Camisa técnica azul",
+      "environment": "Data Center de Servidores",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_31.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 32,
+      "id": "avatar_32",
+      "name": "Diseñador Dibujando en Tableta Gráfica",
+      "outfit": "Camiseta gris minimalista",
+      "environment": "Estudio de Diseño 3D",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_32.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 33,
+      "id": "avatar_33",
+      "name": "Ingeniero Supervisando Nodos DeepSeek",
+      "outfit": "Chaqueta de ingeniero HB.OS",
+      "environment": "Sala de Control de IA",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_33.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 34,
+      "id": "avatar_34",
+      "name": "Creador Inspeccionando Poses de Avatares",
+      "outfit": "Camisa denim y reloj inteligente",
+      "environment": "Pantalla de Múltiples Monitores",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_34.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 35,
+      "id": "avatar_35",
+      "name": "Desarrollador Escribiendo Código en Teclado",
+      "outfit": "Suéter negro confort",
+      "environment": "Escritorio RGB Tech",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_35.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 36,
+      "id": "avatar_36",
+      "name": "Investigador Analizando Grafos DAG",
+      "outfit": "Camisa blanca limpia",
+      "environment": "Pizarra de Cristal con Fórmulas",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_36.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 37,
+      "id": "avatar_37",
+      "name": "Director de Producto Evaluando Métricas",
+      "outfit": "Traje informal sin arrugas",
+      "environment": "Dashboard de Analítica",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_37.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 38,
+      "id": "avatar_38",
+      "name": "Especialista en Automatización Nube",
+      "outfit": "Chaqueta ligera azul",
+      "environment": "Servidores Cloud Nativos",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_38.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 39,
+      "id": "avatar_39",
+      "name": "Consultor B2B Presentando Solución",
+      "outfit": "Traje ejecutivo marino",
+      "environment": "Sala de Demostración Clientela",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_39.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 40,
+      "id": "avatar_40",
+      "name": "Líder de Proyecto Coordinando Agentes",
+      "outfit": "Polo azul oscuro HB.OS",
+      "environment": "Oficina de Agentes Autónomos",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_40.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 41,
+      "id": "avatar_41",
+      "name": "Avatar Cósmico en Órbita Digital",
+      "outfit": "Traje HB.OS Bioluminiscente",
+      "environment": "Fondo Cósmico Nebulosa",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_41.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 42,
+      "id": "avatar_42",
+      "name": "Sovereign AI Human en Espacio R768",
+      "outfit": "Chaqueta con filamentos dorados",
+      "environment": "Vectores de Inserción R768",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_42.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 43,
+      "id": "avatar_43",
+      "name": "Avatar Holográfico Transparente",
+      "outfit": "Silueta HD HB.OS",
+      "environment": "Holograma Láser Dorado",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_43.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 44,
+      "id": "avatar_44",
+      "name": "Guillermo en Laboratorio Futurista 2026",
+      "outfit": "Buzo técnico de vanguardia",
+      "environment": "Laboratorio Cuántico",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_44.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 45,
+      "id": "avatar_45",
+      "name": "Retrato Dorado de Gala HB.OS",
+      "outfit": "Esmoquin sastre de gala",
+      "environment": "Fondo Dorado Texturizado",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_45.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 46,
+      "id": "avatar_46",
+      "name": "Presentador en Matriz de Datos Cuántica",
+      "outfit": "Camisa negra con broche dorado",
+      "environment": "Túnel de Datos Fibra",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_46.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 47,
+      "id": "avatar_47",
+      "name": "Retrato Cinematográfico 8K Bajo Lluvia Suave",
+      "outfit": "Chaqueta impermeable ejecutiva",
+      "environment": "Luces Neón Reflejadas",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_47.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 48,
+      "id": "avatar_48",
+      "name": "Avatar en Estudio Minimalista Blanco Puro",
+      "outfit": "Traje gris claro moderno",
+      "environment": "Estudio Blanco Infinito",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_48.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 49,
+      "id": "avatar_49",
+      "name": "Guillermo en Taller de Alta Precisión",
+      "outfit": "Bata de taller técnico elegante",
+      "environment": "Taller de Micro-Ingeniería",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_49.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    },
+    {
+      "slot": 50,
+      "id": "avatar_50",
+      "name": "Emblema Maestro Guillermo HB.OS Sovereign AI",
+      "outfit": "Traje Ejecutivo Maestro con Insignia HB.OS",
+      "environment": "Fondo Maestro Dorado & Azul Cósmico",
+      "path": "C:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\media_vault\\avatar_bank_50_guillermo\\output\\guillermo_avatar_slot_50.jpg",
+      "flow_model": "nanobanana",
+      "credit_cost": 0
+    }
+  ]
 }

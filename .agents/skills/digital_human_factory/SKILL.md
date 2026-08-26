@@ -16,19 +16,26 @@ Esta Skill sintetiza el motor de producción audiovisual y avatares digitales de
 * **Iluminación Dinámica:** Bokeh 3D HSL con profundidad focal en resolución 1080p (1920x1080 para YouTube / 1080x1920 para TikTok/Reels).
 * **Entorno de Marca:** Identidad corporativa HB Jewelry con badge flotante sin sobreposición de títulos.
 
-### 👤 CAPA 2: Avatar Humano Real / PNG Transparente (Composición Cero-Bordes)
+### 👤 CAPA 2: Avatar Humano Real & Galería de Variaciones Flow (Matriz Multiformato)
+* **Galería de Avatares Flow (Ángulos, Vestuarios y Accesorios)**:
+  - Registro de avatares en cuerpo entero, de perfil, de lado y tres cuartos.
+  - Variaciones de vestuario (formal, ejecutivo, informal, joyería fina), gafas, gorras y entornos temáticos (estudio, tienda HB Jewelry, pasarela).
 * **PNG Transparente (`avatar_transparent.png`):** Se fusiona directamente sobre el fondo espacial HSL con escalado Lanczos y sombra paralela de profundidad, garantizando **cero bordes de tarjeta ni cortes de imagen pegada**.
 * **Avatar Completo con Fondo (`avatars/dorado.png`):** Se renderiza automáticamente a **100% Pantalla Completa (1920x1080 Cover Aspect Ratio)** con movimiento `zoompan` continuo, eliminando cualquier corte o franja lateral.
-* **Fisiología Humana:** Parpadeo natural, respiración orgánica y postura real, eliminando totalmente el efecto de foto 2D flotante.
-* **Inferencia Neural Complementaria:** Integración con **SadTalker 3DMM** / **DaVinci Resolve Scripting** para sincronización labial exacta cuando se requiere animación desde foto base.
+* **Fisiología Humana & Inferencia Video Input/Output**:
+  - Procesamiento de secuencias de movimiento perfecto (*Video In / Video Out*).
+  - Sincronización labial exacta desde la voz original de Guillermo con perfiles modulados (susurro, profesional, autoritario, dinámico).
+* **Inferencia Neural Complementaria:** Integración con **Flow / SadTalker 3DMM** / **DaVinci Resolve Scripting** para animación en movimiento continuo.
 
 ### ✍️ CAPA 3: Teleprompter Bilingüe con Resaltado Palabra por Palabra (YouTube Practice Sync)
 * **Cadencia Pausada (Zero Estrés):** Ritmo de lectura ajustado a **10-12 caracteres por segundo** con pausas respiratorias de 0.8s entre frases.
 * **Resaltado Dinámico Karaoke:** La palabra activa hablada se ilumina en **Verde Neón (`#84cc16`)** sobre un fondo de alto contraste, las palabras pasadas se tornan en **Dorado HB (`#d4af6a`)** y las futuras se mantienen en blanco suave (`#e2e8f0`).
 * **Traducción Automática en Tiempo Real:** Columna o recuadro inferior sincronizado en inglés para práctica de idiomas y alcance internacional.
 
-### 🎙️ CAPA 4: Voz Real Ecualizada en Estudio FM Broadcast (48kHz Stereo)
-* **Motor de Síntesis Neural:** Edge-TTS `es-MX-JorgeNeural` (Español) y `en-US-GuyNeural` (Inglés), ajustados a un tono amigable, pausado y de alta autoridad.
+### 🎙️ CAPA 4: Voz Real Ecualizada & Modulación de Estilo (48kHz Stereo)
+* **Tu Voz Real Masterizada**:
+  - Integración directa con tu pista de estudio original masterizada a 48kHz Estéreo.
+  - Perfiles de modulación de intención según el guion de DeepSeek: Susurro, Profesional, Épico/Vendedor, Pedagógico.
 * **Cadena de Ecualización FM Broadcast (FFmpeg / DaVinci Fairlight):**
   - **Pasa-Altos:** 75 Hz (eliminación de ruidos subsónicos)
   - **Realce de Pecho:** 250 Hz (+3.0 dB de calidez vocal)

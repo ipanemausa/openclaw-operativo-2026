@@ -7,7 +7,7 @@
 
 | Icono | Categoría | Ubicación | Descripción / Rol |
 | :---: | :--- | :--- | :--- |
-| 🟢 | **Gateway MCP & Pasarela** | [`gateway/`](file:///c:/Users/ipane/openclaw-operativo-2026/gateway) \| [`app.py`](file:///c:/Users/ipane/openclaw-operativo-2026/app.py) | Puntos de entrada HTTP/REST, enrutador MCP, autenticación y Gemini/DeepSeek |
+| 🟢 | **Gateway DeepSeek Engine** | [`gateway/`](file:///c:/Users/ipane/openclaw-operativo-2026/gateway) \| [`app.py`](file:///c:/Users/ipane/openclaw-operativo-2026/app.py) | Endpoints HTTP/REST directos (`/api/deepseek/chat`), GitHub & Docker Direct Integration |
 | 🔵 | **Frontend B2B UI** | [`frontend/`](file:///c:/Users/ipane/openclaw-operativo-2026/frontend) | Interfaz React/Vite. Componentes blindados bajo el protocolo `v2.0-stable` |
 | 🟡 | **Skills & Plugins** | [`.agents/`](file:///c:/Users/ipane/openclaw-operativo-2026/.agents) | Habilidades especializadas, sub-agentes, plugins y reglas de conducta |
 | 🟣 | **Orquestación & DAG** | [`claw-orchestrator/`](file:///c:/Users/ipane/openclaw-operativo-2026/claw-orchestrator) \| [`scripts/`](file:///c:/Users/ipane/openclaw-operativo-2026/scripts) | Grafos CPM, pipelines de cierre, renderizado 1080p y respaldo Rclone |

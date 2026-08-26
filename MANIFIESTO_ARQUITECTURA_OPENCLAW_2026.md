@@ -3,16 +3,18 @@
 
 ---
 
-## 🎨 Código de Categorías y Jerarquía de Módulos
+## 🎨 Código de Categorías & Jerarquía de Módulos (Estándar DeepSeek Index)
 
 | Icono | Categoría | Ubicación | Descripción / Rol |
 | :---: | :--- | :--- | :--- |
-| 🟢 | **Gateway DeepSeek Engine** | [`gateway/`](file:///c:/Users/ipane/openclaw-operativo-2026/gateway) \| [`app.py`](file:///c:/Users/ipane/openclaw-operativo-2026/app.py) | Endpoints HTTP/REST directos (`/api/deepseek/chat`), GitHub & Docker Direct Integration |
-| 🔵 | **Frontend B2B UI** | [`frontend/`](file:///c:/Users/ipane/openclaw-operativo-2026/frontend) | Interfaz React/Vite. Componentes blindados bajo el protocolo `v2.0-stable` |
-| 🟡 | **Skills & Plugins** | [`.agents/`](file:///c:/Users/ipane/openclaw-operativo-2026/.agents) | Habilidades especializadas, sub-agentes, plugins y reglas de conducta |
-| 🟣 | **Orquestación & DAG** | [`claw-orchestrator/`](file:///c:/Users/ipane/openclaw-operativo-2026/claw-orchestrator) \| [`scripts/`](file:///c:/Users/ipane/openclaw-operativo-2026/scripts) | Grafos CPM, pipelines de cierre, renderizado 1080p y respaldo Rclone |
-| 🔴 | **Logs & Telemetría** | [`logs/`](file:///c:/Users/ipane/openclaw-operativo-2026/logs) \| `runtime/logs/` | Registros de auditoría, trazabilidad de inferencia y telemetría de GPU/CPU |
-| 🔑 | **Variables de Entorno** | [`.env`](file:///c:/Users/ipane/openclaw-operativo-2026/.env) \| [`.openclaw-master.env`](file:///c:/Users/ipane/.openclaw-master.env) | Fuente Única de Verdad para claves de API (Gemini, DeepSeek, Pickaxe, ElevenLabs) |
+| 🟢 | **Gateway & DeepSeek Engine** | [`gateway/`](file:///c:/Users/ipane/openclaw-operativo-2026/gateway) \| [`app.py`](file:///c:/Users/ipane/openclaw-operativo-2026/app.py) | Inferencia Directa DeepSeek (`/api/deepseek/chat`), GitHub & Docker Cloud Native |
+| 🔵 | **Frontend B2B UI** | [`frontend/`](file:///c:/Users/ipane/openclaw-operativo-2026/frontend) | Interfaz React/Vite `v2.0-stable` blindada |
+| 🟡 | **Skills & Plugins (Flow Engine)**| [`.agents/`](file:///c:/Users/ipane/openclaw-operativo-2026/.agents) | Plugin Flow/Nanobanana (0 Créditos), Matriz 3,000 Avatares Guillermo |
+| 🟣 | **Orquestación & Audiovisual DAG** | [`scripts/`](file:///c:/Users/ipane/openclaw-operativo-2026/scripts) \| [`runtime/media_vault/`](file:///c:/Users/ipane/openclaw-operativo-2026/runtime/media_vault) | Media Vault Aislado V5, Voz Real Studio 48kHz, YouTube Cloud Uploader |
+| 🔴 | **Logs & Gobernanza Vectorial** | [`logs/`](file:///c:/Users/ipane/openclaw-operativo-2026/logs) \| `runtime/logs/` | Trazabilidad Inmutable R^768, Cero Alucinaciones |
+| 🔑 | **Variables de Entorno** | [`.env`](file:///c:/Users/ipane/openclaw-operativo-2026/.env) \| [`.openclaw-master.env`](file:///c:/Users/ipane/.openclaw-master.env) | Fuente Única de Verdad Inmutable |
+
+> **REGLA ANTI-REGRESIÓN**: Todo nuevo módulo o plugin DEBE registrarse inmediatamente bajo esta indexación unificada. Prohibido crear archivos fragmentados o fuera del árbol simbólico de DeepSeek.
 
 ---
 

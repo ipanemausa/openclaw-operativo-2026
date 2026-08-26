@@ -36,13 +36,16 @@ class DeepSeekMediaVault:
         """Limpia de forma aislada y rigurosa el workspace del proyecto sin afectar otros videos."""
         if self.project_dir.exists():
             print(f"[VAULT] Limpiando workspace previo del proyecto: {self.project_slug}")
-            shutil.rmtree(self.project_dir)
+            try:
+                shutil.rmtree(self.project_dir, ignore_errors=True)
+            except Exception as e:
+                print(f"[VAULT] Aviso en limpieza previa: {e}")
         
         self.project_dir.mkdir(parents=True, exist_ok=True)
         self.frames_dir.mkdir(parents=True, exist_ok=True)
         self.audio_dir.mkdir(parents=True, exist_ok=True)
         self.output_dir.mkdir(parents=True, exist_ok=True)
-        print(f"[VAULT] Workspace aislado creado en: {self.project_dir}")
+        print(f"[VAULT] Workspace aislado listo en: {self.project_dir}")
 
     def save_manifest(self, video_filename: str, duration_sec: float, frames_count: int, modules: list):
         """Registra el manifiesto JSON inmutable del proyecto."""

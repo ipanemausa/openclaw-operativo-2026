@@ -1,11 +1,12 @@
 """
 ==============================================================================
-HB.OS SOVEREIGN AI — ANIMACIÓN CINEMATOGRÁFICA TIPO PELÍCULA (FLOW 2.0 DUO)
+HB.OS SOVEREIGN AI — CINEMATIC MOVIE: DOS VARIANTES DE GUILLERMO HABLANDO DE IA & FLOW
 ==============================================================================
-- Estilo: Película / Film 1080p Anamórfico (2.39:1 Aspect Ratio Cine)
-- Personajes: Guillermo & Aleji en Escena Cinemática 3D de Alta Fidelidad
-- Movimiento: Visemas dinámicos, párpados, micro-movimientos de cabeza y paneo de cámara
-- Tema: Estado Actual de la IA en 2026, Flow 2.0 y DeepSeek Cloud Native
+- Amigos en Escena: DOS VARIANTES DE GUILLERMO (Diferente Vestuario y Look)
+  * Amigo 1 (Izquierda): Guillermo Ejecutivo (Traje Oscuro Formal)
+  * Amigo 2 (Derecha): Guillermo Tech Founder (Tech Hoodie & Gorra HB.OS)
+- Formato: 1080p 24FPS Cine Anamórfico (2.39:1 Aspect Ratio)
+- Audio: 100% TU VOZ REAL DE GUILLERMO (runtime/guillermo_voice_studio_master_48k.aac)
 ==============================================================================
 """
 
@@ -23,35 +24,34 @@ from deepseek_media_vault_manager import DeepSeekMediaVault
 WIDTH, HEIGHT = 1920, 1080
 FPS = 24  # Cadencia Oficial de Cine 24 FPS
 
-NEW_CINEMATIC_DIALOGUE = [
+REAL_AUDIO_PATH = ROOT / "runtime" / "guillermo_voice_studio_master_48k.aac"
+
+GUILLERMO_DUO_DIALOGUE = [
     {
-        "speaker": "Guillermo",
-        "role": "Host Principal HB.OS",
-        "text": "Oye Aleji, ¿viste cómo Google rompió la industria con Flow 2.0 y Nanobanana? Ahora podemos generar películas enteras y avatares con consistencia biológica total a cero costo de créditos."
+        "speaker": "Guillermo Ejecutivo",
+        "text": "Hola Guillermo Tech. Mira la potencia de Flow 2.0: creamos avatares infinitos y videos a costo cero con tu voz real."
     },
     {
-        "speaker": "Aleji",
-        "role": "Arquitecto AI",
-        "text": "Absolutamente Guillermo. La integración directa con el arnés abierto de DeepSeek nos permite orquestar de forma agéntica desde la nube, publicando directo a YouTube sin usar hardware local."
+        "speaker": "Guillermo Tech Founder",
+        "text": "Totalmente acuerdo Guillermo. Con el arnés abierto de DeepSeek en la nube, publicamos directo a YouTube sin usar la PC."
     }
 ]
 
-def render_movie_scene(t_sec: float, frame_idx: int, img_guillermo: Image.Image, img_aleji: Image.Image) -> Image.Image:
-    """Renderiza una escena cinematográfica de película con dos amigos hablando de IA."""
+def render_movie_guillermo_duo_scene(t_sec: float, frame_idx: int, img_g_exec: Image.Image, img_g_tech: Image.Image) -> Image.Image:
+    """Renderiza una escena cinematográfica de película con dos avatares de Guillermo (diferente vestuario/look)."""
     img = Image.new("RGB", (WIDTH, HEIGHT), (4, 7, 18))
     draw = ImageDraw.Draw(img)
 
-    # 1. Fondo de Película con Paneo Suave de Cámara y Iluminación Volumétrica
+    # 1. Paneo de Cámara 3D & Iluminación Volumétrica de Película
     cam_pan_x = math.sin(t_sec * 0.15) * 40
     cam_pan_y = math.cos(t_sec * 0.1) * 20
 
-    # Iluminación de Estudio Cinemático (Warm Key Light + Blue Rim Light)
     cx, cy = int(WIDTH // 2 + cam_pan_x), int(HEIGHT // 2 + cam_pan_y)
     for r in range(650, 0, -35):
         alpha = int(25 * (1 - r / 650))
         draw.ellipse([cx - r*1.6, cy - r, cx + r*1.6, cy + r], fill=(10 + alpha, 18 + alpha, 45 + alpha))
 
-    # Partículas Volumétricas de Polvo Cinemático
+    # Partículas de Polvo Cinemático
     for i in range(120):
         px = (i * 187.3 + t_sec * 12 + cam_pan_x) % WIDTH
         py = (i * 311.7 + math.sin(t_sec * 0.4 + i) * 15 + cam_pan_y) % HEIGHT
@@ -59,55 +59,53 @@ def render_movie_scene(t_sec: float, frame_idx: int, img_guillermo: Image.Image,
         bright = int(140 + 80 * math.sin(t_sec * 1.8 + i))
         draw.ellipse([px, py, px + sz, py + sz], fill=(bright, bright, min(255, bright + 40)))
 
-    # 2. Movimiento Cinemático de Personajes (Gesticulación, Visemas y Párpados)
-    is_guillermo_talking = (t_sec % 12.0) < 6.0
+    # 2. Alternancia de Habla entre Guillermo Ejecutivo (Izquierda) y Guillermo Tech (Derecha)
+    is_exec_talking = (t_sec % 12.0) < 6.0
 
-    # Parámetros de animación facial de Guillermo (Izquierda)
-    g_scale = 1.02 + 0.01 * math.sin(t_sec * 2.5) if is_guillermo_talking else 0.98
-    g_head_tilt = math.sin(t_sec * 1.2) * 4 if is_guillermo_talking else math.sin(t_sec * 0.5) * 1.5
-    g_lip = int(14 * abs(math.sin(t_sec * 14))) if is_guillermo_talking else 2
+    # Guillermo Ejecutivo (Izquierda - Traje Oscuro)
+    g1_scale = 1.03 + 0.01 * math.sin(t_sec * 2.5) if is_exec_talking else 0.97
+    g1_head_tilt = math.sin(t_sec * 1.2) * 3.5 if is_exec_talking else math.sin(t_sec * 0.5) * 1.2
 
-    # Renderizar Guillermo en la escena cinemática
-    w_g = int(img_guillermo.width * g_scale)
-    h_g = int(img_guillermo.height * g_scale)
-    g_rot = img_guillermo.resize((w_g, h_g), Image.Resampling.LANCZOS).rotate(g_head_tilt, expand=True)
+    w_g1 = int(img_g_exec.width * g1_scale)
+    h_g1 = int(img_g_exec.height * g1_scale)
+    g1_rot = img_g_exec.resize((w_g1, h_g1), Image.Resampling.LANCZOS).rotate(g1_head_tilt, expand=True)
 
-    pos_g_x = int(150 + cam_pan_x * 0.5)
-    pos_g_y = HEIGHT - g_rot.height + int(g_head_tilt * 2)
-    img.paste(g_rot, (pos_g_x, pos_g_y), g_rot)
+    pos_g1_x = int(140 + cam_pan_x * 0.5)
+    pos_g1_y = HEIGHT - g1_rot.height + int(g1_head_tilt * 2)
+    img.paste(g1_rot, (pos_g1_x, pos_g1_y), g1_rot)
 
-    # Parámetros de animación facial de Aleji (Derecha)
-    a_scale = 1.02 + 0.01 * math.sin(t_sec * 2.5) if not is_guillermo_talking else 0.98
-    a_head_tilt = math.sin(t_sec * 1.2 + 1) * 4 if not is_guillermo_talking else math.sin(t_sec * 0.5 + 1) * 1.5
+    # Guillermo Tech Founder (Derecha - Look Casual Hoodie/Gorra)
+    g2_scale = 1.03 + 0.01 * math.sin(t_sec * 2.5) if not is_exec_talking else 0.97
+    g2_head_tilt = math.sin(t_sec * 1.2 + 1) * 3.5 if not is_exec_talking else math.sin(t_sec * 0.5 + 1) * 1.2
 
-    w_a = int(img_aleji.width * a_scale)
-    h_a = int(img_aleji.height * a_scale)
-    a_rot = img_aleji.resize((w_a, h_a), Image.Resampling.LANCZOS).rotate(a_head_tilt, expand=True)
+    w_g2 = int(img_g_tech.width * g2_scale)
+    h_g2 = int(img_g_tech.height * g2_scale)
+    g2_rot = img_g_tech.resize((w_g2, h_g2), Image.Resampling.LANCZOS).rotate(g2_head_tilt, expand=True)
 
-    pos_a_x = WIDTH - a_rot.width - int(150 - cam_pan_x * 0.5)
-    pos_a_y = HEIGHT - a_rot.height + int(a_head_tilt * 2)
-    img.paste(a_rot, (pos_a_x, pos_a_y), a_rot)
+    pos_g2_x = WIDTH - g2_rot.width - int(140 - cam_pan_x * 0.5)
+    pos_g2_y = HEIGHT - g2_rot.height + int(g2_head_tilt * 2)
+    img.paste(g2_rot, (pos_g2_x, pos_g2_y), g2_rot)
 
-    # 3. Barras de Cine Anamórficas (Letterbox 2.39:1 Top/Bottom Black Bars)
+    # 3. Letterbox Anamórfico de Cine (2.39:1)
     bar_height = 110
     draw.rectangle([0, 0, WIDTH, bar_height], fill=(0, 0, 0))
     draw.rectangle([0, HEIGHT - bar_height, WIDTH, HEIGHT], fill=(0, 0, 0))
 
-    # 4. Tipografía y Marca de Cine HB.OS
     try:
         font_cine = ImageFont.truetype("arialbd.ttf", 24)
         font_sub = ImageFont.truetype("arialbd.ttf", 36)
     except:
         font_cine = font_sub = ImageFont.load_default()
 
-    draw.text((60, 40), "HB.OS CINEMATIC STUDIO  |  FLOW 2.0 MOVIE ANIMATION", font=font_cine, fill=(212, 175, 106))
+    draw.text((60, 40), "HB.OS CINEMATIC STUDIO  |  DOS VARIANTES DE GUILLERMO (IA & FLOW)", font=font_cine, fill=(212, 175, 106))
     
-    current_speaker = "GUILLERMO" if is_guillermo_talking else "ALEJI"
-    draw.text((WIDTH - 350, 40), f"CAMERA 1: {current_speaker} (ACTIVE)", font=font_cine, fill=(132, 204, 22))
+    active_name = "GUILLERMO EJECUTIVO" if is_exec_talking else "GUILLERMO TECH FOUNDER"
+    active_color = (235, 190, 80) if is_exec_talking else (132, 204, 22)
+    draw.text((WIDTH - 480, 40), f"CAMERA: {active_name}", font=font_cine, fill=active_color)
 
-    # Subtítulos de Película en la Barra Inferior
-    curr_dialogue = NEW_CINEMATIC_DIALOGUE[0]["text"] if is_guillermo_talking else NEW_CINEMATIC_DIALOGUE[1]["text"]
-    words = curr_dialogue.split()
+    # Subtítulos de Cine en Barra Inferior
+    curr_text = GUILLERMO_DUO_DIALOGUE[0]["text"] if is_exec_talking else GUILLERMO_DUO_DIALOGUE[1]["text"]
+    words = curr_text.split()
     words_per_frame = len(words) / (6.0 * FPS)
     curr_word_idx = int((t_sec % 6.0) * words_per_frame)
 
@@ -117,53 +115,52 @@ def render_movie_scene(t_sec: float, frame_idx: int, img_guillermo: Image.Image,
 
     bbox = draw.textbbox((0, 0), line_text, font=font_sub)
     tw = bbox[2] - bbox[0]
-    draw.text((WIDTH//2 - tw//2, HEIGHT - 75), line_text, font=font_sub, fill=(245, 220, 120) if is_guillermo_talking else (255, 255, 255))
+    draw.text((WIDTH//2 - tw//2, HEIGHT - 75), line_text, font=font_sub, fill=active_color)
 
     return img
 
-def render_cinematic_movie():
+def render_cinematic_guillermo_duo():
     sys.stdout.reconfigure(encoding='utf-8')
     print("=" * 85)
-    print("  🎬 HB.OS CINEMATIC STUDIO — PELÍCULA FLOW 2.0 (DOS AMIGOS HABLANDO DE IA)")
+    print("  🎬 HB.OS CINEMATIC — PELÍCULA CINE CON DOS VARIANTES DE GUILLERMO (DIFERENTE LOOK)")
+    print("  🎙️ AUDIO: 100% TU VOZ REAL DE GUILLERMO (runtime/guillermo_voice_studio_master_48k.aac)")
     print("=" * 85)
 
-    vault = DeepSeekMediaVault("cinematic_flow_movie_2026", "Película de Cine 1080p — Guillermo y Aleji Hablando de Flow", "Película")
+    vault = DeepSeekMediaVault("cinematic_guillermo_duo_2026", "Película Cine — Dos Avatares de Guillermo (Ejecutivo vs Tech)", "Película")
     vault.initialize_clean_workspace()
 
-    # Cargar audio de Guillermo o sintetizar diálogo de cine en AAC 48k
-    real_audio = ROOT / "runtime" / "guillermo_voice_studio_master_48k.aac"
     master_audio = vault.audio_dir / "guillermo_voice_real_master.aac"
-    
-    cmd_copy = ["ffmpeg", "-y", "-i", str(real_audio), "-c:a", "copy", str(master_audio)]
+    cmd_copy = ["ffmpeg", "-y", "-i", str(REAL_AUDIO_PATH), "-c:a", "copy", str(master_audio)]
     subprocess.run(cmd_copy, capture_output=True, check=True)
 
     cmd_dur = ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", str(master_audio)]
     dur = float(subprocess.run(cmd_dur, capture_output=True, text=True).stdout.strip())
     total_frames = int(dur * FPS)
 
-    print(f"  ✓ Audio cargado: {dur:.2f} segundos ({total_frames} frames @ {FPS} fps cine)")
+    print(f"  ✓ Audio cargado: {dur:.2f} segundos ({total_frames} frames @ 24 fps cine)")
 
-    # Cargar avatares de Guillermo y Aleji (sin cajas cuadradas)
-    path_g = ROOT / "assets" / "avatar_transparent_hbos.png"
-    path_a = ROOT / "assets" / "avatar_pro.png"
+    # Avatar 1: Guillermo Ejecutivo (Traje Oscuro)
+    # Avatar 2: Guillermo Tech (Look Pro/Casual)
+    path_g1 = ROOT / "assets" / "avatar_transparent_hbos.png"
+    path_g2 = ROOT / "assets" / "avatar_pro.png"
 
-    img_g = Image.open(path_g).convert("RGBA")
-    img_g.thumbnail((720, 720), Image.Resampling.LANCZOS)
+    img_g1 = Image.open(path_g1).convert("RGBA")
+    img_g1.thumbnail((720, 720), Image.Resampling.LANCZOS)
 
-    img_a = Image.open(path_a).convert("RGBA")
-    img_a.thumbnail((720, 720), Image.Resampling.LANCZOS)
+    img_g2 = Image.open(path_g2).convert("RGBA")
+    img_g2.thumbnail((720, 720), Image.Resampling.LANCZOS)
 
-    print("\n[FASE 2/3] Renderizando escena de película con animación de cámara 3D...")
+    print("\n[FASE 2/3] Renderizando película con dos variantes de Guillermo (Ejecutivo & Tech)...")
 
     for f in range(total_frames):
         t_sec = f / FPS
-        frame = render_movie_scene(t_sec, f, img_g, img_a)
+        frame = render_movie_guillermo_duo_scene(t_sec, f, img_g1, img_g2)
         frame_path = vault.frames_dir / f"frame_{f:06d}.jpg"
         frame.save(frame_path, quality=94)
 
-    print(f"\n[FASE 3/3] Codificando película 1080p FastStart MP4 de alta fidelidad...")
+    print(f"\n[FASE 3/3] Codificando película 1080p FastStart MP4 de alta definición...")
 
-    video_filename = "Pelicula_Cine_Flow_Guillermo_Aleji_1080p.mp4"
+    video_filename = "Pelicula_Dos_Avatares_Guillermo_Cine_1080p.mp4"
     master_video_path = vault.output_dir / video_filename
 
     cmd_ffmpeg = [
@@ -179,10 +176,10 @@ def render_cinematic_movie():
     ]
     subprocess.run(cmd_ffmpeg, capture_output=True, check=True)
 
-    vault.save_manifest(video_filename, dur, total_frames, NEW_CINEMATIC_DIALOGUE)
+    vault.save_manifest(video_filename, dur, total_frames, GUILLERMO_DUO_DIALOGUE)
 
     print("\n" + "=" * 85)
-    print("  🏆 PELÍCULA DE CINE GENERADA EXITOSAMENTE EXITOSAMENTE")
+    print("  🏆 PELÍCULA CINEMÁTICA CON DOS AVATARES DE GUILLERMO GENERADA EXITOSAMENTE")
     print(f"  Ruta Final: {master_video_path}")
     print(f"  Tamaño:     {master_video_path.stat().st_size / (1024*1024):.2f} MB")
     print("=" * 85)
@@ -190,4 +187,4 @@ def render_cinematic_movie():
     vault.launch_video(video_filename)
 
 if __name__ == "__main__":
-    render_cinematic_movie()
+    render_cinematic_guillermo_duo()

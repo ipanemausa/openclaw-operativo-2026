@@ -1,6 +1,7 @@
 {
   "$schema": "https://api.deepseek.com/schemas/v5/harness.json",
-  "name": "deepseek-harness-sovereign-core",
+  "name": "hbos-sovereign-core",
+  "system_title": "HB.OS (OPERATING SYSTEM) · SOVEREIGN AI",
   "version": "2026.7.1",
   "provider": "DeepSeek Platform Native",
   "architecture": "Open-Weight Sovereign Core",
@@ -18,7 +19,7 @@
       "name": "plugin_media_flow",
       "type": "audiovisual_generation",
       "cost_credits": 0,
-      "features": ["nanobanana_model", "avatar_matrix_binding", "video_in_video_out"],
+      "features": ["nanobanana_model", "13_avatar_matrix_binding", "video_in_video_out"],
       "avatar_matrix_file": "assets/guillermo_avatar_matrix.json"
     },
     {

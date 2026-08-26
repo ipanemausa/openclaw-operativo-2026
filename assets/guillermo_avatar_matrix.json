@@ -1,26 +1,31 @@
 {
+  "system_name": "HB.OS (OPERATING SYSTEM) · SOVEREIGN AI",
+  "version": "2026.7.1",
   "avatar_identity": "Guillermo Hoyos",
   "voice_file": "c:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\guillermo_voice_studio_master_48k.aac",
   "voice_sample_rate": 48000,
-  "voice_channels": 2,
   "voice_loudness": "-14 LUFS EBU R128",
-  "avatar_assets": [
-    {
-      "id": "guillermo_hd_transparent",
-      "path": "c:\\Users\\ipane\\openclaw-operativo-2026\\assets\\avatar_transparent_hbos.png",
-      "type": "transparent_png",
-      "pose": "front_executive"
-    },
-    {
-      "id": "guillermo_pro",
-      "path": "c:\\Users\\ipane\\openclaw-operativo-2026\\assets\\avatar_pro.png",
-      "type": "studio_full",
-      "pose": "studio_presentation"
-    }
+  "avatar_slots_total": 13,
+  "avatar_catalog": [
+    { "id": "avatar_01", "name": "Guillermo HB.OS Executive Transparent", "path": "c:\\Users\\ipane\\openclaw-operativo-2026\\assets\\avatar_transparent_hbos.png", "pose": "front_executive" },
+    { "id": "avatar_02", "name": "Guillermo Studio Pro 4K", "path": "c:\\Users\\ipane\\openclaw-operativo-2026\\assets\\avatar_pro.png", "pose": "studio_full" },
+    { "id": "avatar_03", "name": "Guillermo Transparent Standard", "path": "c:\\Users\\ipane\\openclaw-operativo-2026\\assets\\avatar_transparent.png", "pose": "front_standard" },
+    { "id": "avatar_04", "name": "Guillermo HB.OS Gold Badge Frame", "path": "c:\\openclaw\\hb-jewelry\\public\\avatar_frame.png", "pose": "gold_badge" },
+    { "id": "avatar_05", "name": "Guillermo Presentation HD", "path": "c:\\openclaw\\hb-jewelry\\public\\avatars\\avatar_pro.png", "pose": "presentation_hd" },
+    { "id": "avatar_06", "name": "Guillermo Thumbnail 940f", "path": "c:\\openclaw\\hb-jewelry\\public\\thumbnails\\thumb_guillermo_940f.png", "pose": "thumbnail_portrait" },
+    { "id": "avatar_07", "name": "Flow Avatar Slot 07 — Casual Tech", "path": "runtime/avatar_bank_guillermo/flow_avatar_07.png", "pose": "casual_tech" },
+    { "id": "avatar_08", "name": "Flow Avatar Slot 08 — Keynote Stage", "path": "runtime/avatar_bank_guillermo/flow_avatar_08.png", "pose": "keynote_stage" },
+    { "id": "avatar_09", "name": "Flow Avatar Slot 09 — Full Body Stand", "path": "runtime/avatar_bank_guillermo/flow_avatar_09.png", "pose": "full_body_stand" },
+    { "id": "avatar_10", "name": "Flow Avatar Slot 10 — Side Profile 3/4", "path": "runtime/avatar_bank_guillermo/flow_avatar_10.png", "pose": "side_profile" },
+    { "id": "avatar_11", "name": "Flow Avatar Slot 11 — Software Architecture Diagram", "path": "runtime/avatar_bank_guillermo/flow_avatar_11.png", "pose": "diagram_explain" },
+    { "id": "avatar_12", "name": "Flow Avatar Slot 12 — Close Up Pedagogy", "path": "runtime/avatar_bank_guillermo/flow_avatar_12.png", "pose": "close_up_pedagogy" },
+    { "id": "avatar_13", "name": "Flow Avatar Slot 13 — Dynamic Motion B-Roll", "path": "runtime/avatar_bank_guillermo/flow_avatar_13.png", "pose": "dynamic_motion" }
   ],
-  "flow_plugin_binding": {
+  "deepseek_indexation": {
+    "provider": "DeepSeek Harness Platform Native",
+    "plugin": "plugin_media_flow",
     "model": "nanobanana",
-    "credit_cost": 0,
-    "sync_mode": "video_in_video_out_real_voice"
+    "cost_credits": 0,
+    "voice_binding": "100_percent_guillermo_real_voice"
   }
 }

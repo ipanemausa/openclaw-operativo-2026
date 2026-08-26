@@ -9,6 +9,7 @@
     "frontend": "frontend/",
     "plugins": ".agents/skills/",
     "media_vault": "runtime/media_vault/",
+    "avatar_matrix": "assets/guillermo_avatar_matrix.json",
     "logs": "logs/",
     "master_env": "C:\\Users\\ipane\\.openclaw-master.env"
   },
@@ -17,13 +18,16 @@
       "name": "plugin_media_flow",
       "type": "audiovisual_generation",
       "cost_credits": 0,
-      "features": ["nanobanana_model", "avatar_matrix_3000", "video_in_video_out"]
+      "features": ["nanobanana_model", "avatar_matrix_binding", "video_in_video_out"],
+      "avatar_matrix_file": "assets/guillermo_avatar_matrix.json"
     },
     {
       "name": "plugin_voice_guillermo",
       "type": "audio_mastering",
+      "master_voice_file": "runtime/guillermo_voice_studio_master_48k.aac",
       "sample_rate": 48000,
-      "loudness": "-14 LUFS EBU R128"
+      "loudness": "-14 LUFS EBU R128",
+      "mode": "100_percent_real_voice_only"
     },
     {
       "name": "plugin_youtube_cloud",

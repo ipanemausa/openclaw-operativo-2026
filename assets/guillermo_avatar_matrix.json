@@ -1,0 +1,26 @@
+{
+  "avatar_identity": "Guillermo Hoyos",
+  "voice_file": "c:\\Users\\ipane\\openclaw-operativo-2026\\runtime\\guillermo_voice_studio_master_48k.aac",
+  "voice_sample_rate": 48000,
+  "voice_channels": 2,
+  "voice_loudness": "-14 LUFS EBU R128",
+  "avatar_assets": [
+    {
+      "id": "guillermo_hd_transparent",
+      "path": "c:\\Users\\ipane\\openclaw-operativo-2026\\assets\\avatar_transparent_hbos.png",
+      "type": "transparent_png",
+      "pose": "front_executive"
+    },
+    {
+      "id": "guillermo_pro",
+      "path": "c:\\Users\\ipane\\openclaw-operativo-2026\\assets\\avatar_pro.png",
+      "type": "studio_full",
+      "pose": "studio_presentation"
+    }
+  ],
+  "flow_plugin_binding": {
+    "model": "nanobanana",
+    "credit_cost": 0,
+    "sync_mode": "video_in_video_out_real_voice"
+  }
+}

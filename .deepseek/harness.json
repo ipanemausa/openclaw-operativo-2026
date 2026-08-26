@@ -1,0 +1,35 @@
+{
+  "$schema": "https://api.deepseek.com/schemas/v5/harness.json",
+  "name": "deepseek-harness-sovereign-core",
+  "version": "2026.7.1",
+  "provider": "DeepSeek Platform Native",
+  "architecture": "Open-Weight Sovereign Core",
+  "index": {
+    "gateway": "gateway/app.py",
+    "frontend": "frontend/",
+    "plugins": ".agents/skills/",
+    "media_vault": "runtime/media_vault/",
+    "logs": "logs/",
+    "master_env": "C:\\Users\\ipane\\.openclaw-master.env"
+  },
+  "plugins": [
+    {
+      "name": "plugin_media_flow",
+      "type": "audiovisual_generation",
+      "cost_credits": 0,
+      "features": ["nanobanana_model", "avatar_matrix_3000", "video_in_video_out"]
+    },
+    {
+      "name": "plugin_voice_guillermo",
+      "type": "audio_mastering",
+      "sample_rate": 48000,
+      "loudness": "-14 LUFS EBU R128"
+    },
+    {
+      "name": "plugin_youtube_cloud",
+      "type": "cloud_deployment",
+      "api": "YouTube Data API v3",
+      "mode": "cloud_to_cloud_direct"
+    }
+  ]
+}

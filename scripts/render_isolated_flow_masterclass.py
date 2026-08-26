@@ -28,37 +28,37 @@ FPS = 25
 FLOW_MODULES = [
     {
         "module_num": 1,
-        "title": "INTRODUCCIÓN A FLOW & GENERACIÓN AUDIOVISUAL A 0 CRÉDITOS",
+        "title": "GENERACIÓN AUDIOVISUAL GRATUITA CON FLOW Y NANOBANANA",
         "text": (
-            "Bienvenidos a esta entrega especial sobre la plataforma Flow y el modelo Nanobanana. "
-            "Hoy abrimos todas las posibilidades de la creación audiovisual sin barreras. Con Flow "
-            "podemos generar imágenes de alta definición y secuencias de video real a costo cero de créditos, "
-            "conectando directamente nuestros guiones de DeepSeek con la producción final."
+            "Bienvenidos a esta entrega sobre la plataforma Flow y el modelo Nanobanana. "
+            "Hoy exploramos todas las posibilidades de la creación audiovisual sin costo. Con Flow "
+            "podemos generar imágenes de alta definición y secuencias de video real a cero costo de créditos, "
+            "conectando nuestros guiones de DeepSeek con la producción final."
         )
     },
     {
         "module_num": 2,
-        "title": "MATRIZ INFINITA DE AVATARES, POSICIONES & CARACTERIZACIONES",
+        "title": "MATRIZ INFINITA DE AVATARES, ROPA Y ACCESORIOS HB JEWELRY",
         "text": (
-            "En el segundo bloque exploramos la versatilidad de los avatares. En Flow podemos subir las fotos de referencia "
+            "En el segundo bloque exploramos la versatilidad de los avatares en Flow. Podemos cargar las fotos de referencia "
             "de Guillermo y generar variaciones infinitas: en cuerpo entero, de perfil, con traje ejecutivo formal, ropa de gala "
             "para HB Jewelry, accesorios de oro de catorce y dieciocho kilates, gafas y gorras temáticas. La consistencia facial es total."
         )
     },
     {
         "module_num": 3,
-        "title": "ANIMACIÓN EN VIDEO REAL (VIDEO INPUT / VIDEO OUTPUT) & VOZ REAL",
+        "title": "INFERENCIA VIDEO-TO-VIDEO & SINCRONIZACIÓN CON MI VOZ REAL",
         "text": (
-            "El tercer pilar es la animación fluida en video. Mediante la inferencia Video Input a Video Output, "
+            "El tercer pilar es la animación fluida en video real. Mediante la inferencia Video Input a Video Output de Flow, "
             "transferimos movimientos corporales y gesticulación real a mi avatar. La boca y los visemas se sincronizan "
             "exactamente con mi voz real de estudio a cuarenta y ocho kilohertz, logrando una presencia humana impactante."
         )
     },
     {
         "module_num": 4,
-        "title": "INTEGRACIÓN DIRECTA CON DEEPSEEK & PRODUCCIÓN B2B EN COLOMBIA",
+        "title": "CONEXIÓN DIRECTA DE FLOW CON DEEPSEEK HARNESS EN COLOMBIA",
         "text": (
-            "Concluimos unificando esta potencia con el arnés abierto de DeepSeek. Con un solo prompt o intención natural, "
+            "Concluimos conectando la potencia de Flow con el arnés abierto de DeepSeek. Con un solo prompt o intención natural, "
             "nuestro sistema HB.OS redacta el guión, genera los visuals en Flow, masteriza el audio y renderiza el video final "
             "en menos de cinco segundos. Esta es la nueva era de la producción tecnológica en Colombia."
         )

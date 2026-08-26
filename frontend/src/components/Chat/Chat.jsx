@@ -5,6 +5,7 @@ import { AgentRuntime } from "../../services/agentRuntime";
 import { eventBus } from "../../services/eventBus";
 import { KnowledgeEngine } from "../../services/knowledgeEngine";
 import { detectLanguageOpenAI, translateOpenAI } from "../../services/openaiService";
+import { DeepSeekHarnessEngine } from "../../services/deepseekHarnessEngine";
 import { t } from "../../services/i18n";
 
 const AGENTS = [
@@ -118,34 +119,17 @@ export default function Chat() {
     }
   }
 
-  async function sendViaMCP(userMsg) {
+  async function sendViaDeepSeekHarness(userMsg) {
     try {
-      let sid = sessionId;
-      if (!sid) {
-        const sr = await fetch(API + "/api/mcp/session", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ agent }),
-        });
-        if (!sr.ok) throw new Error("MCP Session error");
-        const sd = await sr.json();
-        sid = sd.session_id;
-        setSessionId(sid);
-      }
-      const r = await fetch(API + "/api/mcp/message", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ agent, message: userMsg, session_id: sid }),
-      });
-      if (!r.ok) throw new Error("MCP Message error");
-      const d = await r.json();
-      
-      AgentRuntime.saveCustomerContext('customer_web_user', { userMessage: userMsg, botResponse: d.response });
-      eventBus.emit('CUSTOMER_QUERY', { userMsg, botResponse: d.response });
+      const res = await DeepSeekHarnessEngine.queryDeepSeek(userMsg, agent);
+      if (!res.success) throw new Error(res.error || "DeepSeek Harness Error");
+
+      AgentRuntime.saveCustomerContext('customer_web_user', { userMessage: userMsg, botResponse: res.response });
+      eventBus.emit('CUSTOMER_QUERY', { userMsg, botResponse: res.response });
 
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: d.response },
+        { role: "assistant", content: res.response },
       ]);
       setLoading(false);
     } catch (e) {
@@ -225,7 +209,7 @@ export default function Chat() {
     if (agent === "main") {
       await sendViaSSE(userMsg);
     } else {
-      await sendViaMCP(userMsg);
+      await sendViaDeepSeekHarness(userMsg);
     }
   }
 

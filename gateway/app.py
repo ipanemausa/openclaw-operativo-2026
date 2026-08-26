@@ -8,6 +8,13 @@ import redis
 import json
 from datetime import datetime
 import google.generativeai as genai
+from dotenv import load_dotenv
+
+# Cargar variables de entorno del workspace y master env
+load_dotenv()
+master_env = r"C:\Users\ipane\.openclaw-master.env"
+if os.path.exists(master_env):
+    load_dotenv(master_env)
 
 app = Flask(__name__)
 CORS(app)
@@ -175,7 +182,7 @@ def mcp_message():
     try:
         genai.configure(api_key=api_key)
         model = genai.GenerativeModel(
-            model_name=os.getenv('GEMINI_MODEL', 'gemini-2.0-flash'),
+            model_name=os.getenv('GEMINI_MODEL', 'gemini-2.5-flash'),
             system_instruction=AGENT_PROMPTS[agent]
         )
 
@@ -211,6 +218,51 @@ def mcp_history():
         return jsonify({"error": "session_id required"}), 400
     history = get_history(session_id, limit=50)
     return jsonify({"session_id": session_id, "history": history, "count": len(history)}), 200
+
+@app.route('/api/deepseek/chat', methods=['POST'])
+def deepseek_chat():
+    """Endpoint directo DeepSeek Harness (V4/V5) desvinculado de MCP"""
+    import requests
+    data = request.get_json() or {}
+    agent = data.get("agent", "main")
+    message = data.get("message", "")
+    model = data.get("model", "deepseek-chat")
+
+    api_key = os.getenv('DEEPSEEK_API_KEY', '')
+    if not api_key:
+        return jsonify({"response": "Error: DEEPSEEK_API_KEY no configurada.", "status": "error"}), 500
+
+    system_prompt = AGENT_PROMPTS.get(agent, AGENT_PROMPTS["main"])
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": message}
+        ],
+        "temperature": 0.7
+    }
+    try:
+        res = requests.post("https://api.deepseek.com/v1/chat/completions", headers=headers, json=payload, timeout=30)
+        if res.status_code == 200:
+            res_data = res.json()
+            reply = res_data["choices"][0]["message"]["content"]
+            return jsonify({
+                "response": reply,
+                "agent": agent,
+                "provider": "deepseek_harness",
+                "model": model,
+                "status": "ok"
+            }), 200
+        else:
+            logger.error(f"DeepSeek API error {res.status_code}: {res.text}")
+            return jsonify({"response": f"Error DeepSeek API ({res.status_code}): {res.text}", "status": "error"}), res.status_code
+    except Exception as e:
+        logger.error(f"DeepSeek Harness error: {str(e)}")
+        return jsonify({"response": f"Error DeepSeek Harness: {str(e)}", "status": "error"}), 500
 
 @app.route('/api/hb/sale', methods=['POST'])
 def register_sale():

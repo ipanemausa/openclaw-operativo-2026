@@ -54,6 +54,7 @@ def get_audio_duration(file_path: str) -> float:
     return float(res.stdout.strip())
 
 def render_real_voice_masterpiece():
+    sys.stdout.reconfigure(encoding='utf-8')
     print("=" * 60)
     print("  🎙️ OPENCLAW VIDEO CON VOZ REAL DE GUILLERMO & FONDO CÓSMICO")
     print("=" * 60)

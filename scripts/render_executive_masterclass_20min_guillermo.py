@@ -177,9 +177,9 @@ def render_executive_masterclass():
     asyncio.run(synthesize_all_audio_tracks())
 
     # 2. Cargar avatar transparente de Guillermo
-    avatar_path = ROOT / "assets" / "guillermo_hoyos_transparent.png"
+    avatar_path = ROOT / "assets" / "avatar_transparent_hbos.png"
     if not avatar_path.exists():
-        avatar_path = ROOT / "assets" / "guillermo_hd.png"
+        avatar_path = ROOT / "assets" / "avatar_transparent.png"
 
     avatar_img = Image.open(avatar_path).convert("RGBA")
     # Escalar manteniendo proporción sin deformación
@@ -256,8 +256,8 @@ def render_executive_masterclass():
     with open(concat_txt, "w", encoding="utf-8") as f:
         for item in EXECUTIVE_MODULES:
             idx = item["module_num"]
-            # Añadir 2s de silencio para la portada
-            f.write(f"file 'module_{idx}_master.aac'\n")
+            audio_path = (RUNTIME / f"module_{idx}_master.aac").resolve()
+            f.write(f"file '{audio_path.as_posix()}'\n")
 
     master_video_path = RUNTIME / "Masterclass_Ejecutiva_Guillermo_2026_1080p.mp4"
 
@@ -265,9 +265,10 @@ def render_executive_masterclass():
         "ffmpeg", "-y",
         "-framerate", str(FPS),
         "-i", str(frames_dir / "frame_%06d.jpg"),
-        "-i", str(RUNTIME / "module_1_master.aac"),
+        "-f", "concat", "-safe", "0", "-i", str(concat_txt),
         "-c:v", "libx264", "-preset", "fast", "-crf", "18", "-pix_fmt", "yuv420p",
         "-c:a", "aac", "-b:a", "256k",
+        "-shortest",
         "-movflags", "+faststart",
         str(master_video_path)
     ]

@@ -1,0 +1,6 @@
+{
+  "name": "claude-free-plugin",
+  "description": "Integración de Claude (Anthropic) en Antigravity IDE usando tier gratuito vía OpenRouter. Soporta claude-3-haiku (gratuito) sin consumir créditos de pago.",
+  "version": "1.0.0",
+  "author": "HB.OS Team"
+}

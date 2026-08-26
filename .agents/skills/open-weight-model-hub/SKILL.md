@@ -1,41 +1,17 @@
 ---
 name: open-weight-model-hub
-description: Hub de Plugins e Integración Unificada de Modelos Open-Weight (DeepSeek-R1, DeepSeek-V3, Qwen 2.5, GLM-4, Kimi K3, Ollama/vLLM) inspirado en la arquitectura plug-and-play de DeepSeek Harness.
+description: Hub de Plugins e Integración Unificada de Modelos Open-Weight (DeepSeek-R1, DeepSeek-V3, DeepSeek Harness V4/V5, Studio Chat, Qwen 2.5, Orca, Ollama/vLLM) para Antigravity IDE.
 ---
 
-# 🔌 Open-Weight Model Hub & Plugin Registry (DeepSeek Standard)
+# 🔌 Open-Weight Model Hub & Plugin Registry (DeepSeek Harness Standard)
 
-Este catálogo centraliza todos los motores de lenguaje de código abierto y modelos de frontera en una arquitectura **Plug-and-Play**. Elimina la necesidad de escribir scripts ad-hoc de conexión para cada modelo.
+Este plugin empaqueta todos los motores de lenguaje de código abierto e integración de desarrolladores en la arquitectura Plug-and-Play de Antigravity.
 
----
+## 🗂️ Registro de Herramientas MCP Autorizadas
 
-## 🗂️ Registro de Plugins de Modelos Activos
-
-| Plugin / Modelo | Tipo / Hosting | Endpoint / Protocolo | Rol Principal |
-| :--- | :--- | :--- | :--- |
-| **`plugin-deepseek-r1`** | Open-Weight (DeepSeek Inc.) | `POST /api/deepseek/chat` (`deepseek-reasoner`) | Razonamiento lógico profundo, matemáticas y refactorización algorítmica. |
-| **`plugin-deepseek-v3`** | Open-Weight (DeepSeek Inc.) | `POST /api/deepseek/chat` (`deepseek-chat`) | Inferencia conversacional de alta velocidad y baja latencia (MoE + MLA). |
-| **`plugin-qwen-2.5`** | Open-Weight (Alibaba Cloud) | Direct OpenAI-Compatible / Fireworks AI | Parseo de JSON determinista, tareas de visión-lenguaje y código. |
-| **`plugin-kimi-k3`** | Serverless ZDR (Moonshot AI) | Fireworks AI / OpenRouter | Procesamiento de super-long context (hasta 1M tokens) con política ZDR. |
-| **`plugin-local-ollama`** | Local Self-Hosted GPU | `http://localhost:11434/api/generate` | Inferencia 100% offline sin conexión a internet ni consumo de API externa. |
-
----
-
-## ⚙️ Esquema Único de Invocación (JSON Standard)
-
-Cualquier agente del sistema invoca cualquier modelo Open-Weight mediante el siguiente payload normalizado:
-
-```json
-{
-  "plugin": "plugin-deepseek-r1",
-  "agent": "bilingual_cs",
-  "message": "Tu consulta de ingeniería o negocio aquí",
-  "temperature": 0.7
-}
-```
-
----
-
-## 🔒 Beneficios Operativos
-1. **Sustitución Transparente de Modelos**: Se puede alternar entre `DeepSeek-R1`, `Qwen` u `Ollama` cambiando únicamente la clave `"plugin"`.
-2. **Cero Fricción en Integraciones Futuras**: Cuando se lance un nuevo modelo (ej. DeepSeek-V5 o Llama-4), solo se agrega su archivo de plugin en `.agents/skills/open-weight-model-hub/` sin tocar el código fuente del frontend ni del backend.
+1. **`query_deepseek_harness_v4_v5`**: Orquestación DeepSeek Harness V4 / V5 y DeepSeek Studio Chat para desarrolladores.
+2. **`query_deepseek_r1`**: Razonamiento lógico profundo y matemática avanzada (`deepseek-reasoner`).
+3. **`query_deepseek_v3`**: Inferencia ultra-rápida MoE y generación de código (`deepseek-chat`).
+4. **`query_qwen_2_5`**: Inferencia de alta fidelidad JSON determinista y código multilingüe (Qwen 2.5 72B & Coder).
+5. **`query_orca_model`**: Modelos de razonamiento paso a paso explicativo (Orca 2 / Orca Mini).
+6. **`query_local_ollama`**: Inferencia offline privada (Ollama localhost:11434 con soporte Llama 3, Qwen 2.5, DeepSeek R1, Orca).

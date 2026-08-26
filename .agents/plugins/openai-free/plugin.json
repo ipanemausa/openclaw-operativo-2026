@@ -1,0 +1,6 @@
+{
+  "name": "openai-free-plugin",
+  "description": "Integración de OpenAI (GPT-4o-mini y GPT-3.5-turbo) en Antigravity IDE usando tier gratuito vía OpenRouter. Cero consumo de créditos de pago mientras no se supere el free tier.",
+  "version": "1.0.0",
+  "author": "HB.OS Team"
+}

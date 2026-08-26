@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "ollama-engine-hub": {
+      "command": "python",
+      "args": [
+        "C:\\Users\\ipane\\openclaw-operativo-2026\\scripts\\ollama_mcp_server.py"
+      ],
+      "env": {
+        "OLLAMA_BASE_URL": "http://localhost:11434",
+        "PYTHONIOENCODING": "utf-8"
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "openai-free": {
+      "command": "python",
+      "args": [
+        "C:\\Users\\ipane\\openclaw-operativo-2026\\.agents\\plugins\\openai-free\\scripts\\openai_mcp_server.py"
+      ],
+      "env": {
+        "OPENROUTER_API_KEY": "${OPENROUTER_API_KEY}",
+        "PYTHONIOENCODING": "utf-8"
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "claude-free": {
+      "command": "python",
+      "args": [
+        "C:\\Users\\ipane\\openclaw-operativo-2026\\.agents\\plugins\\claude-free\\scripts\\claude_mcp_server.py"
+      ],
+      "env": {
+        "OPENROUTER_API_KEY": "${OPENROUTER_API_KEY}",
+        "PYTHONIOENCODING": "utf-8"
+      }
+    }
+  }
+}

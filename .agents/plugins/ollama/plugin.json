@@ -1,0 +1,5 @@
+{
+  "name": "ollama",
+  "version": "1.0.0",
+  "description": "Plugin oficial dedicado de Ollama Local (Llama 3, Qwen 2.5, DeepSeek-R1 local, Orca) para Antigravity IDE."
+}

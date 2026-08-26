@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "openweight-models-hub": {
+      "command": "python",
+      "args": [
+        "C:\\Users\\ipane\\openclaw-operativo-2026\\scripts\\openweight_mcp_server.py"
+      ],
+      "env": {
+        "DEEPSEEK_API_KEY": "${DEEPSEEK_API_KEY}",
+        "OPENROUTER_API_KEY": "${OPENROUTER_API_KEY}",
+        "PYTHONIOENCODING": "utf-8"
+      }
+    }
+  }
+}

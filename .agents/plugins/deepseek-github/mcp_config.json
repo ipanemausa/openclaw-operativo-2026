@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "deepseek-github": {
+      "command": "python",
+      "args": ["${workspaceRoot}/.agents/plugins/deepseek-github/scripts/deepseek_git_clone.py"],
+      "env": {
+        "DEEPSEEK_GITHUB_TOKEN": "${DEEPSEEK_GITHUB_TOKEN}"
+      }
+    }
+  }
+}

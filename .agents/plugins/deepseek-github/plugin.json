@@ -1,0 +1,7 @@
+{
+  "name": "deepseek-github",
+  "description": "MCP plugin that clones DeepSeek model repository from GitHub and builds it locally",
+  "version": "1.0.0",
+  "author": "HB.OS Team",
+  "license": "MIT"
+}

@@ -1,0 +1,5 @@
+{
+  "name": "open-weight-models",
+  "version": "1.0.0",
+  "description": "Plugin oficial de orquestación de modelos Open-Weight (DeepSeek-R1, DeepSeek-V3, Qwen 2.5, Ollama) para Antigravity IDE."
+}

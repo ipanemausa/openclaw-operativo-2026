@@ -1,0 +1,41 @@
+{
+  "specification_name": "Flow 2.0 DeepSeek Native Plugin Specification",
+  "version": "2026.7.1",
+  "system_branding": "HB.OS (OPERATING SYSTEM) · SOVEREIGN AI",
+  "cost_model": {
+    "images_and_agents": 0,
+    "daily_free_video_credits": 50,
+    "upscale_2k": 0
+  },
+  "modules": [
+    {
+      "id": "module_1_watermark_and_credits",
+      "feature": "Desactivación de Marca de Agua de Gemini & 50 Créditos Diarios de Video"
+    },
+    {
+      "id": "module_2_nanobanana_fast_images",
+      "feature": "Inferencia de Imágenes Nanobanana en 3 Segundos & Upscale 2K"
+    },
+    {
+      "id": "module_3_consistent_characters_and_voice",
+      "feature": "Matriz de Personajes Consistentes, 3 Perspectivas (Create Body) & Vinculación de Tu Voz Real de Guillermo"
+    },
+    {
+      "id": "module_4_video_tracking_and_youtube_upload",
+      "feature": "Edición Video-to-Video con Tracking de Rostro/Gafas/Estilos & Publicación Directa Cloud a YouTube"
+    },
+    {
+      "id": "module_5_agentic_workflow",
+      "feature": "Modo Agente Gemini/DeepSeek para Organización de Colecciones & Generación Masiva de 12 Escenas"
+    },
+    {
+      "id": "module_6_community_tools_22_poses",
+      "feature": "Generador Masivo de 22 Expresiones/Ángulos desde 1 Foto de Guillermo + Auto Subtítulos AI"
+    }
+  ],
+  "guillermo_voice_binding": {
+    "voice_file": "runtime/guillermo_voice_studio_master_48k.aac",
+    "mode": "100_percent_real_voice_only",
+    "sample_rate": 48000
+  }
+}

@@ -1,10 +1,13 @@
 {
   "mcpServers": {
-    "deepseek-github": {
+    "openclaw-github": {
       "command": "python",
-      "args": ["${workspaceRoot}/.agents/plugins/deepseek-github/scripts/deepseek_git_clone.py"],
+      "args": [
+        "C:\\Users\\ipane\\openclaw-operativo-2026\\.agents\\plugins\\deepseek-github\\scripts\\github_mcp_server.py"
+      ],
       "env": {
-        "DEEPSEEK_GITHUB_TOKEN": "${DEEPSEEK_GITHUB_TOKEN}"
+        "GITHUB_TOKEN":       "${GITHUB_TOKEN}",
+        "PYTHONIOENCODING":   "utf-8"
       }
     }
   }

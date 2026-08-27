@@ -1,9 +1,12 @@
 """
 ==============================================================================
-OPENCLAW CORE MATRIX 2026 — AI ROUTER MULTI-MODELO REAL
+OPENCLAW CORE MATRIX 2026 — AI ROUTER MULTI-MODELO REAL v2.1
 ==============================================================================
 Router inteligente que selecciona y despacha al modelo óptimo según tarea.
-Ecosistema: DeepSeek (directo) + Qwen/Kimi (OpenRouter) + Gemini + Claude
+
+NIVEL 1 — ULTRA-RÁPIDO: Groq (Llama 3.3 70B, Qwen 2.5 Coder, DeepSeek R1 Distill)
+NIVEL 2 — OPENROUTER HUB: Qwen 3.8, Kimi K2, Minimax, Gemini 2.0, Claude
+NIVEL 3 — DIRECTO: api.deepseek.com, Ollama local
 
 Fuente de verdad de keys: C:\\Users\\ipane\\.openclaw-master.env
 ==============================================================================
@@ -19,110 +22,227 @@ from dotenv import load_dotenv
 # Cargar keys desde el archivo maestro
 load_dotenv(r"C:\Users\ipane\.openclaw-master.env", override=True)
 
-# ─── CONFIGURACIÓN DE MODELOS ───────────────────────────────────────────────
+# ─── NIVEL 1: GROQ — ULTRA-RÁPIDO (600K tokens/día gratis) ─────────────────
 
-MODELS = {
-    # Ecosistema chino — código, matemáticas, RAG técnico
-    "deepseek": {
-        "id": "deepseek-chat",
-        "base_url": "https://api.deepseek.com/v1",
-        "key_env": "DEEPSEEK_API_KEY",
-        "max_tokens": 2048,
-        "tags": ["code", "math", "structured_output"],
+GROQ_MODELS = {
+    "groq-llama": {
+        "id": "llama-3.3-70b-versatile",
+        "base_url": "https://api.groq.com/openai/v1",
+        "key_env": "GROQ_API_KEY",
+        "max_tokens": 8192,
+        "tags": ["fast", "chat", "summarize", "general"],
+        "tier": 1,
     },
-    # Qwen vía OpenRouter — multilingüe, joyería, mercado latinoamericano
-    "qwen": {
-        "id": "qwen/qwen-2.5-72b-instruct",
+    "groq-qwen-coder": {
+        "id": "qwen-2.5-coder-32b",
+        "base_url": "https://api.groq.com/openai/v1",
+        "key_env": "GROQ_API_KEY",
+        "max_tokens": 8192,
+        "tags": ["fast_code", "typescript", "python"],
+        "tier": 1,
+    },
+    "groq-deepseek-r1": {
+        "id": "deepseek-r1-distill-llama-70b",
+        "base_url": "https://api.groq.com/openai/v1",
+        "key_env": "GROQ_API_KEY",
+        "max_tokens": 8192,
+        "tags": ["fast_reasoning", "math", "logic"],
+        "tier": 1,
+    },
+    "groq-mixtral": {
+        "id": "mixtral-8x7b-32768",
+        "base_url": "https://api.groq.com/openai/v1",
+        "key_env": "GROQ_API_KEY",
+        "max_tokens": 32768,
+        "tags": ["multilingual_fast", "long_chat"],
+        "tier": 1,
+    },
+}
+
+# ─── NIVEL 2: OPENROUTER HUB — MODELOS CHINOS + GEMINI ──────────────────────
+
+OPENROUTER_MODELS = {
+    # Qwen 3.8 Max (el mejor modelo actual según rankings)
+    "qwen3-max": {
+        "id": "qwen/qwen3-235b-a22b",
         "base_url": "https://openrouter.ai/api/v1",
         "key_env": "OPENROUTER_API_KEY",
-        "max_tokens": 2048,
-        "tags": ["multilingual", "rag", "jewelry", "latam"],
+        "max_tokens": 4096,
+        "tags": ["rag", "multilingual", "jewelry", "latam", "code"],
+        "tier": 2,
     },
-    # Kimi K3 vía OpenRouter — razonamiento largo, documentos extensos
+    # Kimi K2 — contexto largo 1M, documentos extensos
     "kimi": {
         "id": "moonshotai/kimi-k2",
         "base_url": "https://openrouter.ai/api/v1",
         "key_env": "OPENROUTER_API_KEY",
+        "max_tokens": 16384,
+        "tags": ["long_context", "documents", "analysis"],
+        "tier": 2,
+    },
+    # Minimax — análisis multimedia y texto largo
+    "minimax": {
+        "id": "minimax/minimax-01",
+        "base_url": "https://openrouter.ai/api/v1",
+        "key_env": "OPENROUTER_API_KEY",
         "max_tokens": 4096,
-        "tags": ["long_context", "reasoning", "documents"],
+        "tags": ["multimedia_analysis", "video_scripts"],
+        "tier": 2,
     },
-    # Gemini — razonamiento general, multimodal
-    "gemini": {
-        "id": "gemini-2.0-flash",
-        "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
-        "key_env": "GEMINI_API_KEY",
-        "max_tokens": 2048,
-        "tags": ["reasoning", "general", "firebase"],
+    # Gemini 2.0 Flash — multimodal, gratis vía OpenRouter
+    "gemini-or": {
+        "id": "google/gemini-2.0-flash-001",
+        "base_url": "https://openrouter.ai/api/v1",
+        "key_env": "OPENROUTER_API_KEY",
+        "max_tokens": 8192,
+        "tags": ["reasoning", "firebase", "multimodal"],
+        "tier": 2,
     },
-    # Claude — fallback de alta calidad, análisis de negocio
+    # Claude 4 Sonnet — análisis de negocio B2B
     "claude": {
         "id": "anthropic/claude-sonnet-4-5",
         "base_url": "https://openrouter.ai/api/v1",
         "key_env": "OPENROUTER_API_KEY",
-        "max_tokens": 2048,
-        "tags": ["business", "analysis", "fallback"],
+        "max_tokens": 4096,
+        "tags": ["business", "b2b", "legal"],
+        "tier": 2,
+    },
+    # DeepSeek R1 vía OpenRouter (fallback si api.deepseek.com cae)
+    "deepseek-or": {
+        "id": "deepseek/deepseek-r1",
+        "base_url": "https://openrouter.ai/api/v1",
+        "key_env": "OPENROUTER_API_KEY",
+        "max_tokens": 4096,
+        "tags": ["or_reasoning", "or_structured"],
+        "tier": 2,
     },
 }
 
-# ─── TABLA DE DESPACHO POR TIPO DE TAREA ────────────────────────────────────
+# ─── NIVEL 3: DIRECTO — DEEPSEEK API + GEMINI NATIVO ────────────────────────
 
-DISPATCH_TABLE = {
-    "code":              "deepseek",
-    "math":              "deepseek",
-    "structured_output": "deepseek",
-    "rag":               "qwen",
-    "multilingual":      "qwen",
-    "jewelry":           "qwen",
-    "latam":             "qwen",
-    "long_context":      "kimi",
-    "documents":         "kimi",
-    "reasoning":         "gemini",
-    "general":           "gemini",
-    "business":          "claude",
-    "fallback":          "claude",
+DIRECT_MODELS = {
+    # DeepSeek nativo — código, matemáticas, RAG técnico
+    "deepseek": {
+        "id": "deepseek-chat",
+        "base_url": "https://api.deepseek.com/v1",
+        "key_env": "DEEPSEEK_API_KEY",
+        "max_tokens": 4096,
+        "tags": ["code", "math", "structured_output"],
+        "tier": 3,
+    },
+    "deepseek-r1": {
+        "id": "deepseek-reasoner",
+        "base_url": "https://api.deepseek.com/v1",
+        "key_env": "DEEPSEEK_API_KEY",
+        "max_tokens": 4096,
+        "tags": ["deep_reasoning", "complex_math"],
+        "tier": 3,
+    },
+    # Gemini nativo Google
+    "gemini": {
+        "id": "gemini-2.0-flash",
+        "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+        "key_env": "GEMINI_API_KEY",
+        "max_tokens": 4096,
+        "tags": ["gemini_native", "vision"],
+        "tier": 3,
+    },
 }
 
-# Patrones de input bloqueados (proteccion de datos sensibles)
+# ─── TABLA MAESTRA DE MODELOS ────────────────────────────────────────────────
+
+MODELS = {**GROQ_MODELS, **OPENROUTER_MODELS, **DIRECT_MODELS}
+
+# ─── TABLA DE DESPACHO POR TIPO DE TAREA ────────────────────────────────────
+# Prioridad: Groq (veloc.) > OpenRouter (variedad) > Directo (precisión)
+
+DISPATCH_TABLE = {
+    # Groq NIVEL 1 — ultra-rápido
+    "fast":               "groq-llama",
+    "fast_code":          "groq-qwen-coder",
+    "fast_reasoning":     "groq-deepseek-r1",
+    "multilingual_fast":  "groq-mixtral",
+    "chat":               "groq-llama",
+    "summarize":          "groq-llama",
+    # OpenRouter NIVEL 2 — modelos chinos
+    "rag":                "qwen3-max",
+    "multilingual":       "qwen3-max",
+    "jewelry":            "qwen3-max",
+    "latam":              "qwen3-max",
+    "long_context":       "kimi",
+    "documents":          "kimi",
+    "analysis":           "kimi",
+    "video_scripts":      "minimax",
+    "multimedia_analysis":"minimax",
+    "reasoning":          "gemini-or",
+    "general":            "gemini-or",
+    "firebase":           "gemini-or",
+    "business":           "claude",
+    "b2b":                "claude",
+    "legal":              "claude",
+    # Directo NIVEL 3 — precisión
+    "code":               "deepseek",
+    "math":               "deepseek",
+    "structured_output":  "deepseek",
+    "deep_reasoning":     "deepseek-r1",
+    "complex_math":       "deepseek-r1",
+    # Fallback
+    "fallback":           "groq-llama",
+}
+
+# ─── GUARDRAILS: patrones bloqueados en input ────────────────────────────────
+
 BLOCKED_PATTERNS = [
-    r"sk-[a-zA-Z0-9\-]{20,}",              # API keys OpenAI/DeepSeek style
-    r"sk-or-v1-[a-zA-Z0-9]{6,}",           # OpenRouter keys (6+ chars)
-    r"sk-or-[a-zA-Z0-9\-]{6,}",            # OpenRouter alternativo
-    r"AIza[a-zA-Z0-9\-_]{20,}",            # Google API keys
-    r"\b(?:\d{4}[\s\-]?){4}\b",           # Numeros de tarjeta
-    r"password\s*[:=]\s*\S+",             # Passwords en texto plano
-    r"BEGIN (RSA|EC|OPENSSH) PRIVATE",     # Claves privadas
+    r"sk-[a-zA-Z0-9\-]{20,}",
+    r"sk-or-v1-[a-zA-Z0-9]{6,}",
+    r"AIza[a-zA-Z0-9\-_]{20,}",
+    r"\b(?:\d{4}[\s\-]?){4}\b",
+    r"password\s*[:=]\s*\S+",
+    r"BEGIN (RSA|EC|OPENSSH) PRIVATE",
 ]
 
 # ─── ROUTER PRINCIPAL ────────────────────────────────────────────────────────
 
 class AIRouter:
-    """Router multi-modelo OpenClaw — despacha al modelo óptimo por tarea."""
+    """Router multi-modelo OpenClaw v2.1 — Groq + OpenRouter + Directo."""
 
     def __init__(self):
         self.session_id = f"ROUTER-{int(time.time())}"
         self._verify_keys()
 
     def _verify_keys(self):
-        """Verifica que las keys necesarias estén disponibles."""
+        """Verifica disponibilidad de keys por tier."""
+        tiers_ok = {1: False, 2: False, 3: False}
         missing = []
         checked = set()
-        for model_cfg in MODELS.values():
-            env_var = model_cfg["key_env"]
+        for key, cfg in MODELS.items():
+            env_var = cfg["key_env"]
             if env_var not in checked:
                 checked.add(env_var)
-                if not os.getenv(env_var):
+                val = os.getenv(env_var, "")
+                if val and not val.startswith("tu_"):
+                    tiers_ok[cfg["tier"]] = True
+                else:
                     missing.append(env_var)
-        if missing:
-            print(f"[ROUTER WARNING] Keys no encontradas: {missing}")
-            print(f"  -> Verificar C:\\Users\\ipane\\.openclaw-master.env")
-        else:
-            print(f"[ROUTER OK] Todas las API keys cargadas correctamente.")
+
+        print(f"\n[AI ROUTER v2.1] Session: {self.session_id}")
+        print(f"  Tier 1 (Groq):       {'✅ ACTIVO' if tiers_ok[1] else '⚠️  Sin GROQ_API_KEY — registrar en console.groq.com'}")
+        print(f"  Tier 2 (OpenRouter): {'✅ ACTIVO' if tiers_ok[2] else '❌ Sin OPENROUTER_API_KEY'}")
+        print(f"  Tier 3 (Directo):    {'✅ ACTIVO' if tiers_ok[3] else '⚠️  Sin DeepSeek/Gemini key'}")
+        print()
 
     def select_model(self, task_type: str) -> str:
         """Selecciona el modelo óptimo para el tipo de tarea."""
-        model_key = DISPATCH_TABLE.get(task_type, "claude")
-        model_cfg = MODELS[model_key]
-        print(f"[ROUTER] Tarea '{task_type}' → Modelo: {model_cfg['id']}")
+        model_key = DISPATCH_TABLE.get(task_type, "groq-llama")
+        cfg = MODELS[model_key]
+        # Si el modelo seleccionado no tiene key, escalar al siguiente tier
+        if not os.getenv(cfg["key_env"], ""):
+            if cfg["tier"] == 1:
+                model_key = "qwen3-max"  # fallback Tier 2
+            elif cfg["tier"] == 2:
+                model_key = "deepseek"   # fallback Tier 3
+        cfg = MODELS[model_key]
+        print(f"[ROUTER] Tarea='{task_type}' → Tier {cfg['tier']} → {cfg['id']}")
         return model_key
 
     def call(
@@ -133,29 +253,26 @@ class AIRouter:
         model_override: Optional[str] = None,
     ) -> dict:
         """
-        Llama al modelo seleccionado y retorna respuesta estructurada.
-
-        Args:
-            prompt: Pregunta o instrucción
-            task_type: Tipo de tarea para selección automática de modelo
-            system: System prompt opcional
-            model_override: Forzar un modelo específico
+        Llama al modelo óptimo y retorna respuesta estructurada.
 
         Returns:
-            dict con keys: model, response, tokens, latency_ms, success
+            dict: model, response, tokens, latency_ms, success, tier
         """
         t0 = time.time()
         model_key = model_override if model_override else self.select_model(task_type)
-        cfg = MODELS[model_key]
-        api_key = os.getenv(cfg["key_env"], "")
+        cfg = MODELS.get(model_key)
+        if not cfg:
+            return {"model": model_key, "response": f"ERROR: Modelo '{model_key}' no encontrado.", "tokens": 0, "latency_ms": 0, "success": False, "tier": 0}
 
-        if not api_key:
+        api_key = os.getenv(cfg["key_env"], "")
+        if not api_key or api_key.startswith("tu_"):
             return {
                 "model": cfg["id"],
-                "response": f"ERROR: Key '{cfg['key_env']}' no encontrada en master env.",
+                "response": f"ERROR: Key '{cfg['key_env']}' no configurada. Ver C:\\Users\\ipane\\.openclaw-master.env",
                 "tokens": 0,
                 "latency_ms": 0,
                 "success": False,
+                "tier": cfg["tier"],
             }
 
         messages = []
@@ -167,7 +284,6 @@ class AIRouter:
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
         }
-        # OpenRouter requiere header adicional
         if "openrouter" in cfg["base_url"]:
             headers["HTTP-Referer"] = "https://openclaw.cloud"
             headers["X-Title"] = "OpenClaw Core Matrix 2026"
@@ -184,17 +300,18 @@ class AIRouter:
                 f"{cfg['base_url']}/chat/completions",
                 headers=headers,
                 json=payload,
-                timeout=60,
+                timeout=90,
             )
             resp.raise_for_status()
             data = resp.json()
+
             if "choices" in data and len(data["choices"]) > 0:
                 content = data["choices"][0]["message"]["content"]
             elif "error" in data:
                 err_msg = data["error"].get("message", str(data["error"]))
                 raise ValueError(f"Provider Error: {err_msg}")
             else:
-                raise ValueError(f"Invalid API response structure: {str(data)[:200]}")
+                raise ValueError(f"Invalid API response: {str(data)[:200]}")
 
             tokens = data.get("usage", {}).get("total_tokens", 0)
             latency = int((time.time() - t0) * 1000)
@@ -205,13 +322,17 @@ class AIRouter:
                 "tokens": tokens,
                 "latency_ms": latency,
                 "success": True,
+                "tier": cfg["tier"],
             }
 
         except Exception as e:
-            # Auto-fallback to DeepSeek if primary model failed
-            if model_key != "deepseek" and os.getenv("DEEPSEEK_API_KEY"):
-                print(f"[ROUTER FALLBACK] {cfg['id']} fallo ({e}). Reintentando con DeepSeek...")
-                return self.call(prompt, task_type, system, model_override="deepseek")
+            # Auto-fallback: Tier 1 falla → Tier 2, Tier 2 falla → Tier 3
+            tier = cfg["tier"]
+            fallback_map = {1: "qwen3-max", 2: "deepseek", 3: None}
+            fallback_key = fallback_map.get(tier)
+            if fallback_key and fallback_key != model_key and os.getenv(MODELS[fallback_key]["key_env"], ""):
+                print(f"[ROUTER FALLBACK] {cfg['id']} falló ({e}). → {MODELS[fallback_key]['id']}")
+                return self.call(prompt, task_type, system, model_override=fallback_key)
 
             return {
                 "model": cfg["id"],
@@ -219,18 +340,32 @@ class AIRouter:
                 "tokens": 0,
                 "latency_ms": int((time.time() - t0) * 1000),
                 "success": False,
+                "tier": tier,
             }
 
     def print_result(self, result: dict):
         """Imprime el resultado de forma legible."""
-        status = "[OK]" if result["success"] else "[FAIL]"
-        print(f"\n{'─'*60}")
-        print(f"{status} Modelo:    {result['model']}")
-        print(f"   Tokens:    {result['tokens']}")
-        print(f"   Latencia:  {result['latency_ms']}ms")
+        status = "✅ OK" if result["success"] else "❌ FAIL"
+        print(f"\n{'─'*65}")
+        print(f"{status}  Tier {result.get('tier','?')} — Modelo: {result['model']}")
+        print(f"   Tokens: {result['tokens']}  |  Latencia: {result['latency_ms']}ms")
         print(f"   Respuesta:")
         print(f"   {result['response'][:800]}")
-        print(f"{'─'*60}")
+        print(f"{'─'*65}")
+
+    def benchmark_all_tiers(self):
+        """Test rápido de todos los tiers disponibles."""
+        test_prompt = "Responde en una línea: ¿Conectado y funcionando? Incluye tu nombre de modelo."
+        tiers_to_test = [
+            ("groq-llama",  "Tier 1 — Groq Llama 3.3 70B"),
+            ("qwen3-max",   "Tier 2 — Qwen 3.8 Max (OpenRouter)"),
+            ("deepseek",    "Tier 3 — DeepSeek V3 (Directo)"),
+        ]
+        print("\n[BENCHMARK] Test de conectividad multi-tier...\n")
+        for model_key, label in tiers_to_test:
+            print(f"Testing {label}...")
+            result = self.call(test_prompt, model_override=model_key)
+            self.print_result(result)
 
 
 # ─── INSTANCIA GLOBAL ────────────────────────────────────────────────────────
@@ -239,10 +374,4 @@ router = AIRouter()
 
 
 if __name__ == "__main__":
-    # Test rápido de conectividad
-    print("\n[AI ROUTER] Test de conectividad rápido...\n")
-    result = router.call(
-        prompt="Responde en una sola línea: ¿Estás conectado y funcionando?",
-        task_type="general",
-    )
-    router.print_result(result)
+    router.benchmark_all_tiers()

@@ -6,9 +6,12 @@
         "C:\\Users\\ipane\\openclaw-operativo-2026\\scripts\\openweight_mcp_server.py"
       ],
       "env": {
-        "DEEPSEEK_API_KEY": "${DEEPSEEK_API_KEY}",
+        "DEEPSEEK_API_KEY":   "${DEEPSEEK_API_KEY}",
         "OPENROUTER_API_KEY": "${OPENROUTER_API_KEY}",
-        "PYTHONIOENCODING": "utf-8"
+        "GROQ_API_KEY":       "${GROQ_API_KEY}",
+        "DASHSCOPE_API_KEY":  "${DASHSCOPE_API_KEY}",
+        "GEMINI_API_KEY":     "${GEMINI_API_KEY}",
+        "PYTHONIOENCODING":   "utf-8"
       }
     }
   }

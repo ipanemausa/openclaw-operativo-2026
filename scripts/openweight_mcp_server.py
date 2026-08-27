@@ -1,18 +1,33 @@
 """
 =============================================================================
-OPENCLAW 2026 — SOVEREIGN OPEN-WEIGHT MODEL HUB & LOCAL AI ENGINE MCP SERVER
+OPENCLAW 2026 — SOVEREIGN OPEN-WEIGHT MODEL HUB & LOCAL AI ENGINE MCP SERVER v2.1
 =============================================================================
-Provee integración determinista MCP para el ecosistema de IA Local:
-- DeepSeek-R1 (deepseek-reasoner)
-- DeepSeek-V3 / V4 / V5 (deepseek-chat)
-- DeepSeek Developer Studio Chat
-- Qwen 2.5 (qwen/qwen-2.5-72b-instruct & qwen-2.5-coder-32b)
-- Orca (orca-2-13b / orca-mini)
-- Ollama Local (http://localhost:11434)
-- LM Studio (http://localhost:1234/v1)
-- Jan AI (http://localhost:1337/v1)
-- Anything LLM (http://localhost:3001/api/v1)
-- ComfyUI (http://localhost:8188)
+MCP Server para Antigravity IDE.
+
+NIVEL 1 — ULTRA-RÁPIDO (Groq):
+  - query_groq_fast      → Llama 3.3 70B (chat, resumen, general)
+  - query_groq_coder     → Qwen 2.5 Coder 32B (código rápido)
+  - query_groq_reason    → DeepSeek R1 Distill 70B (razonamiento rápido)
+
+NIVEL 2 — OPENROUTER HUB (modelos chinos + Gemini):
+  - query_qwen3_max      → Qwen 3.8 Max 235B (RAG, multilingüe, código)
+  - query_kimi           → Kimi K2 (contexto 1M, documentos)
+  - query_minimax        → Minimax-01 (análisis multimedia, guiones)
+  - query_gemini_free    → Gemini 2.0 Flash vía OpenRouter
+  - query_deepseek_r1    → DeepSeek-R1 nativo (razonamiento profundo)
+  - query_deepseek_v3    → DeepSeek-V3 nativo (código MoE rápido)
+  - query_deepseek_harness_v4_v5 → Suite DeepSeek Harness
+
+NIVEL 2 — OPENROUTER LEGACY:
+  - query_qwen_2_5       → Qwen 2.5 72B (compatibilidad)
+  - query_orca_model     → Orca 2 / Orca Mini
+
+LOCAL (Offline Privado):
+  - query_local_ollama   → Ollama local (Qwen2.5, Llama3, DeepSeek R1)
+  - query_lm_studio      → LM Studio local
+  - query_jan_ai         → Jan AI local
+  - query_anything_llm   → RAG local AnythingLLM
+  - trigger_comfyui_workflow → ComfyUI imagen/video
 =============================================================================
 """
 
@@ -27,20 +42,27 @@ sys.stderr.reconfigure(encoding='utf-8')
 
 from mcp.server.fastmcp import FastMCP
 
-mcp = FastMCP("OpenClaw Sovereign Open-Weight & Local AI Ecosystem Hub")
+mcp = FastMCP("OpenClaw Sovereign Model Hub v2.1 — Groq + OpenRouter + Local")
 
-DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "")
+# ─── KEYS ───────────────────────────────────────────────────────────────────
+DEEPSEEK_API_KEY   = os.getenv("DEEPSEEK_API_KEY", "")
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
-LM_STUDIO_URL = os.getenv("LM_STUDIO_URL", "http://localhost:1234/v1")
-JAN_AI_URL = os.getenv("JAN_AI_URL", "http://localhost:1337/v1")
-ANYTHING_LLM_URL = os.getenv("ANYTHING_LLM_URL", "http://localhost:3001/api/v1")
-COMFYUI_URL = os.getenv("COMFYUI_URL", "http://localhost:8188")
+GROQ_API_KEY       = os.getenv("GROQ_API_KEY", "")
+DASHSCOPE_API_KEY  = os.getenv("DASHSCOPE_API_KEY", "")
+GEMINI_API_KEY     = os.getenv("GEMINI_API_KEY", "")
 
-def _http_post(url: str, headers: dict, payload: dict) -> dict:
+# ─── LOCAL ENDPOINTS ────────────────────────────────────────────────────────
+LM_STUDIO_URL    = os.getenv("LM_STUDIO_URL", "http://localhost:1234/v1")
+JAN_AI_URL       = os.getenv("JAN_AI_URL", "http://localhost:1337/v1")
+ANYTHING_LLM_URL = os.getenv("ANYTHING_LLM_URL", "http://localhost:3001/api/v1")
+COMFYUI_URL      = os.getenv("COMFYUI_URL", "http://localhost:8188")
+
+# ─── HELPER HTTP ────────────────────────────────────────────────────────────
+def _http_post(url: str, headers: dict, payload: dict, timeout: int = 90) -> dict:
     data = json.dumps(payload).encode('utf-8')
     req = urllib.request.Request(url, data=data, headers=headers, method='POST')
     try:
-        with urllib.request.urlopen(req, timeout=60) as resp:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
             body = resp.read().decode('utf-8')
             return json.loads(body)
     except urllib.error.HTTPError as e:
@@ -49,9 +71,135 @@ def _http_post(url: str, headers: dict, payload: dict) -> dict:
     except Exception as e:
         return {"error": str(e)}
 
+def _openai_compat_call(base_url: str, api_key: str, model: str, prompt: str, system: str, extra_headers: dict = None) -> str:
+    """Helper genérico para cualquier endpoint compatible con OpenAI."""
+    url = f"{base_url}/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json",
+    }
+    if extra_headers:
+        headers.update(extra_headers)
+    payload = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": system},
+            {"role": "user", "content": prompt}
+        ],
+        "temperature": 0.3,
+    }
+    res = _http_post(url, headers, payload)
+    if "error" in res:
+        return f"Error [{model}]: {res['error']}"
+    choices = res.get("choices", [])
+    if choices:
+        return choices[0].get("message", {}).get("content", "")
+    return f"Sin respuesta de {model}."
+
+_OR_HEADERS = {
+    "HTTP-Referer": "https://openclaw.cloud",
+    "X-Title": "OpenClaw Core Matrix 2026"
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# NIVEL 1 — GROQ: ULTRA-RÁPIDO
+# ─────────────────────────────────────────────────────────────────────────────
+
+@mcp.tool()
+def query_groq_fast(prompt: str, system_prompt: str = "Eres un asistente experto. Responde de forma clara y concisa.") -> str:
+    """Llama 3.3 70B vía Groq — Ultra-rápido (~1800 tok/s), ideal para chat, resumen y tareas generales. Tier gratuito: 600K tokens/día."""
+    if not GROQ_API_KEY:
+        return "⚠️ GROQ_API_KEY no configurada. Registrar en https://console.groq.com (gratis)."
+    return _openai_compat_call(
+        "https://api.groq.com/openai/v1",
+        GROQ_API_KEY,
+        "llama-3.3-70b-versatile",
+        prompt, system_prompt
+    )
+
+@mcp.tool()
+def query_groq_coder(prompt: str, system_prompt: str = "Eres Qwen 2.5 Coder, especialista en código Python, TypeScript y JavaScript.") -> str:
+    """Qwen 2.5 Coder 32B vía Groq — Código ultra-rápido. Ideal para completar funciones, revisar errores, generar scripts."""
+    if not GROQ_API_KEY:
+        return "⚠️ GROQ_API_KEY no configurada. Registrar en https://console.groq.com (gratis)."
+    return _openai_compat_call(
+        "https://api.groq.com/openai/v1",
+        GROQ_API_KEY,
+        "qwen-2.5-coder-32b",
+        prompt, system_prompt
+    )
+
+@mcp.tool()
+def query_groq_reason(prompt: str, system_prompt: str = "Eres DeepSeek R1 Distill, experto en razonamiento lógico y matemático.") -> str:
+    """DeepSeek R1 Distill 70B vía Groq — Razonamiento rápido sin latencia de la API de DeepSeek. Tier gratuito incluido."""
+    if not GROQ_API_KEY:
+        return "⚠️ GROQ_API_KEY no configurada. Registrar en https://console.groq.com (gratis)."
+    return _openai_compat_call(
+        "https://api.groq.com/openai/v1",
+        GROQ_API_KEY,
+        "deepseek-r1-distill-llama-70b",
+        prompt, system_prompt
+    )
+
+# ─────────────────────────────────────────────────────────────────────────────
+# NIVEL 2 — OPENROUTER: MODELOS CHINOS NUEVOS
+# ─────────────────────────────────────────────────────────────────────────────
+
+@mcp.tool()
+def query_qwen3_max(prompt: str, system_prompt: str = "Eres Qwen 3.8 Max (235B), el modelo de Alibaba #1 en rankings globales. Especialista en RAG, código multilingüe y análisis técnico.") -> str:
+    """Qwen 3.8 Max 235B vía OpenRouter — El modelo chino mejor posicionado en benchmarks 2026. Excelente para RAG, multilingüe (español/inglés/chino), código y análisis."""
+    if not OPENROUTER_API_KEY:
+        return "Error: OPENROUTER_API_KEY no configurada."
+    return _openai_compat_call(
+        "https://openrouter.ai/api/v1",
+        OPENROUTER_API_KEY,
+        "qwen/qwen3-235b-a22b",
+        prompt, system_prompt, _OR_HEADERS
+    )
+
+@mcp.tool()
+def query_kimi(prompt: str, system_prompt: str = "Eres Kimi K2, modelo de Moonshot AI con ventana de contexto de 1M tokens. Especialista en documentos extensos y razonamiento multi-paso.") -> str:
+    """Kimi K2 vía OpenRouter — Contexto 1M tokens. Ideal para documentos extensos, planes largos, análisis de múltiples archivos."""
+    if not OPENROUTER_API_KEY:
+        return "Error: OPENROUTER_API_KEY no configurada."
+    return _openai_compat_call(
+        "https://openrouter.ai/api/v1",
+        OPENROUTER_API_KEY,
+        "moonshotai/kimi-k2",
+        prompt, system_prompt, _OR_HEADERS
+    )
+
+@mcp.tool()
+def query_minimax(prompt: str, system_prompt: str = "Eres Minimax-01, especialista en análisis multimedia, generación de guiones y contenido audiovisual.") -> str:
+    """Minimax-01 vía OpenRouter — Del mismo equipo que Minimax H3 (video). Ideal para guiones de video, análisis de contenido multimedia, storyboards."""
+    if not OPENROUTER_API_KEY:
+        return "Error: OPENROUTER_API_KEY no configurada."
+    return _openai_compat_call(
+        "https://openrouter.ai/api/v1",
+        OPENROUTER_API_KEY,
+        "minimax/minimax-01",
+        prompt, system_prompt, _OR_HEADERS
+    )
+
+@mcp.tool()
+def query_gemini_free(prompt: str, system_prompt: str = "Eres Gemini 2.0 Flash, modelo multimodal de Google. Especialista en razonamiento general, Firebase y análisis visual.") -> str:
+    """Gemini 2.0 Flash vía OpenRouter — Gratis, multimodal. Ideal para razonamiento general, integraciones Firebase, análisis visual."""
+    if not OPENROUTER_API_KEY:
+        return "Error: OPENROUTER_API_KEY no configurada."
+    return _openai_compat_call(
+        "https://openrouter.ai/api/v1",
+        OPENROUTER_API_KEY,
+        "google/gemini-2.0-flash-001",
+        prompt, system_prompt, _OR_HEADERS
+    )
+
+# ─────────────────────────────────────────────────────────────────────────────
+# NIVEL 2 — DEEPSEEK DIRECTO (API nativa)
+# ─────────────────────────────────────────────────────────────────────────────
+
 @mcp.tool()
 def query_deepseek_r1(prompt: str, system_prompt: str = "Eres DeepSeek-R1, experto en razonamiento algorítmico y lógica matemática.") -> str:
-    """Invoca DeepSeek-R1 para razonamiento lógico profundo y matemática avanzada."""
+    """Invoca DeepSeek-R1 nativo para razonamiento lógico profundo y matemática avanzada. Incluye chain-of-thought."""
     url = "https://api.deepseek.com/chat/completions"
     headers = {
         "Authorization": f"Bearer {DEEPSEEK_API_KEY}",
@@ -73,135 +221,86 @@ def query_deepseek_r1(prompt: str, system_prompt: str = "Eres DeepSeek-R1, exper
         reasoning = msg.get("reasoning_content", "")
         content = msg.get("content", "")
         if reasoning:
-            return f"### [Pensamiento Razonado R1]\n{reasoning}\n\n### [Respuesta Final]\n{content}"
+            return f"### [Pensamiento R1]\n{reasoning}\n\n### [Respuesta Final]\n{content}"
         return content
     return "Sin respuesta de DeepSeek-R1."
 
 @mcp.tool()
-def query_deepseek_v3(prompt: str, system_prompt: str = "Eres DeepSeek-V3, modelo MoE de alta velocidad.") -> str:
-    """Invoca DeepSeek-V3 para inferencia conversacional rápida y código."""
-    url = "https://api.deepseek.com/chat/completions"
-    headers = {
-        "Authorization": f"Bearer {DEEPSEEK_API_KEY}",
-        "Content-Type": "application/json"
-    }
-    payload = {
-        "model": "deepseek-chat",
-        "messages": [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": prompt}
-        ]
-    }
-    res = _http_post(url, headers, payload)
-    if "error" in res:
-        return f"Error invocando DeepSeek-V3: {res['error']}"
-    choices = res.get("choices", [])
-    if choices:
-        return choices[0].get("message", {}).get("content", "")
-    return "Sin respuesta de DeepSeek-V3."
+def query_deepseek_v3(prompt: str, system_prompt: str = "Eres DeepSeek-V3, modelo MoE de alta velocidad para código e inferencia rápida.") -> str:
+    """Invoca DeepSeek-V3 nativo para código e inferencia rápida."""
+    return _openai_compat_call(
+        "https://api.deepseek.com/v1",
+        DEEPSEEK_API_KEY,
+        "deepseek-chat",
+        prompt, system_prompt
+    )
 
 @mcp.tool()
 def query_deepseek_harness_v4_v5(prompt: str, version: str = "v5", system_prompt: str = "Eres DeepSeek Harness V4/V5, orquestador de desarrollo avanzado.") -> str:
-    """Invoca la suite DeepSeek Harness (V4/V5) y DeepSeek Studio Chat para desarrolladores."""
+    """Suite DeepSeek Harness (V4=chat / V5=reasoner) para orquestación de desarrollo."""
     model_name = "deepseek-reasoner" if version.lower() == "v5" else "deepseek-chat"
-    url = "https://api.deepseek.com/chat/completions"
-    headers = {
-        "Authorization": f"Bearer {DEEPSEEK_API_KEY}",
-        "Content-Type": "application/json"
-    }
-    payload = {
-        "model": model_name,
-        "messages": [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": prompt}
-        ]
-    }
-    res = _http_post(url, headers, payload)
-    if "error" in res:
-        return f"Error invocando DeepSeek Harness {version.upper()}: {res['error']}"
-    choices = res.get("choices", [])
-    if choices:
-        return choices[0].get("message", {}).get("content", "")
-    return f"Sin respuesta de DeepSeek Harness {version.upper()}."
+    return _openai_compat_call(
+        "https://api.deepseek.com/v1",
+        DEEPSEEK_API_KEY,
+        model_name,
+        prompt, system_prompt
+    )
+
+# ─────────────────────────────────────────────────────────────────────────────
+# LEGACY — OPENROUTER (compatibilidad anterior)
+# ─────────────────────────────────────────────────────────────────────────────
 
 @mcp.tool()
 def query_qwen_2_5(prompt: str, system_prompt: str = "Eres Qwen 2.5 72B Instruct, especialista en JSON determinista y código multilingüe.") -> str:
-    """Invoca Qwen 2.5 72B vía OpenRouter para estructuras JSON y código sofisticado."""
-    url = "https://openrouter.ai/api/v1/chat/completions"
-    headers = {
-        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-        "Content-Type": "application/json",
-        "HTTP-Referer": "https://openclaw.ai",
-        "X-Title": "OpenClaw Antigravity MCP"
-    }
-    payload = {
-        "model": "qwen/qwen-2.5-72b-instruct",
-        "messages": [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": prompt}
-        ]
-    }
-    res = _http_post(url, headers, payload)
-    if "error" in res:
-        return f"Error invocando Qwen 2.5: {res['error']}"
-    choices = res.get("choices", [])
-    if choices:
-        return choices[0].get("message", {}).get("content", "")
-    return "Sin respuesta de Qwen 2.5."
+    """Qwen 2.5 72B vía OpenRouter — Versión anterior de Qwen. Usar query_qwen3_max para Qwen 3.8."""
+    if not OPENROUTER_API_KEY:
+        return "Error: OPENROUTER_API_KEY no configurada."
+    return _openai_compat_call(
+        "https://openrouter.ai/api/v1",
+        OPENROUTER_API_KEY,
+        "qwen/qwen-2.5-72b-instruct",
+        prompt, system_prompt, _OR_HEADERS
+    )
 
 @mcp.tool()
 def query_orca_model(prompt: str, model_variant: str = "orca-2-13b") -> str:
-    """Invoca modelos de la familia Orca (Orca 2 / Orca Mini) para razonamiento explicativo paso a paso."""
-    url = "https://openrouter.ai/api/v1/chat/completions"
-    headers = {
-        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-        "Content-Type": "application/json",
-        "HTTP-Referer": "https://openclaw.ai"
-    }
+    """Modelos Orca (Microsoft) para razonamiento explicativo paso a paso."""
     model_id = "microsoft/orca-2-13b" if "13b" in model_variant else "microsoft/orca-mini-3b"
-    payload = {
-        "model": model_id,
-        "messages": [
-            {"role": "system", "content": "Eres Orca, un modelo optimizado para el razonamiento paso a paso con explicaciones detalladas."},
-            {"role": "user", "content": prompt}
-        ]
-    }
-    res = _http_post(url, headers, payload)
-    if "error" in res:
-        return query_local_ollama(prompt, model=model_variant)
-    choices = res.get("choices", [])
-    if choices:
-        return choices[0].get("message", {}).get("content", "")
-    return "Sin respuesta de Orca."
+    if not OPENROUTER_API_KEY:
+        return query_local_ollama(prompt, model="llama3")
+    return _openai_compat_call(
+        "https://openrouter.ai/api/v1",
+        OPENROUTER_API_KEY,
+        model_id,
+        prompt,
+        "Eres Orca, optimizado para razonamiento paso a paso con explicaciones detalladas.",
+        _OR_HEADERS
+    )
+
+# ─────────────────────────────────────────────────────────────────────────────
+# LOCAL — OFFLINE PRIVADO
+# ─────────────────────────────────────────────────────────────────────────────
 
 @mcp.tool()
 def query_local_ollama(prompt: str, model: str = "qwen2.5:latest") -> str:
-    """Invoca modelo local 100% offline mediante servidor Ollama local (localhost:11434). Soporta llama3, qwen2.5, deepseek-r1, orca."""
+    """Inferencia 100% offline via Ollama local (localhost:11434). Soporta: qwen2.5, llama3, deepseek-r1, mistral, phi3."""
     url = "http://localhost:11434/api/generate"
     headers = {"Content-Type": "application/json"}
-    payload = {
-        "model": model,
-        "prompt": prompt,
-        "stream": False
-    }
-    res = _http_post(url, headers, payload)
+    payload = {"model": model, "prompt": prompt, "stream": False}
+    res = _http_post(url, headers, payload, timeout=120)
     if "error" in res:
         return f"Ollama local no disponible en http://localhost:11434. Detalles: {res['error']}"
     return res.get("response", "Sin respuesta de Ollama local.")
 
 @mcp.tool()
 def query_lm_studio(prompt: str, model: str = "local-model") -> str:
-    """Invoca el servidor local de LM Studio (http://localhost:1234/v1)."""
+    """Servidor local LM Studio (http://localhost:1234/v1)."""
     url = f"{LM_STUDIO_URL}/chat/completions"
     headers = {"Content-Type": "application/json"}
-    payload = {
-        "model": model,
-        "messages": [{"role": "user", "content": prompt}],
-        "temperature": 0.7
-    }
+    payload = {"model": model, "messages": [{"role": "user", "content": prompt}], "temperature": 0.7}
     res = _http_post(url, headers, payload)
     if "error" in res:
-        return f"LM Studio no detectado en {LM_STUDIO_URL}. Inicia el servidor local en LM Studio."
+        return f"LM Studio no detectado en {LM_STUDIO_URL}."
     choices = res.get("choices", [])
     if choices:
         return choices[0].get("message", {}).get("content", "")
@@ -209,17 +308,13 @@ def query_lm_studio(prompt: str, model: str = "local-model") -> str:
 
 @mcp.tool()
 def query_jan_ai(prompt: str, model: str = "local-model") -> str:
-    """Invoca el servidor local de Jan AI (http://localhost:1337/v1)."""
+    """Servidor local Jan AI (http://localhost:1337/v1)."""
     url = f"{JAN_AI_URL}/chat/completions"
     headers = {"Content-Type": "application/json"}
-    payload = {
-        "model": model,
-        "messages": [{"role": "user", "content": prompt}],
-        "temperature": 0.7
-    }
+    payload = {"model": model, "messages": [{"role": "user", "content": prompt}], "temperature": 0.7}
     res = _http_post(url, headers, payload)
     if "error" in res:
-        return f"Jan AI no detectado en {JAN_AI_URL}. Inicia el servidor local en Jan AI."
+        return f"Jan AI no detectado en {JAN_AI_URL}."
     choices = res.get("choices", [])
     if choices:
         return choices[0].get("message", {}).get("content", "")
@@ -227,21 +322,18 @@ def query_jan_ai(prompt: str, model: str = "local-model") -> str:
 
 @mcp.tool()
 def query_anything_llm(prompt: str, workspace_slug: str = "main") -> str:
-    """Invoca la base de conocimiento RAG local en Anything LLM (http://localhost:3001/api/v1)."""
+    """RAG local en AnythingLLM (http://localhost:3001/api/v1). Búsqueda vectorial sobre documentos locales."""
     url = f"{ANYTHING_LLM_URL}/workspace/{workspace_slug}/chat"
     headers = {"Content-Type": "application/json"}
-    payload = {
-        "message": prompt,
-        "mode": "chat"
-    }
+    payload = {"message": prompt, "mode": "chat"}
     res = _http_post(url, headers, payload)
     if "error" in res:
-        return f"Anything LLM no detectado en {ANYTHING_LLM_URL}. Verifica que el contenedor o app esté activo."
+        return f"Anything LLM no detectado en {ANYTHING_LLM_URL}."
     return res.get("textResponse", "Sin respuesta de Anything LLM.")
 
 @mcp.tool()
 def trigger_comfyui_workflow(prompt_json: str) -> str:
-    """Envía un workflow de generación de imagen/video a la API local de ComfyUI (http://localhost:8188/prompt)."""
+    """Envía workflow de imagen/video a ComfyUI local (http://localhost:8188). prompt_json: JSON del workflow ComfyUI."""
     url = f"{COMFYUI_URL}/prompt"
     headers = {"Content-Type": "application/json"}
     try:
@@ -251,9 +343,9 @@ def trigger_comfyui_workflow(prompt_json: str) -> str:
     payload = {"prompt": workflow_data}
     res = _http_post(url, headers, payload)
     if "error" in res:
-        return f"ComfyUI no detectado en {COMFYUI_URL}. Inicia ComfyUI en el puerto 8188."
+        return f"ComfyUI no detectado en {COMFYUI_URL}."
     prompt_id = res.get("prompt_id", "desconocido")
-    return f"Workflow enviado a ComfyUI con éxito. Prompt ID: {prompt_id}"
+    return f"Workflow enviado a ComfyUI. Prompt ID: {prompt_id}"
 
 if __name__ == "__main__":
     mcp.run()

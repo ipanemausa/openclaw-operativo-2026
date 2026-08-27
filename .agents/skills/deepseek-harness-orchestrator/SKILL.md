@@ -26,5 +26,5 @@ description: Sub-agente y habilidad de orquestación inspirada en la arquitectur
 Cuando el sistema ejecuta una tarea bajo esta habilidad:
 1. Inspecciona el `MANIFIESTO_ARQUITECTURA_OPENCLAW_2026.md` para ubicar el módulo correspondiente.
 2. Ejecuta la validación de claves en `.env`.
-3. Invoca la pasarela DeepSeek a través de `/api/deepseek/chat` o los conectores nativos de GitHub / Docker.
+3. Invoca la pasarela DeepSeek a través de `/api/deepseek/chat` (la cual es ahora interceptada por el `ZeroCostEdgeRouter` hacia OmniRouter `combo-deepseek-free` para costo $0).
 4. Escribe la telemetría de ejecución en `logs/` y registra el resultado final en `ANTIGRAVITY_WORK_LOG.txt`.

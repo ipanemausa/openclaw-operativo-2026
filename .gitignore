@@ -85,21 +85,6 @@ nginx/ssl/openclaw.*
 # Test coverage
 htmlcov/
 .coverage
-.coverage.*
-
-# Custom backups and temp files
-docker-backups/
-import React*.txt
-
-# Repos independientes anidados (tienen su propio .git -- NO trackear aqui)
-hb-jewelry/
-openclaw-operativo-2026/
-
-# Archivos temporales y basura generados por pipelines
-temp_lostfound/
-backup-*/
-handoff_*.txt
-camin-*.cjs
 COMPENDIO.md
 financial_rag_worker.py
 
@@ -128,3 +113,6 @@ scratch_nb2.txt
 config/client_secrets.json
 temp_*/
 temp_frames_*/
+
+# Repos independientes anidados (fix)
+.agents/plugins/deepseek-github/repos/

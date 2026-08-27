@@ -5,7 +5,16 @@ description: Hub de Plugins e Integración Unificada de Modelos Open-Weight y He
 
 # 🔌 Open-Weight & Local AI Ecosystem Hub v2.1
 
-Ecosistema completo de modelos IA: 3 tiers de velocidad + local offline.
+Ecosistema completo de modelos IA: Enrutamiento Inteligente $0, 3 tiers de velocidad + local offline.
+
+## 🚀 TIER 0 — OMNIROUTER (Costo $0 - Enrutamiento Inteligente)
+
+| Tool | Modelo | Uso ideal |
+|---|---|---|
+| `query_omnirouter` | combo-best-free | Asistente de IDE, IDE Chat, Tareas de codificación generales |
+| `query_omnirouter_deepseek` | combo-deepseek-free | Razonamiento puro, matemáticas, validación lógica compleja |
+
+> **Key requerida:** `OMNIROUTER_API_KEY` apuntando a `http://localhost:11435/v1`
 
 ## 🏎️ TIER 1 — GROQ: ULTRA-RÁPIDO (~1800 tok/s, gratis 600K/día)
 
@@ -53,6 +62,7 @@ Ecosistema completo de modelos IA: 3 tiers de velocidad + local offline.
 ```
 Tarea                 → Modelo recomendado
 ───────────────────────────────────────────
+asistente de IDE      → query_omnirouter
 chat / resumen        → query_groq_fast
 código rápido         → query_groq_coder
 razonamiento rápido   → query_groq_reason

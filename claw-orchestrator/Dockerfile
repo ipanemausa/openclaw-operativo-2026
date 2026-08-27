@@ -1,6 +1,7 @@
-FROM python:3.11-slim
+FROM node:20-alpine
 WORKDIR /app
-RUN pip install flask redis docker flask-cors --no-cache-dir
-COPY app/ .
+COPY package*.json ./
+RUN npm install
+COPY src/ ./src/
 EXPOSE 8090
-CMD ["python", "orchestrator.py"]
+CMD ["npm", "start"]

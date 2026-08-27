@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  omnirouter:
+    image: ghcr.io/omnirouter/omnirouter:latest
+    container_name: openclaw-omnirouter
+    ports:
+      - "11435:11434"
+    environment:
+      - NODE_ENV=production
+      - OMNIROUTER_API_KEY=${OMNIROUTER_API_KEY:-change_me}
+      - OMNIROUTER_PASSWORD=${OMNIROUTER_PASSWORD:-change_me}
+    volumes:
+      - ./omnirouter-data:/app/data
+    restart: unless-stopped

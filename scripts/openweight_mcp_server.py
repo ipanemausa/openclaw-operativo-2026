@@ -36,9 +36,22 @@ import os
 import json
 import urllib.request
 import urllib.error
+from pathlib import Path
 
 sys.stdout.reconfigure(encoding='utf-8')
 sys.stderr.reconfigure(encoding='utf-8')
+
+# ─── AUTO-CARGA del master env (fuente única de verdad) ──────────────────────
+_MASTER_ENV = Path(r"C:\Users\ipane\.openclaw-master.env")
+if _MASTER_ENV.exists():
+    for _line in _MASTER_ENV.read_text(encoding="utf-8", errors="ignore").splitlines():
+        if "=" in _line and not _line.strip().startswith("#"):
+            _k, _v = _line.split("=", 1)
+            _k = _k.strip()
+            _v = _v.strip().strip('"').strip("'")
+            if _v and not _v.startswith("tu_"):
+                # IMPORTANTE: Forzar sobrescritura. Si el IDE pasa el literal "${VAR}", lo pisamos con la real.
+                os.environ[_k] = _v
 
 from mcp.server.fastmcp import FastMCP
 

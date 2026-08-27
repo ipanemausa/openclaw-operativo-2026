@@ -28,6 +28,9 @@ LOCAL (Offline Privado):
   - query_jan_ai         → Jan AI local
   - query_anything_llm   → RAG local AnythingLLM
   - trigger_comfyui_workflow → ComfyUI imagen/video
+  - invoke_pinokio_flow  → Ejecutar scripts/apps en Pinokio
+  - generate_jam_audio   → Generar música/audio (Jam)
+  - query_odysseus_workspace → Integración con Odysseus (Felix Kjellberg)
 =============================================================================
 """
 
@@ -69,6 +72,9 @@ LM_STUDIO_URL    = os.getenv("LM_STUDIO_URL", "http://localhost:1234/v1")
 JAN_AI_URL       = os.getenv("JAN_AI_URL", "http://localhost:1337/v1")
 ANYTHING_LLM_URL = os.getenv("ANYTHING_LLM_URL", "http://localhost:3001/api/v1")
 COMFYUI_URL      = os.getenv("COMFYUI_URL", "http://localhost:8188")
+PINOKIO_API_URL  = os.getenv("PINOKIO_API_URL", "http://localhost:4200/api")
+JAM_AUDIO_URL    = os.getenv("JAM_AUDIO_URL", "http://localhost:5000/api")
+ODYSSEUS_URL     = os.getenv("ODYSSEUS_URL", "http://localhost:11435/v1")
 
 # ─── HELPER HTTP ────────────────────────────────────────────────────────────
 def _http_post(url: str, headers: dict, payload: dict, timeout: int = 90) -> dict:
@@ -359,6 +365,42 @@ def trigger_comfyui_workflow(prompt_json: str) -> str:
         return f"ComfyUI no detectado en {COMFYUI_URL}."
     prompt_id = res.get("prompt_id", "desconocido")
     return f"Workflow enviado a ComfyUI. Prompt ID: {prompt_id}"
+
+@mcp.tool()
+def invoke_pinokio_flow(script_path: str, args: dict = None) -> str:
+    """Envía un script de ejecución a Pinokio (AI Browser local)."""
+    url = f"{PINOKIO_API_URL}/run"
+    headers = {"Content-Type": "application/json"}
+    payload = {"script": script_path, "args": args or {}}
+    res = _http_post(url, headers, payload)
+    if "error" in res:
+        return f"Error conectando con Pinokio en {PINOKIO_API_URL}. Detalles: {res['error']}"
+    return res.get("status", "Comando enviado a Pinokio con éxito.")
+
+@mcp.tool()
+def generate_jam_audio(prompt: str) -> str:
+    """Genera música o audio utilizando el modelo de Jam (local o API)."""
+    url = f"{JAM_AUDIO_URL}/generate"
+    headers = {"Content-Type": "application/json"}
+    payload = {"prompt": prompt}
+    res = _http_post(url, headers, payload)
+    if "error" in res:
+        return f"Error conectando con generador Jam de audio: {res['error']}"
+    return res.get("file_url", "Audio Jam generado y guardado localmente.")
+
+@mcp.tool()
+def query_odysseus_workspace(prompt: str) -> str:
+    """Envía un prompt a Odysseus (workspace open-source creado por Felix Kjellberg 'PewDiePie')."""
+    url = f"{ODYSSEUS_URL}/chat/completions"
+    headers = {"Content-Type": "application/json"}
+    payload = {"messages": [{"role": "user", "content": prompt}]}
+    res = _http_post(url, headers, payload)
+    if "error" in res:
+        return f"Error conectando con Odysseus en {ODYSSEUS_URL}. Asegúrate de tenerlo ejecutando localmente."
+    choices = res.get("choices", [])
+    if choices:
+        return choices[0].get("message", {}).get("content", "")
+    return "Sin respuesta de Odysseus."
 
 if __name__ == "__main__":
     mcp.run()

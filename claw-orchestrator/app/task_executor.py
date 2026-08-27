@@ -1,5 +1,9 @@
 import redis, json, os, time, pathlib
 from datetime import datetime, timezone
+try:
+    from zero_cost_router import ZeroCostEdgeRouter
+except ImportError:
+    ZeroCostEdgeRouter = None
 
 ESTADO_PATH = pathlib.Path("/app/claw-estado.json")
 r = redis.Redis(
@@ -19,7 +23,24 @@ def save_estado(estado):
 
 def ejecutar(nombre):
     print(f"[EXECUTOR] ejecutando: {nombre}", flush=True)
-    # Aqui cada tarea tiene su logica
+    
+    # Delegar al ZeroCostEdgeRouter si la tarea lo requiere
+    if ZeroCostEdgeRouter and any(k in nombre.lower() for k in ["edge", "chat", "resumen", "parsing", "multimodal"]):
+        print(f"[EXECUTOR] Delegando {nombre} a Zero-Cost Edge Router...", flush=True)
+        try:
+            # Extraemos el tipo basado en el nombre para demostracion
+            task_type = "rapido"
+            for k in ["chat", "resumen", "parsing", "multimodal"]:
+                if k in nombre.lower(): task_type = k
+            
+            res = ZeroCostEdgeRouter.route_task(task_type, f"Procesa la tarea: {nombre}")
+            print(f"[EXECUTOR] Respuesta del Edge Router: {res[:100]}...", flush=True)
+            return True
+        except Exception as e:
+            print(f"[EXECUTOR] Fallo en Edge Router: {e}", flush=True)
+            return False
+
+    # Aqui cada tarea tiene su logica tradicional
     time.sleep(2)  # simulacion — reemplazar con logica real
     return True
 

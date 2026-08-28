@@ -1,5 +1,5 @@
 # ============================================================
-# OPENCLAW 2026 — GitHub Token Setup via gh CLI (sin sudo)
+# OPENCLAW 2026 - GitHub Token Setup via gh CLI (sin sudo)
 # Ejecutar desde PowerShell en: openclaw-operativo-2026
 # ============================================================
 
@@ -14,7 +14,7 @@ try {
     exit 1
 }
 
-Write-Host "`n[2/4] Autenticando con GitHub (browser — una sola vez)..." -ForegroundColor Cyan
+Write-Host "`n[2/4] Autenticando con GitHub (browser - una sola vez)..." -ForegroundColor Cyan
 $authStatus = & gh auth status 2>&1
 if ($authStatus -match "Logged in to github.com") {
     Write-Host "  Ya autenticado: $($authStatus | Select-String 'account')" -ForegroundColor Green
@@ -41,7 +41,7 @@ if ($token -match "^gh[ps]_" -or $token -match "^github_pat_") {
     Set-Content $MASTER_ENV $content -Encoding UTF8
     Write-Host "  Escrito en: $MASTER_ENV" -ForegroundColor Green
 
-    # Tambien actualizar .env del repo (sin commitear — esta en .gitignore)
+    # Tambien actualizar .env del repo (sin commitear - esta en .gitignore)
     $repoEnv = "C:\Users\ipane\openclaw-operativo-2026\.env"
     $repoContent = Get-Content $repoEnv -Raw -Encoding UTF8
     $repoContent = $repoContent -replace "GITHUB_TOKEN=.*", "GITHUB_TOKEN=$token"

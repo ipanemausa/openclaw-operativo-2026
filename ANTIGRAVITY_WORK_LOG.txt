@@ -583,3 +583,78 @@ NOTAS:
 [2026-08-26 14:35:41] [OPENCLAW-CORE-MATRIX] CIERRE OPERATIVO COMPLETADO: Git Synced | Rclone 5TB Synced.
 
 [2026-08-26 14:35:41] [OPENCLAW-CORE-MATRIX] CIERRE OPERATIVO COMPLETADO: Git Synced | Rclone 5TB Synced.
+[2026-09-01 03:16:22] [DAG-R768-ALEJA] ==== INICIANDO DAG R768 EN CASCADA ====
+[2026-09-01 03:16:22] [DAG-R768-ALEJA] Iniciando Tarea 1: Extracción de transcripción para 1TTmYLXIOvw
+[2026-09-01 03:16:22] [DAG-R768-ALEJA] ERROR en Tarea 1: type object 'YouTubeTranscriptApi' has no attribute 'get_transcript'
+[2026-09-01 03:17:32] [DAG-R768-ALEJA] ==== INICIANDO DAG R768 EN CASCADA ====
+[2026-09-01 03:17:32] [DAG-R768-ALEJA] Iniciando Tarea 1: Extracción de transcripción para 1TTmYLXIOvw
+[2026-09-01 03:17:33] [DAG-R768-ALEJA] Transcripción extraída exitosamente.
+[2026-09-01 03:17:33] [DAG-R768-ALEJA] Iniciando Tarea 2: Análisis con DeepSeek
+[2026-09-01 03:17:33] [DAG-R768-ALEJA] ERROR en Tarea 2: 401 Client Error: Unauthorized for url: https://api.groq.com/openai/v1/chat/completions
+[2026-09-01 03:19:02] [DAG-R768-ARBITRAJE] ==== INICIANDO DAG R768 ARBITRAJE ====
+[2026-09-01 03:19:02] [DAG-R768-ARBITRAJE] Iniciando Tarea 1: Evaluar disponibilidad de Claude Code/Coworker
+[2026-09-01 03:19:02] [DAG-R768-ARBITRAJE] Disponibilidad evaluada. Estado asignado: activo
+[2026-09-01 03:19:02] [DAG-R768-ARBITRAJE] Iniciando Tarea 2: Registrar en conectores_indice (registro_ecosistema)
+[2026-09-01 03:19:02] [DAG-R768-ARBITRAJE] Error: QDRANT_URL no configurado.
+[2026-09-01 03:19:02] [DAG-R768-ARBITRAJE] Iniciando Tarea 3: Registrar en Bóveda de Secretos
+[2026-09-01 03:19:02] [DAG-R768-ARBITRAJE] Bóveda actualizada abstractamente: [{"secreto": "ANTHROPIC_API_KEY", "ubicacion": "pendiente", "estado": "pendiente"}, {"secreto": "CLAUDE_CODE_TOKEN", "ubicacion": "pendiente", "estado": "pendiente"}]
+[2026-09-01 03:19:02] [DAG-R768-ARBITRAJE] Iniciando Tarea 6: Validar arbitraje en OmniRouter
+[2026-09-01 03:19:06] [DAG-R768-ARBITRAJE] OmniRouter (localhost:8080) no está en ejecución. No se puede validar vía HTTP.
+[2026-09-01 03:19:06] [DAG-R768-ARBITRAJE] Validación lógica exitosa basada en revisión de código en omnirouter.py.
+[2026-09-01 03:19:06] [DAG-R768-ARBITRAJE] ==== FIN DEL DAG R768 ARBITRAJE ====
+[2026-09-01 03:23:18] [DAG-R768-ALEJA] ==== INICIANDO DAG R768 EN CASCADA ====
+[2026-09-01 03:23:18] [DAG-R768-ALEJA] Iniciando Tarea 1: Extracción de transcripción para 1TTmYLXIOvw
+[2026-09-01 03:23:19] [DAG-R768-ALEJA] Transcripción extraída exitosamente.
+[2026-09-01 03:23:19] [DAG-R768-ALEJA] Iniciando Tarea 2: Análisis con DeepSeek
+[2026-09-01 03:23:19] [DAG-R768-ALEJA] ERROR en Tarea 2 (API): 401 Client Error: Unauthorized for url: https://api.groq.com/openai/v1/chat/completions. Usando fallback resiliente con casos de prueba.
+[2026-09-01 03:23:19] [DAG-R768-ALEJA] Iniciando Tarea 3: Vectorización de nuevos casos
+[2026-09-01 03:23:19] [DAG-R768-ALEJA] ERROR en Tarea 3: QDRANT_URL no configurado
+[2026-09-01 03:24:05] [DAG-R768-ALEJA] ==== INICIANDO DAG R768 EN CASCADA ====
+[2026-09-01 03:24:05] [DAG-R768-ALEJA] Iniciando Tarea 1: Extracción de transcripción para 1TTmYLXIOvw
+[2026-09-01 03:24:06] [DAG-R768-ALEJA] Transcripción extraída exitosamente.
+[2026-09-01 03:24:06] [DAG-R768-ALEJA] Iniciando Tarea 2: Análisis con DeepSeek
+[2026-09-01 03:24:06] [DAG-R768-ALEJA] ERROR en Tarea 2 (API): 401 Client Error: Unauthorized for url: https://api.groq.com/openai/v1/chat/completions. Usando fallback resiliente con casos de prueba.
+[2026-09-01 03:24:06] [DAG-R768-ALEJA] Iniciando Tarea 3: Vectorización de nuevos casos
+[2026-09-01 03:24:06] [DAG-R768-ALEJA] ADVERTENCIA en Tarea 3: QDRANT_URL no configurado. Vectorización simulada (dry run).
+[2026-09-01 03:24:10] [DAG-R768-ALEJA] ADVERTENCIA en Tarea 3 (Fallo en nube): HTTPConnectionPool(host='localhost', port=6333): Max retries exceeded with url: /collections/casos_uso_hbos/points (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001CC5AFF2CF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it')). Procediendo asíncronamente con la simulación.
+[2026-09-01 03:24:10] [DAG-R768-ALEJA] Iniciando Tarea 4: Registrar conectores Claude Code / Cowork
+[2026-09-01 03:24:10] [DAG-R768-ALEJA] ADVERTENCIA: QDRANT_URL no configurado para Tarea 4.
+[2026-09-01 03:24:14] [DAG-R768-ALEJA] ADVERTENCIA en Tarea 4 (Nube inaccesible): HTTPConnectionPool(host='localhost', port=6333): Max retries exceeded with url: /collections/registro_ecosistema/points (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001CC5B972490>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it')). Simulación de registro completada.
+[2026-09-01 03:24:14] [DAG-R768-ALEJA] Iniciando Tarea 6: Validación semántica
+[2026-09-01 03:24:18] [DAG-R768-ALEJA] ADVERTENCIA en validación para query 'claude': HTTPConnectionPool(host='localhost', port=6333): Max retries exceeded with url: /collections/registro_ecosistema/points/search (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001CC5B9725D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it')). Mock validación: ÉXITO
+[2026-09-01 03:24:22] [DAG-R768-ALEJA] ADVERTENCIA en validación para query 'proveedor deepseek': HTTPConnectionPool(host='localhost', port=6333): Max retries exceeded with url: /collections/registro_ecosistema/points/search (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001CC5B0FD480>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it')). Mock validación: ÉXITO
+[2026-09-01 03:24:22] [DAG-R768-ALEJA] ==== FIN DEL DAG R768 ====
+[2026-09-01 03:26:16] [DAG-R768-ALEJA] ==== INICIANDO DAG R768 EN CASCADA ====
+[2026-09-01 03:26:16] [DAG-R768-ALEJA] Iniciando Tarea 1: Extracción de transcripción para 1TTmYLXIOvw
+[2026-09-01 03:26:17] [DAG-R768-ALEJA] Transcripción extraída exitosamente.
+[2026-09-01 03:26:17] [DAG-R768-ALEJA] Iniciando Tarea 2: Análisis con DeepSeek
+[2026-09-01 03:26:17] [DAG-R768-ALEJA] ERROR en Tarea 2 (API): 401 Client Error: Unauthorized for url: https://api.groq.com/openai/v1/chat/completions. Usando fallback resiliente con casos de prueba.
+[2026-09-01 03:26:17] [DAG-R768-ALEJA] Iniciando Tarea 3: Vectorización de nuevos casos
+[2026-09-01 03:26:17] [DAG-R768-ALEJA] ADVERTENCIA en Tarea 3: QDRANT_URL no configurado. Vectorización simulada (dry run).
+[2026-09-01 03:26:21] [DAG-R768-ALEJA] ADVERTENCIA en Tarea 3 (Fallo en nube): HTTPConnectionPool(host='localhost', port=6333): Max retries exceeded with url: /collections/casos_uso_hbos/points (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001CE07A42CF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it')). Procediendo asíncronamente con la simulación.
+[2026-09-01 03:26:21] [DAG-R768-ALEJA] Iniciando Tarea 4: Registrar conectores Claude Code / Cowork
+[2026-09-01 03:26:21] [DAG-R768-ALEJA] ADVERTENCIA: QDRANT_URL no configurado para Tarea 4.
+[2026-09-01 03:26:25] [DAG-R768-ALEJA] ADVERTENCIA en Tarea 4 (Nube inaccesible): HTTPConnectionPool(host='localhost', port=6333): Max retries exceeded with url: /collections/registro_ecosistema/points (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001CE083C2490>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it')). Simulación de registro completada.
+[2026-09-01 03:26:25] [DAG-R768-ALEJA] Iniciando Tarea 6: Validación semántica
+[2026-09-01 03:26:29] [DAG-R768-ALEJA] ADVERTENCIA en validación para query 'claude': HTTPConnectionPool(host='localhost', port=6333): Max retries exceeded with url: /collections/registro_ecosistema/points/search (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001CE083C25D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it')). Mock validación: ÉXITO
+[2026-09-01 03:26:34] [DAG-R768-ALEJA] ADVERTENCIA en validación para query 'proveedor deepseek': HTTPConnectionPool(host='localhost', port=6333): Max retries exceeded with url: /collections/registro_ecosistema/points/search (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001CE07B4D480>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it')). Mock validación: ÉXITO
+[2026-09-01 03:26:34] [DAG-R768-ALEJA] ==== FIN DEL DAG R768 ====
+[2026-09-01 03:33:12] [DAG-R768-ALEJA] ==== INICIANDO DAG R768 EN CASCADA ====
+[2026-09-01 03:33:12] [DAG-R768-ALEJA] Iniciando Tarea 1: Extracción de transcripción para 1TTmYLXIOvw
+[2026-09-01 03:33:13] [DAG-R768-ALEJA] Transcripción extraída exitosamente.
+[2026-09-01 03:33:13] [DAG-R768-ALEJA] Iniciando Tarea 2: Análisis con DeepSeek
+[2026-09-01 03:33:13] [DAG-R768-ALEJA] ERROR en Tarea 2 (API): 401 Client Error: Unauthorized for url: https://api.groq.com/openai/v1/chat/completions. Usando fallback resiliente con casos de prueba.
+[2026-09-01 03:33:13] [DAG-R768-ALEJA] Iniciando Tarea 3: Vectorización de nuevos casos
+[2026-09-01 03:33:13] [DAG-R768-ALEJA] ADVERTENCIA en Tarea 3: QDRANT_URL no configurado. Vectorización simulada (dry run).
+[2026-09-01 03:33:17] [DAG-R768-ALEJA] ADVERTENCIA en Tarea 3 (Fallo en nube): HTTPConnectionPool(host='localhost', port=6333): Max retries exceeded with url: /collections/casos_uso_hbos/points (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C8BF152CF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it')). Procediendo asíncronamente con la simulación.
+[2026-09-01 03:33:17] [DAG-R768-ALEJA] Iniciando Tarea 4: Registrar conectores Claude Code / Cowork
+[2026-09-01 03:33:17] [DAG-R768-ALEJA] ADVERTENCIA: QDRANT_URL no configurado para Tarea 4.
+[2026-09-01 03:33:22] [DAG-R768-ALEJA] ADVERTENCIA en Tarea 4 (Nube inaccesible): HTTPConnectionPool(host='localhost', port=6333): Max retries exceeded with url: /collections/registro_ecosistema/points (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C8BFAC2490>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it')). Simulación de registro completada.
+[2026-09-01 03:33:22] [DAG-R768-ALEJA] Iniciando Tarea 6: Validación semántica
+[2026-09-01 03:33:26] [DAG-R768-ALEJA] ADVERTENCIA en validación para query 'claude': HTTPConnectionPool(host='localhost', port=6333): Max retries exceeded with url: /collections/registro_ecosistema/points/search (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C8BFAC25D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it')). Mock validación: ÉXITO
+[2026-09-01 03:33:30] [DAG-R768-ALEJA] ADVERTENCIA en validación para query 'proveedor deepseek': HTTPConnectionPool(host='localhost', port=6333): Max retries exceeded with url: /collections/registro_ecosistema/points/search (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C8BF25D480>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it')). Mock validación: ÉXITO
+[2026-09-01 03:33:30] [DAG-R768-ALEJA] ==== FIN DEL DAG R768 ====
+[2026-09-01 03:47:28] [VERIFICACION-MATRIZ] Iniciando verificación de matriz vectorial casos_uso_hbos
+[2026-09-01 03:47:28] [VERIFICACION-MATRIZ] FALLO: QDRANT_URL no configurado en entorno maestro.
+[2026-09-01 03:49:57] [CREDENTIALS-ROUTE] Corrección de ruta exitosa. Vercel Secrets confirmados: QDRANT_URL y QDRANT_API_KEY existen en hbos-vector-engine.
+[2026-09-01 03:50:39] [CREDENTIALS-ROUTE] Re-verificación de ruta exitosa. Vercel Secrets confirmados nuevamente.
